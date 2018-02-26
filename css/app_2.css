@@ -894,7 +894,7 @@ div.dropdown-container .select-arrow:before {
   margin-top: 72px;
   display: grid;
   grid-column-gap: 50px;
-  grid-template-columns: 30% 60%;
+  grid-template-columns: 25% 75%;
 }
 
 .sidebar-submenu {
@@ -903,6 +903,7 @@ div.dropdown-container .select-arrow:before {
 }
 .sidebar-submenu ul {
   font-size: 14px;
+  margin: 0;
 }
 .sidebar-submenu ul li {
   list-style-image: none;
@@ -918,13 +919,14 @@ div.dropdown-container .select-arrow:before {
   display: block;
   color: #333333;
   padding: 0;
-  font-weight: bold;
+  font-weight: normal;
   font-size: 14px;
 }
 .sidebar-submenu ul li a.selected {
   color: #4c5794;
   background: #f2f3f8;
   text-decoration: none;
+  font-weight: bold;
 }
 .sidebar-submenu ul li:hover {
   background: #ffffff;
@@ -943,6 +945,7 @@ div.dropdown-container .select-arrow:before {
   padding: 0;
 }
 .sidebar-submenu ul li.active a.selected {
+  font-weight: bold;
   color: #4c5794;
   background: #f2f3f8;
   text-decoration: none;
@@ -975,7 +978,7 @@ div.dropdown-container .select-arrow:before {
   background: #ffffff;
   border: none;
   padding: 0;
-  font-weight: bold;
+  font-weight: normal;
 }
 .sidebar-submenu ul li.has-submenu ul li a.selected {
   color: #4c5794;
@@ -983,6 +986,7 @@ div.dropdown-container .select-arrow:before {
   text-decoration: none;
   border: none;
   padding: 0;
+  font-weight: bold;
 }
 .sidebar-submenu ul li.has-submenu ul li a.selected:hover {
   color: #4c5794;
@@ -994,7 +998,7 @@ div.dropdown-container .select-arrow:before {
 .sidebar-submenu ul li.has-submenu ul li.active {
   background: #f2f3f8;
   border: none;
-  border-right: 2px solid #4c5794;
+  border-right: 4px solid #4c5794;
 }
 .sidebar-submenu ul li.has-submenu ul li.active a {
   background: #ffffff;

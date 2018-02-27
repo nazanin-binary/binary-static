@@ -29874,22 +29874,25 @@ var Sidebar = function (_React$PureComponent) {
             if (/submenu-item/.test(e.target.className)) {
                 _this.setState({ selectedId: e.target.id });
             } else {
-                _this.setState({ selectedId: e.target.id, isOpen: e.target.id });
+                _this.setState({ selectedId: e.target.id, openTargetId: e.target.id });
             }
         };
 
         _this.openSubmenu = function (e) {
-            if (_this.state.isOpen !== e.target.id) {
+            if (_this.state.openTargetId !== e.target.id) {
                 var firstListItem = _this.props.items.filter(function (it) {
                     return it.id == e.target.id;
                 });
-                _this.setState({ isOpen: e.target.id, selectedId: firstListItem[0].submenu[0].id });
+                _this.setState({ openTargetId: e.target.id, selectedId: firstListItem[0].submenu[0].id });
             }
         };
 
+        var defaultSelectedId = props.items ? props.items[0].submenu ? props.items[0].submenu[0].id : props.items[0].id : '';
+        var defaultOpenTargetId = props.items ? props.items[0].id : '';
+
         _this.state = {
-            selectedId: props.items[0].submenu ? props.items[0].submenu[0].id : props.items[0].id,
-            isOpen: props.items[0].id
+            selectedId: defaultSelectedId,
+            openTargetId: defaultOpenTargetId
         };
         return _this;
     }
@@ -29899,12 +29902,17 @@ var Sidebar = function (_React$PureComponent) {
         value: function render() {
             var _state = this.state,
                 selectedId = _state.selectedId,
-                isOpen = _state.isOpen;
+                openTargetId = _state.openTargetId;
 
             return _react2.default.createElement(
                 'div',
                 { className: 'sidebar-wrapper', id: this.props.id },
-                _react2.default.createElement(SidebarSubmenu, { items: this.props.items, onClick: this.onClick, selectedId: selectedId, openSubmenu: this.openSubmenu, isOpen: isOpen }),
+                _react2.default.createElement(SidebarSubmenu, {
+                    items: this.props.items,
+                    onClick: this.onClick,
+                    selectedId: selectedId,
+                    openSubmenu: this.openSubmenu,
+                    openTargetId: openTargetId }),
                 _react2.default.createElement(SidebarContent, { content: this.props.content, selectedId: selectedId })
             );
         }
@@ -29932,7 +29940,7 @@ var SidebarContent = function (_React$PureComponent2) {
             return _react2.default.createElement(
                 'div',
                 { className: 'sidebar-collapsible-content' },
-                this.props.content.map(function (item, idx) {
+                this.props.content && this.props.content.map(function (item, idx) {
                     return _react2.default.createElement(
                         'div',
                         { key: idx, id: item.id, className: _this3.props.selectedId == item.id ? 'visible' : 'invisible' },
@@ -29963,7 +29971,7 @@ var SidebarSubmenu = function (_React$PureComponent3) {
             var getHref = function getHref(item_id) {
                 return '#' + item_id;
             };
-            var isOpen = this.props.isOpen;
+            var openTargetId = this.props.openTargetId;
 
             return _react2.default.createElement(
                 'div',
@@ -29971,24 +29979,27 @@ var SidebarSubmenu = function (_React$PureComponent3) {
                 _react2.default.createElement(
                     'ul',
                     null,
-                    this.props.items.map(function (item, idx) {
+                    this.props.items && this.props.items.map(function (item, idx) {
                         return _react2.default.createElement(
                             'li',
-                            { key: idx, className: (item.submenu ? 'has-submenu' : '') + (item.id == _this5.props.selectedId ? 'selected' : '') },
+                            {
+                                key: idx,
+                                className: (item.submenu ? 'has-submenu' : '') + (item.id == _this5.props.selectedId ? 'active' : '') },
                             item.submenu && _react2.default.createElement(
                                 _react2.default.Fragment,
                                 null,
                                 _react2.default.createElement(
                                     'a',
-                                    { id: item.id,
-                                        className: isOpen == item.id ? 'selected' : '',
+                                    {
+                                        id: item.id,
+                                        className: openTargetId == item.id ? 'selected' : '',
                                         href: getHref(item.id),
                                         onClick: _this5.props.openSubmenu },
                                     item.text
                                 ),
                                 _react2.default.createElement(
                                     'ul',
-                                    { className: isOpen == item.id ? 'collapsed' : 'compressed' },
+                                    { className: openTargetId == item.id ? 'collapsed' : 'compressed' },
                                     item.submenu.map(function (submenu, idx_submenu) {
                                         return _react2.default.createElement(
                                             'li',
@@ -29996,7 +30007,9 @@ var SidebarSubmenu = function (_React$PureComponent3) {
                                                 className: submenu.id == _this5.props.selectedId ? 'active' : '' },
                                             _react2.default.createElement(
                                                 'a',
-                                                { id: submenu.id, onClick: _this5.props.onClick,
+                                                {
+                                                    id: submenu.id,
+                                                    onClick: _this5.props.onClick,
                                                     className: 'submenu-item ' + (submenu.id == _this5.props.selectedId ? 'selected' : ''),
                                                     href: getHref(submenu.id) },
                                                 submenu.text
@@ -30033,33 +30046,25 @@ var dummyitems = [{
     submenu: [{ id: 'copyright', text: 'Copyright Section' }, { id: 'privacy', text: 'Privacy Section' }]
 }, { id: 'datafeed', text: 'Data Feed Section' }];
 
-var contents = [{
+/*const contents = [
+  {
     id: 'copyright',
-    cont: _react2.default.createElement(
-        'div',
-        null,
-        'copyright'
-    )
-}, {
-    id: 'privacy',
-    cont: _react2.default.createElement(
-        'div',
-        null,
-        'privacy'
-    )
-}, {
-    id: 'datafeed',
-    cont: _react2.default.createElement(
-        'div',
-        null,
-        'datafeed'
-    )
-}];
+    cont: <div>copyright</div>
+  },
+    {
+        id: 'privacy',
+        cont: <div>privacy</div>
+    },
+    {
+        id: 'datafeed',
+        cont: <div>datafeed</div>,
+    }
+];
 
 Sidebar.defaultProps = {
     items: dummyitems,
-    content: contents
-};
+    content: contents,
+}*/
 
 exports.default = Sidebar;
 

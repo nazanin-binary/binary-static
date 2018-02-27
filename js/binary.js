@@ -30046,25 +30046,33 @@ var dummyitems = [{
     submenu: [{ id: 'copyright', text: 'Copyright Section' }, { id: 'privacy', text: 'Privacy Section' }]
 }, { id: 'datafeed', text: 'Data Feed Section' }];
 
-/*const contents = [
-  {
+var contents = [{
     id: 'copyright',
-    cont: <div>copyright</div>
-  },
-    {
-        id: 'privacy',
-        cont: <div>privacy</div>
-    },
-    {
-        id: 'datafeed',
-        cont: <div>datafeed</div>,
-    }
-];
+    cont: _react2.default.createElement(
+        'div',
+        null,
+        'copyright'
+    )
+}, {
+    id: 'privacy',
+    cont: _react2.default.createElement(
+        'div',
+        null,
+        'privacy'
+    )
+}, {
+    id: 'datafeed',
+    cont: _react2.default.createElement(
+        'div',
+        null,
+        'datafeed'
+    )
+}];
 
 Sidebar.defaultProps = {
     items: dummyitems,
-    content: contents,
-}*/
+    content: contents
+};
 
 exports.default = Sidebar;
 

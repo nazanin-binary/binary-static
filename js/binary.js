@@ -8359,14 +8359,18 @@ var isCryptocurrency = function isCryptocurrency(currency) {
     );
 };
 
+var isStableCoin = function isStableCoin(currency) {
+    return isCryptocurrency(currency) && getPropertyValue(crypto_config, [currency, 'stable']);
+};
+
 var crypto_config = {
-    BTC: { name: 'Bitcoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-    BCH: { name: 'Bitcoin Cash', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-    ETH: { name: 'Ether', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-    ETC: { name: 'Ether Classic', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-    LTC: { name: 'Litecoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-    DAI: { name: 'Dai', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
-    UST: { name: 'Tether', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 }
+    BTC: { name: 'Bitcoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
+    BCH: { name: 'Bitcoin Cash', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
+    ETH: { name: 'Ether', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
+    ETC: { name: 'Ether Classic', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
+    LTC: { name: 'Litecoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
+    DAI: { name: 'Dai', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10, stable: true },
+    UST: { name: 'Tether', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10, stable: true }
 };
 
 var getMinWithdrawal = function getMinWithdrawal(currency) {
@@ -8396,6 +8400,7 @@ module.exports = {
     getDecimalPlaces: getDecimalPlaces,
     setCurrencies: setCurrencies,
     isCryptocurrency: isCryptocurrency,
+    isStableCoin: isStableCoin,
     getCurrencyName: getCurrencyName,
     getMinWithdrawal: getMinWithdrawal,
     getMinPayout: getMinPayout,
@@ -22105,6 +22110,7 @@ var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
+var isStableCoin = __webpack_require__(7).isStableCoin;
 var getMinWithdrawal = __webpack_require__(7).getMinWithdrawal;
 var FormManager = __webpack_require__(17);
 var elementTextContent = __webpack_require__(3).elementTextContent;
@@ -22172,7 +22178,9 @@ var AccountTransfer = function () {
         showForm();
 
         if (Client.hasCurrencyType('crypto') && Client.hasCurrencyType('fiat')) {
+            var transfer_fee = isStableCoin(client_currency) ? '0.2%' : '1%';
             el_transfer_fee.setVisibility(1);
+            elementTextContent(getElementById('transfer_fee_amount'), '' + transfer_fee);
         } else {
             el_transfer_info.setVisibility(1);
         }

@@ -8360,17 +8360,17 @@ var isCryptocurrency = function isCryptocurrency(currency) {
 };
 
 var isStableCoin = function isStableCoin(currency) {
-    return isCryptocurrency(currency) && getPropertyValue(crypto_config, [currency, 'stable']);
+    return isCryptocurrency(currency) && getPropertyValue(crypto_config, [currency, 'is_stable']);
 };
 
 var crypto_config = {
-    BTC: { name: 'Bitcoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
-    BCH: { name: 'Bitcoin Cash', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
-    ETH: { name: 'Ether', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
-    ETC: { name: 'Ether Classic', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
-    LTC: { name: 'Litecoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, stable: false },
-    DAI: { name: 'Dai', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10, stable: true },
-    UST: { name: 'Tether', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10, stable: true }
+    BTC: { name: 'Bitcoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, is_stable: false },
+    BCH: { name: 'Bitcoin Cash', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, is_stable: false },
+    ETH: { name: 'Ether', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, is_stable: false },
+    ETC: { name: 'Ether Classic', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, is_stable: false },
+    LTC: { name: 'Litecoin', min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002, is_stable: false },
+    DAI: { name: 'Dai', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10, is_stable: true },
+    UST: { name: 'Tether', min_withdrawal: 0.002, pa_max_withdrawal: 2000, pa_min_withdrawal: 10, is_stable: true }
 };
 
 var getMinWithdrawal = function getMinWithdrawal(currency) {
@@ -22109,9 +22109,7 @@ module.exports = SessionDurationLimit;
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
-var isStableCoin = __webpack_require__(7).isStableCoin;
-var getMinWithdrawal = __webpack_require__(7).getMinWithdrawal;
+var Currency = __webpack_require__(7);
 var FormManager = __webpack_require__(17);
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var getElementById = __webpack_require__(3).getElementById;
@@ -22178,7 +22176,7 @@ var AccountTransfer = function () {
         showForm();
 
         if (Client.hasCurrencyType('crypto') && Client.hasCurrencyType('fiat')) {
-            var transfer_fee = isStableCoin(client_currency) ? '0.2%' : '1%';
+            var transfer_fee = Currency.isStableCoin(client_currency) ? '0.2%' : '1%';
             el_transfer_fee.setVisibility(1);
             elementTextContent(getElementById('transfer_fee_amount'), '' + transfer_fee);
         } else {
@@ -22205,7 +22203,7 @@ var AccountTransfer = function () {
     };
 
     var getDecimals = function getDecimals() {
-        return isCryptocurrency(client_currency) ? 8 : 2;
+        return Currency.isCryptocurrency(client_currency) ? 8 : 2;
     };
 
     var showForm = function showForm() {
@@ -22213,7 +22211,7 @@ var AccountTransfer = function () {
 
         getElementById(form_id).setVisibility(1);
 
-        FormManager.init(form_id_hash, [{ selector: '#amount', validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', decimals: getDecimals(), min: getMinWithdrawal(client_currency), max: Math.min(+withdrawal_limit, +client_balance), format_money: true }]] }, { request_field: 'transfer_between_accounts', value: 1 }, { request_field: 'account_from', value: client_loginid }, { request_field: 'account_to', value: function value() {
+        FormManager.init(form_id_hash, [{ selector: '#amount', validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', decimals: getDecimals(), min: Currency.getMinWithdrawal(client_currency), max: Math.min(+withdrawal_limit, +client_balance), format_money: true }]] }, { request_field: 'transfer_between_accounts', value: 1 }, { request_field: 'account_from', value: client_loginid }, { request_field: 'account_to', value: function value() {
                 return (el_transfer_to.value || el_transfer_to.getAttribute('data-value') || '').split(' (')[0];
             } }, { request_field: 'currency', value: client_currency }]);
 
@@ -22282,7 +22280,7 @@ var AccountTransfer = function () {
         BinarySocket.wait('balance').then(function (response) {
             client_balance = +getPropertyValue(response, ['balance', 'balance']);
             client_currency = Client.get('currency');
-            var min_amount = getMinWithdrawal(client_currency);
+            var min_amount = Currency.getMinWithdrawal(client_currency);
             if (!client_balance || client_balance < min_amount) {
                 getElementById(messages.parent).setVisibility(1);
                 if (client_currency) {

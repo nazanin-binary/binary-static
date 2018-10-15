@@ -22176,7 +22176,7 @@ var AccountTransfer = function () {
         showForm();
 
         if (Client.hasCurrencyType('crypto') && Client.hasCurrencyType('fiat')) {
-            var transfer_fee = Currency.isStableCoin(client_currency) ? '0.2%' : '1%';
+            var transfer_fee = Currency.isStableCoin(client_currency) ? '0.5%' : '1%';
             el_transfer_fee.setVisibility(1);
             elementTextContent(getElementById('transfer_fee_amount'), '' + transfer_fee);
         } else {

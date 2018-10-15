@@ -30078,6 +30078,7 @@ module.exports = LostPassword;
 var MetaTraderConfig = __webpack_require__(184);
 var Client = __webpack_require__(5);
 var formatMoney = __webpack_require__(7).formatMoney;
+var isStableCoin = __webpack_require__(7).isStableCoin;
 var Validation = __webpack_require__(52);
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
@@ -30361,7 +30362,9 @@ var MetaTraderUI = function () {
             // Manage Fund
             var client_currency = Client.get('currency');
             var mt_currency = MetaTraderConfig.getCurrency(acc_type);
+            var transfer_fee = isStableCoin(client_currency) ? '0.5%' : '1%';
             cloneForm();
+            _$form.find('.mt5_transfer_fee_amount').text('' + transfer_fee);
             _$form.find('.binary-account').text('' + localize('[_1] Account [_2]', ['Binary', Client.get('loginid')]));
             _$form.find('.binary-balance').html('' + formatMoney(client_currency, Client.get('balance')));
             _$form.find('.mt5-account').text('' + localize('[_1] Account [_2]', [accounts_info[acc_type].title, accounts_info[acc_type].info.login]));

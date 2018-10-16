@@ -401,7 +401,7 @@ module.exports = {
 "use strict";
 
 
-var BinarySocketBase = __webpack_require__(86);
+var BinarySocketBase = __webpack_require__(85);
 
 // This is to maintain the current references and also to provide the ability to extend this section separately in the future
 module.exports = BinarySocketBase;
@@ -416,7 +416,7 @@ module.exports = BinarySocketBase;
 var BinarySocket = __webpack_require__(4);
 var RealityCheckData = __webpack_require__(132);
 var ClientBase = __webpack_require__(96);
-var SocketCache = __webpack_require__(74);
+var SocketCache = __webpack_require__(73);
 var getElementById = __webpack_require__(3).getElementById;
 var removeCookies = __webpack_require__(6).removeCookies;
 var urlFor = __webpack_require__(8).urlFor;
@@ -783,7 +783,7 @@ module.exports = {
 "use strict";
 
 
-var CurrencyBase = __webpack_require__(118);
+var CurrencyBase = __webpack_require__(119);
 var localize = __webpack_require__(2).localize;
 
 var getCurrencyList = function getCurrencyList(currencies) {
@@ -1719,12 +1719,11 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var showHidePulser = __webpack_require__(119).showHidePulser;
-var checkClientsCountry = __webpack_require__(58).checkClientsCountry;
+var showHidePulser = __webpack_require__(120).showHidePulser;
 var MetaTrader = __webpack_require__(131);
 var GTM = __webpack_require__(57);
-var Login = __webpack_require__(46);
-var SocketCache = __webpack_require__(74);
+var Login = __webpack_require__(51);
+var SocketCache = __webpack_require__(73);
 var elementInnerHtml = __webpack_require__(3).elementInnerHtml;
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var getElementById = __webpack_require__(3).getElementById;
@@ -1740,9 +1739,6 @@ var Header = function () {
     var onLoad = function onLoad() {
         populateAccountsList();
         bindClick();
-        if (!Login.isLoginPages()) {
-            checkClientsCountry();
-        }
         if (Client.isLoggedIn()) {
             getElementById('menu-top').classList.add('smaller-font', 'top-nav-menu');
             displayAccountStatus();
@@ -2172,12 +2168,12 @@ module.exports = Header;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var Defaults = __webpack_require__(23);
-var Symbols = __webpack_require__(79);
-var Tick = __webpack_require__(62);
+var Symbols = __webpack_require__(78);
+var Tick = __webpack_require__(61);
 var contractsElement = __webpack_require__(288);
 var marketsElement = __webpack_require__(291);
 var formatMoney = __webpack_require__(7).formatMoney;
-var ActiveSymbols = __webpack_require__(120);
+var ActiveSymbols = __webpack_require__(121);
 var elementInnerHtml = __webpack_require__(3).elementInnerHtml;
 var getElementById = __webpack_require__(3).getElementById;
 var localize = __webpack_require__(2).localize;
@@ -2643,50 +2639,6 @@ module.exports = commonTrading;
 "use strict";
 
 
-var Client = __webpack_require__(96);
-var getLanguage = __webpack_require__(21).get;
-var isStorageSupported = __webpack_require__(6).isStorageSupported;
-var getAppId = __webpack_require__(24).getAppId;
-
-var Login = function () {
-    var redirectToLogin = function redirectToLogin() {
-        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
-            sessionStorage.setItem('redirect_url', window.location.href);
-            window.location.href = loginUrl();
-        }
-    };
-
-    var loginUrl = function loginUrl() {
-        var server_url = localStorage.getItem('config.server_url');
-        var language = getLanguage();
-        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language : 'https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language;
-    };
-
-    var isLoginPages = function isLoginPages() {
-        return (/logged_inws|redirect/i.test(window.location.pathname)
-        );
-    };
-
-    var socialLoginUrl = function socialLoginUrl(brand) {
-        return loginUrl() + '&social_signup=' + brand;
-    };
-
-    return {
-        redirectToLogin: redirectToLogin,
-        isLoginPages: isLoginPages,
-        socialLoginUrl: socialLoginUrl
-    };
-}();
-
-module.exports = Login;
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var moment = __webpack_require__(9);
 var ServerTime = __webpack_require__(245);
 var elementInnerHtml = __webpack_require__(3).elementInnerHtml;
@@ -2740,7 +2692,7 @@ var Clock = function () {
 module.exports = Clock;
 
 /***/ }),
-/* 48 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2815,7 +2767,7 @@ var MBDefaults = function () {
 module.exports = MBDefaults;
 
 /***/ }),
-/* 49 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2991,8 +2943,52 @@ module.exports = {
 };
 
 /***/ }),
+/* 49 */,
 /* 50 */,
-/* 51 */,
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Client = __webpack_require__(96);
+var getLanguage = __webpack_require__(21).get;
+var isStorageSupported = __webpack_require__(6).isStorageSupported;
+var getAppId = __webpack_require__(24).getAppId;
+
+var Login = function () {
+    var redirectToLogin = function redirectToLogin() {
+        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
+            sessionStorage.setItem('redirect_url', window.location.href);
+            window.location.href = loginUrl();
+        }
+    };
+
+    var loginUrl = function loginUrl() {
+        var server_url = localStorage.getItem('config.server_url');
+        var language = getLanguage();
+        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language : 'https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language;
+    };
+
+    var isLoginPages = function isLoginPages() {
+        return (/logged_inws|redirect/i.test(window.location.pathname)
+        );
+    };
+
+    var socialLoginUrl = function socialLoginUrl(brand) {
+        return loginUrl() + '&social_signup=' + brand;
+    };
+
+    return {
+        redirectToLogin: redirectToLogin,
+        isLoginPages: isLoginPages,
+        socialLoginUrl: socialLoginUrl
+    };
+}();
+
+module.exports = Login;
+
+/***/ }),
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3372,8 +3368,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var Cookies = __webpack_require__(55);
 var moment = __webpack_require__(9);
 var ClientBase = __webpack_require__(96);
-var Login = __webpack_require__(46);
-var BinarySocket = __webpack_require__(86);
+var Login = __webpack_require__(51);
+var BinarySocket = __webpack_require__(85);
 var getElementById = __webpack_require__(3).getElementById;
 var isVisible = __webpack_require__(3).isVisible;
 var getLanguage = __webpack_require__(21).get;
@@ -3535,77 +3531,6 @@ module.exports = GTM;
 "use strict";
 
 
-var createLanguageDropDown = __webpack_require__(265);
-var Client = __webpack_require__(5);
-var BinarySocket = __webpack_require__(4);
-var isLoginPages = __webpack_require__(46).isLoginPages;
-var getElementById = __webpack_require__(3).getElementById;
-var Crowdin = __webpack_require__(162);
-var Language = __webpack_require__(21);
-var State = __webpack_require__(6).State;
-
-var checkClientsCountry = function checkClientsCountry() {
-    if (Crowdin.isInContext() || isLoginPages()) return;
-    BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
-        var website_status = State.getResponse('website_status');
-        if (!website_status) return;
-        var clients_country = website_status.clients_country;
-        if (clients_country === 'id') {
-            limitLanguage('ID');
-        } else {
-            createLanguageDropDown(website_status);
-        }
-    });
-};
-
-// will return true for all clients with maltainvest/malta/iom financial/gaming landing company shortcode
-// needs to wait for website_status, authorize, and landing_company before being called
-// 'mt' is part of EU but account opening is not offered so the landing company response won't include the expected shortcode.
-// we will use the fallback eu_excluded_regex for them.
-var isEuCountry = function isEuCountry() {
-    var eu_shortcode_regex = new RegExp('^(maltainvest|malta|iom)$');
-    var eu_excluded_regex = new RegExp('^mt$');
-    var financial_shortcode = State.getResponse('landing_company.financial_company.shortcode');
-    var gaming_shortcode = State.getResponse('landing_company.gaming_company.shortcode');
-    var clients_country = Client.get('residence') || State.getResponse('website_status.clients_country');
-    return financial_shortcode || gaming_shortcode ? eu_shortcode_regex.test(financial_shortcode) || eu_shortcode_regex.test(gaming_shortcode) : eu_excluded_regex.test(clients_country);
-};
-
-var limitLanguage = function limitLanguage(lang) {
-    if (Language.get() !== lang) {
-        window.location.href = Language.urlFor(lang); // need to redirect not using pjax
-    }
-    if (getElementById('select_language')) {
-        $('.languages').remove();
-        $('#gmt-clock').addClass('gr-6 gr-11-m').removeClass('gr-5 gr-6-m');
-        $('#contact-us').addClass('gr-5').removeClass('gr-2');
-    }
-};
-
-var checkLanguage = function checkLanguage() {
-    if (Language.get() === 'ID') {
-        var $academy_link = $('.academy a');
-        var academy_href = $academy_link.attr('href');
-        var regex = /id/;
-        if (!regex.test(academy_href)) {
-            $academy_link.attr('href', academy_href + regex);
-        }
-    }
-};
-
-module.exports = {
-    checkClientsCountry: checkClientsCountry,
-    isEuCountry: isEuCountry,
-    checkLanguage: checkLanguage
-};
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var localize = __webpack_require__(2).localize;
 var getAppId = __webpack_require__(24).getAppId;
 
@@ -3645,14 +3570,13 @@ module.exports = {
 };
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var getFormNameBarrierCategory = __webpack_require__(32).getFormNameBarrierCategory;
-var getLanguage = __webpack_require__(21).get;
 var localize = __webpack_require__(2).localize;
 var getPropertyValue = __webpack_require__(1).getPropertyValue;
 var isEmptyObject = __webpack_require__(1).isEmptyObject;
@@ -3815,10 +3739,8 @@ var Contract = function () {
                     trade_contract_forms[contract_category] = localize(current_obj.contract_category_display);
                     if (contract_category === 'digits') {
                         trade_contract_forms.matchdiff = localize('Matches/Differs');
-                        if (getLanguage() !== 'ID') {
-                            trade_contract_forms.evenodd = localize('Even/Odd');
-                            trade_contract_forms.overunder = localize('Over/Under');
-                        }
+                        trade_contract_forms.evenodd = localize('Even/Odd');
+                        trade_contract_forms.overunder = localize('Over/Under');
                     } else if (contract_category === 'lookback') {
                         trade_contract_forms.lookbackhigh = localize('High-Close');
                         trade_contract_forms.lookbacklow = localize('Close-Low');
@@ -3883,13 +3805,13 @@ var Contract = function () {
 module.exports = Contract;
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Contract = __webpack_require__(60);
+var Contract = __webpack_require__(59);
 var Defaults = __webpack_require__(23);
 var localize = __webpack_require__(2).localize;
 
@@ -3954,15 +3876,15 @@ var Lookback = function () {
 module.exports = Lookback;
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var moment = __webpack_require__(9);
-var countDecimalPlaces = __webpack_require__(49).countDecimalPlaces;
-var displayPriceMovement = __webpack_require__(49).displayPriceMovement;
+var countDecimalPlaces = __webpack_require__(48).countDecimalPlaces;
+var displayPriceMovement = __webpack_require__(48).displayPriceMovement;
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var getElementById = __webpack_require__(3).getElementById;
 var isVisible = __webpack_require__(3).isVisible;
@@ -4138,6 +4060,7 @@ var Tick = function () {
 module.exports = Tick;
 
 /***/ }),
+/* 62 */,
 /* 63 */,
 /* 64 */,
 /* 65 */,
@@ -4148,8 +4071,7 @@ module.exports = Tick;
 /* 70 */,
 /* 71 */,
 /* 72 */,
-/* 73 */,
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4291,13 +4213,13 @@ var SocketCache = function () {
 module.exports = SocketCache;
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var showPopup = __webpack_require__(122);
+var showPopup = __webpack_require__(123);
 var elementInnerHtml = __webpack_require__(3).elementInnerHtml;
 var localize = __webpack_require__(2).localize;
 var urlFor = __webpack_require__(8).urlFor;
@@ -4362,7 +4284,7 @@ var Dialog = function () {
 module.exports = Dialog;
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4488,7 +4410,7 @@ var Table = function () {
 module.exports = Table;
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4497,9 +4419,9 @@ module.exports = Table;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var moment = __webpack_require__(9);
-var MBDefaults = __webpack_require__(48);
+var MBDefaults = __webpack_require__(47);
 var Client = __webpack_require__(5);
-var SocketCache = __webpack_require__(74);
+var SocketCache = __webpack_require__(73);
 var getLanguage = __webpack_require__(21).get;
 var localize = __webpack_require__(2).localize;
 var padLeft = __webpack_require__(16).padLeft;
@@ -4871,7 +4793,7 @@ var MBContract = function () {
 module.exports = MBContract;
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4943,13 +4865,13 @@ var Reset = function () {
 module.exports = Reset;
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var ActiveSymbols = __webpack_require__(120);
+var ActiveSymbols = __webpack_require__(121);
 
 /*
  * Symbols object parses the active_symbols json that we get from socket.send({active_symbols: 'brief'}
@@ -5001,13 +4923,13 @@ var Symbols = function () {
 module.exports = Symbols;
 
 /***/ }),
+/* 79 */,
 /* 80 */,
 /* 81 */,
 /* 82 */,
 /* 83 */,
 /* 84 */,
-/* 85 */,
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5018,7 +4940,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ClientBase = __webpack_require__(96);
-var SocketCache = __webpack_require__(74);
+var SocketCache = __webpack_require__(73);
 var getLanguage = __webpack_require__(21).get;
 var State = __webpack_require__(6).State;
 var cloneObject = __webpack_require__(1).cloneObject;
@@ -5350,7 +5272,7 @@ var PromiseClass = function PromiseClass() {
 module.exports = BinarySocketBase;
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5478,7 +5400,7 @@ var Scroll = function () {
 module.exports = Scroll;
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5669,6 +5591,33 @@ var TabSelector = function () {
 module.exports = TabSelector;
 
 /***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Client = __webpack_require__(5);
+var State = __webpack_require__(6).State;
+
+// will return true for all clients with maltainvest/malta/iom financial/gaming landing company shortcode
+// needs to wait for website_status, authorize, and landing_company before being called
+// 'mt' is part of EU but account opening is not offered so the landing company response won't include the expected shortcode.
+// we will use the fallback eu_excluded_regex for them.
+var isEuCountry = function isEuCountry() {
+    var eu_shortcode_regex = new RegExp('^(maltainvest|malta|iom)$');
+    var eu_excluded_regex = new RegExp('^mt$');
+    var financial_shortcode = State.getResponse('landing_company.financial_company.shortcode');
+    var gaming_shortcode = State.getResponse('landing_company.gaming_company.shortcode');
+    var clients_country = Client.get('residence') || State.getResponse('website_status.clients_country');
+    return financial_shortcode || gaming_shortcode ? eu_shortcode_regex.test(financial_shortcode) || eu_shortcode_regex.test(gaming_shortcode) : eu_excluded_regex.test(clients_country);
+};
+
+module.exports = {
+    isEuCountry: isEuCountry
+};
+
+/***/ }),
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5850,13 +5799,13 @@ module.exports = DatePicker;
 var showChart = __webpack_require__(91).showChart;
 var Defaults = __webpack_require__(23);
 var getActiveTab = __webpack_require__(177).getActiveTab;
-var GetTicks = __webpack_require__(100);
-var MBDefaults = __webpack_require__(48);
+var GetTicks = __webpack_require__(101);
+var MBDefaults = __webpack_require__(47);
 var MBPortfolio = __webpack_require__(174);
 var getElementById = __webpack_require__(3).getElementById;
 var getLanguage = __webpack_require__(21).get;
 var State = __webpack_require__(6).State;
-var TabSelector = __webpack_require__(88);
+var TabSelector = __webpack_require__(87);
 var Url = __webpack_require__(8);
 
 /*
@@ -6115,8 +6064,8 @@ module.exports = TradingAnalysis;
 "use strict";
 
 
-var getAllSymbols = __webpack_require__(79).getAllSymbols;
-var MBDefaults = __webpack_require__(48);
+var getAllSymbols = __webpack_require__(78).getAllSymbols;
+var MBDefaults = __webpack_require__(47);
 var getElementById = __webpack_require__(3).getElementById;
 var getLanguage = __webpack_require__(21).get;
 var localize = __webpack_require__(2).localize;
@@ -6241,11 +6190,11 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var moment = __webpack_require__(9);
 var ViewPopupUI = __webpack_require__(133);
 var Highchart = __webpack_require__(286);
-var Callputspread = __webpack_require__(99);
-var Lookback = __webpack_require__(61);
-var Reset = __webpack_require__(78);
+var Callputspread = __webpack_require__(100);
+var Lookback = __webpack_require__(60);
+var Reset = __webpack_require__(77);
 var TickDisplay = __webpack_require__(128);
-var Clock = __webpack_require__(47);
+var Clock = __webpack_require__(46);
 var BinarySocket = __webpack_require__(4);
 var getElementById = __webpack_require__(3).getElementById;
 var localize = __webpack_require__(2).localize;
@@ -7001,8 +6950,8 @@ module.exports = ViewPopup;
 
 
 var moment = __webpack_require__(9);
-var isCryptocurrency = __webpack_require__(118).isCryptocurrency;
-var SocketCache = __webpack_require__(74);
+var isCryptocurrency = __webpack_require__(119).isCryptocurrency;
+var SocketCache = __webpack_require__(73);
 var LocalStore = __webpack_require__(6).LocalStore;
 var State = __webpack_require__(6).State;
 var getPropertyValue = __webpack_require__(1).getPropertyValue;
@@ -7355,6 +7304,30 @@ module.exports = ClientBase;
 "use strict";
 
 
+var BinarySocket = __webpack_require__(4);
+var isEuCountry = __webpack_require__(88).isEuCountry;
+
+var hideEU = function hideEU() {
+    BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
+        if (isEuCountry()) {
+            $('.eu-hide').setVisibility(0);
+            $('.eu-show').setVisibility(1);
+            $('.eu-hide-parent').parent().setVisibility(0);
+        }
+    });
+};
+
+module.exports = {
+    hideEU: hideEU
+};
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var FormManager = __webpack_require__(17);
 
 var handleVerifyCode = function handleVerifyCode(onSubmit) {
@@ -7381,7 +7354,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7458,7 +7431,7 @@ var MBNotifications = function () {
 module.exports = MBNotifications;
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7726,7 +7699,7 @@ var getIntervalPath = function getIntervalPath(x, y0, y1, cap_width) {
 module.exports = Callputspread;
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7738,9 +7711,9 @@ var DigitInfo = __webpack_require__(285);
 var Defaults = __webpack_require__(23);
 var getActiveTab = __webpack_require__(177).getActiveTab;
 var Purchase = __webpack_require__(180);
-var Tick = __webpack_require__(62);
+var Tick = __webpack_require__(61);
 var TickDisplay = __webpack_require__(128);
-var MBDefaults = __webpack_require__(48);
+var MBDefaults = __webpack_require__(47);
 var MBTick = __webpack_require__(125);
 var BinarySocket = __webpack_require__(4);
 var State = __webpack_require__(6).State;
@@ -7834,7 +7807,7 @@ var GetTicks = function () {
 module.exports = GetTicks;
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7842,13 +7815,13 @@ module.exports = GetTicks;
 
 var moment = __webpack_require__(9);
 var commonTrading = __webpack_require__(32);
-var displayPriceMovement = __webpack_require__(49).displayPriceMovement;
-var getStartDateNode = __webpack_require__(49).getStartDateNode;
-var getTradingTimes = __webpack_require__(49).getTradingTimes;
-var Contract = __webpack_require__(60);
+var displayPriceMovement = __webpack_require__(48).displayPriceMovement;
+var getStartDateNode = __webpack_require__(48).getStartDateNode;
+var getTradingTimes = __webpack_require__(48).getTradingTimes;
+var Contract = __webpack_require__(59);
 var Defaults = __webpack_require__(23);
-var getLookBackFormula = __webpack_require__(61).getFormula;
-var isLookback = __webpack_require__(61).isLookback;
+var getLookBackFormula = __webpack_require__(60).getFormula;
+var isLookback = __webpack_require__(60).isLookback;
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var formatMoney = __webpack_require__(7).formatMoney;
@@ -8269,7 +8242,6 @@ var Price = function () {
 module.exports = Price;
 
 /***/ }),
-/* 102 */,
 /* 103 */,
 /* 104 */,
 /* 105 */,
@@ -8285,7 +8257,8 @@ module.exports = Price;
 /* 115 */,
 /* 116 */,
 /* 117 */,
-/* 118 */
+/* 118 */,
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8411,7 +8384,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8425,12 +8398,12 @@ var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var professionalClient = __webpack_require__(183);
-var getElementById = __webpack_require__(3).getElementById;
-var makeOption = __webpack_require__(3).makeOption;
+var CommonFunctions = __webpack_require__(3);
 var Geocoder = __webpack_require__(163);
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
 var urlFor = __webpack_require__(8).urlFor;
+var getPropertyValue = __webpack_require__(1).getPropertyValue;
 
 var AccountOpening = function () {
     var redirectAccount = function redirectAccount() {
@@ -8451,7 +8424,11 @@ var AccountOpening = function () {
     var populateForm = function populateForm(form_id, getValidations, is_financial) {
         getResidence(form_id, getValidations);
         generateBirthDate();
-        if (State.getResponse('landing_company.financial_company.shortcode') === 'maltainvest') {
+        var landing_company = State.getResponse('landing_company');
+        var lc_to_upgrade_to = landing_company[is_financial ? 'financial_company' : 'gaming_company'] || landing_company.financial_company;
+        CommonFunctions.elementTextContent(CommonFunctions.getElementById('lc-name'), lc_to_upgrade_to.name);
+        CommonFunctions.elementTextContent(CommonFunctions.getElementById('lc-country'), lc_to_upgrade_to.country);
+        if (getPropertyValue(landing_company, ['financial_company', 'shortcode']) === 'maltainvest') {
             professionalClient.init(is_financial, false);
         }
         Geocoder.init(form_id);
@@ -8474,8 +8451,8 @@ var AccountOpening = function () {
             var $options = $('<div/>');
             var $options_with_disabled = $('<div/>');
             residence_list.forEach(function (res) {
-                $options.append(makeOption({ text: res.text, value: res.value }));
-                $options_with_disabled.append(makeOption({
+                $options.append(CommonFunctions.makeOption({ text: res.text, value: res.value }));
+                $options_with_disabled.append(CommonFunctions.makeOption({
                     text: res.text,
                     value: res.value,
                     is_disabled: res.disabled
@@ -8512,7 +8489,7 @@ var AccountOpening = function () {
 
             if (/^(malta|maltainvest|iom)$/.test(State.getResponse('authorize.upgradeable_landing_companies'))) {
                 var $citizen = $('#citizen');
-                getElementById('citizen_row').setVisibility(1);
+                CommonFunctions.getElementById('citizen_row').setVisibility(1);
                 if ($citizen.length) {
                     BinarySocket.wait('get_settings').then(function (response) {
                         var citizen = response.get_settings.citizen;
@@ -8654,7 +8631,7 @@ var AccountOpening = function () {
 module.exports = AccountOpening;
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8821,13 +8798,13 @@ var ActiveSymbols = function () {
 module.exports = ActiveSymbols;
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Table = __webpack_require__(76);
+var Table = __webpack_require__(75);
 
 var FlexTableUI = function () {
     var config = void 0;
@@ -8896,7 +8873,7 @@ var FlexTableUI = function () {
 module.exports = FlexTableUI;
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8959,38 +8936,14 @@ var callback = function callback(options) {
 module.exports = showPopup;
 
 /***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var BinarySocket = __webpack_require__(4);
-var isEuCountry = __webpack_require__(58).isEuCountry;
-
-var hideEU = function hideEU() {
-    BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
-        if (isEuCountry()) {
-            $('.eu-hide').setVisibility(0);
-            $('.eu-show').setVisibility(1);
-            $('.eu-hide-parent').parent().setVisibility(0);
-        }
-    });
-};
-
-module.exports = {
-    hideEU: hideEU
-};
-
-/***/ }),
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var MBContract = __webpack_require__(77);
-var MBNotifications = __webpack_require__(98);
+var MBContract = __webpack_require__(76);
+var MBNotifications = __webpack_require__(99);
 var TradingAnalysis = __webpack_require__(90);
 var redrawChart = __webpack_require__(91).redrawChart;
 var ViewPopup = __webpack_require__(92);
@@ -9315,8 +9268,8 @@ module.exports = MBPrice;
 "use strict";
 
 
-var MBDefaults = __webpack_require__(48);
-var MBNotifications = __webpack_require__(98);
+var MBDefaults = __webpack_require__(47);
+var MBNotifications = __webpack_require__(99);
 var BinarySocket = __webpack_require__(4);
 var getElementById = __webpack_require__(3).getElementById;
 var getPropertyValue = __webpack_require__(1).getPropertyValue;
@@ -9439,10 +9392,10 @@ module.exports = MBTick;
 
 
 var moment = __webpack_require__(9);
-var countDecimalPlaces = __webpack_require__(49).countDecimalPlaces;
-var Contract = __webpack_require__(60);
+var countDecimalPlaces = __webpack_require__(48).countDecimalPlaces;
+var Contract = __webpack_require__(59);
 var Defaults = __webpack_require__(23);
-var Tick = __webpack_require__(62);
+var Tick = __webpack_require__(61);
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var getElementById = __webpack_require__(3).getElementById;
 var isVisible = __webpack_require__(3).isVisible;
@@ -9659,11 +9612,11 @@ var Dropdown = __webpack_require__(26).selectDropdown;
 var moment = __webpack_require__(9);
 var Barriers = __webpack_require__(126);
 var commonTrading = __webpack_require__(32);
-var commonIndependent = __webpack_require__(49);
-var Contract = __webpack_require__(60);
+var commonIndependent = __webpack_require__(48);
+var Contract = __webpack_require__(59);
 var Defaults = __webpack_require__(23);
-var Price = __webpack_require__(101);
-var Reset = __webpack_require__(78);
+var Price = __webpack_require__(102);
+var Reset = __webpack_require__(77);
 var BinarySocket = __webpack_require__(4);
 var DatePicker = __webpack_require__(89);
 var CommonFunctions = __webpack_require__(3);
@@ -10358,13 +10311,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var moment = __webpack_require__(9);
 var requireHighstock = __webpack_require__(32).requireHighstock;
-var Reset = __webpack_require__(78);
-var Tick = __webpack_require__(62);
+var Reset = __webpack_require__(77);
+var Tick = __webpack_require__(61);
 var updatePurchaseStatus = __webpack_require__(129).updatePurchaseStatus;
 var ViewPopupUI = __webpack_require__(133);
 var BinarySocket = __webpack_require__(4);
 var ChartSettings = __webpack_require__(170);
-var addComma = __webpack_require__(118).addComma;
+var addComma = __webpack_require__(119).addComma;
 var CommonFunctions = __webpack_require__(3);
 var localize = __webpack_require__(2).localize;
 
@@ -11014,7 +10967,7 @@ var ViewPopup = __webpack_require__(92);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var formatMoney = __webpack_require__(7).formatMoney;
-var GetAppDetails = __webpack_require__(59);
+var GetAppDetails = __webpack_require__(58);
 var localize = __webpack_require__(2).localize;
 var urlParam = __webpack_require__(8).param;
 var getPropertyValue = __webpack_require__(1).getPropertyValue;
@@ -11571,7 +11524,7 @@ module.exports = RealityCheckData;
 "use strict";
 
 
-var setExternalTimer = __webpack_require__(47).setExternalTimer;
+var setExternalTimer = __webpack_require__(46).setExternalTimer;
 var BinarySocket = __webpack_require__(4);
 var getHighestZIndex = __webpack_require__(1).getHighestZIndex;
 
@@ -12103,7 +12056,8 @@ module.exports = MenuSelector;
 
 var BinarySocket = __webpack_require__(4);
 var Client = __webpack_require__(5);
-var isEuCountry = __webpack_require__(58).isEuCountry;
+var hideEU = __webpack_require__(97).hideEU;
+var isEuCountry = __webpack_require__(88).isEuCountry;
 var State = __webpack_require__(6).State;
 
 var Footer = function () {
@@ -12117,6 +12071,7 @@ var Footer = function () {
             } else {
                 showWarning(isEuCountry());
             }
+            hideEU();
         });
     };
 
@@ -12240,8 +12195,8 @@ module.exports = {
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var addComma = __webpack_require__(7).addComma;
-var isCallputspread = __webpack_require__(99).isCallputspread;
-var isReset = __webpack_require__(78).isReset;
+var isCallputspread = __webpack_require__(100).isCallputspread;
+var isReset = __webpack_require__(77).isReset;
 var localize = __webpack_require__(2).localize;
 
 var ChartSettings = function () {
@@ -12736,9 +12691,9 @@ module.exports = MBPortfolio;
 "use strict";
 
 
-var MBContract = __webpack_require__(77);
-var MBDefaults = __webpack_require__(48);
-var MBNotifications = __webpack_require__(98);
+var MBContract = __webpack_require__(76);
+var MBDefaults = __webpack_require__(47);
+var MBNotifications = __webpack_require__(99);
 var MBPrice = __webpack_require__(124);
 var MBSymbols = __webpack_require__(176);
 var MBTick = __webpack_require__(125);
@@ -13128,7 +13083,7 @@ module.exports = MBProcess;
 "use strict";
 
 
-var ActiveSymbols = __webpack_require__(120);
+var ActiveSymbols = __webpack_require__(121);
 
 /*
  * MBSymbols object parses the active_symbols json that we get from socket.send({active_symbols: 'brief'}
@@ -13300,17 +13255,17 @@ var refreshDropdown = __webpack_require__(26).selectDropdown;
 var moment = __webpack_require__(9);
 var TradingAnalysis = __webpack_require__(90);
 var commonTrading = __webpack_require__(32);
-var Contract = __webpack_require__(60);
+var Contract = __webpack_require__(59);
 var Defaults = __webpack_require__(23);
 var Durations = __webpack_require__(127);
-var GetTicks = __webpack_require__(100);
-var Lookback = __webpack_require__(61);
+var GetTicks = __webpack_require__(101);
+var Lookback = __webpack_require__(60);
 var Notifications = __webpack_require__(178);
-var Price = __webpack_require__(101);
-var Reset = __webpack_require__(78);
+var Price = __webpack_require__(102);
+var Reset = __webpack_require__(77);
 var StartDates = __webpack_require__(292).StartDates;
-var Symbols = __webpack_require__(79);
-var Tick = __webpack_require__(62);
+var Symbols = __webpack_require__(78);
+var Tick = __webpack_require__(61);
 var BinarySocket = __webpack_require__(4);
 var getMinPayout = __webpack_require__(7).getMinPayout;
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
@@ -13672,12 +13627,12 @@ module.exports = Process;
 "use strict";
 
 
-var Contract = __webpack_require__(60);
-var getLookBackFormula = __webpack_require__(61).getFormula;
-var isLookback = __webpack_require__(61).isLookback;
-var isCallputspread = __webpack_require__(99).isCallputspread;
-var Symbols = __webpack_require__(79);
-var Tick = __webpack_require__(62);
+var Contract = __webpack_require__(59);
+var getLookBackFormula = __webpack_require__(60).getFormula;
+var isLookback = __webpack_require__(60).isLookback;
+var isCallputspread = __webpack_require__(100).isCallputspread;
+var Symbols = __webpack_require__(78);
+var Tick = __webpack_require__(61);
 var TickDisplay = __webpack_require__(128);
 var updateValues = __webpack_require__(129);
 var Client = __webpack_require__(5);
@@ -14615,7 +14570,7 @@ module.exports = professionalClient;
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var Dialog = __webpack_require__(75);
+var Dialog = __webpack_require__(74);
 var Currency = __webpack_require__(7);
 var Validation = __webpack_require__(52);
 var GTM = __webpack_require__(57);
@@ -18456,7 +18411,7 @@ var Page = __webpack_require__(262);
 var BinarySocket = __webpack_require__(4);
 var ContentVisibility = __webpack_require__(266);
 var GTM = __webpack_require__(57);
-var Login = __webpack_require__(46);
+var Login = __webpack_require__(51);
 var getElementById = __webpack_require__(3).getElementById;
 var localize = __webpack_require__(2).localize;
 var ScrollToAnchor = __webpack_require__(255);
@@ -18609,7 +18564,7 @@ module.exports = BinaryLoader;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var BinarySocket = __webpack_require__(86);
+var BinarySocket = __webpack_require__(85);
 
 /*
  * Monitors the network status and initialises the WebSocket connection
@@ -18747,7 +18702,7 @@ module.exports = NetworkMonitorBase;
 
 
 var moment = __webpack_require__(9);
-var BinarySocket = __webpack_require__(86);
+var BinarySocket = __webpack_require__(85);
 
 var ServerTime = function () {
     var clock_started = false;
@@ -20791,8 +20746,8 @@ module.exports = ScrollToAnchor;
 
 
 var BinarySocket = __webpack_require__(4);
-var Dialog = __webpack_require__(75);
-var isEuCountry = __webpack_require__(58).isEuCountry;
+var Dialog = __webpack_require__(74);
+var isEuCountry = __webpack_require__(88).isEuCountry;
 
 var ThirdPartyLinks = function () {
     var init = function init() {
@@ -20855,7 +20810,7 @@ module.exports = ThirdPartyLinks;
 
 
 // ==================== _common ====================
-var TabSelector = __webpack_require__(88); // eslint-disable-line import/order
+var TabSelector = __webpack_require__(87); // eslint-disable-line import/order
 
 // ==================== app ====================
 var LoggedInHandler = __webpack_require__(259);
@@ -21040,7 +20995,7 @@ var moment = __webpack_require__(9);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var GTM = __webpack_require__(57);
-var SocketCache = __webpack_require__(74);
+var SocketCache = __webpack_require__(73);
 var getElementById = __webpack_require__(3).getElementById;
 var getLanguage = __webpack_require__(21).get;
 var urlLang = __webpack_require__(21).urlLang;
@@ -21278,10 +21233,9 @@ var Header = __webpack_require__(27);
 var Footer = __webpack_require__(167);
 var Menu = __webpack_require__(260);
 var BinarySocket = __webpack_require__(4);
-var checkLanguage = __webpack_require__(58).checkLanguage;
 var TrafficSource = __webpack_require__(172);
 var RealityCheck = __webpack_require__(328);
-var Login = __webpack_require__(46);
+var Login = __webpack_require__(51);
 var elementInnerHtml = __webpack_require__(3).elementInnerHtml;
 var getElementById = __webpack_require__(3).getElementById;
 var Crowdin = __webpack_require__(162);
@@ -21290,7 +21244,7 @@ var PushNotification = __webpack_require__(253);
 var Localize = __webpack_require__(2);
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
-var scrollToTop = __webpack_require__(87).scrollToTop;
+var scrollToTop = __webpack_require__(86).scrollToTop;
 var Url = __webpack_require__(8);
 var createElement = __webpack_require__(1).createElement;
 __webpack_require__(164);
@@ -21362,12 +21316,10 @@ var Page = function () {
         }
         if (Client.isLoggedIn()) {
             BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
-                checkLanguage();
                 RealityCheck.onLoad();
                 Menu.init();
             });
         } else {
-            checkLanguage();
             Menu.init();
         }
         TrafficSource.setData();
@@ -21490,17 +21442,19 @@ module.exports = Redirect;
 
 
 var Client = __webpack_require__(5);
-var Clock = __webpack_require__(47);
+var Clock = __webpack_require__(46);
 var Footer = __webpack_require__(167);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
-var Dialog = __webpack_require__(75);
-var showPopup = __webpack_require__(122);
+var createLanguageDropDown = __webpack_require__(265);
+var Dialog = __webpack_require__(74);
+var showPopup = __webpack_require__(123);
 var setCurrencies = __webpack_require__(7).setCurrencies;
 var SessionDurationLimit = __webpack_require__(268);
 var updateBalance = __webpack_require__(333);
+var Crowdin = __webpack_require__(162);
 var GTM = __webpack_require__(57);
-var Login = __webpack_require__(46);
+var Login = __webpack_require__(51);
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
 var urlFor = __webpack_require__(8).urlFor;
@@ -21532,6 +21486,9 @@ var BinarySocketGeneral = function () {
                     if (is_available && !BinarySocket.availability()) {
                         window.location.reload();
                         return;
+                    }
+                    if (!Crowdin.isInContext()) {
+                        createLanguageDropDown(response.website_status);
                     }
                     if (response.website_status.message) {
                         Footer.displayNotification(response.website_status.message);
@@ -21715,7 +21672,7 @@ module.exports = createLanguageDropDown;
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var State = __webpack_require__(6).State;
-var updateTabDisplay = __webpack_require__(88).updateTabDisplay;
+var updateTabDisplay = __webpack_require__(87).updateTabDisplay;
 var MetaTrader = __webpack_require__(131);
 
 /*
@@ -22342,7 +22299,7 @@ module.exports = AccountTransfer;
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
-var hideEU = __webpack_require__(123).hideEU;
+var hideEU = __webpack_require__(97).hideEU;
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
 var getElementById = __webpack_require__(3).getElementById;
 var paramsHash = __webpack_require__(8).paramsHash;
@@ -22446,11 +22403,11 @@ var setShouldRedirect = __webpack_require__(181).setShouldRedirect;
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var showPopup = __webpack_require__(122);
+var showPopup = __webpack_require__(123);
 var Currency = __webpack_require__(7);
 var FormManager = __webpack_require__(17);
 var validEmailToken = __webpack_require__(52).validEmailToken;
-var handleVerifyCode = __webpack_require__(97).handleVerifyCode;
+var handleVerifyCode = __webpack_require__(98).handleVerifyCode;
 var getElementById = __webpack_require__(3).getElementById;
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
@@ -22858,7 +22815,7 @@ var getDecimalPlaces = __webpack_require__(7).getDecimalPlaces;
 var getPaWithdrawalLimit = __webpack_require__(7).getPaWithdrawalLimit;
 var FormManager = __webpack_require__(17);
 var validEmailToken = __webpack_require__(52).validEmailToken;
-var handleVerifyCode = __webpack_require__(97).handleVerifyCode;
+var handleVerifyCode = __webpack_require__(98).handleVerifyCode;
 var localize = __webpack_require__(2).localize;
 var Url = __webpack_require__(8);
 var isBinaryApp = __webpack_require__(24).isBinaryApp;
@@ -23093,8 +23050,8 @@ module.exports = Endpoint;
 "use strict";
 
 
-var MBContract = __webpack_require__(77);
-var MBDefaults = __webpack_require__(48);
+var MBContract = __webpack_require__(76);
+var MBDefaults = __webpack_require__(47);
 var formatCurrency = __webpack_require__(7).formatCurrency;
 var State = __webpack_require__(6).State;
 
@@ -23143,9 +23100,9 @@ module.exports = MBDisplayCurrencies;
 "use strict";
 
 
-var MBContract = __webpack_require__(77);
-var MBDefaults = __webpack_require__(48);
-var MBNotifications = __webpack_require__(98);
+var MBContract = __webpack_require__(76);
+var MBDefaults = __webpack_require__(47);
+var MBNotifications = __webpack_require__(99);
 var MBPrice = __webpack_require__(124);
 var MBProcess = __webpack_require__(175);
 var MBTick = __webpack_require__(125);
@@ -23390,7 +23347,7 @@ module.exports = MBTradingEvents;
 "use strict";
 
 
-var MBContract = __webpack_require__(77);
+var MBContract = __webpack_require__(76);
 var MBDisplayCurrencies = __webpack_require__(275);
 var MBTradingEvents = __webpack_require__(276);
 var MBPortfolio = __webpack_require__(174);
@@ -23514,9 +23471,9 @@ module.exports = MBTradePage;
 
 var BinaryPjax = __webpack_require__(15);
 var BinarySocket = __webpack_require__(4);
-var isEuCountry = __webpack_require__(58).isEuCountry;
+var isEuCountry = __webpack_require__(88).isEuCountry;
 var FormManager = __webpack_require__(17);
-var Login = __webpack_require__(46);
+var Login = __webpack_require__(51);
 var getElementById = __webpack_require__(3).getElementById;
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
@@ -23704,7 +23661,7 @@ module.exports = AssetIndex;
 
 var AssetIndex = __webpack_require__(279);
 var BinarySocket = __webpack_require__(4);
-var Table = __webpack_require__(76);
+var Table = __webpack_require__(75);
 var showLoadingImage = __webpack_require__(1).showLoadingImage;
 
 var AssetIndexUI = function () {
@@ -23981,7 +23938,7 @@ module.exports = TradingTimes;
 var moment = __webpack_require__(9);
 var TradingTimes = __webpack_require__(283);
 var BinarySocket = __webpack_require__(4);
-var Table = __webpack_require__(76);
+var Table = __webpack_require__(75);
 var DatePicker = __webpack_require__(89);
 var dateValueChanged = __webpack_require__(3).dateValueChanged;
 var localize = __webpack_require__(2).localize;
@@ -24185,7 +24142,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var CreateDropdown = __webpack_require__(26).selectDropdown;
 var getHighstock = __webpack_require__(32).requireHighstock;
-var Symbols = __webpack_require__(79);
+var Symbols = __webpack_require__(78);
 var BinarySocket = __webpack_require__(4);
 var localize = __webpack_require__(2).localize;
 
@@ -24457,13 +24414,13 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var HighchartUI = __webpack_require__(287);
 var getHighstock = __webpack_require__(32).requireHighstock;
-var MBContract = __webpack_require__(77);
-var MBDefaults = __webpack_require__(48);
-var Callputspread = __webpack_require__(99);
+var MBContract = __webpack_require__(76);
+var MBDefaults = __webpack_require__(47);
+var Callputspread = __webpack_require__(100);
 var Defaults = __webpack_require__(23);
-var GetTicks = __webpack_require__(100);
-var Lookback = __webpack_require__(61);
-var Reset = __webpack_require__(78);
+var GetTicks = __webpack_require__(101);
+var Lookback = __webpack_require__(60);
+var Reset = __webpack_require__(77);
 var ViewPopupUI = __webpack_require__(133);
 var BinarySocket = __webpack_require__(4);
 var addComma = __webpack_require__(7).addComma;
@@ -25257,7 +25214,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(117);
+var _react = __webpack_require__(118);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -25578,15 +25535,15 @@ var moment = __webpack_require__(9);
 var TradingAnalysis = __webpack_require__(90);
 var Barriers = __webpack_require__(126);
 var CommonTrading = __webpack_require__(32);
-var CommonIndependent = __webpack_require__(49);
+var CommonIndependent = __webpack_require__(48);
 var Defaults = __webpack_require__(23);
 var Durations = __webpack_require__(127);
-var GetTicks = __webpack_require__(100);
+var GetTicks = __webpack_require__(101);
 var Notifications = __webpack_require__(178);
-var Price = __webpack_require__(101);
+var Price = __webpack_require__(102);
 var Process = __webpack_require__(179);
 var Purchase = __webpack_require__(180);
-var Tick = __webpack_require__(62);
+var Tick = __webpack_require__(61);
 var BinarySocket = __webpack_require__(4);
 var getDecimalPlaces = __webpack_require__(7).getDecimalPlaces;
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
@@ -26015,7 +25972,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 // Should be remove in the future
 
 
-var _react = __webpack_require__(117);
+var _react = __webpack_require__(118);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -26023,7 +25980,7 @@ var _reactDom = __webpack_require__(228);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _symbols = __webpack_require__(79);
+var _symbols = __webpack_require__(78);
 
 var _symbols2 = _interopRequireDefault(_symbols);
 
@@ -26613,8 +26570,8 @@ exports.default = init;
 
 var Dropdown = __webpack_require__(26).selectDropdown;
 var moment = __webpack_require__(9);
-var CommonIndependent = __webpack_require__(49);
-var Contract = __webpack_require__(60);
+var CommonIndependent = __webpack_require__(48);
+var Contract = __webpack_require__(59);
 var Defaults = __webpack_require__(23);
 var Durations = __webpack_require__(127);
 var getElementById = __webpack_require__(3).getElementById;
@@ -26756,7 +26713,7 @@ var cleanupChart = __webpack_require__(91).cleanupChart;
 var displayCurrencies = __webpack_require__(289);
 var Defaults = __webpack_require__(23);
 var TradingEvents = __webpack_require__(290);
-var Price = __webpack_require__(101);
+var Price = __webpack_require__(102);
 var Process = __webpack_require__(179);
 var ViewPopup = __webpack_require__(92);
 var Client = __webpack_require__(5);
@@ -27652,11 +27609,11 @@ module.exports = {
 
 var ProfitTableUI = __webpack_require__(301);
 var ViewPopup = __webpack_require__(92);
-var showLocalTimeOnHover = __webpack_require__(47).showLocalTimeOnHover;
+var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
 var DateTo = __webpack_require__(169);
-var addTooltip = __webpack_require__(59).addTooltip;
-var buildOauthApps = __webpack_require__(59).buildOauthApps;
+var addTooltip = __webpack_require__(58).addTooltip;
+var buildOauthApps = __webpack_require__(58).buildOauthApps;
 var localize = __webpack_require__(2).localize;
 
 var ProfitTableInit = function () {
@@ -27848,9 +27805,9 @@ module.exports = ProfitTable;
 
 var ProfitTable = __webpack_require__(300);
 var Client = __webpack_require__(5);
-var Table = __webpack_require__(76);
+var Table = __webpack_require__(75);
 var formatMoney = __webpack_require__(7).formatMoney;
-var showTooltip = __webpack_require__(59).showTooltip;
+var showTooltip = __webpack_require__(58).showTooltip;
 var localize = __webpack_require__(2).localize;
 
 var ProfitTableUI = function () {
@@ -28004,10 +27961,10 @@ module.exports = Settings;
 "use strict";
 
 
-var showLocalTimeOnHover = __webpack_require__(47).showLocalTimeOnHover;
+var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
-var Dialog = __webpack_require__(75);
-var FlexTableUI = __webpack_require__(121);
+var Dialog = __webpack_require__(74);
+var FlexTableUI = __webpack_require__(122);
 var FormManager = __webpack_require__(17);
 var localize = __webpack_require__(2).localize;
 var toTitleCase = __webpack_require__(16).toTitleCase;
@@ -28165,10 +28122,10 @@ module.exports = APIToken;
 
 var moment = __webpack_require__(9);
 var Client = __webpack_require__(5);
-var showLocalTimeOnHover = __webpack_require__(47).showLocalTimeOnHover;
+var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
-var Dialog = __webpack_require__(75);
-var FlexTableUI = __webpack_require__(121);
+var Dialog = __webpack_require__(74);
+var FlexTableUI = __webpack_require__(122);
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
@@ -28262,7 +28219,7 @@ var AuthorisedApps = function () {
         if (elements.table) {
             return FlexTableUI.replace(data);
         }
-        var headers = ['Name', 'Permissions', 'Last Used'];
+        var headers = ['Name', 'Permissions', 'Last Login'];
         can_revoke = /admin/.test((State.getResponse('authorize') || {}).scopes);
         if (can_revoke) {
             headers.push('Action');
@@ -28585,8 +28542,8 @@ module.exports = IPHistory;
 
 
 var moment = __webpack_require__(9);
-var showLocalTimeOnHover = __webpack_require__(47).showLocalTimeOnHover;
-var FlexTableUI = __webpack_require__(121);
+var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
+var FlexTableUI = __webpack_require__(122);
 var localize = __webpack_require__(2).localize;
 
 var IPHistoryUI = function () {
@@ -28768,7 +28725,7 @@ module.exports = Limits;
 
 
 var Client = __webpack_require__(5);
-var Table = __webpack_require__(76);
+var Table = __webpack_require__(75);
 var formatMoney = __webpack_require__(7).formatMoney;
 var elementInnerHtml = __webpack_require__(3).elementInnerHtml;
 var getElementById = __webpack_require__(3).getElementById;
@@ -28867,14 +28824,14 @@ var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
-var Dialog = __webpack_require__(75);
+var Dialog = __webpack_require__(74);
 var Currency = __webpack_require__(7);
 var FormManager = __webpack_require__(17);
 var DatePicker = __webpack_require__(89);
 var TimePicker = __webpack_require__(173);
 var dateValueChanged = __webpack_require__(3).dateValueChanged;
 var localize = __webpack_require__(2).localize;
-var scrollToHashSection = __webpack_require__(87).scrollToHashSection;
+var scrollToHashSection = __webpack_require__(86).scrollToHashSection;
 
 var SelfExclusion = function () {
     var $form = void 0,
@@ -29340,11 +29297,11 @@ module.exports = TwoFactorAuthentication;
 
 var StatementUI = __webpack_require__(317);
 var ViewPopup = __webpack_require__(92);
-var showLocalTimeOnHover = __webpack_require__(47).showLocalTimeOnHover;
+var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
 var DateTo = __webpack_require__(169);
-var addTooltip = __webpack_require__(59).addTooltip;
-var buildOauthApps = __webpack_require__(59).buildOauthApps;
+var addTooltip = __webpack_require__(58).addTooltip;
+var buildOauthApps = __webpack_require__(58).buildOauthApps;
 var localize = __webpack_require__(2).localize;
 
 var StatementInit = function () {
@@ -29579,8 +29536,8 @@ module.exports = Statement;
 
 var Statement = __webpack_require__(316);
 var Client = __webpack_require__(5);
-var Table = __webpack_require__(76);
-var showTooltip = __webpack_require__(59).showTooltip;
+var Table = __webpack_require__(75);
+var showTooltip = __webpack_require__(58).showTooltip;
 var localize = __webpack_require__(2).localize;
 var downloadCSV = __webpack_require__(1).downloadCSV;
 
@@ -29779,6 +29736,10 @@ var Accounts = function () {
         return Client.getLandingCompanyValue(account, landing_company, 'name');
     };
 
+    var getCompanyCountry = function getCompanyCountry(account) {
+        return Client.getLandingCompanyValue(account, landing_company, 'country');
+    };
+
     var populateNewAccounts = function populateNewAccounts(upgrade_info) {
         var new_account = upgrade_info;
         var account = {
@@ -29786,7 +29747,11 @@ var Accounts = function () {
             financial: new_account.type === 'financial'
         };
 
-        $(form_id).find('tbody').append($('<tr/>').append($('<td/>').html($('<span/>', { text: localize(toTitleCase(new_account.type) + ' Account'), 'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) }))).append($('<td/>', { text: getAvailableMarkets(account) })).append($('<td/>', { text: Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies').join(', ') })).append($('<td/>').html($('<a/>', { class: 'button', href: urlFor(new_account.upgrade_link) }).html($('<span/>', { text: localize('Create') })))));
+        $(form_id).find('tbody').append($('<tr/>').append($('<td/>').html($('<span/>', {
+            text: localize(toTitleCase(new_account.type) + ' Account'),
+            'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
+            'data-balloon-length': 'large'
+        }))).append($('<td/>', { text: getAvailableMarkets(account) })).append($('<td/>', { text: Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies').join(', ') })).append($('<td/>').html($('<a/>', { class: 'button', href: urlFor(new_account.upgrade_link) }).html($('<span/>', { text: localize('Create') })))));
     };
 
     var populateExistingAccounts = function populateExistingAccounts() {
@@ -29816,7 +29781,9 @@ var Accounts = function () {
 
         if (!Client.isAccountOfType('virtual', loginid)) {
             var company_name = getCompanyName(loginid);
-            account_type_prop['data-balloon'] = localize('Counterparty') + ': ' + company_name;
+            var company_country = getCompanyCountry(loginid);
+            account_type_prop['data-balloon'] = localize('Counterparty') + ': ' + company_name + ', ' + localize('Jurisdiction') + ': ' + company_country;
+            account_type_prop['data-balloon-length'] = 'large';
         }
 
         var is_disabled = Client.get('is_disabled', loginid);
@@ -29863,7 +29830,12 @@ var Accounts = function () {
 
     var populateMultiAccount = function populateMultiAccount() {
         var currencies = getCurrencies(landing_company);
-        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>').html($('<span/>', { text: localize('Real Account'), 'data-balloon': localize('Counterparty') + ': ' + getCompanyName({ real: 1 }) }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }) })).append($('<td/>', { class: 'account-currency' })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
+        var account = { real: 1 };
+        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>').html($('<span/>', {
+            text: localize('Real Account'),
+            'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
+            'data-balloon-length': 'large'
+        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }) })).append($('<td/>', { class: 'account-currency' })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
 
         $('#note').setVisibility(1);
 
@@ -30024,7 +29996,7 @@ module.exports = GetCurrency;
 
 var BinaryPjax = __webpack_require__(15);
 var FormManager = __webpack_require__(17);
-var handleVerifyCode = __webpack_require__(97).handleVerifyCode;
+var handleVerifyCode = __webpack_require__(98).handleVerifyCode;
 var localize = __webpack_require__(2).localize;
 var urlFor = __webpack_require__(8).urlFor;
 var isBinaryApp = __webpack_require__(24).isBinaryApp;
@@ -30696,7 +30668,7 @@ module.exports = MetaTraderUI;
 
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var Scroll = __webpack_require__(87);
+var Scroll = __webpack_require__(86);
 var State = __webpack_require__(6).State;
 
 var TypesOfAccounts = function () {
@@ -30738,7 +30710,7 @@ var moment = __webpack_require__(9);
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var AccountOpening = __webpack_require__(119);
+var AccountOpening = __webpack_require__(120);
 var FormManager = __webpack_require__(17);
 var localize = __webpack_require__(2).localize;
 var isEmptyObject = __webpack_require__(1).isEmptyObject;
@@ -30864,7 +30836,7 @@ module.exports = FinancialAccOpening;
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
-var AccountOpening = __webpack_require__(119);
+var AccountOpening = __webpack_require__(120);
 var FormManager = __webpack_require__(17);
 var State = __webpack_require__(6).State;
 
@@ -30931,7 +30903,7 @@ var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var FormManager = __webpack_require__(17);
 var TrafficSource = __webpack_require__(172);
-var handleVerifyCode = __webpack_require__(97).handleVerifyCode;
+var handleVerifyCode = __webpack_require__(98).handleVerifyCode;
 var makeOption = __webpack_require__(3).makeOption;
 var localize = __webpack_require__(2).localize;
 var LocalStore = __webpack_require__(6).LocalStore;
@@ -31204,7 +31176,7 @@ module.exports = RealityCheck;
 
 
 var RealityCheckData = __webpack_require__(132);
-var showLocalTimeOnHover = __webpack_require__(47).showLocalTimeOnHover;
+var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
 var FormManager = __webpack_require__(17);
 var urlFor = __webpack_require__(8).urlFor;
@@ -31359,7 +31331,7 @@ module.exports = RealityCheckUI;
 
 var generateBirthDate = __webpack_require__(168);
 var FormManager = __webpack_require__(17);
-var Login = __webpack_require__(46);
+var Login = __webpack_require__(51);
 var localize = __webpack_require__(2).localize;
 
 var ResetPassword = function () {
@@ -31742,7 +31714,7 @@ module.exports = Charity;
 
 var moment = __webpack_require__(9);
 var Dropdown = __webpack_require__(26).selectDropdown;
-var BinarySocket = __webpack_require__(86);
+var BinarySocket = __webpack_require__(85);
 
 var Contact = function () {
     var $chat_button = void 0,
@@ -31886,14 +31858,14 @@ module.exports = {
 "use strict";
 
 
-var Login = __webpack_require__(46);
+var Login = __webpack_require__(51);
 var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
-var TabSelector = __webpack_require__(88);
+var TabSelector = __webpack_require__(87);
 var urlFor = __webpack_require__(8).urlFor;
 var BinaryPjax = __webpack_require__(15);
 var BinarySocket = __webpack_require__(4);
-var isEuCountry = __webpack_require__(58).isEuCountry;
+var isEuCountry = __webpack_require__(88).isEuCountry;
 var FormManager = __webpack_require__(17);
 var isBinaryApp = __webpack_require__(24).isBinaryApp;
 
@@ -32042,7 +32014,7 @@ module.exports = JobDetails;
 
 
 var getElementById = __webpack_require__(3).getElementById;
-var TabSelector = __webpack_require__(88);
+var TabSelector = __webpack_require__(87);
 
 var os_list = [{
     name: 'mac',
@@ -32155,12 +32127,12 @@ module.exports = Regulation;
 var tabListener = __webpack_require__(26).tabListener;
 var ImageSlider = __webpack_require__(247);
 var MenuSelector = __webpack_require__(166);
-var Scroll = __webpack_require__(87);
+var Scroll = __webpack_require__(86);
 var handleHash = __webpack_require__(1).handleHash;
 var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
-var hideEU = __webpack_require__(123).hideEU;
+var hideEU = __webpack_require__(97).hideEU;
 
 module.exports = {
     OpenPositions: {
@@ -32213,7 +32185,7 @@ module.exports = {
     },
     AffiliatesFAQ: {
         onLoad: function onLoad() {
-            MenuSelector.init(['general', 'account-management-and-tracking', 'marketing-and-promotions', 'support']);
+            MenuSelector.init(['general', 'account-management-and-tracking', 'referral-tools', 'support']);
         },
         onUnload: function onUnload() {
             MenuSelector.clean();
@@ -32221,7 +32193,7 @@ module.exports = {
     },
     IBProgrammeFAQ: {
         onLoad: function onLoad() {
-            MenuSelector.init(['general', 'account-management', 'marketing-and-promotions']);
+            MenuSelector.init(['general', 'account-management', 'referral-tools']);
         },
         onUnload: function onUnload() {
             MenuSelector.clean();
@@ -32246,7 +32218,7 @@ module.exports = {
 
 var tabListener = __webpack_require__(26).tabListener;
 var localize = __webpack_require__(2).localize;
-var hideEU = __webpack_require__(123).hideEU;
+var hideEU = __webpack_require__(97).hideEU;
 var TNCApproval = __webpack_require__(185);
 
 var TermsAndConditions = function () {
@@ -32393,7 +32365,7 @@ module.exports = TermsAndConditions;
 "use strict";
 
 
-var Scroll = __webpack_require__(87);
+var Scroll = __webpack_require__(86);
 var Client = __webpack_require__(5);
 
 var WhyUs = function () {

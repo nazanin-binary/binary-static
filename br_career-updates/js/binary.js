@@ -14656,7 +14656,9 @@ var PersonalDetails = function () {
                     return;
                 }
                 var get_settings = data.get_settings;
-                var has_required_mt = /real_vanuatu_(standard|advanced)/.test(redirect_url) ? get_settings.tax_residence && get_settings.tax_identification_number && get_settings.citizen : get_settings.citizen // only check Citizen if user selects mt volatility account
+                var is_tax_req = +State.getResponse('landing_company.config.tax_details_required') === 1;
+                var is_for_mt_financial = /real_vanuatu_(standard|advanced)/.test(redirect_url);
+                var has_required_mt = is_for_mt_financial && is_tax_req ? get_settings.tax_residence && get_settings.tax_identification_number && get_settings.citizen : get_settings.citizen // only check Citizen if user selects mt volatility account
                 ;
                 if (redirect_url && has_required_mt) {
                     localStorage.removeItem('personal_details_redirect');

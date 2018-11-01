@@ -22153,14 +22153,14 @@ var updateTabDisplay = __webpack_require__(89).updateTabDisplay;
 
 var visible_classname = 'data-show-visible';
 var mt_company_rule = 'mtcompany';
-var mt_country = 'mt';
+var mt_country_shortcode = 'mt';
 
 var ContentVisibility = function () {
     var init = function init() {
         BinarySocket.wait('authorize', 'landing_company', 'website_status').then(function () {
             var is_virtual = Client.isLoggedIn() && Client.get('is_virtual');
             var clients_country = State.getResponse('website_status.clients_country');
-            var client_is_mt_country = clients_country === mt_country;
+            var client_is_mt_country = clients_country === mt_country_shortcode;
             var landing_company_shortcode = is_virtual ? State.getResponse('landing_company.financial_company.shortcode') || State.getResponse('landing_company.gaming_company.shortcode') || (client_is_mt_country ? 'malta' : 'default') : Client.get('landing_company_shortcode') || (client_is_mt_country ? 'malta' : 'default');
             controlVisibility({
                 landing_company_shortcode: landing_company_shortcode,

@@ -11992,7 +11992,7 @@ var State = __webpack_require__(6).State;
 var createElement = __webpack_require__(1).createElement;
 
 var Elevio = function () {
-    var available_countries = ['in', 'lk', 'ng', 'za'];
+    var excluded_countries = ['br', 'id', 'ru'];
 
     var init = function init() {
         BinarySocket.wait('website_status').then(function () {
@@ -12010,7 +12010,7 @@ var Elevio = function () {
     };
 
     var isAvailable = function isAvailable() {
-        return new RegExp('^(' + available_countries.join('|') + ')$', 'i').test(State.getResponse('website_status.clients_country'));
+        return !new RegExp('^(' + excluded_countries.join('|') + ')$', 'i').test(State.getResponse('website_status.clients_country'));
     };
 
     var addEventListenerGTM = function addEventListenerGTM() {
@@ -21752,7 +21752,9 @@ var Page = function () {
         } else {
             Menu.init();
             if (!LocalStore.get('date_first_contact')) {
-                LocalStore.set('date_first_contact', toISOFormat(moment()));
+                BinarySocket.wait('time').then(function (response) {
+                    LocalStore.set('date_first_contact', toISOFormat(moment(response.time * 1000).utc()));
+                });
             }
             if (!LocalStore.get('signup_device')) {
                 LocalStore.set('signup_device', isMobile() ? 'mobile' : 'desktop');

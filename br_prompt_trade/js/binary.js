@@ -14059,7 +14059,7 @@ var Purchase = function () {
         var profit = CommonFunctions.getElementById('contract_purchase_profit');
         var spots = CommonFunctions.getElementById('contract_purchase_spots');
         var confirmation_error = CommonFunctions.getElementById('confirmation_error');
-        var authorization_error = CommonFunctions.getElementById('authorization_error');
+        var authorization_error = CommonFunctions.getElementById('authorization_error_container');
         var contracts_list = CommonFunctions.getElementById('contracts_list');
         var button = CommonFunctions.getElementById('contract_purchase_button');
 

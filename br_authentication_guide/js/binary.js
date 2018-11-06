@@ -419,7 +419,7 @@ module.exports = {
 "use strict";
 
 
-var BinarySocketBase = __webpack_require__(59);
+var BinarySocketBase = __webpack_require__(74);
 
 // This is to maintain the current references and also to provide the ability to extend this section separately in the future
 module.exports = BinarySocketBase;
@@ -967,7 +967,8 @@ module.exports = Url;
 /* 11 */,
 /* 12 */,
 /* 13 */,
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1185,7 +1186,6 @@ var BinaryPjax = function () {
 module.exports = BinaryPjax;
 
 /***/ }),
-/* 15 */,
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1734,7 +1734,7 @@ module.exports = Defaults;
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var showHidePulser = __webpack_require__(122).showHidePulser;
@@ -2189,7 +2189,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var Defaults = __webpack_require__(24);
 var Symbols = __webpack_require__(80);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var contractsElement = __webpack_require__(290);
 var marketsElement = __webpack_require__(293);
 var formatMoney = __webpack_require__(7).formatMoney;
@@ -2978,7 +2978,7 @@ var moment = __webpack_require__(9);
 var ClientBase = __webpack_require__(87);
 var Login = __webpack_require__(52);
 var ServerTime = __webpack_require__(164);
-var BinarySocket = __webpack_require__(59);
+var BinarySocket = __webpack_require__(74);
 var getElementById = __webpack_require__(3).getElementById;
 var isVisible = __webpack_require__(3).isVisible;
 var getLanguage = __webpack_require__(20).get;
@@ -3617,6 +3617,552 @@ module.exports = Validation;
 "use strict";
 
 
+var localize = __webpack_require__(2).localize;
+var getAppId = __webpack_require__(22).getAppId;
+
+var buildOauthApps = function buildOauthApps(response) {
+    if (!response || !response.oauth_apps) return {};
+    var obj_oauth_apps = { 2: 'Binary.com Autoexpiry' };
+    response.oauth_apps.forEach(function (app) {
+        obj_oauth_apps[app.app_id] = app.name;
+    });
+    return obj_oauth_apps;
+};
+
+var addTooltip = function addTooltip(oauth_apps) {
+    Object.keys(oauth_apps).forEach(function (key) {
+        var tooltip_text = addAppIdName(key, oauth_apps[key]);
+        if (tooltip_text) {
+            $('.' + key).attr('data-balloon', tooltip_text);
+        }
+    });
+};
+
+var addAppIdName = function addAppIdName(app_id, app_name) {
+    return +app_id === +getAppId() ? '' : localize('Transaction performed by [_1] (App ID: [_2])', [app_name || '', app_id]);
+};
+
+var showTooltip = function showTooltip(app_id, oauth_app_id) {
+    var tooltip_text = addAppIdName(app_id, oauth_app_id);
+    var tooltip_attr = tooltip_text ? 'data-balloon="' + tooltip_text + '"' : '';
+    return app_id ? ' class="' + app_id + '" ' + tooltip_attr : '';
+};
+
+module.exports = {
+    buildOauthApps: buildOauthApps,
+    addTooltip: addTooltip,
+    addAppIdName: addAppIdName,
+    showTooltip: showTooltip
+};
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getFormNameBarrierCategory = __webpack_require__(32).getFormNameBarrierCategory;
+var localize = __webpack_require__(2).localize;
+var getPropertyValue = __webpack_require__(1).getPropertyValue;
+var isEmptyObject = __webpack_require__(1).isEmptyObject;
+
+/*
+ * Contract object mocks the trading form we have on our website
+ * It parses the contracts json we get from socket.send({contracts_for: 'R_50'})
+ * and gives back barriers, startDate, durations etc
+ *
+ *
+ * Usage:
+ *
+ * use `Contract.details` to populate this object
+ *
+ * then use
+ *
+ * `Contract.durations()` to get durations like seconds, hours etc
+ * `Contract.open()` `Contract.close()`
+ * `Contract.barriers` if applicable for current underlying
+ */
+var Contract = function () {
+    var contract_type = {};
+
+    var contract_details = {};
+    var _barriers = {};
+    var _durations = {};
+    var start_dates = {};
+
+    var _open = void 0,
+        _close = void 0,
+        _form = void 0,
+        _barrier = void 0;
+
+    var populateDurations = function populateDurations(current_contract) {
+        var current_category = current_contract.contract_category;
+        var expiry_type = current_contract.expiry_type;
+        var barrier_category = current_contract.barrier_category;
+        var start_type = current_contract.start_type;
+        var max_duration = current_contract.max_contract_duration;
+        var min_duration = current_contract.min_contract_duration;
+
+        if (!_durations[expiry_type]) {
+            _durations[expiry_type] = {};
+        }
+
+        if (!_durations[expiry_type][current_category]) {
+            _durations[expiry_type][current_category] = {};
+        }
+
+        if (!_durations[expiry_type][current_category][barrier_category]) {
+            _durations[expiry_type][current_category][barrier_category] = {};
+        }
+
+        if (!_durations[expiry_type][current_category][barrier_category][start_type]) {
+            _durations[expiry_type][current_category][barrier_category][start_type] = {};
+        }
+
+        _durations[expiry_type][current_category][barrier_category][start_type].max_contract_duration = max_duration;
+
+        _durations[expiry_type][current_category][barrier_category][start_type].min_contract_duration = min_duration;
+    };
+
+    var details = function details(form_name) {
+        var contracts = Contract.contracts().contracts_for;
+
+        if (!contracts) return;
+
+        start_dates = { has_spot: 0, list: [] };
+        _durations = {};
+        _open = contracts.open;
+        _close = contracts.close;
+
+        var form_barrier = getFormNameBarrierCategory(form_name);
+        _form = form_barrier.form_name;
+        if (!_form) {
+            return;
+        }
+        _barrier = form_barrier.barrier_category;
+
+        contracts.available.forEach(function (current_obj) {
+            var contract_category = current_obj.contract_category;
+            // for callput and callputequals, populate duration for both
+            if (_form === contract_category || /callput/.test(_form) && /callput/.test(contract_category)) {
+                if (_barrier) {
+                    if (_barrier === current_obj.barrier_category) {
+                        populateDurations(current_obj);
+                    }
+                } else {
+                    populateDurations(current_obj);
+                }
+            }
+            if (_form === contract_category) {
+                if (current_obj.forward_starting_options && current_obj.start_type === 'forward' && sessionStorage.formname !== 'higherlower') {
+                    start_dates.list = current_obj.forward_starting_options;
+                } else if (current_obj.start_type === 'spot') {
+                    start_dates.has_spot = 1;
+                }
+
+                var symbol = current_obj.underlying_symbol;
+                if (current_obj.barrier_category && current_obj.barrier_category !== 'non_financial') {
+                    if (!getPropertyValue(_barriers, symbol)) {
+                        _barriers[symbol] = {};
+                    }
+                    if (!getPropertyValue(_barriers[symbol], contract_category)) {
+                        _barriers[symbol][contract_category] = {};
+                    }
+                    if (!getPropertyValue(_barriers[symbol][contract_category], current_obj.expiry_type)) {
+                        _barriers[symbol][contract_category][current_obj.expiry_type] = {};
+                    }
+                    if (current_obj.barriers === 1) {
+                        _barriers[symbol][contract_category][current_obj.expiry_type] = {
+                            count: 1,
+                            barrier: current_obj.barrier,
+                            barrier_category: current_obj.barrier_category
+                        };
+                    } else if (current_obj.barriers === 2) {
+                        _barriers[symbol][contract_category][current_obj.expiry_type] = {
+                            count: 2,
+                            barrier: current_obj.high_barrier,
+                            barrier1: current_obj.low_barrier,
+                            barrier_category: current_obj.barrier_category
+                        };
+                    }
+                }
+
+                if (!contract_type[contract_category]) {
+                    contract_type[contract_category] = {};
+                }
+
+                var type = current_obj.contract_type;
+                if (!getPropertyValue(contract_type[contract_category], type)) {
+                    contract_type[contract_category][type] = localize(current_obj.contract_display /* localize-ignore */); // handled in static_strings_app.js
+                }
+            }
+        });
+
+        if (_barrier) {
+            if (_barriers && _barriers[_form] && _barriers[_form].barrier_category !== _barrier) {
+                _barriers = {};
+            }
+        }
+    };
+
+    var getContractForms = function getContractForms() {
+        var contracts = Contract.contracts().contracts_for;
+        var trade_contract_forms = {};
+
+        if (!contracts) return null;
+
+        contracts.available.forEach(function (current_obj) {
+            var contract_category = current_obj.contract_category;
+            if (contract_category && !getPropertyValue(trade_contract_forms, contract_category)) {
+                if (contract_category === 'callput') {
+                    if (current_obj.barrier_category === 'euro_atm') {
+                        trade_contract_forms.risefall = localize('Rise/Fall');
+                    } else {
+                        trade_contract_forms.higherlower = localize('Higher/Lower');
+                    }
+                } else {
+                    trade_contract_forms[contract_category] = localize(current_obj.contract_category_display /* localize-ignore */); // handled in static_strings_app.js: Asian
+                    if (contract_category === 'digits') {
+                        trade_contract_forms.matchdiff = localize('Matches/Differs');
+                        trade_contract_forms.evenodd = localize('Even/Odd');
+                        trade_contract_forms.overunder = localize('Over/Under');
+                    } else if (contract_category === 'lookback') {
+                        trade_contract_forms.lookbackhigh = localize('High-Close');
+                        trade_contract_forms.lookbacklow = localize('Close-Low');
+                        trade_contract_forms.lookbackhighlow = localize('High-Low');
+                    } else if (contract_category === 'reset') {
+                        trade_contract_forms.resetcall = localize('Reset Call');
+                        trade_contract_forms.resetput = localize('Reset Put');
+                    }
+                }
+            }
+        });
+
+        if (isEmptyObject(trade_contract_forms)) return null;
+
+        if (trade_contract_forms.risefall || trade_contract_forms.higherlower) {
+            trade_contract_forms.updown = localize('Up/Down');
+        }
+
+        if (trade_contract_forms.endsinout || trade_contract_forms.staysinout) {
+            trade_contract_forms.inout = localize('In/Out');
+        }
+
+        return trade_contract_forms;
+    };
+
+    return {
+        details: details,
+        contractForms: getContractForms,
+        open: function open() {
+            return _open;
+        },
+        close: function close() {
+            return _close;
+        },
+        contracts: function contracts() {
+            return contract_details;
+        },
+        durations: function durations() {
+            return _durations;
+        },
+        startDates: function startDates() {
+            return start_dates;
+        },
+        barriers: function barriers() {
+            return _barriers;
+        },
+        contractType: function contractType() {
+            return contract_type;
+        },
+        form: function form() {
+            return _form;
+        },
+        barrier: function barrier() {
+            return _barrier;
+        },
+        setContracts: function setContracts(data) {
+            contract_details = data;
+        }
+    };
+}();
+
+module.exports = Contract;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Contract = __webpack_require__(60);
+var Defaults = __webpack_require__(24);
+var localize = __webpack_require__(2).localize;
+
+/**
+ * Handles lookback option form
+ */
+var Lookback = function () {
+    var displayLookback = function displayLookback() {
+        var multiplier_element = document.getElementById('multiplier_row');
+        var multiplier_input = document.getElementById('multiplier');
+        var payout_element = document.getElementById('payout_row');
+
+        if (Contract.form() === 'lookback') {
+            multiplier_element.show();
+            payout_element.hide(); // Hide payout
+            if (Defaults.get('multiplier')) {
+                multiplier_input.value = Defaults.get('multiplier');
+            } else {
+                Defaults.set('multiplier', multiplier_input.value);
+            }
+        } else {
+            multiplier_element.hide();
+            payout_element.show(); // Show payout
+        }
+    };
+
+    var getFormula = function getFormula() {
+        var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        var mul = arguments[1];
+
+        var formulaMapping = {
+            LBFLOATPUT: mul + ' x (' + localize('High') + ' - ' + localize('Close') + ')',
+            LBFLOATCALL: mul + ' x (' + localize('Close') + ' - ' + localize('Low') + ')',
+            LBHIGHLOW: mul + ' x (' + localize('High') + ' - ' + localize('Low') + ')'
+        };
+
+        return formulaMapping[type.toUpperCase()];
+    };
+
+    var isLookback = function isLookback(type) {
+        return (/^(LBFLOATCALL|LBFLOATPUT|LBHIGHLOW)$/.test(type)
+        );
+    };
+
+    var getBarrierLabel = function getBarrierLabel(type) {
+        var barrier_map = {
+            LBFLOATCALL: localize(['Low']),
+            LBFLOATPUT: localize(['High']),
+            LBHIGHLOW: localize(['High', 'Low'])
+        };
+        return barrier_map[type] || localize(['Barrier']);
+    };
+
+    return {
+        display: displayLookback,
+        getFormula: getFormula,
+        isLookback: isLookback,
+        getBarrierLabel: getBarrierLabel
+    };
+}();
+
+module.exports = Lookback;
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var moment = __webpack_require__(9);
+var countDecimalPlaces = __webpack_require__(48).countDecimalPlaces;
+var displayPriceMovement = __webpack_require__(48).displayPriceMovement;
+var elementTextContent = __webpack_require__(3).elementTextContent;
+var getElementById = __webpack_require__(3).getElementById;
+var isVisible = __webpack_require__(3).isVisible;
+
+/*
+ * Tick object handles all the process/display related to tick streaming
+ *
+ * We request tick stream for particular underlying to update current spot
+ *
+ *
+ * Usage:
+ * use `Tick.detail` to populate this object
+ *
+ * then use
+ *
+ * `Tick.quote()` to get current spot quote
+ * `Tick.id()` to get the unique for current stream
+ * `Tick.epoch()` to get the tick epoch time
+ * 'Tick.display()` to display current spot
+ */
+var Tick = function () {
+    var _quote = '';
+    var _id = '';
+    var _epoch = '';
+    var error_message = '';
+    var _spots = {};
+
+    var details = function details(data) {
+        error_message = '';
+
+        if (data) {
+            if (data.error) {
+                error_message = data.error.message;
+            } else {
+                var tick = data.tick;
+                _quote = tick.quote;
+                _id = tick.id;
+                _epoch = tick.epoch;
+
+                _spots[_epoch] = _quote;
+                var epoches = Object.keys(_spots).sort(function (a, b) {
+                    return a - b;
+                });
+                if (epoches.length > 20) {
+                    delete _spots[epoches[0]];
+                }
+            }
+        }
+    };
+
+    var display = function display() {
+        $('#spot').fadeIn(200);
+        var message = '';
+        if (error_message) {
+            message = error_message;
+        } else {
+            message = _quote;
+        }
+
+        var spot_element = getElementById('spot');
+        if (parseFloat(message) !== +message) {
+            spot_element.className = 'error';
+        } else {
+            spot_element.classList.remove('error');
+            displayPriceMovement(spot_element, elementTextContent(spot_element), message);
+            displayIndicativeBarrier();
+        }
+
+        elementTextContent(spot_element, message);
+    };
+
+    /*
+     * display indicative barrier
+     */
+    var displayIndicativeBarrier = function displayIndicativeBarrier() {
+        var current_tick = Tick.quote();
+
+        var unit = getElementById('duration_units');
+        var indicative_barrier_tooltip = getElementById('indicative_barrier_tooltip');
+        var indicative_high_barrier_tooltip = getElementById('indicative_high_barrier_tooltip');
+        var indicative_low_barrier_tooltip = getElementById('indicative_low_barrier_tooltip');
+        var barrier_element = getElementById('barrier');
+        var high_barrier_element = getElementById('barrier_high');
+        var low_barrier_element = getElementById('barrier_low');
+        var tooltip = getElementById('barrier_tooltip');
+        var span = getElementById('barrier_span');
+        var high_tooltip = getElementById('barrier_high_tooltip');
+        var high_span = getElementById('barrier_high_span');
+        var low_tooltip = getElementById('barrier_low_tooltip');
+        var low_span = getElementById('barrier_low_span');
+
+        var value = void 0;
+
+        var end_time = getElementById('expiry_date');
+        if (unit && (!isVisible(unit) || unit.value !== 'd') && current_tick && !isNaN(current_tick) && end_time && (!isVisible(end_time) || moment(end_time.getAttribute('data-value')).isBefore(moment().add(1, 'day'), 'day'))) {
+            var decimal_places = countDecimalPlaces(current_tick);
+            if (isVisible(indicative_barrier_tooltip) && String(barrier_element.value).match(/^[+-]/)) {
+                var barrier_value = isNaN(parseFloat(barrier_element.value)) ? 0 : parseFloat(barrier_element.value);
+
+                indicative_barrier_tooltip.textContent = (parseFloat(current_tick) + barrier_value).toFixed(decimal_places);
+                tooltip.style.display = 'inherit';
+                span.style.display = 'none';
+            } else {
+                elementTextContent(indicative_barrier_tooltip, '');
+                tooltip.style.display = 'none';
+                span.style.display = 'inherit';
+            }
+
+            if (isVisible(indicative_high_barrier_tooltip) && String(high_barrier_element.value).match(/^[+-]/)) {
+                value = parseFloat(high_barrier_element.value);
+                value = isNaN(value) ? 0 : value;
+                indicative_high_barrier_tooltip.textContent = (parseFloat(current_tick) + value).toFixed(decimal_places);
+                high_tooltip.style.display = 'inherit';
+                high_span.style.display = 'none';
+            } else {
+                elementTextContent(indicative_high_barrier_tooltip, '');
+                high_tooltip.style.display = 'none';
+                high_span.style.display = 'inherit';
+            }
+
+            if (isVisible(indicative_low_barrier_tooltip) && String(low_barrier_element.value).match(/^[+-]/)) {
+                value = parseFloat(low_barrier_element.value);
+                value = isNaN(value) ? 0 : value;
+                indicative_low_barrier_tooltip.textContent = (parseFloat(current_tick) + value).toFixed(decimal_places);
+                low_tooltip.style.display = 'inherit';
+                low_span.style.display = 'none';
+            } else {
+                elementTextContent(indicative_low_barrier_tooltip, '');
+                low_tooltip.style.display = 'none';
+                low_span.style.display = 'inherit';
+            }
+        } else {
+            elementTextContent(indicative_barrier_tooltip, '');
+            elementTextContent(indicative_high_barrier_tooltip, '');
+            elementTextContent(indicative_low_barrier_tooltip, '');
+        }
+    };
+
+    var clean = function clean() {
+        _spots = {};
+        _quote = '';
+        $('#spot').fadeOut(200, function () {
+            // resets spot movement coloring, will continue on the next tick responses
+            $(this).removeClass('price_moved_down price_moved_up').text('');
+        });
+    };
+
+    return {
+        details: details,
+        display: display,
+        clean: clean,
+        quote: function quote() {
+            return _quote;
+        },
+        id: function id() {
+            return _id;
+        },
+        epoch: function epoch() {
+            return _epoch;
+        },
+        errorMessage: function errorMessage() {
+            return error_message;
+        },
+        spots: function spots() {
+            return _spots;
+        },
+        setQuote: function setQuote(q) {
+            _quote = q;
+        }
+    };
+}();
+
+module.exports = Tick;
+
+/***/ }),
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3954,552 +4500,6 @@ var PromiseClass = function PromiseClass() {
 module.exports = BinarySocketBase;
 
 /***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var localize = __webpack_require__(2).localize;
-var getAppId = __webpack_require__(22).getAppId;
-
-var buildOauthApps = function buildOauthApps(response) {
-    if (!response || !response.oauth_apps) return {};
-    var obj_oauth_apps = { 2: 'Binary.com Autoexpiry' };
-    response.oauth_apps.forEach(function (app) {
-        obj_oauth_apps[app.app_id] = app.name;
-    });
-    return obj_oauth_apps;
-};
-
-var addTooltip = function addTooltip(oauth_apps) {
-    Object.keys(oauth_apps).forEach(function (key) {
-        var tooltip_text = addAppIdName(key, oauth_apps[key]);
-        if (tooltip_text) {
-            $('.' + key).attr('data-balloon', tooltip_text);
-        }
-    });
-};
-
-var addAppIdName = function addAppIdName(app_id, app_name) {
-    return +app_id === +getAppId() ? '' : localize('Transaction performed by [_1] (App ID: [_2])', [app_name || '', app_id]);
-};
-
-var showTooltip = function showTooltip(app_id, oauth_app_id) {
-    var tooltip_text = addAppIdName(app_id, oauth_app_id);
-    var tooltip_attr = tooltip_text ? 'data-balloon="' + tooltip_text + '"' : '';
-    return app_id ? ' class="' + app_id + '" ' + tooltip_attr : '';
-};
-
-module.exports = {
-    buildOauthApps: buildOauthApps,
-    addTooltip: addTooltip,
-    addAppIdName: addAppIdName,
-    showTooltip: showTooltip
-};
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getFormNameBarrierCategory = __webpack_require__(32).getFormNameBarrierCategory;
-var localize = __webpack_require__(2).localize;
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
-var isEmptyObject = __webpack_require__(1).isEmptyObject;
-
-/*
- * Contract object mocks the trading form we have on our website
- * It parses the contracts json we get from socket.send({contracts_for: 'R_50'})
- * and gives back barriers, startDate, durations etc
- *
- *
- * Usage:
- *
- * use `Contract.details` to populate this object
- *
- * then use
- *
- * `Contract.durations()` to get durations like seconds, hours etc
- * `Contract.open()` `Contract.close()`
- * `Contract.barriers` if applicable for current underlying
- */
-var Contract = function () {
-    var contract_type = {};
-
-    var contract_details = {};
-    var _barriers = {};
-    var _durations = {};
-    var start_dates = {};
-
-    var _open = void 0,
-        _close = void 0,
-        _form = void 0,
-        _barrier = void 0;
-
-    var populateDurations = function populateDurations(current_contract) {
-        var current_category = current_contract.contract_category;
-        var expiry_type = current_contract.expiry_type;
-        var barrier_category = current_contract.barrier_category;
-        var start_type = current_contract.start_type;
-        var max_duration = current_contract.max_contract_duration;
-        var min_duration = current_contract.min_contract_duration;
-
-        if (!_durations[expiry_type]) {
-            _durations[expiry_type] = {};
-        }
-
-        if (!_durations[expiry_type][current_category]) {
-            _durations[expiry_type][current_category] = {};
-        }
-
-        if (!_durations[expiry_type][current_category][barrier_category]) {
-            _durations[expiry_type][current_category][barrier_category] = {};
-        }
-
-        if (!_durations[expiry_type][current_category][barrier_category][start_type]) {
-            _durations[expiry_type][current_category][barrier_category][start_type] = {};
-        }
-
-        _durations[expiry_type][current_category][barrier_category][start_type].max_contract_duration = max_duration;
-
-        _durations[expiry_type][current_category][barrier_category][start_type].min_contract_duration = min_duration;
-    };
-
-    var details = function details(form_name) {
-        var contracts = Contract.contracts().contracts_for;
-
-        if (!contracts) return;
-
-        start_dates = { has_spot: 0, list: [] };
-        _durations = {};
-        _open = contracts.open;
-        _close = contracts.close;
-
-        var form_barrier = getFormNameBarrierCategory(form_name);
-        _form = form_barrier.form_name;
-        if (!_form) {
-            return;
-        }
-        _barrier = form_barrier.barrier_category;
-
-        contracts.available.forEach(function (current_obj) {
-            var contract_category = current_obj.contract_category;
-            // for callput and callputequals, populate duration for both
-            if (_form === contract_category || /callput/.test(_form) && /callput/.test(contract_category)) {
-                if (_barrier) {
-                    if (_barrier === current_obj.barrier_category) {
-                        populateDurations(current_obj);
-                    }
-                } else {
-                    populateDurations(current_obj);
-                }
-            }
-            if (_form === contract_category) {
-                if (current_obj.forward_starting_options && current_obj.start_type === 'forward' && sessionStorage.formname !== 'higherlower') {
-                    start_dates.list = current_obj.forward_starting_options;
-                } else if (current_obj.start_type === 'spot') {
-                    start_dates.has_spot = 1;
-                }
-
-                var symbol = current_obj.underlying_symbol;
-                if (current_obj.barrier_category && current_obj.barrier_category !== 'non_financial') {
-                    if (!getPropertyValue(_barriers, symbol)) {
-                        _barriers[symbol] = {};
-                    }
-                    if (!getPropertyValue(_barriers[symbol], contract_category)) {
-                        _barriers[symbol][contract_category] = {};
-                    }
-                    if (!getPropertyValue(_barriers[symbol][contract_category], current_obj.expiry_type)) {
-                        _barriers[symbol][contract_category][current_obj.expiry_type] = {};
-                    }
-                    if (current_obj.barriers === 1) {
-                        _barriers[symbol][contract_category][current_obj.expiry_type] = {
-                            count: 1,
-                            barrier: current_obj.barrier,
-                            barrier_category: current_obj.barrier_category
-                        };
-                    } else if (current_obj.barriers === 2) {
-                        _barriers[symbol][contract_category][current_obj.expiry_type] = {
-                            count: 2,
-                            barrier: current_obj.high_barrier,
-                            barrier1: current_obj.low_barrier,
-                            barrier_category: current_obj.barrier_category
-                        };
-                    }
-                }
-
-                if (!contract_type[contract_category]) {
-                    contract_type[contract_category] = {};
-                }
-
-                var type = current_obj.contract_type;
-                if (!getPropertyValue(contract_type[contract_category], type)) {
-                    contract_type[contract_category][type] = localize(current_obj.contract_display /* localize-ignore */); // handled in static_strings_app.js
-                }
-            }
-        });
-
-        if (_barrier) {
-            if (_barriers && _barriers[_form] && _barriers[_form].barrier_category !== _barrier) {
-                _barriers = {};
-            }
-        }
-    };
-
-    var getContractForms = function getContractForms() {
-        var contracts = Contract.contracts().contracts_for;
-        var trade_contract_forms = {};
-
-        if (!contracts) return null;
-
-        contracts.available.forEach(function (current_obj) {
-            var contract_category = current_obj.contract_category;
-            if (contract_category && !getPropertyValue(trade_contract_forms, contract_category)) {
-                if (contract_category === 'callput') {
-                    if (current_obj.barrier_category === 'euro_atm') {
-                        trade_contract_forms.risefall = localize('Rise/Fall');
-                    } else {
-                        trade_contract_forms.higherlower = localize('Higher/Lower');
-                    }
-                } else {
-                    trade_contract_forms[contract_category] = localize(current_obj.contract_category_display /* localize-ignore */); // handled in static_strings_app.js: Asian
-                    if (contract_category === 'digits') {
-                        trade_contract_forms.matchdiff = localize('Matches/Differs');
-                        trade_contract_forms.evenodd = localize('Even/Odd');
-                        trade_contract_forms.overunder = localize('Over/Under');
-                    } else if (contract_category === 'lookback') {
-                        trade_contract_forms.lookbackhigh = localize('High-Close');
-                        trade_contract_forms.lookbacklow = localize('Close-Low');
-                        trade_contract_forms.lookbackhighlow = localize('High-Low');
-                    } else if (contract_category === 'reset') {
-                        trade_contract_forms.resetcall = localize('Reset Call');
-                        trade_contract_forms.resetput = localize('Reset Put');
-                    }
-                }
-            }
-        });
-
-        if (isEmptyObject(trade_contract_forms)) return null;
-
-        if (trade_contract_forms.risefall || trade_contract_forms.higherlower) {
-            trade_contract_forms.updown = localize('Up/Down');
-        }
-
-        if (trade_contract_forms.endsinout || trade_contract_forms.staysinout) {
-            trade_contract_forms.inout = localize('In/Out');
-        }
-
-        return trade_contract_forms;
-    };
-
-    return {
-        details: details,
-        contractForms: getContractForms,
-        open: function open() {
-            return _open;
-        },
-        close: function close() {
-            return _close;
-        },
-        contracts: function contracts() {
-            return contract_details;
-        },
-        durations: function durations() {
-            return _durations;
-        },
-        startDates: function startDates() {
-            return start_dates;
-        },
-        barriers: function barriers() {
-            return _barriers;
-        },
-        contractType: function contractType() {
-            return contract_type;
-        },
-        form: function form() {
-            return _form;
-        },
-        barrier: function barrier() {
-            return _barrier;
-        },
-        setContracts: function setContracts(data) {
-            contract_details = data;
-        }
-    };
-}();
-
-module.exports = Contract;
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Contract = __webpack_require__(61);
-var Defaults = __webpack_require__(24);
-var localize = __webpack_require__(2).localize;
-
-/**
- * Handles lookback option form
- */
-var Lookback = function () {
-    var displayLookback = function displayLookback() {
-        var multiplier_element = document.getElementById('multiplier_row');
-        var multiplier_input = document.getElementById('multiplier');
-        var payout_element = document.getElementById('payout_row');
-
-        if (Contract.form() === 'lookback') {
-            multiplier_element.show();
-            payout_element.hide(); // Hide payout
-            if (Defaults.get('multiplier')) {
-                multiplier_input.value = Defaults.get('multiplier');
-            } else {
-                Defaults.set('multiplier', multiplier_input.value);
-            }
-        } else {
-            multiplier_element.hide();
-            payout_element.show(); // Show payout
-        }
-    };
-
-    var getFormula = function getFormula() {
-        var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-        var mul = arguments[1];
-
-        var formulaMapping = {
-            LBFLOATPUT: mul + ' x (' + localize('High') + ' - ' + localize('Close') + ')',
-            LBFLOATCALL: mul + ' x (' + localize('Close') + ' - ' + localize('Low') + ')',
-            LBHIGHLOW: mul + ' x (' + localize('High') + ' - ' + localize('Low') + ')'
-        };
-
-        return formulaMapping[type.toUpperCase()];
-    };
-
-    var isLookback = function isLookback(type) {
-        return (/^(LBFLOATCALL|LBFLOATPUT|LBHIGHLOW)$/.test(type)
-        );
-    };
-
-    var getBarrierLabel = function getBarrierLabel(type) {
-        var barrier_map = {
-            LBFLOATCALL: localize(['Low']),
-            LBFLOATPUT: localize(['High']),
-            LBHIGHLOW: localize(['High', 'Low'])
-        };
-        return barrier_map[type] || localize(['Barrier']);
-    };
-
-    return {
-        display: displayLookback,
-        getFormula: getFormula,
-        isLookback: isLookback,
-        getBarrierLabel: getBarrierLabel
-    };
-}();
-
-module.exports = Lookback;
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var moment = __webpack_require__(9);
-var countDecimalPlaces = __webpack_require__(48).countDecimalPlaces;
-var displayPriceMovement = __webpack_require__(48).displayPriceMovement;
-var elementTextContent = __webpack_require__(3).elementTextContent;
-var getElementById = __webpack_require__(3).getElementById;
-var isVisible = __webpack_require__(3).isVisible;
-
-/*
- * Tick object handles all the process/display related to tick streaming
- *
- * We request tick stream for particular underlying to update current spot
- *
- *
- * Usage:
- * use `Tick.detail` to populate this object
- *
- * then use
- *
- * `Tick.quote()` to get current spot quote
- * `Tick.id()` to get the unique for current stream
- * `Tick.epoch()` to get the tick epoch time
- * 'Tick.display()` to display current spot
- */
-var Tick = function () {
-    var _quote = '';
-    var _id = '';
-    var _epoch = '';
-    var error_message = '';
-    var _spots = {};
-
-    var details = function details(data) {
-        error_message = '';
-
-        if (data) {
-            if (data.error) {
-                error_message = data.error.message;
-            } else {
-                var tick = data.tick;
-                _quote = tick.quote;
-                _id = tick.id;
-                _epoch = tick.epoch;
-
-                _spots[_epoch] = _quote;
-                var epoches = Object.keys(_spots).sort(function (a, b) {
-                    return a - b;
-                });
-                if (epoches.length > 20) {
-                    delete _spots[epoches[0]];
-                }
-            }
-        }
-    };
-
-    var display = function display() {
-        $('#spot').fadeIn(200);
-        var message = '';
-        if (error_message) {
-            message = error_message;
-        } else {
-            message = _quote;
-        }
-
-        var spot_element = getElementById('spot');
-        if (parseFloat(message) !== +message) {
-            spot_element.className = 'error';
-        } else {
-            spot_element.classList.remove('error');
-            displayPriceMovement(spot_element, elementTextContent(spot_element), message);
-            displayIndicativeBarrier();
-        }
-
-        elementTextContent(spot_element, message);
-    };
-
-    /*
-     * display indicative barrier
-     */
-    var displayIndicativeBarrier = function displayIndicativeBarrier() {
-        var current_tick = Tick.quote();
-
-        var unit = getElementById('duration_units');
-        var indicative_barrier_tooltip = getElementById('indicative_barrier_tooltip');
-        var indicative_high_barrier_tooltip = getElementById('indicative_high_barrier_tooltip');
-        var indicative_low_barrier_tooltip = getElementById('indicative_low_barrier_tooltip');
-        var barrier_element = getElementById('barrier');
-        var high_barrier_element = getElementById('barrier_high');
-        var low_barrier_element = getElementById('barrier_low');
-        var tooltip = getElementById('barrier_tooltip');
-        var span = getElementById('barrier_span');
-        var high_tooltip = getElementById('barrier_high_tooltip');
-        var high_span = getElementById('barrier_high_span');
-        var low_tooltip = getElementById('barrier_low_tooltip');
-        var low_span = getElementById('barrier_low_span');
-
-        var value = void 0;
-
-        var end_time = getElementById('expiry_date');
-        if (unit && (!isVisible(unit) || unit.value !== 'd') && current_tick && !isNaN(current_tick) && end_time && (!isVisible(end_time) || moment(end_time.getAttribute('data-value')).isBefore(moment().add(1, 'day'), 'day'))) {
-            var decimal_places = countDecimalPlaces(current_tick);
-            if (isVisible(indicative_barrier_tooltip) && String(barrier_element.value).match(/^[+-]/)) {
-                var barrier_value = isNaN(parseFloat(barrier_element.value)) ? 0 : parseFloat(barrier_element.value);
-
-                indicative_barrier_tooltip.textContent = (parseFloat(current_tick) + barrier_value).toFixed(decimal_places);
-                tooltip.style.display = 'inherit';
-                span.style.display = 'none';
-            } else {
-                elementTextContent(indicative_barrier_tooltip, '');
-                tooltip.style.display = 'none';
-                span.style.display = 'inherit';
-            }
-
-            if (isVisible(indicative_high_barrier_tooltip) && String(high_barrier_element.value).match(/^[+-]/)) {
-                value = parseFloat(high_barrier_element.value);
-                value = isNaN(value) ? 0 : value;
-                indicative_high_barrier_tooltip.textContent = (parseFloat(current_tick) + value).toFixed(decimal_places);
-                high_tooltip.style.display = 'inherit';
-                high_span.style.display = 'none';
-            } else {
-                elementTextContent(indicative_high_barrier_tooltip, '');
-                high_tooltip.style.display = 'none';
-                high_span.style.display = 'inherit';
-            }
-
-            if (isVisible(indicative_low_barrier_tooltip) && String(low_barrier_element.value).match(/^[+-]/)) {
-                value = parseFloat(low_barrier_element.value);
-                value = isNaN(value) ? 0 : value;
-                indicative_low_barrier_tooltip.textContent = (parseFloat(current_tick) + value).toFixed(decimal_places);
-                low_tooltip.style.display = 'inherit';
-                low_span.style.display = 'none';
-            } else {
-                elementTextContent(indicative_low_barrier_tooltip, '');
-                low_tooltip.style.display = 'none';
-                low_span.style.display = 'inherit';
-            }
-        } else {
-            elementTextContent(indicative_barrier_tooltip, '');
-            elementTextContent(indicative_high_barrier_tooltip, '');
-            elementTextContent(indicative_low_barrier_tooltip, '');
-        }
-    };
-
-    var clean = function clean() {
-        _spots = {};
-        _quote = '';
-        $('#spot').fadeOut(200, function () {
-            // resets spot movement coloring, will continue on the next tick responses
-            $(this).removeClass('price_moved_down price_moved_up').text('');
-        });
-    };
-
-    return {
-        details: details,
-        display: display,
-        clean: clean,
-        quote: function quote() {
-            return _quote;
-        },
-        id: function id() {
-            return _id;
-        },
-        epoch: function epoch() {
-            return _epoch;
-        },
-        errorMessage: function errorMessage() {
-            return error_message;
-        },
-        spots: function spots() {
-            return _spots;
-        },
-        setQuote: function setQuote(q) {
-            _quote = q;
-        }
-    };
-}();
-
-module.exports = Tick;
-
-/***/ }),
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */,
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6692,7 +6692,7 @@ var moment = __webpack_require__(9);
 var ViewPopupUI = __webpack_require__(134);
 var Highchart = __webpack_require__(288);
 var Callputspread = __webpack_require__(101);
-var Lookback = __webpack_require__(62);
+var Lookback = __webpack_require__(61);
 var Reset = __webpack_require__(79);
 var TickDisplay = __webpack_require__(129);
 var Clock = __webpack_require__(46);
@@ -8074,7 +8074,7 @@ var DigitInfo = __webpack_require__(287);
 var Defaults = __webpack_require__(24);
 var getActiveTab = __webpack_require__(180).getActiveTab;
 var Purchase = __webpack_require__(183);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var TickDisplay = __webpack_require__(129);
 var MBDefaults = __webpack_require__(47);
 var MBTick = __webpack_require__(126);
@@ -8181,10 +8181,10 @@ var commonTrading = __webpack_require__(32);
 var displayPriceMovement = __webpack_require__(48).displayPriceMovement;
 var getStartDateNode = __webpack_require__(48).getStartDateNode;
 var getTradingTimes = __webpack_require__(48).getTradingTimes;
-var Contract = __webpack_require__(61);
+var Contract = __webpack_require__(60);
 var Defaults = __webpack_require__(24);
-var getLookBackFormula = __webpack_require__(62).getFormula;
-var isLookback = __webpack_require__(62).isLookback;
+var getLookBackFormula = __webpack_require__(61).getFormula;
+var isLookback = __webpack_require__(61).isLookback;
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var formatMoney = __webpack_require__(7).formatMoney;
@@ -8836,7 +8836,7 @@ var SelectMatcher = __webpack_require__(26).select2Matcher;
 var Cookies = __webpack_require__(57);
 var generateBirthDate = __webpack_require__(171);
 var FormManager = __webpack_require__(16);
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var professionalClient = __webpack_require__(186);
@@ -9159,6 +9159,7 @@ var getElementById = __webpack_require__(3).getElementById;
 var createElement = __webpack_require__(1).createElement;
 
 var cache = {};
+var popup_queue = [];
 
 var showPopup = function showPopup(options) {
     if (cache[options.url]) {
@@ -9181,7 +9182,19 @@ var callback = function callback(options) {
     var div = createElement('div', { html: cache[options.url] });
     var lightbox = createElement('div', { id: options.popup_id, class: 'lightbox' });
     lightbox.appendChild(div.querySelector(options.content_id));
-    document.body.appendChild(lightbox);
+    lightbox.addEventListener('DOMNodeRemoved', function (e) {
+        if (!popup_queue.length || e.target.className !== 'lightbox') return;
+        document.body.appendChild(popup_queue.pop()); // show popup in queue
+    });
+
+    var has_lightbox = document.querySelector('.lightbox');
+    if (has_lightbox) {
+        // store this popup in queue to show it after the previous popup has been removed
+        // to avoid having multiple popup showing at the same time
+        popup_queue.push(lightbox);
+    } else {
+        document.body.appendChild(lightbox);
+    }
 
     if (options.validations) {
         Validation.init(options.form_id, options.validations);
@@ -9668,9 +9681,9 @@ module.exports = MBTick;
 
 var moment = __webpack_require__(9);
 var countDecimalPlaces = __webpack_require__(48).countDecimalPlaces;
-var Contract = __webpack_require__(61);
+var Contract = __webpack_require__(60);
 var Defaults = __webpack_require__(24);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var getElementById = __webpack_require__(3).getElementById;
 var isVisible = __webpack_require__(3).isVisible;
@@ -9888,7 +9901,7 @@ var moment = __webpack_require__(9);
 var Barriers = __webpack_require__(127);
 var commonTrading = __webpack_require__(32);
 var commonIndependent = __webpack_require__(48);
-var Contract = __webpack_require__(61);
+var Contract = __webpack_require__(60);
 var Defaults = __webpack_require__(24);
 var Price = __webpack_require__(103);
 var Reset = __webpack_require__(79);
@@ -10602,7 +10615,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var moment = __webpack_require__(9);
 var requireHighstock = __webpack_require__(32).requireHighstock;
 var Reset = __webpack_require__(79);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var updatePurchaseStatus = __webpack_require__(130).updatePurchaseStatus;
 var ViewPopupUI = __webpack_require__(134);
 var BinarySocket = __webpack_require__(4);
@@ -11257,7 +11270,7 @@ var ViewPopup = __webpack_require__(93);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var formatMoney = __webpack_require__(7).formatMoney;
-var GetAppDetails = __webpack_require__(60);
+var GetAppDetails = __webpack_require__(59);
 var localize = __webpack_require__(2).localize;
 var urlParam = __webpack_require__(8).param;
 var getPropertyValue = __webpack_require__(1).getPropertyValue;
@@ -12051,30 +12064,19 @@ module.exports = ViewPopupUI;
 
 var ClientBase = __webpack_require__(87);
 var GTM = __webpack_require__(51);
-var BinarySocket = __webpack_require__(59);
-var State = __webpack_require__(6).State;
+var BinarySocket = __webpack_require__(74);
 var createElement = __webpack_require__(1).createElement;
 
 var Elevio = function () {
-    var excluded_countries = ['br', 'id', 'ru'];
-
     var init = function init() {
-        BinarySocket.wait('website_status').then(function () {
-            if (isAvailable()) {
-                window._elev.on('load', function (elev) {
-                    // eslint-disable-line no-underscore-dangle
-                    // window._elev.setLanguage(lang);
-                    setUserInfo(elev);
-                    setTranslations(elev);
-                    addEventListenerGTM();
-                    makeLauncherVisible();
-                });
-            }
+        window._elev.on('load', function (elev) {
+            // eslint-disable-line no-underscore-dangle
+            // window._elev.setLanguage(lang);
+            setUserInfo(elev);
+            setTranslations(elev);
+            addEventListenerGTM();
+            makeLauncherVisible();
         });
-    };
-
-    var isAvailable = function isAvailable() {
-        return !new RegExp('^(' + excluded_countries.join('|') + ')$', 'i').test(State.getResponse('website_status.clients_country'));
     };
 
     var addEventListenerGTM = function addEventListenerGTM() {
@@ -12124,7 +12126,6 @@ var Elevio = function () {
 
     return {
         init: init,
-        isAvailable: isAvailable,
         createComponent: createComponent
     };
 }();
@@ -12139,7 +12140,7 @@ module.exports = Elevio;
 
 
 var moment = __webpack_require__(9);
-var BinarySocket = __webpack_require__(59);
+var BinarySocket = __webpack_require__(74);
 
 var ServerTime = function () {
     var clock_started = false;
@@ -13142,7 +13143,7 @@ var MBSymbols = __webpack_require__(179);
 var MBTick = __webpack_require__(126);
 var showChart = __webpack_require__(92).showChart;
 var commonTrading = __webpack_require__(32);
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
@@ -13698,17 +13699,17 @@ var refreshDropdown = __webpack_require__(26).selectDropdown;
 var moment = __webpack_require__(9);
 var TradingAnalysis = __webpack_require__(91);
 var commonTrading = __webpack_require__(32);
-var Contract = __webpack_require__(61);
+var Contract = __webpack_require__(60);
 var Defaults = __webpack_require__(24);
 var Durations = __webpack_require__(128);
 var GetTicks = __webpack_require__(102);
-var Lookback = __webpack_require__(62);
+var Lookback = __webpack_require__(61);
 var Notifications = __webpack_require__(181);
 var Price = __webpack_require__(103);
 var Reset = __webpack_require__(79);
 var StartDates = __webpack_require__(294).StartDates;
 var Symbols = __webpack_require__(80);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var BinarySocket = __webpack_require__(4);
 var getMinPayout = __webpack_require__(7).getMinPayout;
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
@@ -14070,12 +14071,12 @@ module.exports = Process;
 "use strict";
 
 
-var Contract = __webpack_require__(61);
-var getLookBackFormula = __webpack_require__(62).getFormula;
-var isLookback = __webpack_require__(62).isLookback;
+var Contract = __webpack_require__(60);
+var getLookBackFormula = __webpack_require__(61).getFormula;
+var isLookback = __webpack_require__(61).isLookback;
 var isCallputspread = __webpack_require__(101).isCallputspread;
 var Symbols = __webpack_require__(80);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var TickDisplay = __webpack_require__(129);
 var updateValues = __webpack_require__(130);
 var Client = __webpack_require__(5);
@@ -14400,7 +14401,7 @@ module.exports = Purchase;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var BinarySocket = __webpack_require__(4);
 var FormManager = __webpack_require__(16);
 var localize = __webpack_require__(2).localize;
@@ -14506,7 +14507,7 @@ module.exports = CashierPassword;
 
 var SelectMatcher = __webpack_require__(26).select2Matcher;
 var moment = __webpack_require__(9);
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
@@ -14881,7 +14882,7 @@ module.exports = PersonalDetails;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var FormManager = __webpack_require__(16);
@@ -15013,7 +15014,7 @@ module.exports = professionalClient;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var Dialog = __webpack_require__(76);
@@ -15550,7 +15551,7 @@ module.exports = MetaTraderConfig;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
@@ -15628,7 +15629,7 @@ module.exports = TNCApproval;
 
 var moment = __webpack_require__(9);
 var Dropdown = __webpack_require__(26).selectDropdown;
-var BinarySocket = __webpack_require__(59);
+var BinarySocket = __webpack_require__(74);
 
 var Contact = function () {
     var $chat_button = void 0,
@@ -18995,7 +18996,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var pages_config = __webpack_require__(259);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
@@ -19165,7 +19166,7 @@ module.exports = BinaryLoader;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var BinarySocket = __webpack_require__(59);
+var BinarySocket = __webpack_require__(74);
 var localize = __webpack_require__(2).localize;
 
 /*
@@ -21239,11 +21240,8 @@ var isEuCountry = __webpack_require__(53).isEuCountry;
 
 var ThirdPartyLinks = function () {
     var init = function init() {
-        // show third-party website redirect notification for logged in and logged out EU clients
         BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
-            if (isEuCountry()) {
-                document.body.addEventListener('click', clickHandler);
-            }
+            document.body.addEventListener('click', clickHandler);
         });
     };
 
@@ -21252,22 +21250,61 @@ var ThirdPartyLinks = function () {
         var el_link = e.target.closest('a');
         if (!el_link) return;
 
-        var dialog = document.querySelector('#third_party_redirect_dialog');
-        if (dialog && dialog.contains(el_link)) return;
+        var href = el_link.href;
+        if (isEuCountry()) {
+            var dialog = document.querySelector('#third_party_redirect_dialog');
+            if (dialog && dialog.contains(el_link)) return;
 
-        if (isThirdPartyLink(el_link.href)) {
-            e.preventDefault();
-            Dialog.confirm({
-                id: 'third_party_redirect_dialog',
-                localized_message: localize(['You will be redirected to a third-party website which is not owned by Binary.com.', 'Click OK to proceed.'])
-            }).then(function (should_proceed) {
-                if (should_proceed) {
-                    var link = window.open();
-                    link.opener = null;
-                    link.location = el_link.href;
-                }
-            });
+            if (isThirdPartyLink(href)) {
+                e.preventDefault();
+                showThirdPartyLinkPopup(href);
+            }
+        } else {
+            var _dialog = document.querySelector('#telegram_installation_dialog');
+            if (_dialog && _dialog.contains(el_link)) return;
+
+            if (isTelegramLink(href)) {
+                e.preventDefault();
+                showTelegramPopup(href);
+            }
         }
+    };
+
+    var openThirdPartyLink = function openThirdPartyLink(href) {
+        var link = window.open();
+        link.opener = null;
+        link.location = href;
+    };
+
+    var showThirdPartyLinkPopup = function showThirdPartyLinkPopup(href) {
+        // show third-party website redirect notification for logged in and logged out EU clients
+        Dialog.confirm({
+            id: 'third_party_redirect_dialog',
+            localized_message: localize(['You will be redirected to a third-party website which is not owned by Binary.com.', 'Click OK to proceed.'])
+        }).then(function (should_proceed) {
+            if (should_proceed && isTelegramLink(href)) {
+                showTelegramPopup(href);
+            } else if (should_proceed) {
+                openThirdPartyLink(href);
+            }
+        });
+    };
+
+    var showTelegramPopup = function showTelegramPopup(href) {
+        // show a popup to remind clients to have Telegram app installed on their device
+        Dialog.confirm({
+            id: 'telegram_installation_dialog',
+            localized_message: localize(['Please ensure that you have the Telegram app installed on your device.', 'Click OK to proceed.'])
+        }).then(function (should_proceed) {
+            if (should_proceed) {
+                openThirdPartyLink(href);
+            }
+        });
+    };
+
+    var isTelegramLink = function isTelegramLink(href) {
+        return (/t\.me/.test(href)
+        );
     };
 
     var isThirdPartyLink = function isThirdPartyLink(href) {
@@ -22580,7 +22617,7 @@ module.exports = SessionDurationLimit;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var Currency = __webpack_require__(7);
@@ -22909,7 +22946,7 @@ module.exports = Cashier;
 
 
 var setShouldRedirect = __webpack_require__(184).setShouldRedirect;
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var showPopup = __webpack_require__(124);
@@ -23223,7 +23260,7 @@ module.exports = DepositWithdraw;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var urlForStatic = __webpack_require__(8).urlForStatic;
@@ -23862,7 +23899,7 @@ var MBPortfolio = __webpack_require__(177);
 var MBPrice = __webpack_require__(125);
 var MBProcess = __webpack_require__(178);
 var cleanupChart = __webpack_require__(92).cleanupChart;
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
@@ -23977,7 +24014,7 @@ module.exports = MBTradePage;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var BinarySocket = __webpack_require__(4);
 var isEuCountry = __webpack_require__(53).isEuCountry;
 var FormManager = __webpack_require__(16);
@@ -24934,7 +24971,7 @@ var MBDefaults = __webpack_require__(47);
 var Callputspread = __webpack_require__(101);
 var Defaults = __webpack_require__(24);
 var GetTicks = __webpack_require__(102);
-var Lookback = __webpack_require__(62);
+var Lookback = __webpack_require__(61);
 var Reset = __webpack_require__(79);
 var ViewPopupUI = __webpack_require__(134);
 var BinarySocket = __webpack_require__(4);
@@ -26058,7 +26095,7 @@ var Notifications = __webpack_require__(181);
 var Price = __webpack_require__(103);
 var Process = __webpack_require__(182);
 var Purchase = __webpack_require__(183);
-var Tick = __webpack_require__(63);
+var Tick = __webpack_require__(62);
 var BinarySocket = __webpack_require__(4);
 var getDecimalPlaces = __webpack_require__(7).getDecimalPlaces;
 var isCryptocurrency = __webpack_require__(7).isCryptocurrency;
@@ -27086,7 +27123,7 @@ exports.default = init;
 var Dropdown = __webpack_require__(26).selectDropdown;
 var moment = __webpack_require__(9);
 var CommonIndependent = __webpack_require__(48);
-var Contract = __webpack_require__(61);
+var Contract = __webpack_require__(60);
 var Defaults = __webpack_require__(24);
 var Durations = __webpack_require__(128);
 var getElementById = __webpack_require__(3).getElementById;
@@ -27346,11 +27383,11 @@ var BinarySocket = __webpack_require__(4);
 var CompressImage = __webpack_require__(121).compressImg;
 var ConvertToBase64 = __webpack_require__(121).convertToBase64;
 var isImageType = __webpack_require__(121).isImageType;
+var getLanguage = __webpack_require__(20).get;
 var localize = __webpack_require__(2).localize;
 var toTitleCase = __webpack_require__(23).toTitleCase;
 var Url = __webpack_require__(8);
 var showLoadingImage = __webpack_require__(1).showLoadingImage;
-var getLanguage = __webpack_require__(20).get;
 
 var Authenticate = function () {
     var is_action_needed = false;
@@ -27800,7 +27837,7 @@ module.exports = Authenticate;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var FormManager = __webpack_require__(16);
@@ -28162,8 +28199,8 @@ var ViewPopup = __webpack_require__(93);
 var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
 var DateTo = __webpack_require__(172);
-var addTooltip = __webpack_require__(60).addTooltip;
-var buildOauthApps = __webpack_require__(60).buildOauthApps;
+var addTooltip = __webpack_require__(59).addTooltip;
+var buildOauthApps = __webpack_require__(59).buildOauthApps;
 var localize = __webpack_require__(2).localize;
 
 var ProfitTableInit = function () {
@@ -28357,7 +28394,7 @@ var ProfitTable = __webpack_require__(302);
 var Client = __webpack_require__(5);
 var Table = __webpack_require__(77);
 var formatMoney = __webpack_require__(7).formatMoney;
-var showTooltip = __webpack_require__(60).showTooltip;
+var showTooltip = __webpack_require__(59).showTooltip;
 var localize = __webpack_require__(2).localize;
 
 var ProfitTableUI = function () {
@@ -29381,7 +29418,7 @@ module.exports = LimitsUI;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var moment = __webpack_require__(9);
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
@@ -29863,8 +29900,8 @@ var Client = __webpack_require__(5);
 var showLocalTimeOnHover = __webpack_require__(46).showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(4);
 var DateTo = __webpack_require__(172);
-var addTooltip = __webpack_require__(60).addTooltip;
-var buildOauthApps = __webpack_require__(60).buildOauthApps;
+var addTooltip = __webpack_require__(59).addTooltip;
+var buildOauthApps = __webpack_require__(59).buildOauthApps;
 var localize = __webpack_require__(2).localize;
 
 var StatementInit = function () {
@@ -30111,7 +30148,7 @@ var Statement = __webpack_require__(318);
 var Client = __webpack_require__(5);
 var Table = __webpack_require__(77);
 var formatMoney = __webpack_require__(7).formatMoney;
-var showTooltip = __webpack_require__(60).showTooltip;
+var showTooltip = __webpack_require__(59).showTooltip;
 var localize = __webpack_require__(2).localize;
 var downloadCSV = __webpack_require__(1).downloadCSV;
 
@@ -30273,7 +30310,7 @@ module.exports = TopUpVirtual;
 var moment = __webpack_require__(9);
 var setIsForNewAccount = __webpack_require__(185).setIsForNewAccount;
 var getCurrencies = __webpack_require__(322).getCurrencies;
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var getCurrencyList = __webpack_require__(7).getCurrencyList;
@@ -30596,7 +30633,7 @@ module.exports = GetCurrency;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var FormManager = __webpack_require__(16);
 var handleVerifyCode = __webpack_require__(99).handleVerifyCode;
 var localize = __webpack_require__(2).localize;
@@ -31306,7 +31343,7 @@ module.exports = TypesOfAccounts;
 
 
 var moment = __webpack_require__(9);
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var AccountOpening = __webpack_require__(122);
@@ -31432,7 +31469,7 @@ module.exports = FinancialAccOpening;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var AccountOpening = __webpack_require__(122);
@@ -31997,7 +32034,7 @@ module.exports = ResetPassword;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 var BinarySocket = __webpack_require__(4);
@@ -32194,7 +32231,7 @@ module.exports = updateBalance;
 "use strict";
 
 
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var BinarySocket = __webpack_require__(4);
 var localize = __webpack_require__(2).localize;
@@ -32314,22 +32351,14 @@ module.exports = Charity;
 
 var initPhoneNumber = __webpack_require__(189).initPhoneNumber;
 var Elevio = __webpack_require__(163);
-var BinarySocket = __webpack_require__(59);
-var BinaryPjax = __webpack_require__(14);
 
 var Contact = function () {
     var onLoad = function onLoad() {
-        BinarySocket.wait('website_status').then(function () {
-            if (Elevio.isAvailable()) {
-                initPhoneNumber(true);
-                window._elev.on('ready', embedElevioComponents); // eslint-disable-line no-underscore-dangle
+        initPhoneNumber(true);
+        window._elev.on('ready', embedElevioComponents); // eslint-disable-line no-underscore-dangle
 
-                $('#contact_2_loading').remove();
-                $('#contact_2').setVisibility(true);
-            } else {
-                BinaryPjax.load('contact', true);
-            }
-        });
+        $('#contact_2_loading').remove();
+        $('#contact_2').setVisibility(1);
     };
 
     var embedElevioComponents = function embedElevioComponents() {
@@ -32418,7 +32447,7 @@ var localize = __webpack_require__(2).localize;
 var State = __webpack_require__(6).State;
 var TabSelector = __webpack_require__(89);
 var urlFor = __webpack_require__(8).urlFor;
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var BinarySocket = __webpack_require__(4);
 var isEuCountry = __webpack_require__(53).isEuCountry;
 var FormManager = __webpack_require__(16);
@@ -32715,7 +32744,7 @@ var ImageSlider = __webpack_require__(250);
 var MenuSelector = __webpack_require__(169);
 var Scroll = __webpack_require__(88);
 var handleHash = __webpack_require__(1).handleHash;
-var BinaryPjax = __webpack_require__(14);
+var BinaryPjax = __webpack_require__(15);
 var Client = __webpack_require__(5);
 var Header = __webpack_require__(27);
 

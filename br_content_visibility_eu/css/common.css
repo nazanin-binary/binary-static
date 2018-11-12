@@ -404,8 +404,8 @@ button .barspinner.white {
   width: 40px;
   height: 40px;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 78px;
+  right: 18px;
   display: none;
   background: url("../images/common/scrollup_icon.svg") no-repeat;
   z-index: 999; }
@@ -1027,7 +1027,7 @@ label + input {
   padding: 10px 7px;
   position: fixed;
   bottom: 8px;
-  right: 8px;
+  right: 78px;
   left: 8px;
   border-radius: 5px;
   z-index: 1000; }
@@ -1141,7 +1141,7 @@ body #topbar .upgrademessage a, .landing_page-content .upgrademessage a {
   #header #menu-top.top-nav-menu > li {
     float: none; }
     #header #menu-top.top-nav-menu > li ul {
-      z-index: 2; }
+      z-index: 99; }
       #header #menu-top.top-nav-menu > li ul li {
         display: block; }
         #header #menu-top.top-nav-menu > li ul li a {

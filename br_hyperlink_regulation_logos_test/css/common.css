@@ -993,14 +993,10 @@ label + input {
   margin-right: 20px; }
 
 #footer .regulation-logos .vanuatu-icon {
-  width: 160px;
-  margin-left: -30px;
-  margin-right: 0; }
+  width: 100px; }
 
 #footer .regulation-logos .bvi-icon {
-  width: 115px;
-  margin-left: -30px;
-  margin-right: 0; }
+  width: 75px; }
 
 #footer .regulation-logos .labuan-icon {
   width: 120px; }

@@ -999,7 +999,8 @@ label + input {
   width: 75px; }
 
 #footer .regulation-logos .labuan-icon {
-  width: 120px; }
+  width: 120px;
+  margin-right: 0; }
 
 #footer #end-note {
   line-height: 25px;

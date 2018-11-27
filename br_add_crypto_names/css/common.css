@@ -704,8 +704,7 @@ label + input {
   .responsive thead {
     display: none !important; }
   .responsive td, .responsive .table-container tr div .td, .table-container tr div .responsive .td {
-    display: block;
-    text-align: left !important; }
+    display: block; }
     .responsive td:before, .responsive .table-container tr div .td:before, .table-container tr div .responsive .td:before {
       content: attr(datath);
       font-weight: bold;

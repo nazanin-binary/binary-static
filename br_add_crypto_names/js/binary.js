@@ -29405,6 +29405,11 @@ var Accounts = function () {
     var form_id = '#new_accounts';
 
     var onLoad = function onLoad() {
+        var table_headers = {
+            account: localize('Account'),
+            available_markets: localize('Available Markets'),
+            available_currencies: localize('Available Currencies')
+        };
         if (!Client.get('residence')) {
             // ask client to set residence first since cannot wait landing_company otherwise
             BinaryPjax.load(urlFor('user/settings/detailsws'));
@@ -29417,12 +29422,12 @@ var Accounts = function () {
             var element_to_show = '#no_new_accounts_wrapper';
             var upgrade_info = Client.getUpgradeInfo();
             if (upgrade_info.can_upgrade) {
-                populateNewAccounts(upgrade_info);
+                populateNewAccounts(upgrade_info, table_headers);
                 element_to_show = '#new_accounts_wrapper';
             }
 
             if (upgrade_info.can_open_multi) {
-                populateMultiAccount();
+                populateMultiAccount(table_headers);
             } else {
                 doneLoading(element_to_show);
             }
@@ -29443,19 +29448,18 @@ var Accounts = function () {
         return Client.getLandingCompanyValue(account, landing_company, 'country');
     };
 
-    var populateNewAccounts = function populateNewAccounts(upgrade_info) {
+    var populateNewAccounts = function populateNewAccounts(upgrade_info, table_headers) {
         var new_account = upgrade_info;
         var account = {
             real: new_account.type === 'real',
             financial: new_account.type === 'financial'
         };
         var new_account_title = new_account.type === 'financial' ? localize('Financial Account') : localize('Real Account');
-
-        $(form_id).find('tbody').append($('<tr/>').append($('<td/>').html($('<span/>', {
+        $(form_id).find('tbody').append($('<tr/>').append($('<td/>', { datath: table_headers.account }).html($('<span/>', {
             text: new_account_title,
             'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
             'data-balloon-length': 'large'
-        }))).append($('<td/>', { text: getAvailableMarkets(account) })).append($('<td/>', { text: Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies').join(', ') })).append($('<td/>').html($('<a/>', { class: 'button', href: urlFor(new_account.upgrade_link) }).html($('<span/>', { text: localize('Create') })))));
+        }))).append($('<td/>', { text: getAvailableMarkets(account), datath: table_headers.available_markets })).append($('<td/>', { text: Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies').join(', '), datath: table_headers.available_currencies })).append($('<td/>').html($('<a/>', { class: 'button', href: urlFor(new_account.upgrade_link) }).html($('<span/>', { text: localize('Create') })))));
     };
 
     var populateExistingAccounts = function populateExistingAccounts() {
@@ -29547,14 +29551,14 @@ var Accounts = function () {
         return MarketsConfig.get()[market] || '';
     };
 
-    var populateMultiAccount = function populateMultiAccount() {
+    var populateMultiAccount = function populateMultiAccount(table_headers) {
         var currencies = getCurrencies(landing_company);
         var account = { real: 1 };
-        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { datath: localize('Account') }).html($('<span/>', {
+        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { datath: table_headers.account }).html($('<span/>', {
             text: localize('Real Account'),
             'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
             'data-balloon-length': 'large'
-        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }), datath: localize('Available Markets') })).append($('<td/>', { class: 'account-currency', datath: localize('Available Currencies') })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
+        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }), datath: table_headers.available_markets })).append($('<td/>', { class: 'account-currency', datath: table_headers.available_currencies })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
 
         $('#note').setVisibility(1);
 

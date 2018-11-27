@@ -29550,11 +29550,11 @@ var Accounts = function () {
     var populateMultiAccount = function populateMultiAccount() {
         var currencies = getCurrencies(landing_company);
         var account = { real: 1 };
-        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { dataTh: localize('Account') }).html($('<span/>', {
+        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { datath: localize('Account') }).html($('<span/>', {
             text: localize('Real Account'),
             'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
             'data-balloon-length': 'large'
-        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }), dataTh: localize('Available Markets') })).append($('<td/>', { class: 'account-currency', dataTh: localize('Available Currencies') })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
+        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }), datath: localize('Available Markets') })).append($('<td/>', { class: 'account-currency', datath: localize('Available Currencies') })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
 
         $('#note').setVisibility(1);
 

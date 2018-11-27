@@ -29550,11 +29550,11 @@ var Accounts = function () {
     var populateMultiAccount = function populateMultiAccount() {
         var currencies = getCurrencies(landing_company);
         var account = { real: 1 };
-        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>').html($('<span/>', {
+        $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { dataTh: localize('Account') }).html($('<span/>', {
             text: localize('Real Account'),
             'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
             'data-balloon-length': 'large'
-        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }) })).append($('<td/>', { class: 'account-currency' })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
+        }))).append($('<td/>', { text: getAvailableMarkets({ real: 1 }), dataTh: localize('Available Markets') })).append($('<td/>', { class: 'account-currency', dataTh: localize('Available Currencies') })).append($('<td/>').html($('<button/>', { text: localize('Create'), type: 'submit' }))));
 
         $('#note').setVisibility(1);
 
@@ -31951,7 +31951,6 @@ var RealityCheckUI = function () {
                 if (response.error && !/user\/statementws\.html/.test(window.location.pathname)) {
                     // don't block statement page for reality check error, but block all other pages
                     $('#content').empty().html($('<div/>', { class: 'container' }).append($('<p/>', { class: 'notice-msg center-text', text: response.error.message })));
-                    window.location.reload();
                 } else if (response.reality_check) {
                     getAjax(RealityCheckData.summaryData(response.reality_check));
                 }
@@ -33142,9 +33141,6 @@ var ViewPopup = function () {
         if (response.error) {
             if (response.error.code !== 'AlreadySubscribed' && response.echo_req.contract_id === contract_id) {
                 showErrorPopup(response, response.error.message);
-                if (response.error.code === 'InvalidToken') {
-                    window.location.reload();
-                }
             }
             return;
         }

@@ -29404,6 +29404,27 @@ var Accounts = function () {
     var landing_company = void 0;
     var form_id = '#new_accounts';
 
+    var TableHeaders = function () {
+        var table_headers = void 0;
+
+        var initTableHeaders = function initTableHeaders() {
+            return {
+                account: localize('Account'),
+                available_markets: localize('Available Markets'),
+                available_currencies: localize('Available Currencies')
+            };
+        };
+
+        return {
+            get: function get() {
+                if (!table_headers) {
+                    table_headers = initTableHeaders();
+                }
+                return table_headers;
+            }
+        };
+    }();
+
     var onLoad = function onLoad() {
         if (!Client.get('residence')) {
             // ask client to set residence first since cannot wait landing_company otherwise
@@ -29435,14 +29456,6 @@ var Accounts = function () {
         $('#accounts_wrapper').setVisibility(1);
     };
 
-    var initNewAccountTableHeaders = function initNewAccountTableHeaders() {
-        return {
-            account: localize('Account'),
-            available_markets: localize('Available Markets'),
-            available_currencies: localize('Available Currencies')
-        };
-    };
-
     var getCompanyName = function getCompanyName(account) {
         return Client.getLandingCompanyValue(account, landing_company, 'name');
     };
@@ -29452,8 +29465,8 @@ var Accounts = function () {
     };
 
     var populateNewAccounts = function populateNewAccounts(upgrade_info) {
+        var table_headers = TableHeaders.get();
         var new_account = upgrade_info;
-        var table_headers = initNewAccountTableHeaders();
         var account = {
             real: new_account.type === 'real',
             financial: new_account.type === 'financial'
@@ -29556,7 +29569,7 @@ var Accounts = function () {
     };
 
     var populateMultiAccount = function populateMultiAccount() {
-        var table_headers = initNewAccountTableHeaders();
+        var table_headers = TableHeaders.get();
         var currencies = getCurrencies(landing_company);
         var account = { real: 1 };
         $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { datath: table_headers.account }).html($('<span/>', {

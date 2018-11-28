@@ -719,8 +719,8 @@ var CryptoConfig = function () {
         return {
             BTC: { name: localize('Bitcoin'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             BCH: { name: localize('Bitcoin Cash'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-            ETH: { name: localize('Ethereum'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-            ETC: { name: localize('Ethereum Classic'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
+            ETH: { name: localize('Ether'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
+            ETC: { name: localize('Ether Classic'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             LTC: { name: localize('Litecoin'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             DAI: { name: localize('Dai'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             UST: { name: localize('Tether'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 }
@@ -29405,11 +29405,6 @@ var Accounts = function () {
     var form_id = '#new_accounts';
 
     var onLoad = function onLoad() {
-        var table_headers = {
-            account: localize('Account'),
-            available_markets: localize('Available Markets'),
-            available_currencies: localize('Available Currencies')
-        };
         if (!Client.get('residence')) {
             // ask client to set residence first since cannot wait landing_company otherwise
             BinaryPjax.load(urlFor('user/settings/detailsws'));
@@ -29422,12 +29417,12 @@ var Accounts = function () {
             var element_to_show = '#no_new_accounts_wrapper';
             var upgrade_info = Client.getUpgradeInfo();
             if (upgrade_info.can_upgrade) {
-                populateNewAccounts(upgrade_info, table_headers);
+                populateNewAccounts(upgrade_info);
                 element_to_show = '#new_accounts_wrapper';
             }
 
             if (upgrade_info.can_open_multi) {
-                populateMultiAccount(table_headers);
+                populateMultiAccount();
             } else {
                 doneLoading(element_to_show);
             }
@@ -29440,6 +29435,14 @@ var Accounts = function () {
         $('#accounts_wrapper').setVisibility(1);
     };
 
+    var initNewAccountTableHeaders = function initNewAccountTableHeaders() {
+        return {
+            account: localize('Account'),
+            available_markets: localize('Available Markets'),
+            available_currencies: localize('Available Currencies')
+        };
+    };
+
     var getCompanyName = function getCompanyName(account) {
         return Client.getLandingCompanyValue(account, landing_company, 'name');
     };
@@ -29448,8 +29451,9 @@ var Accounts = function () {
         return Client.getLandingCompanyValue(account, landing_company, 'country');
     };
 
-    var populateNewAccounts = function populateNewAccounts(upgrade_info, table_headers) {
+    var populateNewAccounts = function populateNewAccounts(upgrade_info) {
         var new_account = upgrade_info;
+        var table_headers = initNewAccountTableHeaders();
         var account = {
             real: new_account.type === 'real',
             financial: new_account.type === 'financial'
@@ -29551,7 +29555,8 @@ var Accounts = function () {
         return MarketsConfig.get()[market] || '';
     };
 
-    var populateMultiAccount = function populateMultiAccount(table_headers) {
+    var populateMultiAccount = function populateMultiAccount() {
+        var table_headers = initNewAccountTableHeaders();
         var currencies = getCurrencies(landing_company);
         var account = { real: 1 };
         $(form_id).find('tbody').append($('<tr/>', { id: 'new_account_opening' }).append($('<td/>', { datath: table_headers.account }).html($('<span/>', {

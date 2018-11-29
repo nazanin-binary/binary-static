@@ -12419,15 +12419,22 @@ module.exports = {
 var CurrencyBase = __webpack_require__(/*! ../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
 var localize = __webpack_require__(/*! ../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 
+var is_crypto_currency = function is_crypto_currency(currency) {
+    return CurrencyBase.isCryptocurrency(currency);
+};
+
+var getCurrencyFullName = function getCurrencyFullName(currency) {
+    return is_crypto_currency(currency) ? CurrencyBase.getCurrencyName(currency) + ' (' + currency + ')' : currency;
+};
+
 var getCurrencyList = function getCurrencyList(currencies) {
     var $currencies = $('<select/>');
     var $fiat_currencies = $('<optgroup/>', { label: localize('Fiat') });
     var $cryptocurrencies = $('<optgroup/>', { label: localize('Crypto') });
 
     currencies.forEach(function (currency) {
-        var is_crypto_currency = CurrencyBase.isCryptocurrency(currency);
-        var currency_name = is_crypto_currency ? CurrencyBase.getCurrencyName(currency) + ' (' + currency + ')' : currency;
-        (is_crypto_currency ? $cryptocurrencies : $fiat_currencies).append($('<option/>', { value: currency, text: currency_name }));
+        var currency_name = getCurrencyFullName(currency);
+        (is_crypto_currency(currency) ? $cryptocurrencies : $fiat_currencies).append($('<option/>', { value: currency, text: currency_name }));
     });
 
     return $currencies.append($fiat_currencies.children().length ? $fiat_currencies : '').append($cryptocurrencies.children().length ? $cryptocurrencies : '');
@@ -12436,8 +12443,7 @@ var getCurrencyList = function getCurrencyList(currencies) {
 var getCurrencyNameList = function getCurrencyNameList(currencies) {
     var currencies_name_list = [];
     currencies.forEach(function (currency) {
-        var is_crypto_currency = CurrencyBase.isCryptocurrency(currency);
-        var currency_name = is_crypto_currency ? CurrencyBase.getCurrencyName(currency) + ' (' + currency + ')' : currency;
+        var currency_name = getCurrencyFullName(currency);
         currencies_name_list.push(currency_name);
     });
     return currencies_name_list;
@@ -12445,7 +12451,8 @@ var getCurrencyNameList = function getCurrencyNameList(currencies) {
 
 module.exports = Object.assign({
     getCurrencyList: getCurrencyList,
-    getCurrencyNameList: getCurrencyNameList
+    getCurrencyNameList: getCurrencyNameList,
+    getCurrencyFullName: getCurrencyFullName
 }, CurrencyBase);
 
 /***/ }),
@@ -29406,6 +29413,7 @@ var getCurrencies = __webpack_require__(/*! ./get_currency */ "./src/javascript/
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var getCurrencyFullName = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyFullName;
 var getCurrencyNameList = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyNameList;
 var getCurrencyList = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyList;
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
@@ -29538,7 +29546,7 @@ var Accounts = function () {
             txt_markets = getAvailableMarkets(loginid);
         }
 
-        $('#existing_accounts').find('tbody').append($('<tr/>', { id: loginid, class: is_disabled || excluded_until ? 'color-dark-white' : '' }).append($('<td/>', { text: loginid })).append($('<td/>').html($('<span/>', account_type_prop))).append($('<td/>', { text: txt_markets })).append($('<td/>').html(!account_currency && loginid === Client.get('loginid') ? $('<a/>', { class: 'button', href: urlFor('user/set-currency') }).html($('<span/>', { text: localize('Set Currency') })) : account_currency || '-')));
+        $('#existing_accounts').find('tbody').append($('<tr/>', { id: loginid, class: is_disabled || excluded_until ? 'color-dark-white' : '' }).append($('<td/>', { text: loginid })).append($('<td/>').html($('<span/>', account_type_prop))).append($('<td/>', { text: txt_markets })).append($('<td/>').html(!account_currency && loginid === Client.get('loginid') ? $('<a/>', { class: 'button', href: urlFor('user/set-currency') }).html($('<span/>', { text: localize('Set Currency') })) : getCurrencyFullName(account_currency) || '-')));
 
         if (is_disabled || excluded_until) {
             $('#note_support').setVisibility(1);
@@ -33666,6 +33674,11 @@ var Contact = function () {
         component_types.forEach(function (type) {
             $('#elevio_element_' + type).html(Elevio.createComponent(type));
         });
+
+        // Open support module when submit_ticket is set on query string
+        if (/submit_ticket=true/.test(window.location.search)) {
+            window._elev.openModule('support'); // eslint-disable-line no-underscore-dangle
+        }
     };
 
     return {

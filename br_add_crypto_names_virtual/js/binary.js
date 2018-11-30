@@ -12419,12 +12419,8 @@ module.exports = {
 var CurrencyBase = __webpack_require__(/*! ../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
 var localize = __webpack_require__(/*! ../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 
-var is_crypto_currency = function is_crypto_currency(currency) {
-    return CurrencyBase.isCryptocurrency(currency);
-};
-
 var getCurrencyFullName = function getCurrencyFullName(currency) {
-    return is_crypto_currency(currency) ? CurrencyBase.getCurrencyName(currency) + ' (' + currency + ')' : currency;
+    return CurrencyBase.isCryptocurrency(currency) ? CurrencyBase.getCurrencyName(currency) + ' (' + currency + ')' : currency;
 };
 
 var getCurrencyList = function getCurrencyList(currencies) {
@@ -12434,7 +12430,7 @@ var getCurrencyList = function getCurrencyList(currencies) {
 
     currencies.forEach(function (currency) {
         var currency_name = getCurrencyFullName(currency);
-        (is_crypto_currency(currency) ? $cryptocurrencies : $fiat_currencies).append($('<option/>', { value: currency, text: currency_name }));
+        (CurrencyBase.isCryptocurrency(currency) ? $cryptocurrencies : $fiat_currencies).append($('<option/>', { value: currency, text: currency_name }));
     });
 
     return $currencies.append($fiat_currencies.children().length ? $fiat_currencies : '').append($cryptocurrencies.children().length ? $cryptocurrencies : '');

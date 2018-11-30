@@ -658,6 +658,45 @@ div.kineticjs-content {
     #content.home-content .tab-circles .tab-circle:last-child {
       margin-right: auto; }
 
+#content.home-content .award-icons {
+  margin: 30px auto 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; }
+  #content.home-content .award-icons .award-icon {
+    height: 120px;
+    width: 100px;
+    padding-bottom: 30px;
+    margin: 0 15px; }
+  #content.home-content .award-icons img {
+    max-height: 100px; }
+  #content.home-content .award-icons .caption {
+    font-size: 0.6575162324rem;
+    line-height: 1.2;
+    text-align: center;
+    width: 100%;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: auto; }
+  @media screen and (max-width: 768px) {
+    #content.home-content .award-icons {
+      padding: 0 10px; } }
+
 @media screen and (max-width: 768px) {
   .home-content #banner {
     background-position: right top;
@@ -707,7 +746,8 @@ div.kineticjs-content {
 
 .open-positions .eq {
   padding: 10px;
-  width: 30%; }
+  width: 45%;
+  width: calc(50% - 21px); }
 
 .open-positions .eqWrap {
   display: -webkit-box;
@@ -1110,6 +1150,45 @@ body #_elev_io ._elevio_articlelink > div {
 #content.cyberjaya-content, #content.malta-content, #content.labuan-content {
   margin-top: 0; }
 
+#content.cyberjaya-content .box-container.padding, #content.careers-content .box-container.padding {
+  padding: 5px 15px; }
+
+#content.cyberjaya-content .box-container > [class*='gr-padding'], #content.careers-content .box-container > [class*='gr-padding'] {
+  padding-bottom: 0; }
+  @media (max-width: 768px) {
+    #content.cyberjaya-content .box-container > [class*='gr-padding'], #content.careers-content .box-container > [class*='gr-padding'] {
+      padding-bottom: unset; } }
+
+#content.cyberjaya-content .box-container .box, #content.careers-content .box-container .box {
+  background: #fff; }
+  #content.cyberjaya-content .box-container .box.bordered, #content.careers-content .box-container .box.bordered {
+    border: 1px solid #dedede;
+    height: 100%; }
+  #content.cyberjaya-content .box-container .box .items, #content.careers-content .box-container .box .items {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    #content.cyberjaya-content .box-container .box .items img, #content.careers-content .box-container .box .items img {
+      padding-top: 20px;
+      width: 50px; }
+    #content.cyberjaya-content .box-container .box .items p, #content.careers-content .box-container .box .items p {
+      font-weight: 600;
+      color: #2a3052; }
+    #content.cyberjaya-content .box-container .box .items > .box-item-end, #content.careers-content .box-container .box .items > .box-item-end {
+      padding: 0 30px; }
+    @media (max-width: 768px) {
+      #content.cyberjaya-content .box-container .box .items, #content.careers-content .box-container .box .items {
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center; } }
+
 .location-cyberjaya .introduction h1, .location-labuan .introduction h1, .location-malta .introduction h1 {
   color: #e98024;
   font-size: 2.25rem; }
@@ -1150,6 +1229,9 @@ body #_elev_io ._elevio_articlelink > div {
 
 .regulation-content .margin-left-0 {
   margin-left: 0 !important; }
+
+.regulation-content .margin-top-17 {
+  margin-top: 17px; }
 
 .tour-content#content {
   margin-bottom: 0; }
@@ -1236,9 +1318,14 @@ body #not_authenticated_financial ul.checked > li {
   .accounts-content .table-container table th {
     background-color: #fff; }
   .accounts-content .table-container table th, .accounts-content .table-container table td {
-    text-align: center !important;
+    text-align: center;
     padding: 20px;
     border-bottom: 1px solid #f2f2f2; }
+  @media screen and (max-width: 500px) {
+    .accounts-content .table-container table.responsive th, .accounts-content .table-container table.responsive td {
+      text-align: left !important; }
+      .accounts-content .table-container table.responsive th:last-child, .accounts-content .table-container table.responsive td:last-child {
+        padding-top: 0; } }
 
 .accounts-content #note .hint {
   margin-bottom: 3px; }
@@ -1463,40 +1550,6 @@ body #not_authenticated_financial ul.checked > li {
     @media (max-width: 768px) {
       #content.careers-content .career .values-box {
         margin-bottom: 2.5rem; } }
-  #content.careers-content .career .box-container.padding {
-    padding: 5px 15px; }
-  #content.careers-content .career .box-container > [class*='gr-padding'] {
-    padding-bottom: 0; }
-    @media (max-width: 768px) {
-      #content.careers-content .career .box-container > [class*='gr-padding'] {
-        padding-bottom: unset; } }
-  #content.careers-content .career .box-container .box.bordered {
-    border: 1px solid #dedede;
-    height: 100%; }
-  #content.careers-content .career .box-container .box .items {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center; }
-    #content.careers-content .career .box-container .box .items img {
-      padding-top: 20px;
-      width: 50px; }
-    #content.careers-content .career .box-container .box .items p {
-      font-weight: 600;
-      color: #2a3052; }
-    #content.careers-content .career .box-container .box .items > .box-item-end {
-      padding: 0 30px; }
-    @media (max-width: 768px) {
-      #content.careers-content .career .box-container .box .items {
-        -webkit-box-pack: center;
-            -ms-flex-pack: center;
-                justify-content: center; } }
   #content.careers-content .career h4 {
     color: #2a3052; }
   #content.careers-content .career ul.role-section {
@@ -1797,7 +1850,9 @@ body #not_authenticated_financial ul.checked > li {
 
 @media screen and (max-width: 480px) {
   .vpn-app .column {
-    padding: 0; } }
+    padding: 0;
+    width: 100%;
+    text-align: center; } }
 
 .vpn-app .vertical-divider {
   width: 1px;
@@ -1810,6 +1865,46 @@ body #not_authenticated_financial ul.checked > li {
   margin-top: 50px; }
   .vpn-app .cta-download-heading h2 {
     margin-bottom: 45px; }
+
+.why-us-content .awards-section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding-bottom: 40px; }
+  .why-us-content .awards-section img {
+    width: 70px;
+    height: auto; }
+  .why-us-content .awards-section .award-icon {
+    max-height: 90px;
+    width: 70px; }
+    .why-us-content .awards-section .award-icon .caption {
+      font-size: 0.6575162324rem;
+      line-height: 1.2;
+      text-align: center;
+      width: 100%;
+      display: -webkit-inline-box;
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      -webkit-box-align: end;
+          -ms-flex-align: end;
+              align-items: flex-end;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      margin-top: auto; }
+  .why-us-content .awards-section .horizontal-margin {
+    margin: 0 15px; }
+    @media screen and (max-width: 931px) {
+      .why-us-content .awards-section .horizontal-margin {
+        margin: 15px 15px 20px; } }
 
 .timeline {
   margin: 0 auto;

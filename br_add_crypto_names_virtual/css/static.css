@@ -1313,6 +1313,9 @@ body #not_authenticated_financial ul.checked > li {
 .about-us-content .btn-margin-top {
   margin-top: 1.5em; }
 
+.accounts-content .table-container {
+  overflow-x: hidden; }
+
 .accounts-content .table-container table {
   border: 1px solid #f2f2f2; }
   .accounts-content .table-container table th {
@@ -1337,7 +1340,9 @@ body #not_authenticated_financial ul.checked > li {
     .accounts-content .table-container table.responsive#existing_accounts tr {
       display: block;
       margin: 10px !important;
-      border-bottom: 1px solid #dedede; } }
+      border-bottom: 1px solid #f2f2f2; }
+      .accounts-content .table-container table.responsive#existing_accounts tr:last-child {
+        border: none; } }
   .accounts-content .table-container table.responsive#existing_accounts th, .accounts-content .table-container table.responsive#existing_accounts td {
     text-align: left !important;
     border: none; }

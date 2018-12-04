@@ -9127,6 +9127,9 @@ var BinaryLoader = function () {
         },
         only_real: function only_real() {
             return localize('This feature is not relevant to virtual-money accounts.');
+        },
+        not_authenticated: function not_authenticated() {
+            return localize('This page is only available to logged out clients.');
         }
     };
 
@@ -9149,7 +9152,7 @@ var BinaryLoader = function () {
                 });
             }
         } else if (config.not_authenticated && Client.isLoggedIn()) {
-            BinaryPjax.load(Client.defaultRedirectUrl(), true);
+            handleNotAuthenticated();
         } else {
             loadActiveScript(config);
         }
@@ -9188,6 +9191,33 @@ var BinaryLoader = function () {
                 Login.redirectToLogin();
             });
         }
+    };
+
+    var handleNotAuthenticated = function handleNotAuthenticated() {
+        var content = container.querySelector('#content .container');
+        if (!content) {
+            return;
+        }
+
+        var outer_container = createElement('div', { class: 'logged_out_title_container', html: content.getElementsByTagName('h1')[0] });
+        var rowDiv = function rowDiv(element) {
+            var row_element = createElement('div', { class: 'gr-padding-10' });
+            row_element.appendChild(element);
+            return row_element;
+        };
+        var inner_container = createElement('div', { class: 'center-text' });
+        var error_msg = createElement('div', { class: 'center-text notice-msg', text: error_messages.not_authenticated() });
+        var logout_cta = createElement('button');
+        var logout_span = createElement('span', { text: localize('Sign out') });
+
+        logout_cta.addEventListener('click', function () {
+            Client.doLogout({ logout: 1 });
+        });
+        logout_cta.appendChild(logout_span);
+        inner_container.appendChild(rowDiv(error_msg));
+        inner_container.appendChild(rowDiv(logout_cta));
+        outer_container.append(inner_container);
+        content.html(outer_container);
     };
 
     return {
@@ -9840,6 +9870,7 @@ module.exports = Contents;
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var Client = __webpack_require__(/*! ../base/client */ "./src/javascript/app/base/client.js");
 var isEuCountry = __webpack_require__(/*! ../common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
+var LocalStore = __webpack_require__(/*! ../../_common/storage */ "./src/javascript/_common/storage.js").LocalStore;
 var State = __webpack_require__(/*! ../../_common/storage */ "./src/javascript/_common/storage.js").State;
 
 var Footer = function () {
@@ -9866,15 +9897,25 @@ var Footer = function () {
     };
 
     var displayNotification = function displayNotification(message) {
-        var $status_notification = $('#status_notification');
-        var $status_message_text = $('#status_notification_text');
-        var $close_icon = $('#status_notification_close');
+        BinarySocket.wait('time').then(function (response) {
+            var notification_storage = LocalStore.getObject('status_notification');
+            var time_difference = parseInt(response.time) - (parseInt(notification_storage.close_time) || 0);
+            var required_difference = 30 * 60;
 
-        $status_notification.css('display', 'flex');
-        $status_message_text.html(message);
+            if (time_difference > required_difference || notification_storage.message !== message) {
+                var $status_message_text = $('#status_notification_text');
+                var $close_icon = $('#status_notification_close');
+                var $status_notification = $('#status_notification');
 
-        $close_icon.off('click').on('click', function () {
-            $status_notification.slideUp(200);
+                $status_notification.css('display', 'flex');
+                $status_message_text.html(message);
+                $close_icon.off('click').on('click', function () {
+                    $status_notification.slideUp(200);
+                    notification_storage.message = message;
+                    notification_storage.close_time = response.time;
+                    LocalStore.setObject('status_notification', notification_storage);
+                });
+            }
         });
     };
 
@@ -11292,13 +11333,22 @@ var AccountOpening = function () {
         $('.upgrademessage').children('a').setVisibility(should_show);
     };
 
+    var registerPepToggle = function registerPepToggle() {
+        $('#pep_declaration_note_toggle').off('click').on('click', function (e) {
+            e.stopPropagation();
+            $('#pep_declaration_note_toggle').toggleClass('open');
+            $('#pep_declaration_note').slideToggle();
+        });
+    };
+
     return {
         redirectAccount: redirectAccount,
         populateForm: populateForm,
         handleNewAccount: handleNewAccount,
         commonValidations: commonValidations,
         selectCheckboxValidation: selectCheckboxValidation,
-        showHidePulser: showHidePulser
+        showHidePulser: showHidePulser,
+        registerPepToggle: registerPepToggle
     };
 }();
 
@@ -14050,7 +14100,6 @@ module.exports = AccountTransfer;
 
 
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
-var Header = __webpack_require__(/*! ../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var isCryptocurrency = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").isCryptocurrency;
 var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
@@ -14063,7 +14112,6 @@ var Cashier = function () {
 
     var showContent = function showContent() {
         Client.activateByClientType();
-        Header.upgradeMessageVisibility(); // To handle the upgrade buttons visibility
         var anchor = paramsHash().anchor;
         var $toggler = void 0;
         if (anchor) {
@@ -22484,7 +22532,8 @@ var Markets = (_temp = _class = function (_React$Component) {
             },
             markets: markets_arr,
             active_market: market_symbol,
-            query: ''
+            query: '',
+            open_dropdown_scroll_id: 0
         };
         _this.el_underlying.value = underlying_symbol;
         return _this;
@@ -22710,6 +22759,28 @@ var Markets = (_temp = _class = function (_React$Component) {
         _this2.stickyHeader(position);
     };
 
+    this.openScrollMonitor = function (element) {
+        // if there is no scroll, we don't need to register anything.
+        if (element.scrollHeight < element.clientHeight) return;
+        var forceScroll = function forceScroll(e) {
+            e.scrollTop += 1;
+            e.scrollTop -= 1;
+        };
+        _this2.setState({
+            open_dropdown_scroll_id: setInterval(forceScroll.bind(null, element), 300)
+        });
+        setTimeout(function () {
+            _this2.closeScrollMonitor();
+        }, 1500);
+    };
+
+    this.closeScrollMonitor = function () {
+        clearInterval(_this2.state.open_dropdown_scroll_id);
+        _this2.setState({
+            open_dropdown_scroll_id: 0
+        });
+    };
+
     this.openDropdown = function () {
         _this2.setState({ open: true });
         Object.values(_this2.references.market_nodes).forEach(function (node) {
@@ -22720,6 +22791,8 @@ var Markets = (_temp = _class = function (_React$Component) {
         });
         _this2.references.list.scrollTop = 0;
         _this2.scrollToElement(_this2.state.underlying.symbol, 0, 70);
+        var scrollable = document.querySelector('.markets_dropdown .list');
+        _this2.openScrollMonitor(scrollable);
     };
 
     this.onUnderlyingClick = function (underlying_symbol, market_symbol) {
@@ -25508,6 +25581,8 @@ var Authenticate = function () {
             if ($(e.target).is('span.remove')) resetLabel(event);
         });
 
+        // Hide success message on another file selected
+        hideSuccess();
         // Change submit button state
         enableDisableSubmit();
     };
@@ -25845,9 +25920,18 @@ var Authenticate = function () {
         var msg = localize('We are reviewing your documents. For more details [_1]contact us[_2].', ['<a href="' + Url.urlFor('contact') + '">', '</a>']);
         displayNotification(msg, false, 'document_under_review');
         setTimeout(function () {
-            $('#not_authenticated, #not_authenticated_financial').setVisibility(0); // Just hide it
+            removeButtonLoading();
+            $button.setVisibility(0);
+            $('.submit-status').setVisibility(0);
             $('#success-message').setVisibility(1);
         }, 3000);
+    };
+
+    var hideSuccess = function hideSuccess() {
+        if ($button) {
+            $button.setVisibility(1);
+        }
+        $('#success-message').setVisibility(0);
     };
 
     var onResponse = function onResponse(response, is_last_upload) {
@@ -29409,9 +29493,7 @@ var getCurrencies = __webpack_require__(/*! ./get_currency */ "./src/javascript/
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
-var getCurrencyFullName = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyFullName;
-var getCurrencyNameList = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyNameList;
-var getCurrencyList = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyList;
+var Currency = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js");
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -29493,7 +29575,7 @@ var Accounts = function () {
         };
         var new_account_title = new_account.type === 'financial' ? localize('Financial Account') : localize('Real Account');
         var available_currencies = Client.getLandingCompanyValue(account, landing_company, 'legal_allowed_currencies');
-        var currencies_name_list = getCurrencyNameList(available_currencies);
+        var currencies_name_list = Currency.getCurrencyNameList(available_currencies);
         $(form_id).find('tbody').append($('<tr/>').append($('<td/>', { datath: table_headers.account }).html($('<span/>', {
             text: new_account_title,
             'data-balloon': localize('Counterparty') + ': ' + getCompanyName(account) + ', ' + localize('Jurisdiction') + ': ' + getCompanyCountry(account),
@@ -29545,7 +29627,7 @@ var Accounts = function () {
             txt_markets = getAvailableMarkets(loginid);
         }
 
-        $('#existing_accounts').find('tbody').append($('<tr/>', { id: loginid, class: is_disabled || excluded_until ? 'color-dark-white' : '' }).append($('<td/>', { text: loginid, datath: table_headers.account })).append($('<td/>', { datath: table_headers.type }).html($('<span/>', account_type_prop))).append($('<td/>', { text: txt_markets, datath: table_headers.available_markets })).append($('<td/>', { datath: table_headers.currency }).html(!account_currency && loginid === Client.get('loginid') ? $('<a/>', { class: 'button', href: urlFor('user/set-currency') }).html($('<span/>', { text: localize('Set Currency') })) : getCurrencyFullName(account_currency) || '-')));
+        $('#existing_accounts').find('tbody').append($('<tr/>', { id: loginid, class: is_disabled || excluded_until ? 'color-dark-white' : '' }).append($('<td/>', { text: loginid, datath: table_headers.account })).append($('<td/>', { datath: table_headers.type }).html($('<span/>', account_type_prop))).append($('<td/>', { text: txt_markets, datath: table_headers.available_markets })).append($('<td/>', { datath: table_headers.currency }).html(!account_currency && loginid === Client.get('loginid') ? $('<a/>', { class: 'button', href: urlFor('user/set-currency') }).html($('<span/>', { text: localize('Set Currency') })) : Currency.getCurrencyFullName(account_currency) || '-')));
 
         if (is_disabled || excluded_until) {
             $('#note_support').setVisibility(1);
@@ -29606,7 +29688,7 @@ var Accounts = function () {
         var $new_account_opening = $('#new_account_opening');
         if (currencies.length > 1) {
             var $currencies = $('<div/>');
-            $currencies.append(getCurrencyList(currencies).html());
+            $currencies.append(Currency.getCurrencyList(currencies).html());
             $new_account_opening.find('.account-currency').html($('<select/>', { id: 'new_account_currency' }).html($currencies.html()));
         } else {
             $new_account_opening.find('.account-currency').html($('<label/>', { id: 'new_account_currency', 'data-value': currencies, text: currencies }));
@@ -29781,6 +29863,7 @@ var LostPassword = function () {
     var responseHandler = function responseHandler(response) {
         if (response.verify_email) {
             $('#password_reset_description').setVisibility(0);
+            $('#password_reset_social').setVisibility(0);
             $('#check_spam').setVisibility(1);
             if (isBinaryApp()) {
                 $(form_id).setVisibility(0);
@@ -31355,6 +31438,7 @@ var FinancialAccOpening = function () {
         });
 
         AccountOpening.showHidePulser(0);
+        AccountOpening.registerPepToggle();
     };
 
     var getValidations = function getValidations() {
@@ -31445,6 +31529,7 @@ var RealAccOpening = function () {
             BinaryPjax.loadPreviousUrl();
         }
         AccountOpening.showHidePulser(0);
+        AccountOpening.registerPepToggle();
     };
 
     var getValidations = function getValidations() {

@@ -12294,7 +12294,7 @@ var eu_country_rule = 'eucountry';
 var ContentVisibility = function () {
     var init = function init() {
         BinarySocket.wait('authorize', 'landing_company', 'website_status').then(function () {
-            var current_landing_company_shortcode = State.getResponse('authorize.landing_company_name');
+            var current_landing_company_shortcode = State.getResponse('authorize.landing_company_name') || 'default';
             controlVisibility(current_landing_company_shortcode, MetaTrader.isEligible(), State.getResponse('landing_company.mt_financial_company.shortcode'));
         });
     };
@@ -16954,11 +16954,11 @@ var NewAccount = function () {
             }
         });
 
-        $google_btn.on('click', function (e) {
+        $google_btn.off('click').on('click', function (e) {
             e.preventDefault();
             window.location.href = Login.socialLoginUrl('google');
         });
-        $login_btn.on('click', function (e) {
+        $login_btn.off('click').on('click', function (e) {
             e.preventDefault();
             Login.redirectToLogin();
         });
@@ -16994,8 +16994,6 @@ var NewAccount = function () {
 
     var onUnload = function onUnload() {
         getElementById('footer').setVisibility(1);
-        $google_btn.off('click');
-        $login_btn.off('click');
     };
 
     return {

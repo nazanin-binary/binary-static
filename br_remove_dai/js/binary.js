@@ -12356,6 +12356,9 @@ var updateTabDisplay = __webpack_require__(/*! ../../_common/tab_selector */ "./
         Show for clients with 'vanuatu' mt5 financial company
             data-show='mt5fin:vanuatu'
 
+        Show for clients either with  'vanuatu' or 'labuan' mt5 financial company
+            data-show='mt5fin:vanuatu, labuan'
+
     Prohibited values:
         Cannot mix includes and excludes:
             data-show='costarica, -malta' -> throws error
@@ -12369,9 +12372,28 @@ var eu_country_rule = 'eucountry';
 
 var ContentVisibility = function () {
     var init = function init() {
+        var arr_mt5fin_shortcodes = void 0;
+        var mt_company_type = 'financial';
+
         BinarySocket.wait('authorize', 'landing_company', 'website_status').then(function () {
             var current_landing_company_shortcode = State.getResponse('authorize.landing_company_name') || 'default';
-            controlVisibility(current_landing_company_shortcode, MetaTrader.isEligible(), State.getResponse('landing_company.mt_financial_company.shortcode'));
+            var landing_company_id = State.getResponse('landing_company.id');
+
+            // check if landing_company id is be or no, since belgium and norway are the only countries that have malta landing company shortcode but no mt_financial_company offered
+            if (/^(be|no)$/.test(landing_company_id)) {
+                mt_company_type = 'gaming';
+            }
+
+            var mt_landing_company = State.getResponse('landing_company.mt_' + mt_company_type + '_company');
+
+            // Check mt_financial_company by account type, since we are offering different landing companies for standard and advanced
+            arr_mt5fin_shortcodes = mt_landing_company ? Object.keys(mt_landing_company).map(function (key) {
+                return mt_landing_company[key].shortcode;
+            }) : [];
+
+            controlVisibility(current_landing_company_shortcode, MetaTrader.isEligible(),
+            // We then pass the list of found mt5fin company shortcodes as an array
+            arr_mt5fin_shortcodes);
         });
     };
 
@@ -12440,7 +12462,7 @@ var ContentVisibility = function () {
         return rule.match(/^mt5fin:(.+)$/)[1];
     };
 
-    var shouldShowElement = function shouldShowElement(attr_str, current_landing_company_shortcode, client_has_mt_company, mt5fin_company_shortcode) {
+    var shouldShowElement = function shouldShowElement(attr_str, current_landing_company_shortcode, client_has_mt_company, arr_mt5fin_shortcodes) {
         var _parseAttributeString = parseAttributeString(attr_str),
             is_exclude = _parseAttributeString.is_exclude,
             mt5fin_rules = _parseAttributeString.mt5fin_rules,
@@ -12458,7 +12480,12 @@ var ContentVisibility = function () {
         if (client_has_mt_company && rule_set_has_mt) show_element = !is_exclude;else if (is_exclude !== rule_set_has_current) show_element = true;
         if (rule_set_has_eu_country && is_eu_country) show_element = !is_exclude;
 
-        if (mt5fin_rules.includes(mt5fin_company_shortcode)) show_element = !is_exclude;
+        // Check if list of mt5fin_company_shortcodes is array type and filter with defined mt5fin rules
+        if (Array.isArray(arr_mt5fin_shortcodes)) {
+            if (arr_mt5fin_shortcodes.some(function (el) {
+                return mt5fin_rules.includes(el);
+            })) show_element = !is_exclude;
+        }
 
         return show_element;
     };
@@ -27535,7 +27562,7 @@ var FinancialAssessment = function () {
         }
 
         // display Trading Experience only for financial & MT5 financial accounts
-        var is_mt5_financial = /real_vanuatu_(standard|advanced|mamm_advanced)/.test(localStorage.getItem('financial_assessment_redirect'));
+        var is_mt5_financial = /labuan_advanced|real_vanuatu_(standard|advanced|mamm_advanced)/.test(localStorage.getItem('financial_assessment_redirect'));
         $('#trading_experience_form').setVisibility(is_mt5_financial || Client.isAccountOfType('financial'));
 
         Object.keys(financial_assessment).forEach(function (key) {
@@ -30046,7 +30073,7 @@ var MetaTraderConfig = function () {
             };
             var advanced_config = {
                 account_type: 'advanced',
-                leverage: 300,
+                leverage: 100,
                 short_title: localize('Advanced')
             };
             var volatility_config = {
@@ -30114,6 +30141,11 @@ var MetaTraderConfig = function () {
         };
     }();
 
+    // we need to check if the account type is standard or advanced account before returning landing_company shortcode
+    var getMTFinancialAccountType = function getMTFinancialAccountType(acc_type) {
+        return '' + (/_advanced$/.test(acc_type) ? 'advanced' : 'standard');
+    };
+
     var accounts_info = {};
 
     var $messages = void 0;
@@ -30162,7 +30194,7 @@ var MetaTraderConfig = function () {
                         // financial accounts have their own checks
                         BinarySocket.wait('get_account_status', 'landing_company').then(function () {
                             var is_ok = true;
-                            if (State.getResponse('landing_company.mt_financial_company.shortcode') === 'maltainvest' && !Client.hasAccountType('financial', 1)) {
+                            if (State.getResponse('landing_company.mt_financial_company.' + getMTFinancialAccountType(acc_type) + '.shortcode') === 'maltainvest' && !Client.hasAccountType('financial', 1)) {
                                 $message.find('.maltainvest').setVisibility(1);
                                 is_ok = false;
                             } else {
@@ -30527,6 +30559,7 @@ var MetaTraderConfig = function () {
     return {
         accounts_info: accounts_info,
         actions_info: actions_info,
+        getMTFinancialAccountType: getMTFinancialAccountType,
         fields: fields,
         validations: validations,
         needsRealMessage: needsRealMessage,
@@ -30607,7 +30640,21 @@ var MetaTrader = function () {
     };
 
     var setMTCompanies = function setMTCompanies() {
-        var is_financial = State.getResponse('landing_company.mt_financial_company.shortcode') === 'maltainvest';
+        var mt_company_type = 'financial';
+        var landing_company_id = State.getResponse('landing_company.id');
+
+        // check if landing_company id is be or no, since belgium and norway are the only countries that have malta landing company shortcode but no mt_financial_company offered
+        if (/^(be|no)$/.test(landing_company_id)) {
+            mt_company_type = 'gaming';
+        }
+
+        var mt_landing_company = State.getResponse('landing_company.mt_' + mt_company_type + '_company');
+
+        // Check if any of the account type shortcodes from mt_landing_company account is maltainvest
+        var is_financial = mt_landing_company ? Object.keys(mt_landing_company).some(function (key) {
+            return mt_landing_company[key].shortcode === 'maltainvest';
+        }) : undefined;
+
         mt_companies = mt_companies || MetaTraderConfig[is_financial ? 'configMtFinCompanies' : 'configMtCompanies']();
     };
 
@@ -30615,11 +30662,13 @@ var MetaTrader = function () {
         setMTCompanies();
         var has_mt_company = false;
         Object.keys(mt_companies).forEach(function (company) {
-            mt_company[company] = State.getResponse('landing_company.mt_' + company + '_company.shortcode');
-            if (mt_company[company]) {
-                has_mt_company = true;
-                addAccount(company);
-            }
+            Object.keys(mt_companies[company]).forEach(function (acc_type) {
+                mt_company[company] = State.getResponse('landing_company.mt_' + company + '_company.' + MetaTraderConfig.getMTFinancialAccountType(acc_type) + '.shortcode');
+                if (mt_company[company]) {
+                    has_mt_company = true;
+                    addAccount(company);
+                }
+            });
         });
         return has_mt_company;
     };
@@ -31294,6 +31343,10 @@ var MetaTraderUI = function () {
             return !accounts_info[acc_type].is_demo && accounts_info[acc_type].mt5_account_type !== 'mamm';
         }) // toEnableMAM: remove second check
         .forEach(function (acc_type) {
+            // toEnableVanuatuAdvanced: remove vanuatu_advanced from regex below
+            if (/labuan_standard|vanuatu_advanced/.test(acc_type)) {
+                return;
+            }
             count++;
             var $acc = $acc_template.clone();
             var type = acc_type.split('_').slice(1).join('_');

@@ -32404,7 +32404,6 @@ var isCryptocurrency = __webpack_require__(/*! ../../common/currency */ "./src/j
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../_common/storage */ "./src/javascript/_common/storage.js").State;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
-var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 
 var SetCurrency = function () {
     var is_new_account = void 0;
@@ -32432,7 +32431,6 @@ var SetCurrency = function () {
 
         BinarySocket.wait('payout_currencies', 'landing_company').then(function () {
             var landing_company = State.getResponse('landing_company');
-            var default_currency = getPropertyValue(landing_company.financial_company, 'legal_default_currency') || getPropertyValue(landing_company.gaming_company, 'legal_default_currency') || '';
             var currencies = State.getResponse('payout_currencies');
 
             if (Client.get('landing_company_shortcode') === 'costarica') {
@@ -32456,10 +32454,6 @@ var SetCurrency = function () {
 
             $('#set_currency_loading').remove();
             $('#set_currency, .select_currency').setVisibility(1);
-
-            if (default_currency) {
-                $('#' + default_currency).addClass('selected');
-            }
 
             var $currency_list = $('.currency_list');
             var popup_selector = '#set_currency_popup_container';

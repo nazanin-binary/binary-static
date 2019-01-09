@@ -889,8 +889,10 @@ label + input {
     overflow: auto;
     text-align: left; }
     .lightbox > div.small-popup {
-      max-width: 25em;
+      max-width: 24em;
       padding: 30px; }
+      .lightbox > div.small-popup button#btn_back, .lightbox > div.small-popup button#btn_confirm {
+        width: 100%; }
 
 .image-slider {
   position: relative; }

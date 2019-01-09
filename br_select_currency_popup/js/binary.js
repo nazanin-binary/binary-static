@@ -32432,6 +32432,7 @@ var SetCurrency = function () {
         BinarySocket.wait('payout_currencies', 'landing_company').then(function () {
             var landing_company = State.getResponse('landing_company');
             var currencies = State.getResponse('payout_currencies');
+
             if (Client.get('landing_company_shortcode') === 'costarica') {
                 currencies = getCurrencies(landing_company);
             }
@@ -32464,11 +32465,11 @@ var SetCurrency = function () {
 
                 var localized_text = '';
                 if (isCryptocurrency($(this).attr('id'))) {
-                    localized_text = localize('You have chosen [_1] as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', $(this).attr('id'));
+                    localized_text = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', $(this).attr('id'));
                 } else {
-                    localized_text = localize('You have chosen [_1] as the currency for this account. You cannot change this later. You can have one fiat currency account only.', $(this).attr('id'));
+                    localized_text = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have one fiat currency account only.', $(this).attr('id'));
                 }
-                $popup_content.text(localized_text).setVisibility(1);
+                $popup_content.html(localized_text).setVisibility(1);
                 $('body').append($('<div/>', { id: 'set_currency_popup_container', class: 'lightbox' }).append($popup_container.clone().setVisibility(1)));
 
                 var $popup = $(popup_selector);

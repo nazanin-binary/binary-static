@@ -32529,9 +32529,9 @@ var SetCurrency = function () {
                 $(this).addClass('selected');
                 var localized_message = '';
                 if (isCryptocurrency($(this).attr('id'))) {
-                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', '<strong>' + $(this).attr('id') + '</strong>');
+                    localized_message = localize('You have chosen [_1] as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', '<strong>' + $(this).attr('id') + '</strong>');
                 } else {
-                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have one fiat currency account only.', '<strong>' + $(this).attr('id') + '</strong>');
+                    localized_message = localize('You have chosen [_1] as the currency for this account. You cannot change this later. You can have one fiat currency account only.', '<strong>' + $(this).attr('id') + '</strong>');
                 }
 
                 Dialog.confirm({

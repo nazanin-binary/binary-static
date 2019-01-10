@@ -11778,7 +11778,7 @@ var Dialog = function () {
                     var localized_message = Array.isArray(options.localized_message) ? options.localized_message.join('<p />') : options.localized_message;
                     elementInnerHtml(container.querySelector('#dialog_message'), localized_message);
 
-                    var localized_title = Array.isArray(options.localized_title) ? options.localized_title.join('<h1 />') : options.localized_title;
+                    var localized_title = options.localized_title;
                     if (localized_title && el_title) {
                         el_title.setVisibility(1);
                         elementInnerHtml(container.querySelector('#dialog_title'), localized_title);

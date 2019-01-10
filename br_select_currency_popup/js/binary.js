@@ -32484,7 +32484,7 @@ var SetCurrency = function () {
             var $currency_list = $('.currency_list');
             var $error = $('#set_currency_popup_container').find('.error-msg');
             var onConfirm = function onConfirm() {
-                var $selected_currency = $currency_list.find('.selected');
+                var $selected_currency = 'sbc';
                 BinarySocket.send({ set_account_currency: $selected_currency.attr('id') }).then(function (response_c) {
                     if (response_c.error) {
                         $error.text(response_c.error.message).setVisibility(1);
@@ -32527,9 +32527,9 @@ var SetCurrency = function () {
                 $(this).addClass('selected');
                 var localized_message = '';
                 if (isCryptocurrency($(this).attr('id'))) {
-                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', $(this).attr('id'));
+                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', '<strong>' + $(this).attr('id') + '</strong>');
                 } else {
-                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have one fiat currency account only.', $(this).attr('id'));
+                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have one fiat currency account only.', '<strong>' + $(this).attr('id') + '</strong>');
                 }
 
                 Dialog.confirm({

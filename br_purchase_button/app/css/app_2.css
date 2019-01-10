@@ -5511,6 +5511,7 @@ a {
           background-color: #34a39a;
           overflow: hidden;
           height: 56px;
+          width: 224px;
           text-align: left;
           -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
                   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); }

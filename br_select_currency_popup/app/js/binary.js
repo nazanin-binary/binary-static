@@ -5675,7 +5675,7 @@ InputField.propTypes = {
     className: _propTypes2.default.string,
     error_messages: _mobxReact.PropTypes.arrayOrObservableArray,
     fractional_digits: _propTypes2.default.number,
-    helper: _propTypes2.default.bool,
+    helper: _propTypes2.default.string,
     is_disabled: _propTypes2.default.string,
     is_float: _propTypes2.default.bool,
     is_signed: _propTypes2.default.bool,

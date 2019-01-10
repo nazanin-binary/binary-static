@@ -11771,11 +11771,18 @@ var Dialog = function () {
                     var el_dialog = container;
                     var el_btn_ok = container.querySelector('#btn_ok');
                     var el_btn_cancel = container.querySelector('#btn_cancel');
+                    var el_title = container.querySelector('#dialog_title');
 
                     if (!el_dialog) return;
 
                     var localized_message = Array.isArray(options.localized_message) ? options.localized_message.join('<p />') : options.localized_message;
                     elementInnerHtml(container.querySelector('#dialog_message'), localized_message);
+
+                    var localized_title = Array.isArray(options.localized_title) ? options.localized_title.join('<h1 />') : options.localized_title;
+                    if (localized_title && el_title) {
+                        el_title.setVisibility(1);
+                        elementInnerHtml(container.querySelector('#dialog_title'), localized_title);
+                    }
 
                     if (is_alert) {
                         el_btn_cancel.classList.add('invisible');
@@ -11791,6 +11798,14 @@ var Dialog = function () {
 
                     if (options.ok_text && el_btn_ok.firstElementChild) {
                         el_btn_ok.firstElementChild.textContent = options.ok_text;
+                    }
+
+                    if (options.cancel_text && el_btn_cancel.firstElementChild) {
+                        el_btn_cancel.firstElementChild.textContent = options.cancel_text;
+                    }
+
+                    if (options.title_message && el_title.firstElementChild) {
+                        el_title.firstElementChild.textContent = options.title_message;
                     }
 
                     el_btn_ok.addEventListener('click', function () {
@@ -28549,6 +28564,12 @@ var professionalClient = function () {
         populateProfessionalClient(is_financial);
     };
 
+    var setVisible = function setVisible(selector) {
+        $('#loading').remove();
+        $('#frm_professional').setVisibility(0);
+        $(selector).setVisibility(1);
+    };
+
     var populateProfessionalClient = function populateProfessionalClient(is_financial) {
         var has_maltainvest = State.getResponse('landing_company.financial_company.shortcode') === 'maltainvest';
         if (!has_maltainvest || !is_financial) {
@@ -28560,10 +28581,14 @@ var professionalClient = function () {
         }
 
         var status = State.getResponse('get_account_status.status') || [];
-        if (is_in_page && /professional/.test(status)) {
-            $('#loading').remove();
-            $('#frm_professional').setVisibility(0);
-            $('#' + (/professional_requested/.test(status) ? 'processing' : 'professional')).setVisibility(1);
+        if (is_in_page && status.includes('professional')) {
+            setVisible('#professional');
+            return;
+        } else if (is_in_page && status.includes('professional_requested')) {
+            setVisible('#processing');
+            return;
+        } else if (is_in_page && status.includes('professional_rejected')) {
+            setVisible('#rejected');
             return;
         }
 
@@ -32399,6 +32424,7 @@ var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javasc
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var getCurrencyName = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyName;
 var isCryptocurrency = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").isCryptocurrency;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -32456,73 +32482,66 @@ var SetCurrency = function () {
             $('#set_currency, .select_currency').setVisibility(1);
 
             var $currency_list = $('.currency_list');
-            var popup_selector = '#set_currency_popup_container';
+            var $error = $('#set_currency_popup_container').find('.error-msg');
+            var onConfirm = function onConfirm() {
+                var $selected_currency = $currency_list.find('.selected');
+                BinarySocket.send({ set_account_currency: $selected_currency.attr('id') }).then(function (response_c) {
+                    if (response_c.error) {
+                        $error.text(response_c.error.message).setVisibility(1);
+                    } else {
+                        localStorage.removeItem('is_new_account');
+                        Client.set('currency', response_c.echo_req.set_account_currency);
+                        BinarySocket.send({ balance: 1 });
+                        BinarySocket.send({ payout_currencies: 1 }, { forced: true });
+                        Header.displayAccountStatus();
+
+                        var redirect_url = void 0;
+                        if (is_new_account) {
+                            if (Client.isAccountOfType('financial')) {
+                                var get_account_status = State.getResponse('get_account_status');
+                                if (!/authenticated/.test(get_account_status.status)) {
+                                    redirect_url = Url.urlFor('user/authenticate');
+                                }
+                            }
+                            // Do not redirect MX clients to cashier, because they need to set max limit before making deposit
+                            if (!redirect_url && !/^(iom)$/i.test(Client.get('landing_company_shortcode'))) {
+                                redirect_url = Url.urlFor('cashier');
+                            }
+                        } else {
+                            redirect_url = BinaryPjax.getPreviousUrl();
+                        }
+
+                        if (redirect_url) {
+                            window.location.href = redirect_url; // load without pjax
+                        } else {
+                            Header.populateAccountsList(); // update account title
+                            $('.select_currency').setVisibility(0);
+                            $('#deposit_btn').setVisibility(1);
+                        }
+                    }
+                });
+            };
+
             $('.currency_wrapper').on('click', function () {
                 $currency_list.find('> div').removeClass('selected');
                 $(this).addClass('selected');
-                var $popup_container = $('#set_currency_popup');
-                var $popup_content = $('#set_currency_popup_content');
-
-                var localized_text = '';
+                var localized_message = '';
                 if (isCryptocurrency($(this).attr('id'))) {
-                    localized_text = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', $(this).attr('id'));
+                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', $(this).attr('id'));
                 } else {
-                    localized_text = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have one fiat currency account only.', $(this).attr('id'));
+                    localized_message = localize('You have chosen <strong>[_1]</strong> as the currency for this account. You cannot change this later. You can have one fiat currency account only.', $(this).attr('id'));
                 }
-                $popup_content.html(localized_text).setVisibility(1);
-                $('body').append($('<div/>', { id: 'set_currency_popup_container', class: 'lightbox' }).append($popup_container.clone().setVisibility(1)));
 
-                var $popup = $(popup_selector);
-
-                $popup.find('#btn_confirm, #btn_back').off('click').bind('click', function (e) {
-                    e.preventDefault();
-                    var $error = $popup_container.find('.error-msg');
-                    $error.setVisibility(0);
-                    if ($(this).attr('id') === 'btn_confirm') {
-                        var $selected_currency = $currency_list.find('.selected');
-                        if ($selected_currency.length) {
-                            BinarySocket.send({ set_account_currency: $selected_currency.attr('id') }).then(function (response_c) {
-                                if (response_c.error) {
-                                    $error.text(response_c.error.message).setVisibility(1);
-                                } else {
-                                    localStorage.removeItem('is_new_account');
-                                    Client.set('currency', response_c.echo_req.set_account_currency);
-                                    BinarySocket.send({ balance: 1 });
-                                    BinarySocket.send({ payout_currencies: 1 }, { forced: true });
-                                    Header.displayAccountStatus();
-
-                                    var redirect_url = void 0;
-                                    if (is_new_account) {
-                                        if (Client.isAccountOfType('financial')) {
-                                            var get_account_status = State.getResponse('get_account_status');
-                                            if (!/authenticated/.test(get_account_status.status)) {
-                                                redirect_url = Url.urlFor('user/authenticate');
-                                            }
-                                        }
-                                        // Do not redirect MX clients to cashier, because they need to set max limit before making deposit
-                                        if (!redirect_url && !/^(iom)$/i.test(Client.get('landing_company_shortcode'))) {
-                                            redirect_url = Url.urlFor('cashier');
-                                        }
-                                    } else {
-                                        redirect_url = BinaryPjax.getPreviousUrl();
-                                    }
-
-                                    if (redirect_url) {
-                                        window.location.href = redirect_url; // load without pjax
-                                    } else {
-                                        Header.populateAccountsList(); // update account title
-                                        $('.select_currency').setVisibility(0);
-                                        $('#deposit_btn').setVisibility(1);
-                                    }
-                                }
-                            });
-                        } else {
-                            $error.text(localize('Please choose a currency')).setVisibility(1);
-                        }
-                    } else {
-                        $currency_list.find('> div').removeClass('selected');
+                Dialog.confirm({
+                    id: 'set_currency_popup_container',
+                    ok_text: localize('Confirm'),
+                    cancel_text: localize('Back'),
+                    localized_title: localize('Are you sure?'),
+                    localized_message: localized_message,
+                    onConfirm: onConfirm,
+                    onAbort: function onAbort() {
+                        return $currency_list.find('> div').removeClass('selected');
                     }
-                    $popup.remove();
                 });
             });
         });

@@ -32482,44 +32482,49 @@ var SetCurrency = function () {
             $('#set_currency, .select_currency').setVisibility(1);
 
             var $currency_list = $('.currency_list');
-            var $error = $('#set_currency_popup_container').find('.error-msg');
+            var $error = $('#set_currency').find('.error-msg');
             var onConfirm = function onConfirm() {
-                var $selected_currency = 'sbc';
-                BinarySocket.send({ set_account_currency: $selected_currency.attr('id') }).then(function (response_c) {
-                    if (response_c.error) {
-                        $error.text(response_c.error.message).setVisibility(1);
-                    } else {
-                        localStorage.removeItem('is_new_account');
-                        Client.set('currency', response_c.echo_req.set_account_currency);
-                        BinarySocket.send({ balance: 1 });
-                        BinarySocket.send({ payout_currencies: 1 }, { forced: true });
-                        Header.displayAccountStatus();
+                $error.setVisibility(0);
+                var $selected_currency = $currency_list.find('.selected');
+                if ($selected_currency.length) {
+                    BinarySocket.send({ set_account_currency: $selected_currency.attr('id') }).then(function (response_c) {
+                        if (response_c.error) {
+                            $error.text(response_c.error.message).setVisibility(1);
+                        } else {
+                            localStorage.removeItem('is_new_account');
+                            Client.set('currency', response_c.echo_req.set_account_currency);
+                            BinarySocket.send({ balance: 1 });
+                            BinarySocket.send({ payout_currencies: 1 }, { forced: true });
+                            Header.displayAccountStatus();
 
-                        var redirect_url = void 0;
-                        if (is_new_account) {
-                            if (Client.isAccountOfType('financial')) {
-                                var get_account_status = State.getResponse('get_account_status');
-                                if (!/authenticated/.test(get_account_status.status)) {
-                                    redirect_url = Url.urlFor('user/authenticate');
+                            var redirect_url = void 0;
+                            if (is_new_account) {
+                                if (Client.isAccountOfType('financial')) {
+                                    var get_account_status = State.getResponse('get_account_status');
+                                    if (!/authenticated/.test(get_account_status.status)) {
+                                        redirect_url = Url.urlFor('user/authenticate');
+                                    }
                                 }
+                                // Do not redirect MX clients to cashier, because they need to set max limit before making deposit
+                                if (!redirect_url && !/^(iom)$/i.test(Client.get('landing_company_shortcode'))) {
+                                    redirect_url = Url.urlFor('cashier');
+                                }
+                            } else {
+                                redirect_url = BinaryPjax.getPreviousUrl();
                             }
-                            // Do not redirect MX clients to cashier, because they need to set max limit before making deposit
-                            if (!redirect_url && !/^(iom)$/i.test(Client.get('landing_company_shortcode'))) {
-                                redirect_url = Url.urlFor('cashier');
-                            }
-                        } else {
-                            redirect_url = BinaryPjax.getPreviousUrl();
-                        }
 
-                        if (redirect_url) {
-                            window.location.href = redirect_url; // load without pjax
-                        } else {
-                            Header.populateAccountsList(); // update account title
-                            $('.select_currency').setVisibility(0);
-                            $('#deposit_btn').setVisibility(1);
+                            if (redirect_url) {
+                                window.location.href = redirect_url; // load without pjax
+                            } else {
+                                Header.populateAccountsList(); // update account title
+                                $('.select_currency').setVisibility(0);
+                                $('#deposit_btn').setVisibility(1);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    $error.text(localize('Please choose a currency')).setVisibility(1);
+                }
             };
 
             $('.currency_wrapper').on('click', function () {

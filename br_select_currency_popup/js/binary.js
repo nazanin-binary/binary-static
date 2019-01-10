@@ -11804,10 +11804,6 @@ var Dialog = function () {
                         el_btn_cancel.firstElementChild.textContent = options.cancel_text;
                     }
 
-                    if (options.title_message && el_title.firstElementChild) {
-                        el_title.firstElementChild.textContent = options.title_message;
-                    }
-
                     el_btn_ok.addEventListener('click', function () {
                         el_dialog.remove();
                         if (typeof options.onConfirm === 'function') {
@@ -32483,6 +32479,7 @@ var SetCurrency = function () {
 
             var $currency_list = $('.currency_list');
             var $error = $('#set_currency').find('.error-msg');
+
             var onConfirm = function onConfirm() {
                 $error.setVisibility(0);
                 var $selected_currency = $currency_list.find('.selected');

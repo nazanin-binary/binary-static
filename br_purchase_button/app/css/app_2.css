@@ -5285,17 +5285,25 @@ a {
         border-radius: 4px; }
     .binary-app fieldset .purchase-info-wrapper {
       line-height: 0.9rem;
-      padding-bottom: 1vh;
-      border: 0; }
+      border: 0;
+      margin: 16px 16px 0;
+      min-width: 224px;
+      display: grid;
+      grid-template-columns: 1fr 1fr; }
       .binary-app fieldset .purchase-info-wrapper .info-wrapper {
         display: -webkit-box;
         display: -ms-flexbox;
-        display: flex; }
+        display: flex;
+        justify-self: left;
+        font-size: 12px; }
         .binary-app fieldset .purchase-info-wrapper .info-wrapper div:last-child {
           margin-left: 4px; }
+        .binary-app fieldset .purchase-info-wrapper .info-wrapper .symbols {
+          display: inline-block;
+          position: relative; }
       .binary-app fieldset .purchase-info-wrapper .purchase-tooltip {
-        float: right;
-        margin-top: -4px; }
+        margin-top: -4px;
+        justify-self: right; }
     .binary-app fieldset.trade-types {
       border: 0;
       padding: 0;
@@ -5442,7 +5450,7 @@ a {
       min-height: 100px; }
       .binary-app div.purchase-wrapper fieldset.purchase-option div.box {
         display: grid;
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: 2fr 1fr;
         position: relative;
         min-height: 71px; }
         .binary-app div.purchase-wrapper fieldset.purchase-option div.box .left-column, .binary-app div.purchase-wrapper fieldset.purchase-option div.box .right-column {
@@ -5511,10 +5519,11 @@ a {
           background-color: #34a39a;
           overflow: hidden;
           height: 56px;
-          width: 224px;
+          min-width: 224px;
           text-align: left;
           -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
-                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5); }
+                  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+          margin-top: 5px; }
           .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .info-container {
             width: 30%;
             float: right;

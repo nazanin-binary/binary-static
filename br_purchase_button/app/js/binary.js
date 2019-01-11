@@ -13669,6 +13669,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
+
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -13687,36 +13689,21 @@ var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/to
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _Types = __webpack_require__(/*! ../../../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractInfo = function ContractInfo(_ref) {
-    var barrier_count = _ref.barrier_count,
-        contract_title = _ref.contract_title,
-        contract_type = _ref.contract_type,
+    var basis = _ref.basis,
+        basis_list = _ref.basis_list,
         currency = _ref.currency,
         proposal_info = _ref.proposal_info;
 
-    var icon_type = ('' + contract_type + (/^(call|put)$/i.test(contract_type) && barrier_count > 0 ? '_barrier' : '')).toLowerCase();
+    var contract_info_basis = basis_list.find(function (o) {
+        return o.value !== basis;
+    });
 
     return _react2.default.createElement(
-        'div',
-        { className: 'box' },
-        _react2.default.createElement(
-            'div',
-            { className: 'left-column' },
-            _react2.default.createElement(
-                'div',
-                { className: 'type-wrapper' },
-                _react2.default.createElement(_Types.IconTradeType, { type: icon_type, className: 'type' })
-            ),
-            _react2.default.createElement(
-                'h4',
-                { className: 'trade-type' },
-                contract_title
-            )
-        ),
+        _react2.default.Fragment,
+        null,
         proposal_info.has_error || !proposal_info.id ? _react2.default.createElement(
             'div',
             { className: proposal_info.has_error ? 'error-info-wrapper' : '' },
@@ -13729,69 +13716,23 @@ var ContractInfo = function ContractInfo(_ref) {
             'div',
             { className: 'purchase-info-wrapper' },
             _react2.default.createElement(
+                'div',
+                { className: 'info-wrapper' },
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    (0, _localize.localize)('[_1]', contract_info_basis.text)
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(_money2.default, { amount: proposal_info[contract_info_basis.value], currency: currency })
+                )
+            ),
+            _react2.default.createElement(
                 'span',
                 { className: 'purchase-tooltip' },
                 _react2.default.createElement(_tooltip2.default, { alignment: 'left', icon: 'info', message: proposal_info.message })
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Stake'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.stake, currency: currency })
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Payout'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.payout, currency: currency })
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Net Profit'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.profit, currency: currency })
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Return'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    proposal_info.returns
-                )
             )
         )
     );
@@ -13799,8 +13740,8 @@ var ContractInfo = function ContractInfo(_ref) {
 
 ContractInfo.propTypes = {
     barrier_count: _propTypes2.default.number,
-    contract_title: _propTypes2.default.string,
-    contract_type: _propTypes2.default.string,
+    basis: _propTypes2.default.string,
+    basis_list: _mobxReact.PropTypes.arrayOrObservableArray,
     currency: _propTypes2.default.string,
     proposal_info: _propTypes2.default.object
 };
@@ -14794,6 +14735,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
+
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -14844,6 +14787,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Purchase = function Purchase(_ref) {
     var barrier_count = _ref.barrier_count,
+        basis = _ref.basis,
+        basis_list = _ref.basis_list,
         currency = _ref.currency,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
         is_purchase_confirm_on = _ref.is_purchase_confirm_on,
@@ -14934,6 +14879,8 @@ var Purchase = function Purchase(_ref) {
                 !is_purchase_enabled && idx === 0 && _react2.default.createElement(_ui_loader2.default, null),
                 _react2.default.createElement(_contract_info2.default, {
                     barrier_count: barrier_count,
+                    basis: basis,
+                    basis_list: basis_list,
                     contract_title: trade_types[type],
                     contract_type: type,
                     currency: currency,
@@ -14956,6 +14903,8 @@ var Purchase = function Purchase(_ref) {
 
 Purchase.propTypes = {
     barrier_count: _propTypes2.default.number,
+    basis: _propTypes2.default.string,
+    basis_list: _mobxReact.PropTypes.arrayOrObservableArray,
     currency: _propTypes2.default.string,
     is_client_allowed_to_visit: _propTypes2.default.bool,
     is_purchase_confirm_on: _propTypes2.default.bool,
@@ -14979,6 +14928,8 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
         barrier_count: modules.trade.barrier_count,
+        basis: modules.trade.basis,
+        basis_list: modules.trade.basis_list,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,

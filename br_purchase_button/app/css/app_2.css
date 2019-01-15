@@ -114,6 +114,9 @@ fieldset {
   -webkit-transition: none !important;
   transition: none !important; }
 
+.center-text {
+  text-align: center; }
+
 @font-face {
   font-family: 'BinarySymbols';
   font-style: normal;
@@ -5260,6 +5263,9 @@ a {
         right: 5px;
         font-size: 0.5625rem;
         /* stylelint-disable-line number-max-precision */ }
+      .binary-app fieldset .clock-header span.field-info.center, .binary-app fieldset .fieldset-header span.field-info.center, .binary-app fieldset .stake-wrapper span.field-info.center {
+        position: relative;
+        top: 5px; }
     .binary-app fieldset .clock-header, .binary-app fieldset .fieldset-header {
       height: 1.5rem;
       position: relative; }
@@ -5287,7 +5293,8 @@ a {
       line-height: 0.9rem;
       border: 0;
       margin: 16px 16px 0;
-      min-width: 224px;
+      width: 90%;
+      width: calc(100% - 32px);
       display: grid;
       grid-template-columns: 1fr 1fr;
       position: relative; }
@@ -5309,6 +5316,30 @@ a {
       border: 0;
       padding: 0;
       background: transparent; }
+    .binary-app fieldset .number-selector {
+      margin-top: 15px;
+      text-align: center; }
+      .binary-app fieldset .number-selector__selection {
+        width: calc(20% - 5px);
+        height: 24px;
+        border-radius: 4px;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        background-color: #2a3052;
+        margin: 0 5px 5px 0; }
+        .binary-app fieldset .number-selector__selection.selected {
+          background-color: #4a4f6c; }
+        .binary-app fieldset .number-selector__selection:hover {
+          cursor: pointer; }
+        .binary-app fieldset .number-selector__selection:last-child {
+          margin-right: 0; }
     @media screen and (max-height: 800px) {
       .binary-app fieldset .fieldset-header {
         margin-bottom: -8px; }
@@ -5520,7 +5551,8 @@ a {
           background-color: #34a39a;
           overflow: hidden;
           height: 56px;
-          min-width: 224px;
+          width: 90%;
+          width: calc(100% - 32px);
           text-align: left;
           -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
                   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
@@ -5619,11 +5651,25 @@ a {
               border-color: transparent transparent transparent rgba(127, 131, 151, 0.3); }
             .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled .trade-type svg {
               opacity: 0.16; }
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled .symbols {
+              color: rgba(127, 131, 151, 0.3); }
           .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:hover {
             -webkit-box-shadow: none;
                     box-shadow: none; }
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip {
         position: unset; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip i:before {
+          content: url("../images/common/tooltip/ic_tooltip_info_light.svg ");
+          right: 100%;
+          position: absolute;
+          margin-right: 342px;
+          z-index: 10;
+          opacity: 0;
+          -webkit-transition: all 0.18s ease-out 0.17s;
+          transition: all 0.18s ease-out 0.17s;
+          top: 0; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip i:hover:before {
+          opacity: 1; }
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:before {
         background: #15212d;
         color: #fff;
@@ -5632,13 +5678,12 @@ a {
         max-width: unset;
         width: 290px;
         white-space: normal;
-        top: 50px;
-        margin-right: 30px;
-        font-size: 12px; }
+        margin-right: 32px;
+        font-size: 12px;
+        padding-left: 40px; }
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:after {
         border-left-color: #15212d;
-        top: 50px;
-        margin-right: 18px; }
+        margin-right: 20px; }
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:after, .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:before {
         opacity: 1; }
       .binary-app div.purchase-wrapper fieldset.purchase-option:not(:only-child):nth-last-child(2) {
@@ -5765,7 +5810,7 @@ body.dark, .theme-wrapper.dark {
       background: #353b5b;
       color: #fff;
       border-color: #4a4f6c; }
-      body.dark .app-contents fieldset div.fieldset-header span.field-info.left, .theme-wrapper.dark .app-contents fieldset div.fieldset-header span.field-info.left {
+      body.dark .app-contents fieldset div.fieldset-header span.field-info.left, body.dark .app-contents fieldset div.fieldset-header span.field-info.center, .theme-wrapper.dark .app-contents fieldset div.fieldset-header span.field-info.left, .theme-wrapper.dark .app-contents fieldset div.fieldset-header span.field-info.center {
         color: #aaacba; }
       body.dark .app-contents fieldset input, body.dark .app-contents fieldset select, .theme-wrapper.dark .app-contents fieldset input, .theme-wrapper.dark .app-contents fieldset select {
         background: #2a3052;

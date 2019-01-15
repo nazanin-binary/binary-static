@@ -33076,6 +33076,7 @@ var SetCurrency = function () {
                 var $clicked_currency = $(this);
                 var currency = $clicked_currency.attr('id');
                 var localized_message = '';
+                $error.setVisibility(0);
                 $currency_list.find('> div').removeClass('selected');
                 $clicked_currency.addClass('selected');
                 if (isCryptocurrency(currency)) {

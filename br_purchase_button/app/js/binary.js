@@ -11021,10 +11021,11 @@ var IconTradeType = function IconTradeType(_ref) {
                 IconType = _react2.default.createElement(
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
-                    _react2.default.createElement('path', { fill: 'none', d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { fill: '#FFF', d: 'M8.631 14.862c0-1.131.901-2.031 1.983-2.031h1.848L4.912 5.1V2.215l8.97 9.185V9.508c0-1.131.901-2.031 1.983-2.031v7.408H8.63v-.023z' }),
-                    _react2.default.createElement('path', { fill: '#F93', d: 'M.045 2.215V.092h2.817l2.05 2.123z' })
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('rect', { fill: '#2A3052', transform: 'rotate(180 8 12)', y: '11.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('rect', { fill: '#2A3052', transform: 'rotate(180 8 5)', y: '4.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('path', { d: 'M13.277 3.772a.5.5 0 0 0 .966-.259l-.55-2.049a.5.5 0 0 0-.612-.353l-2.049.549a.5.5 0 0 0 .259.966l1.566-.42.42 1.566z', fill: '#2A3052', fillRule: 'nonzero' }),
+                    _react2.default.createElement('path', { d: 'M4.876 6.17a.5.5 0 0 0-.766.018L2.26 8.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 .39-.188L4.517 7.28l3.107 3.55a.5.5 0 0 0 .807-.075l5-8.5a.5.5 0 0 0-.862-.508L7.92 9.65 4.876 6.17z', fill: '#2A3052', fillRule: 'nonzero' })
                 );
                 break;
             default:
@@ -15031,6 +15032,8 @@ var _fieldset = __webpack_require__(/*! ../../../App/Components/Form/fieldset.js
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
+var _Types = __webpack_require__(/*! ../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
+
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
 var _contract_info = __webpack_require__(/*! ../Components/Form/Purchase/contract_info.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/contract_info.jsx");
@@ -15044,8 +15047,6 @@ var _MessageBox2 = _interopRequireDefault(_MessageBox);
 var _PurchaseLock = __webpack_require__(/*! ../Components/Form/Purchase/PurchaseLock */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/PurchaseLock/index.js");
 
 var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
-
-var _Types = __webpack_require__(/*! ../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -5362,7 +5362,10 @@ a {
         justify-self: left;
         font-size: 12px; }
         .binary-app fieldset .purchase-info-wrapper .info-wrapper div {
-          margin-left: 4px; }
+          margin-left: 4px;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex; }
         .binary-app fieldset .purchase-info-wrapper .info-wrapper div:first-child {
           margin-left: 0; }
         .binary-app fieldset .purchase-info-wrapper .info-wrapper .symbols {

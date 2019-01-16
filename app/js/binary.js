@@ -370,10 +370,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _class, _temp, _initialiseProps;
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -381,6 +377,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _calendar_footer = __webpack_require__(/*! ./calendar_footer.jsx */ "./src/javascript/app_2/App/Components/Elements/Calendar/calendar_footer.jsx");
 
@@ -415,7 +413,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
         var date_format = props.date_format,
             start_date = props.start_date;
 
-        var current_date = _moment2.default.utc(start_date).format(date_format);
+        var current_date = (0, _Date.toMoment)(start_date).format(date_format);
         _this.state = {
             calendar_date: current_date, // calendar date reference
             selected_date: '', // selected date
@@ -548,7 +546,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             min_date = _props2.min_date;
 
 
-        var new_date = _moment2.default.utc(_this2.state.calendar_date, date_format)[is_add ? 'add' : 'subtract'](value, unit).format(date_format);
+        var new_date = (0, _Date.toMoment)(_this2.state.calendar_date)[is_add ? 'add' : 'subtract'](value, unit).format(date_format);
 
         if (unit === 'months' && _this2.isPeriodDisabled(new_date, 'month')) return;
 
@@ -556,7 +554,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             new_date = is_add ? max_date : min_date;
         }
 
-        _this2.setState({ calendar_date: _moment2.default.utc(new_date, date_format).format(date_format) }); // formatted date
+        _this2.setState({ calendar_date: (0, _Date.toMoment)(new_date).format(date_format) }); // formatted date
     };
 
     this.updateSelectedDate = function (e, is_disabled) {
@@ -571,9 +569,9 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             onSelect = _props3.onSelect;
 
 
-        var moment_date = _moment2.default.utc(e.target.dataset.date).startOf('day');
-        var is_before = moment_date.isBefore(_moment2.default.utc(min_date));
-        var is_after = moment_date.isAfter(_moment2.default.utc(max_date));
+        var moment_date = (0, _Date.toMoment)(e.target.dataset.date).startOf('day');
+        var is_before = moment_date.isBefore((0, _Date.toMoment)(min_date));
+        var is_after = moment_date.isAfter((0, _Date.toMoment)(max_date));
 
         if (is_before || is_after) {
             return;
@@ -596,7 +594,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             year: 'month',
             decade: 'year'
         };
-        var date = _moment2.default.utc(_this2.state.calendar_date, _this2.props.date_format)[type === 'decade' ? 'year' : type](e.target.dataset[type].split('-')[0]).format(_this2.props.date_format);
+        var date = (0, _Date.toMoment)(_this2.state.calendar_date)[type === 'decade' ? 'year' : type](e.target.dataset[type].split('-')[0]).format(_this2.props.date_format);
 
         if (_this2.isPeriodDisabled(date, type)) return;
 
@@ -612,7 +610,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             start_date = _props4.start_date;
 
 
-        var default_date = _moment2.default.utc(start_date).format(date_format);
+        var default_date = (0, _Date.toMoment)(start_date).format(date_format);
         _this2.setState({
             calendar_date: default_date,
             selected_date: '',
@@ -626,7 +624,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             onSelect = _props5.onSelect;
 
 
-        var now = (0, _moment2.default)().utc().format(date_format);
+        var now = (0, _Date.toMoment)().format(date_format);
         _this2.setState({
             calendar_date: now,
             selected_date: now,
@@ -644,17 +642,17 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
             min_date = _props6.min_date;
 
 
-        var start_of_period = _moment2.default.utc(date).startOf(unit);
-        var end_of_period = _moment2.default.utc(date).endOf(unit);
-        return end_of_period.isBefore(_moment2.default.utc(min_date)) || start_of_period.isAfter(_moment2.default.utc(max_date));
+        var start_of_period = (0, _Date.toMoment)(date).startOf(unit);
+        var end_of_period = (0, _Date.toMoment)(date).endOf(unit);
+        return end_of_period.isBefore((0, _Date.toMoment)(min_date)) || start_of_period.isAfter((0, _Date.toMoment)(max_date));
     };
 }, _temp);
 
 
 Calendar.defaultProps = {
     date_format: 'YYYY-MM-DD',
-    min_date: (0, _moment2.default)(0).utc().format('YYYY-MM-DD'), // by default, min_date is set to Unix Epoch (January 1st 1970)
-    max_date: (0, _moment2.default)().utc().add(120, 'y').format('YYYY-MM-DD') // by default, max_date is set to 120 years after today
+    min_date: (0, _Date.toMoment)().format('YYYY-MM-DD'), // by default, min_date is set to Unix Epoch (January 1st 1970)
+    max_date: (0, _Date.toMoment)().add(120, 'y').format('YYYY-MM-DD') // by default, max_date is set to 120 years after today
 };
 
 Calendar.propTypes = {
@@ -815,10 +813,6 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -826,6 +820,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _calendar_button = __webpack_require__(/*! ./calendar_button.jsx */ "./src/javascript/app_2/App/Components/Elements/Calendar/calendar_button.jsx");
 
@@ -844,7 +840,7 @@ function CalendarHeader(_ref) {
     var is_month_view = calendar_view === 'month';
     var is_year_view = calendar_view === 'year';
     var is_decade_view = calendar_view === 'decade';
-    var moment_date = _moment2.default.utc(calendar_date);
+    var moment_date = (0, _Date.toMoment)(calendar_date);
 
     return _react2.default.createElement(
         'div',
@@ -1009,15 +1005,13 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
 var _string_util = __webpack_require__(/*! ../../../../../../_common/string_util */ "./src/javascript/_common/string_util.js");
+
+var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _types = __webpack_require__(/*! ./types */ "./src/javascript/app_2/App/Components/Elements/Calendar/panels/types.js");
 
@@ -1036,16 +1030,16 @@ var getDays = function getDays(_ref) {
 
     var dates = [];
     var days = [];
-    var moment_today = (0, _moment2.default)().utc().startOf('day');
-    var moment_cur_date = _moment2.default.utc(calendar_date);
+    var moment_today = (0, _Date.toMoment)().startOf('day');
+    var moment_cur_date = (0, _Date.toMoment)(calendar_date);
     var num_of_days = moment_cur_date.daysInMonth() + 1;
     var moment_month_start = moment_cur_date.clone().startOf('month');
     var moment_month_end = moment_cur_date.clone().endOf('month');
     var first_day = moment_month_start.day();
     var last_day = moment_month_end.day();
-    var moment_min_date = _moment2.default.utc(min_date);
-    var moment_max_date = _moment2.default.utc(max_date);
-    var moment_selected = _moment2.default.utc(selected_date);
+    var moment_min_date = (0, _Date.toMoment)(min_date);
+    var moment_max_date = (0, _Date.toMoment)(max_date);
+    var moment_selected = (0, _Date.toMoment)(selected_date);
 
     for (var i = first_day; i > 0; i--) {
         dates.push(moment_month_start.clone().subtract(i, 'day').format(date_format));
@@ -1057,9 +1051,9 @@ var getDays = function getDays(_ref) {
         dates.push(moment_month_end.clone().add(_i, 'day').format(date_format));
     }
 
-    var moment_start_date = _moment2.default.unix(start_date).utc().startOf('day');
+    var moment_start_date = (0, _Date.toMoment)(start_date).startOf('day');
     dates.map(function (date) {
-        var moment_date = _moment2.default.utc(date).startOf('day');
+        var moment_date = (0, _Date.toMoment)(date).startOf('day');
         var is_active = selected_date && moment_date.isSame(moment_selected);
         var is_today = moment_date.isSame(moment_today, 'day');
         var is_disabled = moment_date.isBefore(moment_min_date) || moment_date.isAfter(moment_max_date) ||
@@ -1135,13 +1129,11 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _types = __webpack_require__(/*! ./types */ "./src/javascript/app_2/App/Components/Elements/Calendar/panels/types.js");
 
@@ -1155,8 +1147,8 @@ var CalendarDecades = exports.CalendarDecades = function CalendarDecades(_ref) {
         onClick = _ref.onClick,
         selected_date = _ref.selected_date;
 
-    var selected_year = _moment2.default.utc(selected_date).year();
-    var moment_date = _moment2.default.utc(calendar_date);
+    var selected_year = (0, _Date.toMoment)(selected_date).year();
+    var moment_date = (0, _Date.toMoment)(calendar_date);
 
     var decades = [];
     var min_year = moment_date.year() - 10;
@@ -1218,15 +1210,13 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
 var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _types = __webpack_require__(/*! ./types */ "./src/javascript/app_2/App/Components/Elements/Calendar/panels/types.js");
 
@@ -1257,8 +1247,8 @@ var CalendarMonths = exports.CalendarMonths = function CalendarMonths(_ref) {
         onClick = _ref.onClick,
         selected_date = _ref.selected_date;
 
-    var moment_date = _moment2.default.utc(calendar_date);
-    var selected_month = _moment2.default.utc(selected_date).month();
+    var moment_date = (0, _Date.toMoment)(calendar_date);
+    var selected_month = (0, _Date.toMoment)(selected_date).month();
     var month_headers = getMonthHeaders();
 
     return _react2.default.createElement(
@@ -1307,13 +1297,11 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _types = __webpack_require__(/*! ./types */ "./src/javascript/app_2/App/Components/Elements/Calendar/panels/types.js");
 
@@ -1327,8 +1315,8 @@ var CalendarYears = exports.CalendarYears = function CalendarYears(_ref) {
         onClick = _ref.onClick,
         selected_date = _ref.selected_date;
 
-    var selected_year = _moment2.default.utc(selected_date).year();
-    var moment_date = _moment2.default.utc(calendar_date);
+    var selected_year = (0, _Date.toMoment)(selected_date).year();
+    var moment_date = (0, _Date.toMoment)(calendar_date);
     var current_year = moment_date.year();
     var years = [];
     for (var year = current_year - 1; year < current_year + 11; year++) {
@@ -4592,10 +4580,6 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -4655,7 +4639,7 @@ var DatePicker = function (_React$PureComponent) {
             _this.setState({ is_close_btn_visible: false });
         }, _this.onSelectCalendar = function (selected_date, is_datepicker_visible) {
             var value = selected_date;
-            if (!_moment2.default.utc(value).isValid) {
+            if (!(0, _Date.isDateValid)(value)) {
                 value = '';
             }
 
@@ -4679,10 +4663,10 @@ var DatePicker = function (_React$PureComponent) {
                 date_format = _this$props.date_format,
                 start_date = _this$props.start_date;
 
-            var new_date = mode === 'duration' ? _moment2.default.utc().add(value, 'days').format(date_format) : value;
-            if (_this.calendar && (_moment2.default.utc(new_date, date_format).isValid() || !new_date)) {
+            var new_date = mode === 'duration' ? (0, _Date.toMoment)().add(value, 'days').format(date_format) : value;
+            if (_this.calendar && ((0, _Date.isDateValid)(new_date) || !new_date)) {
                 if (!new_date) {
-                    var current_date = _moment2.default.utc(start_date).format(date_format);
+                    var current_date = (0, _Date.toMoment)(start_date).format(date_format);
                     _this.calendar.setState({
                         calendar_date: current_date,
                         selected_date: current_date
@@ -4880,7 +4864,7 @@ function DatePickerInput(props) {
         placeholder: props.placeholder || (props.mode === 'duration' ? (0, _localize.localize)('Select a duration') : (0, _localize.localize)('Select date')),
         onChange: props.onChange,
         onClick: props.onClick,
-        value: props.value
+        value: props.value || ''
     });
 }
 
@@ -5492,18 +5476,20 @@ var Fieldset = function Fieldset(_ref) {
         className = _ref.className,
         header = _ref.header,
         icon = _ref.icon,
+        is_center = _ref.is_center,
         onMouseEnter = _ref.onMouseEnter,
         onMouseLeave = _ref.onMouseLeave,
         tooltip = _ref.tooltip;
 
-    var field_left_class = (0, _classnames2.default)('field-info left', { icon: icon }, icon);
+    var fieldset_class = (0, _classnames2.default)('fieldset-header', is_center ? 'center-text' : '');
+    var field_left_class = (0, _classnames2.default)('field-info', { icon: icon }, icon, is_center ? 'center' : 'left');
 
     return _react2.default.createElement(
         'fieldset',
         { className: className, onMouseEnter: onMouseEnter, onMouseLeave: onMouseLeave },
         !!header && _react2.default.createElement(
             'div',
-            { className: 'fieldset-header' },
+            { className: fieldset_class },
             _react2.default.createElement(
                 'span',
                 { className: field_left_class },
@@ -5569,6 +5555,14 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _icon_minus = __webpack_require__(/*! ../../../Assets/Common/icon_minus.jsx */ "./src/javascript/app_2/Assets/Common/icon_minus.jsx");
+
+var _icon_plus = __webpack_require__(/*! ../../../Assets/Common/icon_plus.jsx */ "./src/javascript/app_2/Assets/Common/icon_plus.jsx");
+
+var _button = __webpack_require__(/*! ./button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
+
 var _tooltip = __webpack_require__(/*! ../Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
@@ -5582,12 +5576,18 @@ var InputField = function InputField(_ref) {
         helper = _ref.helper,
         is_disabled = _ref.is_disabled,
         is_float = _ref.is_float,
+        is_incrementable = _ref.is_incrementable,
+        _ref$is_read_only = _ref.is_read_only,
+        is_read_only = _ref$is_read_only === undefined ? false : _ref$is_read_only,
         _ref$is_signed = _ref.is_signed,
         is_signed = _ref$is_signed === undefined ? false : _ref$is_signed,
         label = _ref.label,
         max_length = _ref.max_length,
+        max_value = _ref.max_value,
+        min_value = _ref.min_value,
         name = _ref.name,
         onChange = _ref.onChange,
+        onClick = _ref.onClick,
         placeholder = _ref.placeholder,
         prefix = _ref.prefix,
         required = _ref.required,
@@ -5596,6 +5596,8 @@ var InputField = function InputField(_ref) {
 
     var has_error = error_messages && error_messages.length;
     var has_valid_length = true;
+    var max_is_disabled = max_value && +value >= +max_value;
+    var min_is_disabled = min_value && +value <= +min_value;
 
     var changeValue = function changeValue(e) {
         if (type === 'number') {
@@ -5626,6 +5628,25 @@ var InputField = function InputField(_ref) {
         onChange(e);
     };
 
+    var incrementValue = function incrementValue() {
+        if (max_is_disabled) return;
+
+        var increment_value = +value + 1;
+        onChange({ target: { value: increment_value, name: name } });
+    };
+
+    var decrementValue = function decrementValue() {
+        if (!value || min_is_disabled) return;
+
+        var decrement_value = +value - 1;
+        onChange({ target: { value: decrement_value, name: name } });
+    };
+
+    var onKeyPressed = function onKeyPressed(e) {
+        if (e.keyCode === 38) incrementValue(); // up-arrow pressed
+        if (e.keyCode === 40) decrementValue(); // down-arrow pressed
+    };
+
     var input = _react2.default.createElement('input', {
         className: (0, _classnames2.default)({ error: has_error }),
         disabled: is_disabled,
@@ -5633,12 +5654,39 @@ var InputField = function InputField(_ref) {
         'data-tip': true,
         maxLength: fractional_digits ? max_length + fractional_digits + 1 : max_length,
         name: name,
+        onKeyDown: is_incrementable ? onKeyPressed : undefined,
         onChange: changeValue,
+        onClick: onClick,
         placeholder: placeholder || undefined,
+        readOnly: is_read_only,
         required: required || undefined,
         type: type === 'number' ? 'text' : type,
-        value: value
+        value: value || ''
     });
+
+    var input_increment = _react2.default.createElement(
+        'div',
+        { className: 'input-wrapper' },
+        _react2.default.createElement(
+            _button2.default,
+            {
+                className: 'input-wrapper__button input-wrapper__button--increment',
+                is_disabled: max_is_disabled,
+                onClick: incrementValue
+            },
+            _react2.default.createElement(_icon_plus.IconPlus, { className: 'input-wrapper__icon input-wrapper__icon--plus', is_disabled: max_is_disabled })
+        ),
+        _react2.default.createElement(
+            _button2.default,
+            {
+                className: 'input-wrapper__button input-wrapper__button--decrement',
+                is_disabled: min_is_disabled,
+                onClick: decrementValue
+            },
+            _react2.default.createElement(_icon_minus.IconMinus, { className: 'input-wrapper__icon input-wrapper__icon--minus', is_disabled: min_is_disabled })
+        ),
+        input
+    );
 
     return _react2.default.createElement(
         'div',
@@ -5663,7 +5711,7 @@ var InputField = function InputField(_ref) {
                 { className: 'input-helper' },
                 helper
             ),
-            input
+            is_incrementable && type === 'number' ? input_increment : input
         )
     );
 };
@@ -5671,6 +5719,7 @@ var InputField = function InputField(_ref) {
 // ToDo: Refactor input_field
 // supports more than two different types of 'value' as a prop.
 // Quick Solution - Pass two different props to input field.
+// implicit import here { IconMinus, IconPlus } from 'Assets/Common' breaks compilation
 InputField.propTypes = {
     className: _propTypes2.default.string,
     error_messages: _mobxReact.PropTypes.arrayOrObservableArray,
@@ -5678,11 +5727,14 @@ InputField.propTypes = {
     helper: _propTypes2.default.string,
     is_disabled: _propTypes2.default.string,
     is_float: _propTypes2.default.bool,
+    is_incrementable: _propTypes2.default.bool,
+    is_read_only: _propTypes2.default.bool,
     is_signed: _propTypes2.default.bool,
     label: _propTypes2.default.string,
     max_length: _propTypes2.default.number,
     name: _propTypes2.default.string,
     onChange: _propTypes2.default.func,
+    onClick: _propTypes2.default.func,
     placeholder: _propTypes2.default.string,
     prefix: _propTypes2.default.string,
     required: _propTypes2.default.bool,
@@ -5691,6 +5743,81 @@ InputField.propTypes = {
 };
 
 exports.default = (0, _mobxReact.observer)(InputField);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/number_selector.jsx":
+/*!**********************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/number_selector.jsx ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// arr_arr_numbers is an array of arrays where each nested array indicates one row
+// for example [[1, 2, 3]] will be a single row of these three numbers
+// but [[1, 2, 3], [4, 5, 6]] will be two rows:
+// first row with the first three numbers and second row with the last three numbers
+var NumberSelector = function NumberSelector(_ref) {
+    var arr_arr_numbers = _ref.arr_arr_numbers,
+        name = _ref.name,
+        onChange = _ref.onChange,
+        selected_number = _ref.selected_number;
+
+    var handleSelect = function handleSelect(item) {
+        if (+item.target.getAttribute('data-value') !== selected_number) {
+            onChange({ target: { name: name, value: +item.target.getAttribute('data-value') } });
+        }
+    };
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'number-selector' },
+        arr_arr_numbers.map(function (arr_numbers, idx) {
+            return _react2.default.createElement(
+                'div',
+                { key: idx },
+                arr_numbers.map(function (i) {
+                    return _react2.default.createElement(
+                        'span',
+                        {
+                            key: i,
+                            className: 'number-selector__selection' + (selected_number === i ? ' selected' : ''),
+                            'data-value': i,
+                            onClick: handleSelect
+                        },
+                        i
+                    );
+                })
+            );
+        })
+    );
+};
+
+NumberSelector.propTypes = {
+    arr_arr_numbers: _propTypes2.default.arrayOf(_propTypes2.default.array),
+    name: _propTypes2.default.string,
+    onChange: _propTypes2.default.func,
+    selected_number: _propTypes2.default.number
+};
+
+exports.default = NumberSelector;
 
 /***/ }),
 
@@ -5716,10 +5843,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -5731,6 +5854,12 @@ var _react2 = _interopRequireDefault(_react);
 var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 var _start_date = __webpack_require__(/*! ../../../Stores/Modules/Trading/Helpers/start_date */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/start_date.js");
+
+var _Date = __webpack_require__(/*! ../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
+
+var _input_field = __webpack_require__(/*! ./input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+
+var _input_field2 = _interopRequireDefault(_input_field);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5755,7 +5884,7 @@ var TimePickerDropdown = function (_React$Component) {
         _this.selectOption = function (type, value) {
             var is_enabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
-            if (is_enabled) {
+            if (is_enabled && _this.props.value) {
                 var _this$props$value$spl = _this.props.value.split(':'),
                     _this$props$value$spl2 = _slicedToArray(_this$props$value$spl, 2),
                     prev_hour = _this$props$value$spl2[0],
@@ -5829,7 +5958,7 @@ var TimePickerDropdown = function (_React$Component) {
                 start_date = _props.start_date,
                 sessions = _props.sessions;
 
-            var start_moment = (0, _moment2.default)(start_date * 1000 || undefined).utc();
+            var start_moment = (0, _Date.toMoment)(start_date);
             var start_moment_clone = start_moment.clone().minute(0).second(0);
 
             var _value$split = value.split(':'),
@@ -6003,7 +6132,8 @@ var TimePicker = function (_React$Component2) {
                 is_align_right = _props2.is_align_right,
                 placeholder = _props2.placeholder,
                 start_date = _props2.start_date,
-                sessions = _props2.sessions;
+                sessions = _props2.sessions,
+                validation_errors = _props2.validation_errors;
 
             return _react2.default.createElement(
                 'div',
@@ -6020,10 +6150,10 @@ var TimePicker = function (_React$Component2) {
                 }) : _react2.default.createElement(
                     _react2.default.Fragment,
                     null,
-                    _react2.default.createElement('input', {
-                        ref: this.saveRef,
+                    _react2.default.createElement(_input_field2.default, {
+                        error_messages: validation_errors,
                         type: 'text',
-                        readOnly: true,
+                        is_read_only: true,
                         id: prefix_class + '-input',
                         className: prefix_class + '-input ' + (this.state.is_open ? 'active' : ''),
                         value: value,
@@ -9282,6 +9412,102 @@ exports.IconExclamation = IconExclamation;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/Assets/Common/icon_minus.jsx":
+/*!***********************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Common/icon_minus.jsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconMinus = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconMinus = function IconMinus(_ref) {
+    var className = _ref.className,
+        is_disabled = _ref.is_disabled;
+    return _react2.default.createElement(
+        'svg',
+        { className: (0, _classnames2.default)(className, { disabled: is_disabled }), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement('path', { fill: '#5C5C5C', fillRule: 'evenodd', d: 'M3 7.5h10v1H3z' })
+    );
+};
+
+IconMinus.propTypes = {
+    className: _propTypes2.default.string,
+    is_disabled: _propTypes2.default.bool
+};
+
+exports.IconMinus = IconMinus;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Common/icon_plus.jsx":
+/*!**********************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Common/icon_plus.jsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconPlus = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconPlus = function IconPlus(_ref) {
+    var className = _ref.className,
+        is_disabled = _ref.is_disabled;
+    return _react2.default.createElement(
+        'svg',
+        { className: (0, _classnames2.default)(className, { disabled: is_disabled }), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement('path', { fill: '#5C5C5C', fillRule: 'evenodd', d: 'M8.5 7.5H13v1H8.5V13h-1V8.5H3v-1h4.5V3h1v4.5z' })
+    );
+};
+
+IconPlus.propTypes = {
+    className: _propTypes2.default.string,
+    is_disabled: _propTypes2.default.bool
+};
+
+exports.IconPlus = IconPlus;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/Assets/Common/index.js":
 /*!*****************************************************!*\
   !*** ./src/javascript/app_2/Assets/Common/index.js ***!
@@ -9340,6 +9566,30 @@ Object.keys(_icon_exclamation).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _icon_exclamation[key];
+    }
+  });
+});
+
+var _icon_minus = __webpack_require__(/*! ./icon_minus.jsx */ "./src/javascript/app_2/Assets/Common/icon_minus.jsx");
+
+Object.keys(_icon_minus).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _icon_minus[key];
+    }
+  });
+});
+
+var _icon_plus = __webpack_require__(/*! ./icon_plus.jsx */ "./src/javascript/app_2/Assets/Common/icon_plus.jsx");
+
+Object.keys(_icon_plus).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _icon_plus[key];
     }
   });
 });
@@ -10323,7 +10573,7 @@ var IconTradeCategory = function IconTradeCategory(_ref) {
                         { className: 'category-wrapper' },
                         _react2.default.createElement(_Types.IconTradeType, {
                             className: 'category-type',
-                            type: 'digitodd'
+                            type: 'digiteven'
                         })
                     ),
                     _react2.default.createElement(
@@ -10331,7 +10581,7 @@ var IconTradeCategory = function IconTradeCategory(_ref) {
                         { className: 'category-wrapper' },
                         _react2.default.createElement(_Types.IconTradeType, {
                             className: 'category-type',
-                            type: 'digiteven'
+                            type: 'digitodd'
                         })
                     )
                 );
@@ -10523,17 +10773,251 @@ var IconTradeType = function IconTradeType(_ref) {
     var IconType = void 0;
     if (type) {
         switch (type) {
+            case 'asiand':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 16h16V0H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M1 10.667h13.333V9.334H1zM1 6.667h13.333v-1H1zM1 4h13.333V3H1z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', fillRule: 'nonzero', d: 'M7.765 6.093l5.541 6.427-1.01.87-4.728-5.483L6.22 8.918l-4.737-5.83 1.034-.842 3.93 4.836z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M13.576 13.6v-2.208l-1.006-1.007v2.19h-2.266l1.052 1.025z' })
+                );
+                break;
+            case 'asianu':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M1 5.333h13.333v1.333H1zM1 9.333h13.333v1H1zM1 12h13.333v1H1z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', fillRule: 'nonzero', d: 'M7.765 9.907l5.541-6.427-1.01-.87-4.728 5.483L6.22 7.082l-4.737 5.83 1.034.842 3.93-4.836z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M13.576 2.4v2.208L12.57 5.615v-2.19h-2.266L11.356 2.4z' })
+                );
+                break;
+            case 'call_barrier':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M7.234 9.316l5.183-5.193H10.14a1.988 1.988 0 0 1-1.983-1.988h7.662v5.713h-1.983V5.523L10.05 9.316h5.769v1.987H.045V9.316h7.189z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M3.425 15.91H.045v-3.387h2.073v1.874l1.87-1.874h2.818z' })
+                );
+                break;
             case 'call':
                 IconType = _react2.default.createElement(
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
-                    _react2.default.createElement('path', { fill: 'none', d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { fill: '#FFF', d: 'M8.721.162c0 1.13.902 2.03 1.983 2.03h1.848l-7.55 7.731v2.885l8.97-9.185v1.892c0 1.131.901 2.031 1.983 2.031V.138H8.72v.024z' }),
-                    _react2.default.createElement('path', { fill: '#F93', d: 'M.135 12.808v2.123h2.817l2.05-2.123z' })
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M8.721.162c0 1.13.902 2.03 1.983 2.03h1.848l-7.55 7.731v2.885l8.97-9.185v1.892c0 1.131.901 2.031 1.983 2.031V.138H8.72v.024z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.135 12.808v2.123h2.817l2.05-2.123z' })
+                );
+                break;
+            case 'calle_light':
+                IconType = _react2.default.createElement('path', { d: 'M6.671 8l3.422-4.79A.5.5 0 0 1 10.5 3h1.79l-1.144-1.147a.5.5 0 1 1 .708-.706l1.963 1.966a.499.499 0 0 1 0 .774l-1.963 1.966a.5.5 0 0 1-.708-.706L12.291 4h-1.534L7.9 8h4.6a.5.5 0 1 1 0 1H7.186l-1.28 1.79a.5.5 0 0 1-.76.064l-2-2A.498.498 0 0 1 3.5 8h3.171zm-.714 1h-1.25l.73.73.52-.73zm6.897-2.147a.5.5 0 0 1-.708-.706l1.997-2a.5.5 0 1 1 .707.706l-1.996 2z', fill: '#2A3052', fillRule: 'evenodd' });
+                break;
+            case 'digitdiff':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M3.493.654l5.746 5.723-5.746 5.747c-.766-.789-.789-2.028 0-2.817l1.848-1.848H.045V5.476H5.5L3.493 3.47a1.973 1.973 0 0 1 0-2.816zm3.448 11.808h1.983v3.493H6.94v-3.493zM6.94.18h1.983v1.893H6.94V.18z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M15.82 8.563h-4.305l1.848-1.848c.767-.766.767-2.028 0-2.816L10.051 7.21a.844.844 0 0 1 0 1.172l-1.826 1.825 5.138 5.138c.609-.923.474-2.343-.315-3.132l-1.69-1.69h4.44v-1.96h.022z' })
+                );
+                break;
+            case 'digiteven':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.135 6.49V.158h6.333V6.49H.135zM4.26 2.39H2.366v1.893H4.26V2.389zM9.6 16V9.668h6.332V16H9.6zm4.101-4.124h-1.893v1.893h1.893v-1.893z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M9.6.158h6.332V6.49H9.6V.158zm2.208 4.124h1.893V2.389h-1.893v1.893zM.135 16V9.668h6.333V16H.135zm4.124-4.124H2.366v1.893H4.26v-1.893z' })
+                );
+                break;
+            case 'digitmatch':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M3.556 2.231l5.666 5.724L3.556 13.7c-.756-.788-.778-2.028 0-2.816l1.822-1.848H.156V7.054h5.377L3.556 5.048a1.992 1.992 0 0 1 0-2.817zm3.377 10.231H8.89v3.47H6.933v-3.47zm0-12.304H8.89v3.56H6.933V.158z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M12.156 2.344c.755.788.755 2.05-.023 2.817l-1.466 1.487L9.289 5.25l2.867-2.907zm0 11.493L9.2 10.817l1.378-1.397 1.578 1.6c.755.788.755 2.05 0 2.817zm-1.223-4.778l1.045-1.082-.911-.923h4.622v2.005h-4.756z' })
+                );
+                break;
+            case 'digitodd':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M11.628 7.827H4.237L7.91 2l3.718 5.827zM7.256 6.155h1.352l-.676-1.068-.676 1.068z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M7.46 14.86H.067L3.74 9.035l3.718 5.827zm-4.395-1.67h1.352L3.74 12.12l-.676 1.068zm12.755 1.67H8.428l3.673-5.826 3.719 5.827zm-4.372-1.67H12.8l-.676-1.069-.676 1.068z' })
+                );
+                break;
+            case 'digitover':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M6.513 12.544L3.02 15.912H.203l4.89-4.746z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M.045 11.034H15.82v1.925H.045v-1.925zM13.837 8.06V5.412l-5.792 5.622V8.3l4.372-4.244H9.69c-1.104 0-1.983-.875-1.983-1.925h8.113v7.875c-1.105 0-1.983-.875-1.983-1.947z' })
+                );
+                break;
+            case 'digitunder':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M6.603 5.478L3.11 2.088H.293l4.913 4.768z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M.135 5.04H15.91v1.926H.135V5.04zm13.792 4.9c0-1.071.901-1.924 1.983-1.946v7.875H7.797c0-1.05.88-1.925 1.983-1.925h2.727L8.135 9.7V6.966l5.792 5.621V9.941z' })
+                );
+                break;
+            case 'expirymiss':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: '#2A3052', fillRule: 'evenodd' },
+                    _react2.default.createElement('rect', { transform: 'rotate(180 8 5)', y: '4.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('rect', { transform: 'rotate(180 8 11)', y: '10.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement(
+                        'g',
+                        { fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M13.646 3.146a.5.5 0 1 0 .708.708l1.5-1.5a.5.5 0 0 0 0-.708l-1.5-1.5a.5.5 0 1 0-.708.708L14.793 2l-1.147 1.146z' }),
+                        _react2.default.createElement('path', { d: 'M15.5 1.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 1 0 0-1z' })
+                    )
+                );
+                break;
+            case 'expiryrange':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: '#2A3052', fillRule: 'evenodd' },
+                    _react2.default.createElement('rect', { transform: 'rotate(180 8 5)', y: '4.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('rect', { transform: 'rotate(180 8 11)', y: '10.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement(
+                        'g',
+                        { fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M13.646 9.146a.5.5 0 1 0 .708.708l1.5-1.5a.5.5 0 0 0 0-.708l-1.5-1.5a.5.5 0 1 0-.708.708L14.793 8l-1.147 1.146z' }),
+                        _react2.default.createElement('path', { d: 'M15.5 7.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 1 0 0-1z' })
+                    )
+                );
+                break;
+            case 'expiryrangee':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: '#2A3052', fillRule: 'evenodd' },
+                    _react2.default.createElement('rect', { transform: 'rotate(180 8 5)', y: '4.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('rect', { transform: 'rotate(180 8 11)', y: '10.5', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement(
+                        'g',
+                        { fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M13.646 9.146a.5.5 0 1 0 .708.708l1.5-1.5a.5.5 0 0 0 0-.708l-1.5-1.5a.5.5 0 1 0-.708.708L14.793 8l-1.147 1.146z' }),
+                        _react2.default.createElement('path', { d: 'M15.5 7.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 1 0 0-1z' })
+                    )
+                );
+                break;
+            case 'lbfloatcall':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 16h16V0H0z' }),
+                    _react2.default.createElement('path', { d: 'M.5 11a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z', fill: '#2A3052', fillRule: 'nonzero' }),
+                    _react2.default.createElement(
+                        'g',
+                        { fill: '#2A3052', fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M12.5 9V3a.5.5 0 0 1 1 0v6a.5.5 0 0 1-1 0z' }),
+                        _react2.default.createElement('path', { d: 'M13.021 8.586l1.061-1.06a.5.5 0 1 1 .707.706l-1.414 1.414a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.06 1.06zM13.021 3.172l1.061 1.06a.5.5 0 1 0 .707-.707l-1.414-1.414a.5.5 0 0 0-.707 0l-1.414 1.414a.5.5 0 0 0 .707.707l1.06-1.06z' })
+                    ),
+                    _react2.default.createElement(
+                        'g',
+                        { fill: '#2A3052', fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M.812 7.11a.5.5 0 0 0-.624.78l2.5 2a.5.5 0 0 0 .68-.05l6-6.5a.5.5 0 1 0-.735-.68L2.949 8.82.812 7.109z' }),
+                        _react2.default.createElement('path', { d: 'M9 3v1.5a.5.5 0 1 0 1 0v-2a.5.5 0 0 0-.5-.5h-2a.5.5 0 1 0 0 1H9z' })
+                    )
+                );
+                break;
+            case 'lbfloatput':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { d: 'M.5 5a.5.5 0 0 1 0-1h15a.5.5 0 1 1 0 1H.5z', fill: '#2A3052', fillRule: 'nonzero' }),
+                    _react2.default.createElement(
+                        'g',
+                        { fill: '#2A3052', fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M12.5 7v6a.5.5 0 0 0 1 0V7a.5.5 0 0 0-1 0z' }),
+                        _react2.default.createElement('path', { d: 'M13.021 7.414l1.061 1.06a.5.5 0 1 0 .707-.706l-1.414-1.414a.5.5 0 0 0-.707 0l-1.414 1.414a.5.5 0 0 0 .707.707l1.06-1.06zM13.021 12.828l1.061-1.06a.5.5 0 1 1 .707.707l-1.414 1.414a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.06 1.06z' })
+                    ),
+                    _react2.default.createElement(
+                        'g',
+                        { fill: '#2A3052', fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M.812 8.89a.5.5 0 0 1-.624-.78l2.5-2a.5.5 0 0 1 .68.05l6 6.5a.5.5 0 1 1-.735.68L2.949 7.18.812 8.891z' }),
+                        _react2.default.createElement('path', { d: 'M9 13v-1.5a.5.5 0 1 1 1 0v2a.5.5 0 0 1-.5.5h-2a.5.5 0 1 1 0-1H9z' })
+                    )
+                );
+                break;
+            case 'lbhighlow':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { d: 'M.5 14a.5.5 0 1 1 0-1h15a.5.5 0 1 1 0 1H.5zM.5 3a.5.5 0 0 1 0-1h15a.5.5 0 1 1 0 1H.5z', fill: '#2A3052', fillRule: 'nonzero' }),
+                    _react2.default.createElement(
+                        'g',
+                        { fill: '#2A3052', fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M12.5 4.536v6.428c0 .296.224.536.5.536s.5-.24.5-.536V4.536C13.5 4.24 13.276 4 13 4s-.5.24-.5.536z' }),
+                        _react2.default.createElement('path', { d: 'M13.021 4.914l1.061 1.06a.5.5 0 1 0 .707-.706l-1.414-1.414a.5.5 0 0 0-.707 0l-1.414 1.414a.5.5 0 0 0 .707.707l1.06-1.06zM13.021 11.088l1.061-1.06a.5.5 0 1 1 .707.707l-1.414 1.414a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.06 1.06z' })
+                    ),
+                    _react2.default.createElement(
+                        'g',
+                        { fill: '#2A3052', fillRule: 'nonzero' },
+                        _react2.default.createElement('path', { d: 'M9.496 6.5V8a.5.5 0 1 0 1 0V6a.5.5 0 0 0-.5-.5h-2a.5.5 0 1 0 0 1h1.5z' }),
+                        _react2.default.createElement('path', { d: 'M5.246 10.923L3.486 3.88c-.125-.497-.826-.508-.967-.016l-2 7a.5.5 0 1 0 .962.274l1.487-5.204 1.547 6.188a.5.5 0 0 0 .87.2l5-6a.5.5 0 1 0-.77-.641l-4.369 5.243z' })
+                    )
+                );
+                break;
+            case 'notouch':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M.068.07h15.774V2.1H.068V.07zm13.769 8.007c0-1.13.878-2.03 1.983-2.054v6.646H9.33c0-1.107.878-2.03 1.983-2.03h1.104L9.059 7.2l-5.363 5.515V9.831l5.363-5.516 4.778 4.893V8.077z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.068 12.692v2.123h1.6l2.05-2.123z' })
+                );
+                break;
+            case 'onetouch':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M11.989 2.1h1.983V.07h1.96V2.1h-1.938v7.408c-1.081 0-1.983-.9-1.983-2.031V5.585l-6.94 7.107V9.785l5.52-5.654H8.745c-1.082 0-1.983-.9-1.983-2.031H.158V.07h11.83V2.1z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.158 12.692v2.123H3.02l2.05-2.123z' })
+                );
+                break;
+            case 'put_barrier':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M10.14 8.706l3.787 3.794v-2.326h1.983v5.713H8.248c0-1.084.879-1.987 1.983-1.987h2.276L7.324 8.706H.135V6.72H15.91v1.987h-5.77z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M3.515 2.113H.135V5.5h2.073V3.626L4.078 5.5h2.818z' })
                 );
                 break;
             case 'put':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('path', { fill: '#2A3052', d: 'M8.631 14.862c0-1.131.901-2.031 1.983-2.031h1.848L4.912 5.1V2.215l8.97 9.185V9.508c0-1.131.901-2.031 1.983-2.031v7.408H8.63v-.023z' }),
+                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.045 2.215V.092h2.817l2.05 2.123z' })
+                );
+                break;
+            case 'range':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
+                    _react2.default.createElement('rect', { fill: '#2A3052', transform: 'rotate(180 8 11.5)', y: '11', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('rect', { fill: '#2A3052', transform: 'rotate(180 8 4.5)', y: '4', width: '16', height: '1', rx: '.5' }),
+                    _react2.default.createElement('path', { d: 'M12.646 9.146a.5.5 0 0 0 .708.708l1.5-1.5a.5.5 0 0 0 0-.708l-1.5-1.5a.5.5 0 0 0-.708.708L13.793 8l-1.147 1.146z', fill: '#2A3052', fillRule: 'nonzero' }),
+                    _react2.default.createElement('path', { d: 'M11.167 7.5L9.3 6.1a.5.5 0 0 0-.716.123L6.955 8.665 4.885 6.18a.5.5 0 0 0-.739-.034L2.293 8H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 .354-.146L4.466 7.24l2.15 2.58a.5.5 0 0 0 .8-.044l1.707-2.56L10.7 8.4a.5.5 0 0 0 .3.1h3.5a.5.5 0 1 0 0-1h-3.333z', fill: '#2A3052', fillRule: 'nonzero' })
+                );
+                break;
+            case 'upordown':
                 IconType = _react2.default.createElement(
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
@@ -10637,6 +11121,77 @@ IconLock.propTypes = {
 };
 
 exports.IconLock = IconLock;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Trading/icon_price_move.jsx":
+/*!*****************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Trading/icon_price_move.jsx ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconPriceMove = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconPriceMove = function IconPriceMove(_ref) {
+    var type = _ref.type,
+        className = _ref.className;
+
+    var IconType = void 0;
+    if (type) {
+        switch (type) {
+            case 'profit':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { fill: '#2BC8A5', fillRule: 'nonzero', d: 'M8 4l6 8H2z' })
+                );
+                break;
+            case 'loss':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { fill: '#E31C4B', fillRule: 'nonzero', d: 'M8 12l6-8H2z' })
+                );
+                break;
+            default:
+                IconType = _react2.default.createElement('path', { fill: '#B0B3BF', fillRule: 'evenodd', d: 'M7 10.4L7.4 9 8 7.9l1-1c.4-.5.6-1 .6-1.5 0-.6-.1-1-.4-1.3-.2-.3-.6-.4-1.2-.4-.5 0-.9.1-1.2.4-.3.3-.4.6-.4 1H5c0-.7.3-1.4.9-1.9.5-.5 1.2-.7 2.1-.7 1 0 1.7.3 2.2.8.5.5.8 1.1.8 2 0 .9-.4 1.7-1.2 2.6l-.8.8c-.4.4-.5 1-.5 1.7H7zm0 2.3c0-.2 0-.4.2-.5l.6-.3c.3 0 .5.1.6.3.2.1.2.3.2.5 0 .3 0 .4-.2.6l-.6.2c-.2 0-.4 0-.6-.2a.8.8 0 0 1-.2-.6z' });
+                break;
+        }
+    }
+    return _react2.default.createElement(
+        'svg',
+        { className: (0, _classnames2.default)('inline-icon', className), width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
+        IconType
+    );
+};
+
+IconPriceMove.propTypes = {
+    className: _propTypes2.default.string,
+    type: _propTypes2.default.string
+};
+
+exports.IconPriceMove = IconPriceMove;
 
 /***/ }),
 
@@ -12488,6 +13043,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
 
+var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
+
+var _tooltip2 = _interopRequireDefault(_tooltip);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractTypeItem = function ContractTypeItem(_ref) {
@@ -12512,7 +13071,11 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 'span',
                 { className: 'contract-title' },
                 contract.text
-            )
+            ),
+            _react2.default.createElement(_tooltip2.default, {
+                alignment: 'left',
+                icon: 'info'
+            })
         );
     });
 };
@@ -12564,30 +13127,33 @@ var ContractTypeList = function ContractTypeList(_ref) {
         name = _ref.name,
         value = _ref.value;
     return Object.keys(list).map(function (key) {
-        return _react2.default.createElement(
-            _react2.default.Fragment,
-            { key: key },
-            _react2.default.createElement(
-                'div',
-                { className: 'list-group' },
+        return (
+            // TODO: Remove this line after other contracts are ready to be served
+            !['In/Out', 'Asians'].includes(key) && _react2.default.createElement(
+                _react2.default.Fragment,
+                { key: key },
                 _react2.default.createElement(
                     'div',
-                    { className: 'list-label' },
+                    { className: 'list-group' },
                     _react2.default.createElement(
-                        'span',
-                        null,
-                        key
+                        'div',
+                        { className: 'list-label' },
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            key
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'list-items' },
+                        _react2.default.createElement(_contract_type_item2.default, {
+                            contracts: list[key],
+                            name: name,
+                            value: value,
+                            handleSelect: handleSelect
+                        })
                     )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'list-items' },
-                    _react2.default.createElement(_contract_type_item2.default, {
-                        contracts: list[key],
-                        name: name,
-                        value: value,
-                        handleSelect: handleSelect
-                    })
                 )
             )
         );
@@ -12628,8 +13194,6 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
-
-var _Common = __webpack_require__(/*! ../../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
 var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
 
@@ -12750,7 +13314,6 @@ var ContractTypeWidget = function (_React$PureComponent) {
                         this.getDisplayText()
                     )
                 ),
-                _react2.default.createElement(_Common.IconArrow, { className: 'select-arrow' }),
                 _react2.default.createElement(
                     _contract_type_dialog2.default,
                     {
@@ -13368,12 +13931,15 @@ var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/to
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
+var _icon_price_move = __webpack_require__(/*! ../../../../../Assets/Trading/icon_price_move.jsx */ "./src/javascript/app_2/Assets/Trading/icon_price_move.jsx");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractInfo = function ContractInfo(_ref) {
     var basis = _ref.basis,
         basis_list = _ref.basis_list,
         currency = _ref.currency,
+        price_move = _ref.price_move,
         proposal_info = _ref.proposal_info;
 
     var contract_info_basis = basis_list.find(function (o) {
@@ -13406,7 +13972,8 @@ var ContractInfo = function ContractInfo(_ref) {
                     'div',
                     null,
                     _react2.default.createElement(_money2.default, { amount: proposal_info[contract_info_basis.value], currency: currency })
-                )
+                ),
+                _react2.default.createElement(_icon_price_move.IconPriceMove, { type: price_move })
             ),
             _react2.default.createElement(
                 'span',
@@ -13422,6 +13989,7 @@ ContractInfo.propTypes = {
     basis: _propTypes2.default.string,
     basis_list: _mobxReact.PropTypes.arrayOrObservableArray,
     currency: _propTypes2.default.string,
+    price_move: _propTypes2.default.string,
     proposal_info: _propTypes2.default.object
 };
 
@@ -13700,10 +14268,6 @@ var _classnames2 = _interopRequireDefault(_classnames);
 
 var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -13736,6 +14300,8 @@ var _time_picker2 = _interopRequireDefault(_time_picker);
 
 var _duration = __webpack_require__(/*! ../../../../../Stores/Modules/Trading/Helpers/duration */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/duration.js");
 
+var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* TODO:
@@ -13745,12 +14311,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var expiry_list = [{ text: (0, _localize.localize)('Duration'), value: 'duration' }];
 
 var now_date = void 0,
-    min_date_duration = void 0,
     max_date_duration = void 0,
     min_date_expiry = void 0,
     min_day = void 0,
     max_day = void 0,
-    start_date_time = void 0;
+    start_date_time = void 0,
+    max_duration = void 0,
+    min_duration = void 0;
 
 var Duration = function Duration(_ref) {
     var contract_expiry_type = _ref.contract_expiry_type,
@@ -13771,7 +14338,9 @@ var Duration = function Duration(_ref) {
         validation_errors = _ref.validation_errors;
 
     if (duration_min_max[contract_expiry_type]) {
-        var moment_now = (0, _moment2.default)(server_time);
+        min_duration = (0, _duration.convertDurationLimit)(+duration_min_max[contract_expiry_type].min, duration_unit);
+        max_duration = (0, _duration.convertDurationLimit)(+duration_min_max[contract_expiry_type].max, duration_unit);
+        var moment_now = (0, _Date.toMoment)(server_time);
         var new_min_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].min, 's', 'd');
         var new_max_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].max, 's', 'd');
         if (!now_date || moment_now.date() !== now_date.date() || duration_unit === 'd' && (min_day !== new_min_day || max_day !== new_max_day)) {
@@ -13783,17 +14352,16 @@ var Duration = function Duration(_ref) {
             var moment_today = moment_now.clone().startOf('day');
 
             now_date = moment_now.clone();
-            min_date_duration = moment_today.clone().add(min_day || 1, 'd');
             max_date_duration = moment_today.clone().add(max_day || 365, 'd');
             min_date_expiry = moment_today.clone();
         }
     }
 
-    var moment_expiry = _moment2.default.utc(expiry_date);
-    var is_same_day = moment_expiry.isSame((0, _moment2.default)(start_date * 1000 || undefined).utc(), 'day');
+    var moment_expiry = (0, _Date.toMoment)(expiry_date);
+    var is_same_day = moment_expiry.isSame((0, _Date.toMoment)(start_date), 'day');
     if (is_same_day) {
-        var date_time = _moment2.default.utc(start_date * 1000 || undefined);
-        if (start_date) {
+        var date_time = (0, _Date.toMoment)(start_date);
+        if (start_date && (0, _Date.isTimeValid)(start_time)) {
             var _start_time$split = start_time.split(':'),
                 _start_time$split2 = _slicedToArray(_start_time$split, 2),
                 hour = _start_time$split2[0],
@@ -13802,7 +14370,7 @@ var Duration = function Duration(_ref) {
             date_time.hour(hour).minute(minute).second(0).add(5, 'minutes');
         }
         // only update start time every five minutes, since time picker shows five minute durations
-        var moment_start_date_time = _moment2.default.unix(start_date_time);
+        var moment_start_date_time = (0, _Date.toMoment)(start_date_time);
         if (!start_date_time || moment_start_date_time.isAfter(date_time) || moment_start_date_time.clone().add(5, 'minutes').isBefore(date_time) || moment_start_date_time.minutes() !== date_time.minutes() && date_time.minutes() % 5 === 0) {
             start_date_time = date_time.unix();
         }
@@ -13818,7 +14386,6 @@ var Duration = function Duration(_ref) {
             expiry_type === 'duration' ? duration + ' ' + duration_unit_text : moment_expiry.format('ddd - DD MMM, YYYY') + '\n' + expiry_time
         );
     }
-    var datepicker_footer = min_day > 1 ? (0, _localize.localize)('The minimum duration is [_1] days', [min_day]) : (0, _localize.localize)('The minimum duration is [_1] day', [min_day]);
 
     var has_end_time = expiry_list.find(function (expiry) {
         return expiry.value === 'endtime';
@@ -13854,31 +14421,23 @@ var Duration = function Duration(_ref) {
             _react2.default.createElement(
                 'div',
                 { className: 'duration-container' },
-                duration_unit === 'd' && !is_nativepicker ? _react2.default.createElement(_DatePicker2.default, {
-                    name: 'duration',
-                    min_date: min_date_duration,
-                    max_date: max_date_duration,
-                    mode: 'duration',
-                    onChange: onChange,
-                    value: duration || min_day,
-                    is_read_only: true,
-                    is_clearable: false,
-                    is_nativepicker: is_nativepicker,
-                    footer: datepicker_footer
-                }) : _react2.default.createElement(_input_field2.default, {
-                    type: 'number',
-                    name: 'duration',
-                    value: duration,
-                    onChange: onChange,
-                    is_nativepicker: is_nativepicker,
-                    error_messages: validation_errors.duration || []
-                }),
                 _react2.default.createElement(_DropDown2.default, {
                     list: duration_units_list,
                     value: duration_unit,
                     name: 'duration_unit',
                     onChange: onChange,
                     is_nativepicker: is_nativepicker
+                }),
+                _react2.default.createElement(_input_field2.default, {
+                    type: 'number',
+                    max_value: max_duration,
+                    min_value: min_duration,
+                    name: 'duration',
+                    value: duration,
+                    onChange: onChange,
+                    is_nativepicker: is_nativepicker,
+                    is_incrementable: true,
+                    error_messages: validation_errors.duration || []
                 })
             )
         ) : _react2.default.createElement(
@@ -13909,6 +14468,7 @@ var Duration = function Duration(_ref) {
                     sessions: sessions,
                     is_clearable: false,
                     is_nativepicker: is_nativepicker
+                    // validation_errors={validation_errors.end_time} TODO: add validation_errors for end time
                 })
             )
         )
@@ -13965,9 +14525,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
-var _DropDown = __webpack_require__(/*! ../../../../../App/Components/Form/DropDown */ "./src/javascript/app_2/App/Components/Form/DropDown/index.js");
+var _number_selector = __webpack_require__(/*! ../../../../../App/Components/Form/number_selector.jsx */ "./src/javascript/app_2/App/Components/Form/number_selector.jsx");
 
-var _DropDown2 = _interopRequireDefault(_DropDown);
+var _number_selector2 = _interopRequireDefault(_number_selector);
 
 var _fieldset = __webpack_require__(/*! ../../../../../App/Components/Form/fieldset.jsx */ "./src/javascript/app_2/App/Components/Form/fieldset.jsx");
 
@@ -13977,16 +14537,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var last_digit_numbers = [].concat(_toConsumableArray(Array(10).keys())).map(function (number) {
-    return {
-        text: number,
-        value: number
-    };
-});
-
 var LastDigit = function LastDigit(_ref) {
     var is_minimized = _ref.is_minimized,
-        is_nativepicker = _ref.is_nativepicker,
         last_digit = _ref.last_digit,
         onChange = _ref.onChange;
 
@@ -13998,25 +14550,26 @@ var LastDigit = function LastDigit(_ref) {
             (0, _localize.localize)('Last Digit') + ': ' + last_digit
         );
     }
+    var arr_five = [].concat(_toConsumableArray(Array(5).keys()));
     return _react2.default.createElement(
         _fieldset2.default,
         {
             header: (0, _localize.localize)('Last Digit Prediction'),
-            icon: 'digits'
+            is_center: true
         },
-        _react2.default.createElement(_DropDown2.default, {
-            list: last_digit_numbers,
-            value: +last_digit,
+        _react2.default.createElement(_number_selector2.default, {
+            arr_arr_numbers: [arr_five, arr_five.map(function (i) {
+                return i + 5;
+            })],
             name: 'last_digit',
             onChange: onChange,
-            is_nativepicker: is_nativepicker
+            selected_number: +last_digit
         })
     );
 };
 
 LastDigit.propTypes = {
     is_minimized: _propTypes2.default.bool,
-    is_nativepicker: _propTypes2.default.bool,
     last_digit: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     onChange: _propTypes2.default.func
 };
@@ -14076,7 +14629,8 @@ var StartDate = function StartDate(_ref) {
         sessions = _ref.sessions,
         start_date = _ref.start_date,
         start_dates_list = _ref.start_dates_list,
-        start_time = _ref.start_time;
+        start_time = _ref.start_time,
+        validation_errors = _ref.validation_errors;
 
     // Number(0) refers to 'now'
     var is_today = start_date === Number(0);
@@ -14107,21 +14661,18 @@ var StartDate = function StartDate(_ref) {
             onChange: onChange,
             is_nativepicker: is_nativepicker
         }),
-        !is_today && _react2.default.createElement(
-            _react2.default.Fragment,
-            null,
-            _react2.default.createElement(_time_picker2.default, {
-                onChange: onChange,
-                is_align_right: true,
-                name: 'start_time',
-                value: start_time,
-                placeholder: '12:00',
-                start_date: start_date,
-                sessions: sessions,
-                is_clearable: false,
-                is_nativepicker: is_nativepicker
-            })
-        )
+        !is_today && start_time && _react2.default.createElement(_time_picker2.default, {
+            onChange: onChange,
+            is_align_right: true,
+            name: 'start_time',
+            value: start_time,
+            placeholder: '12:00',
+            start_date: start_date,
+            sessions: sessions,
+            is_clearable: false,
+            is_nativepicker: is_nativepicker,
+            validation_errors: validation_errors.start_time
+        })
     );
 };
 
@@ -14132,7 +14683,8 @@ StartDate.propTypes = {
     sessions: _mobxReact.PropTypes.arrayOrObservableArray,
     start_date: _propTypes2.default.number,
     start_dates_list: _mobxReact.PropTypes.arrayOrObservableArray,
-    start_time: _propTypes2.default.string
+    start_time: _propTypes2.default.string,
+    validation_errors: _propTypes2.default.object
 };
 
 exports.default = (0, _mobxReact.observer)(StartDate);
@@ -14478,6 +15030,7 @@ var Purchase = function Purchase(_ref) {
         onHoverPurchase = _ref.onHoverPurchase,
         togglePurchaseLock = _ref.togglePurchaseLock,
         resetPurchase = _ref.resetPurchase,
+        price_move = _ref.price_move,
         proposal_info = _ref.proposal_info,
         purchase_info = _ref.purchase_info,
         trade_types = _ref.trade_types;
@@ -14563,6 +15116,7 @@ var Purchase = function Purchase(_ref) {
                     contract_title: trade_types[type],
                     contract_type: type,
                     currency: currency,
+                    price_move: price_move,
                     proposal_info: info
                 }),
                 is_purchase_confirm_on ? _react2.default.createElement(
@@ -14592,6 +15146,7 @@ Purchase.propTypes = {
     is_trade_enabled: _propTypes2.default.bool,
     onClickPurchase: _propTypes2.default.func,
     onHoverPurchase: _propTypes2.default.func,
+    price_move: _propTypes2.default.string,
     proposal_info: _propTypes2.default.object,
     purchase_info: _propTypes2.default.object,
     resetPurchase: _propTypes2.default.func,
@@ -14614,6 +15169,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         onClickPurchase: modules.trade.onPurchase,
         onHoverPurchase: modules.trade.onHoverPurchase,
         resetPurchase: modules.trade.requestProposal,
+        price_move: modules.trade.price_move,
         proposal_info: modules.trade.proposal_info,
         purchase_info: modules.trade.purchase_info,
         trade_types: modules.trade.trade_types,
@@ -18054,7 +18610,8 @@ var onChangeStartDate = exports.onChangeStartDate = function onChangeStartDate(s
     var contract_type = store.contract_type,
         start_date = store.start_date,
         duration_unit = store.duration_unit,
-        expiry_time = store.expiry_time;
+        expiry_time = store.expiry_time,
+        expiry_type = store.expiry_type;
     var start_time = store.start_time,
         expiry_date = store.expiry_date;
 
@@ -18069,7 +18626,7 @@ var onChangeStartDate = exports.onChangeStartDate = function onChangeStartDate(s
     var obj_duration_units_list = _contract_type2.default.getDurationUnitsList(contract_type, contract_start_type);
     var obj_duration_unit = _contract_type2.default.getDurationUnit(duration_unit, contract_type, contract_start_type);
 
-    var obj_expiry_date = _contract_type2.default.getExpiryDate(expiry_date, start_date);
+    var obj_expiry_date = _contract_type2.default.getExpiryDate(expiry_date, start_date, expiry_type);
     expiry_date = obj_expiry_date.expiry_date;
     var obj_expiry_time = _contract_type2.default.getExpiryTime(sessions, start_date, start_time, expiry_date, expiry_time);
 
@@ -18196,10 +18753,31 @@ var getContractCategoriesConfig = exports.getContractCategoriesConfig = function
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-// list of trade's options that should be used in query string of trade page url.
-var allowed_query_string_variables = exports.allowed_query_string_variables = ['amount', 'barrier_1', 'barrier_2', 'basis', 'contract_start_type', 'contract_type', 'duration', 'duration_unit', 'expiry_date', 'expiry_type', 'last_digit', 'start_date', 'symbol'];
+exports.removable_proposal_properties = exports.proposal_properties_alternative_names = exports.getNonProposalQueryStringVariables = exports.allowed_query_string_variables = undefined;
 
-var non_proposal_query_string_variable = exports.non_proposal_query_string_variable = ['contract_start_type', 'expiry_type'];
+var _contract_type = __webpack_require__(/*! ../Helpers/contract_type */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/contract_type.js");
+
+var _contract_type2 = _interopRequireDefault(_contract_type);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+// list of trade's options that should be used in query string of trade page url.
+var allowed_query_string_variables = exports.allowed_query_string_variables = ['amount', 'barrier_1', 'barrier_2', 'basis', 'contract_start_type', 'contract_type', 'duration', 'duration_unit', 'expiry_date', 'expiry_type', 'last_digit', 'start_date', 'start_time', 'symbol'];
+
+var getNonProposalQueryStringVariables = exports.getNonProposalQueryStringVariables = function getNonProposalQueryStringVariables(store) {
+    var non_proposal_query_string_variables = ['contract_start_type', 'expiry_type'];
+
+    if (!store) return non_proposal_query_string_variables;
+
+    var _ContractType$getStar = _contract_type2.default.getStartType(store.start_date),
+        contract_start_type = _ContractType$getStar.contract_start_type;
+
+    var expiry_type = store.expiry_type;
+
+    return [].concat(non_proposal_query_string_variables, _toConsumableArray(contract_start_type === 'forward' ? ['start_time'] : []), _toConsumableArray(expiry_type === 'endtime' ? ['expiry_date'] : []));
+};
 
 var proposal_properties_alternative_names = exports.proposal_properties_alternative_names = {
     barrier: function barrier(is_digit) {
@@ -18269,7 +18847,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _start_date = __webpack_require__(/*! ../Helpers/start_date */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/start_date.js");
+
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var getValidationRules = function getValidationRules() {
     return {
@@ -18305,6 +18889,30 @@ var getValidationRules = function getValidationRules() {
         },
         duration: {
             rules: [['req', { message: (0, _localize.localize)('Duration is a required field.') }]]
+        },
+        start_date: {
+            trigger: 'start_time'
+        },
+        start_time: {
+            rules: [['custom', { func: function func(value, options, store) {
+                    return store.contract_start_type === 'spot' || (0, _Date.isTimeValid)(value);
+                }, message: (0, _localize.localize)('Please enter the start time in the format "HH:MM".') }], ['custom', { func: function func(value, options, store) {
+                    return store.contract_start_type === 'spot' || (0, _Date.isHourValid)(value);
+                }, message: (0, _localize.localize)('Hour must be between 0 and 23.') }], ['custom', { func: function func(value, options, store) {
+                    return store.contract_start_type === 'spot' || (0, _Date.isMinuteValid)(value);
+                }, message: (0, _localize.localize)('Minute must be between 0 and 59.') }], ['custom', { func: function func(value, options, store) {
+                    if (store.contract_start_type === 'spot') return true;
+                    if (!(0, _Date.isTimeValid)(value)) return false;
+                    var start_moment = (0, _Date.toMoment)(store.start_date);
+                    var start_moment_clone = start_moment.clone();
+
+                    var _value$split = value.split(':'),
+                        _value$split2 = _slicedToArray(_value$split, 2),
+                        h = _value$split2[0],
+                        m = _value$split2[1];
+
+                    return (0, _start_date.isSessionAvailable)(store.sessions, start_moment_clone.hour(h).minute(m), start_moment);
+                }, message: (0, _localize.localize)('Start time cannot be in the past.') }]]
         }
     };
 };
@@ -18391,15 +18999,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
 var _Services = __webpack_require__(/*! ../../../../Services */ "./src/javascript/app_2/Services/index.js");
+
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _barrier = __webpack_require__(/*! ./barrier */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/barrier.js");
 
@@ -18408,8 +19014,6 @@ var _duration = __webpack_require__(/*! ./duration */ "./src/javascript/app_2/St
 var _start_date = __webpack_require__(/*! ./start_date */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/start_date.js");
 
 var _contract = __webpack_require__(/*! ../Constants/contract */ "./src/javascript/app_2/Stores/Modules/Trading/Constants/contract.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -18655,27 +19259,30 @@ var ContractType = function () {
     };
 
     var buildMoment = function buildMoment(date, time) {
+        var moment_date = (0, _Date.toMoment)(date);
+        if (!time || !(0, _Date.isTimeValid)(time)) return moment_date;
+
         var _time$split = time.split(':'),
             _time$split2 = _slicedToArray(_time$split, 2),
             hour = _time$split2[0],
             minute = _time$split2[1];
 
-        return _moment2.default.utc(isNaN(date) ? date : +date * 1000).hour(hour).minute(minute);
+        return moment_date.hour(hour).minute(minute);
     };
 
     var getStartTime = function getStartTime(sessions, start_date, start_time) {
         return {
-            start_time: getValidTime(sessions, buildMoment(start_date, start_time))
+            start_time: start_date ? getValidTime(sessions, buildMoment(start_date, start_time)) : null
         };
     };
 
-    var getExpiryDate = function getExpiryDate(expiry_date, start_date) {
-        var moment_start = _moment2.default.utc(start_date ? start_date * 1000 : undefined);
-        var moment_expiry = _moment2.default.utc(expiry_date || undefined);
+    var getExpiryDate = function getExpiryDate(expiry_date, start_date, expiry_type) {
+        var moment_start = (0, _Date.toMoment)(start_date);
+        var moment_expiry = (0, _Date.toMoment)(expiry_date);
         // forward starting contracts should only show today and tomorrow as expiry date
         var is_invalid = moment_expiry.isBefore(moment_start, 'day') || start_date && moment_expiry.isAfter(moment_start.clone().add(1, 'day'));
         return {
-            expiry_date: (is_invalid ? moment_start : moment_expiry).format('YYYY-MM-DD')
+            expiry_date: expiry_type === 'endtime' ? (is_invalid ? moment_start : moment_expiry).format('YYYY-MM-DD') : null
         };
     };
 
@@ -18683,7 +19290,7 @@ var ContractType = function () {
     // first check if end time is within available sessions
     // then confirm that end time is after start time
     var getExpiryTime = function getExpiryTime(sessions, start_date, start_time, expiry_date, expiry_time) {
-        var start_moment = start_date ? buildMoment(start_date, start_time) : (0, _moment2.default)().utc();
+        var start_moment = start_date ? buildMoment(start_date, start_time) : (0, _Date.toMoment)();
         var end_moment = buildMoment(expiry_date, expiry_time);
 
         var end_time = expiry_time;
@@ -18821,13 +19428,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.convertDurationLimit = exports.getExpiryType = exports.convertDurationUnit = exports.buildDurationConfig = undefined;
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -18914,7 +19517,7 @@ var getExpiryType = exports.getExpiryType = function getExpiryType(store) {
     var server_time = store.root_store.common.server_time;
 
     var duration_is_day = expiry_type === 'duration' && duration_unit === 'd';
-    var expiry_is_after_today = expiry_type === 'endtime' && _moment2.default.utc(expiry_date).isAfter((0, _moment2.default)(server_time).utc(), 'day');
+    var expiry_is_after_today = expiry_type === 'endtime' && (0, _Date.toMoment)(expiry_date).isAfter((0, _Date.toMoment)(server_time), 'day');
 
     var contract_expiry_type = 'daily';
     if (!duration_is_day && !expiry_is_after_today) {
@@ -19054,10 +19657,6 @@ exports.getProposalParametersName = exports.createProposalRequests = exports.get
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
 var _currency_base = __webpack_require__(/*! ../../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
 
 var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
@@ -19065,8 +19664,6 @@ var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/
 var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _query_string = __webpack_require__(/*! ../Constants/query_string */ "./src/javascript/app_2/Stores/Modules/Trading/Constants/query_string.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, response) {
     var proposal = response.proposal || {};
@@ -19101,8 +19698,8 @@ var createProposalRequests = exports.createProposalRequests = function createPro
 var createProposalRequestForContract = function createProposalRequestForContract(store, type_of_contract) {
     var obj_expiry = {};
     if (store.expiry_type === 'endtime') {
-        var expiry_date = _moment2.default.utc(store.expiry_date);
-        var start_date = _moment2.default.unix(store.start_date || store.root_store.common.server_time / 1000).utc();
+        var expiry_date = (0, _Date.toMoment)(store.expiry_date);
+        var start_date = (0, _Date.toMoment)(store.start_date || store.root_store.common.server_time);
         var is_same_day = expiry_date.isSame(start_date, 'day');
         var expiry_time = is_same_day ? store.expiry_time : '23:59:59';
         obj_expiry.date_expiry = (0, _Date.convertToUnix)(expiry_date.unix(), expiry_time);
@@ -19161,11 +19758,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isSessionAvailable = exports.buildForwardStartingConfig = undefined;
 
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var buildForwardStartingConfig = exports.buildForwardStartingConfig = function buildForwardStartingConfig(contract, forward_starting_dates) {
     var forward_starting_config = [];
@@ -19175,12 +19768,12 @@ var buildForwardStartingConfig = exports.buildForwardStartingConfig = function b
             var duplicated_option = forward_starting_config.find(function (opt) {
                 return opt.value === parseInt(option.date);
             });
-            var current_session = { open: _moment2.default.unix(option.open).utc(), close: _moment2.default.unix(option.close).utc() };
+            var current_session = { open: (0, _Date.toMoment)(option.open), close: (0, _Date.toMoment)(option.close) };
             if (duplicated_option) {
                 duplicated_option.sessions.push(current_session);
             } else {
                 forward_starting_config.push({
-                    text: _moment2.default.unix(option.date).format('ddd - DD MMM, YYYY'),
+                    text: (0, _Date.toMoment)(option.date).format('ddd - DD MMM, YYYY'),
                     value: parseInt(option.date),
                     sessions: [current_session]
                 });
@@ -19193,7 +19786,7 @@ var buildForwardStartingConfig = exports.buildForwardStartingConfig = function b
 
 // returns false if same as now
 var isBeforeDate = function isBeforeDate(compare_moment, start_moment, should_only_check_hour) {
-    var now_moment = _moment2.default.utc(start_moment);
+    var now_moment = (0, _Date.toMoment)(start_moment);
     if (should_only_check_hour) {
         now_moment.minute(0).second(0);
     }
@@ -19202,8 +19795,8 @@ var isBeforeDate = function isBeforeDate(compare_moment, start_moment, should_on
 
 var isSessionAvailable = exports.isSessionAvailable = function isSessionAvailable() {
     var sessions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    var compare_moment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _moment2.default.utc();
-    var start_moment = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _moment2.default.utc();
+    var compare_moment = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : (0, _Date.toMoment)();
+    var start_moment = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : (0, _Date.toMoment)();
     var should_only_check_hour = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     return !isBeforeDate(compare_moment, undefined, should_only_check_hour) && !isBeforeDate(compare_moment, start_moment, should_only_check_hour) && (!sessions.length || !!sessions.find(function (session) {
         return compare_moment.isBetween(should_only_check_hour ? session.open.clone().minute(0) : session.open, session.close, null, '[]');
@@ -19256,7 +19849,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32;
 
 var _lodash = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
 
@@ -19379,17 +19972,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     // Chart
 
 
-    // Purchase
-    // Number(0) refers to 'now'
+    // Last Digit
 
 
-    // Barrier
+    // Start Time
 
 
-    // Amount
+    // Duration
 
 
-    // Contract Type
+    // Underlying
     function TradeStore(_ref) {
         var root_store = _ref.root_store;
 
@@ -19463,16 +20055,28 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         _initDefineProp(_this, 'purchase_info', _descriptor30, _this);
 
+        _initDefineProp(_this, 'price_move', _descriptor31, _this);
+
         _this.chart_id = 1;
         _this.debouncedProposal = (0, _lodash2.default)(_this.requestProposal, 500);
         _this.proposal_requests = {};
 
-        _initDefineProp(_this, 'init', _descriptor31, _this);
+        _initDefineProp(_this, 'init', _descriptor32, _this);
 
         Object.defineProperty(_this, 'is_query_string_applied', {
             enumerable: false,
             value: false,
             writable: true
+        });
+        (0, _mobx.observe)(_this, function (change) {
+            if (change.name === 'proposal_info') {
+                // Put your logic for changing the city here
+                if (change.newValue > change.oldValue) {
+                    _this.price_move = 'profit';
+                } else {
+                    _this.price_move = 'loss';
+                }
+            }
         });
         // Adds intercept to change min_max value of duration validation
         (0, _mobx.reaction)(function () {
@@ -19483,16 +20087,17 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         return _this;
     }
 
-    // Last Digit
+    // Purchase
+    // Number(0) refers to 'now'
 
 
-    // Start Time
+    // Barrier
 
 
-    // Duration
+    // Amount
 
 
-    // Underlying
+    // Contract Type
 
 
     _createClass(TradeStore, [{
@@ -19777,7 +20382,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             if (!(0, _utility.isEmptyObject)(requests)) {
                 var proper_proposal_params_for_query_string = (0, _proposal.getProposalParametersName)(requests);
 
-                _url_helper2.default.pruneQueryString([].concat(_toConsumableArray(proper_proposal_params_for_query_string), _toConsumableArray(_query_string.non_proposal_query_string_variable)));
+                _url_helper2.default.pruneQueryString([].concat(_toConsumableArray(proper_proposal_params_for_query_string), _toConsumableArray((0, _query_string.getNonProposalQueryStringVariables)(this))));
 
                 this.proposal_requests = requests;
                 this.proposal_info = {};
@@ -20053,7 +20658,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 }), _descriptor26 = _applyDecoratedDescriptor(_class.prototype, 'start_time', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
-        return '12:30';
+        return null;
     }
 }), _descriptor27 = _applyDecoratedDescriptor(_class.prototype, 'sessions', [_mobx.observable], {
     enumerable: true,
@@ -20075,7 +20680,12 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     initializer: function initializer() {
         return {};
     }
-}), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec], {
+}), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, 'price_move', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return '';
+    }
+}), _descriptor32 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec], {
     enumerable: true,
     initializer: function initializer() {
         var _this8 = this;
@@ -20379,7 +20989,10 @@ var BaseStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = 
     }, {
         key: 'saveToStorage',
         value: function saveToStorage(properties, storage) {
-            var snapshot = JSON.stringify(this.getSnapshot(properties));
+            var snapshot = JSON.stringify(this.getSnapshot(properties), function (key, value) {
+                if (value !== null) return value;
+                return undefined;
+            });
 
             if (storage === BaseStore.STORAGES.LOCAL_STORAGE) {
                 localStorage.setItem(this.constructor.name, snapshot);
@@ -21921,7 +22534,7 @@ exports.default = UIStore;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.formatDuration = exports.getDiffDuration = exports.daysFromTodayTo = exports.formatDate = exports.toGMTFormat = exports.convertToUnix = exports.toMoment = undefined;
+exports.isDateValid = exports.isMinuteValid = exports.isHourValid = exports.isTimeValid = exports.formatDuration = exports.getDiffDuration = exports.daysFromTodayTo = exports.formatDate = exports.toGMTFormat = exports.convertToUnix = exports.toMoment = exports.epochToMoment = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -21938,8 +22551,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param  {Number} epoch
  * @return {moment} the moment object of provided epoch
  */
-var toMoment = exports.toMoment = function toMoment(epoch) {
+var epochToMoment = exports.epochToMoment = function epochToMoment(epoch) {
   return _moment2.default.unix(epoch).utc();
+};
+
+/**
+ * Convert date string or epoch to moment object
+ * @param  {Number} value   the date in epoch format
+ * @param  {String} value   the date in string format
+ * @return {moment} the moment object of 'now' or the provided date epoch or string
+ */
+var toMoment = exports.toMoment = function toMoment(value) {
+  if (!value) return (0, _moment2.default)().utc(); // returns 'now' moment object
+  if (value instanceof _moment2.default && value.isValid() && value.isUTC()) return value; // returns if already a moment object
+  var moment_obj = epochToMoment(value);
+  return moment_obj.isValid() ? moment_obj : _moment2.default.utc(value);
 };
 
 /**
@@ -22013,6 +22639,39 @@ var formatDuration = exports.formatDuration = function formatDuration(duration) 
     formatted_str = d + ' ' + (d > 1 ? (0, _localize.localize)('days') : (0, _localize.localize)('day')) + ' ' + formatted_str;
   }
   return formatted_str;
+};
+
+/**
+ * return true if the time_str is in "HH:MM" format, else return false
+ * @param {String} time_str time
+ */
+var isTimeValid = exports.isTimeValid = function isTimeValid(time_str) {
+  return (/^(\d{1,2}):(\d{2})(:00)?$/.test(time_str)
+  );
+};
+
+/**
+ * return true if the time_str's hour is between 0 and 23, else return false
+ * @param {String} time_str time
+ */
+var isHourValid = exports.isHourValid = function isHourValid(time_str) {
+  return isTimeValid(time_str) && /^([01][0-9]|2[0-3])$/.test(time_str.split(':')[0]);
+};
+
+/**
+ * return true if the time_str's minute is between 0 and 59, else return false
+ * @param {String} time_str time
+ */
+var isMinuteValid = exports.isMinuteValid = function isMinuteValid(time_str) {
+  return isTimeValid(time_str) && /^[0-5][0-9]$/.test(time_str.split(':')[1]);
+};
+
+/**
+ * return true if the date is typeof string and a valid moment date, else return false
+ * @param {String} date_str date
+ */
+var isDateValid = exports.isDateValid = function isDateValid(date_str) {
+  return typeof date_str === 'string' && (0, _moment2.default)(date_str).isValid();
 };
 
 /***/ }),
@@ -22396,7 +23055,7 @@ var URLHelper = function () {
             }
 
             if (!url) {
-                window.history.replaceState(null, null, '?' + param_object.toString());
+                window.history.replaceState(null, null, '?' + decodeURIComponent(param_object.toString()));
             } else {
                 url_object.search = param_object.toString();
             }
@@ -22458,7 +23117,7 @@ var URLHelper = function () {
 
             var query_string = [].concat(_toConsumableArray(query_params)).length ? '?' + query_params.toString() : '';
 
-            window.history.replaceState(null, null, query_string);
+            window.history.replaceState(null, null, decodeURIComponent(query_string));
         }
     }]);
 
@@ -23081,21 +23740,6 @@ window.check_new_release = _check_new_release.checkNewRelease; // used by GTM to
 (0, _pwa2.default)();
 (0, _app2.default)();
 
-// TODO Remove the below comments
-/**
- * The below lines are not necessary anymore since we are using `defer` in script tags.
- * It tells the browser to download the scripts without blocking the HTML parsing and
- * execute them after parsing is completely finished in the order they appear in the HTML.
- * Please let me know if you think we need to listen to this two events; otherwise, I will remove them totally in the next PR.
- */
-
-// document.addEventListener('DOMContentLoaded', initApp);
-// window.addEventListener('pageshow', (e) => { // Safari doesn't fire load event when using back button
-//     if (e.persisted) {
-//         initApp();
-//     }
-// });
-
 /***/ }),
 
 /***/ "./src/javascript/config.js":
@@ -23140,7 +23784,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = '12447'; // you can insert Application ID of your registered application here
+    var user_app_id = ''; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {

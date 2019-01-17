@@ -13950,26 +13950,17 @@ var ContractInfo = function (_React$PureComponent) {
 
         var _this = _possibleConstructorReturn(this, (ContractInfo.__proto__ || Object.getPrototypeOf(ContractInfo)).call(this, props));
 
-        _this.getIconType = function () {
-            var icon_type = '';
-            var contract_basis = _this.props.contract_basis.value;
-            var price = _this.props.proposal_info[contract_basis];
-            if (price !== _this.previous_price) {
-                icon_type = price > _this.previous_price ? 'profit' : 'loss';
-                _this.previous_price = price;
-            }
-            return icon_type;
+        _this.state = {
+            previous_price: null,
+            icon_type: null,
+            proposal_info_req_id: null
         };
-
-        _this.previous_price = null;
         return _this;
     }
 
     _createClass(ContractInfo, [{
         key: 'render',
         value: function render() {
-            var iconType = this.getIconType();
-
             return _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
@@ -14003,7 +13994,7 @@ var ContractInfo = function (_React$PureComponent) {
                         _react2.default.createElement(
                             'div',
                             { className: 'icon_price_move_container' },
-                            iconType && _react2.default.createElement(_icon_price_move.IconPriceMove, { type: iconType })
+                            this.state.icon_type && _react2.default.createElement(_icon_price_move.IconPriceMove, { type: this.state.icon_type })
                         )
                     ),
                     _react2.default.createElement(
@@ -14013,6 +14004,30 @@ var ContractInfo = function (_React$PureComponent) {
                     )
                 )
             );
+        }
+    }], [{
+        key: 'getDerivedStateFromProps',
+        value: function getDerivedStateFromProps(props, state) {
+            var previous_price = state.previous_price;
+            var proposal_info_req_id = props.proposal_info_req_id;
+
+            if (proposal_info_req_id && proposal_info_req_id !== state.proposal_info_req_id) {
+                var icon_type = null;
+                var price = props.proposal_info[props.contract_basis.value];
+                if (price !== previous_price) {
+                    icon_type = price > previous_price ? 'profit' : 'loss';
+                }
+                return {
+                    icon_type: icon_type,
+                    previous_price: price,
+                    proposal_info_req_id: proposal_info_req_id
+                };
+            }
+            return {
+                icon_type: state.icon_type,
+                previous_price: previous_price,
+                proposal_info_req_id: proposal_info_req_id
+            };
         }
     }]);
 
@@ -14024,7 +14039,8 @@ ContractInfo.propTypes = {
     basis: _propTypes2.default.string,
     contract_basis: _propTypes2.default.object,
     currency: _propTypes2.default.string,
-    proposal_info: _propTypes2.default.object
+    proposal_info: _propTypes2.default.object,
+    proposal_info_req_id: _propTypes2.default.number
 };
 
 exports.default = ContractInfo;
@@ -15065,6 +15081,7 @@ var Purchase = function Purchase(_ref) {
         togglePurchaseLock = _ref.togglePurchaseLock,
         resetPurchase = _ref.resetPurchase,
         proposal_info = _ref.proposal_info,
+        proposal_info_req_id = _ref.proposal_info_req_id,
         purchase_info = _ref.purchase_info,
         trade_types = _ref.trade_types;
     return Object.keys(trade_types).map(function (type, idx) {
@@ -15152,7 +15169,8 @@ var Purchase = function Purchase(_ref) {
                     contract_title: trade_types[type],
                     contract_type: type,
                     currency: currency,
-                    proposal_info: info
+                    proposal_info: info,
+                    proposal_info_req_id: proposal_info_req_id
                 }),
                 is_purchase_confirm_on ? _react2.default.createElement(
                     _PopConfirm.PopConfirm,
@@ -15182,6 +15200,7 @@ Purchase.propTypes = {
     onClickPurchase: _propTypes2.default.func,
     onHoverPurchase: _propTypes2.default.func,
     proposal_info: _propTypes2.default.object,
+    proposal_info_req_id: _propTypes2.default.number,
     purchase_info: _propTypes2.default.object,
     resetPurchase: _propTypes2.default.func,
     togglePurchaseLock: _propTypes2.default.func,
@@ -15204,6 +15223,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         onHoverPurchase: modules.trade.onHoverPurchase,
         resetPurchase: modules.trade.requestProposal,
         proposal_info: modules.trade.proposal_info,
+        proposal_info_req_id: modules.trade.proposal_info_req_id,
         purchase_info: modules.trade.purchase_info,
         trade_types: modules.trade.trade_types,
         is_purchase_confirm_on: ui.is_purchase_confirm_on,
@@ -19882,7 +19902,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32;
 
 var _lodash = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
 
@@ -20005,17 +20025,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     // Chart
 
 
-    // Purchase
-    // Number(0) refers to 'now'
+    // Last Digit
 
 
-    // Barrier
+    // Start Time
 
 
-    // Amount
+    // Duration
 
 
-    // Contract Type
+    // Underlying
     function TradeStore(_ref) {
         var root_store = _ref.root_store;
 
@@ -20087,13 +20106,15 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         _initDefineProp(_this, 'proposal_info', _descriptor29, _this);
 
-        _initDefineProp(_this, 'purchase_info', _descriptor30, _this);
+        _initDefineProp(_this, 'proposal_info_req_id', _descriptor30, _this);
+
+        _initDefineProp(_this, 'purchase_info', _descriptor31, _this);
 
         _this.chart_id = 1;
         _this.debouncedProposal = (0, _lodash2.default)(_this.requestProposal, 500);
         _this.proposal_requests = {};
 
-        _initDefineProp(_this, 'init', _descriptor31, _this);
+        _initDefineProp(_this, 'init', _descriptor32, _this);
 
         Object.defineProperty(_this, 'is_query_string_applied', {
             enumerable: false,
@@ -20109,16 +20130,17 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         return _this;
     }
 
-    // Last Digit
+    // Purchase
+    // Number(0) refers to 'now'
 
 
-    // Start Time
+    // Barrier
 
 
-    // Duration
+    // Amount
 
 
-    // Underlying
+    // Contract Type
 
 
     _createClass(TradeStore, [{
@@ -20337,7 +20359,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.updateStore({ // disable purchase button(s), clear contract info
                                     is_purchase_enabled: false,
-                                    proposal_info: {}
+                                    proposal_info: {},
+                                    proposal_info_req_id: 0
                                 });
 
                                 if (!this.smart_chart.is_contract_mode) {
@@ -20395,6 +20418,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                 return e.length;
             })) {
                 this.proposal_info = {};
+                this.proposal_info_req_id = 0;
                 this.purchase_info = {};
                 _Services.WS.forgetAll('proposal');
                 return;
@@ -20407,6 +20431,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                 this.proposal_requests = requests;
                 this.proposal_info = {};
+                this.proposal_info_req_id = 0;
                 this.purchase_info = {};
 
                 _Services.WS.forgetAll('proposal').then(function () {
@@ -20421,6 +20446,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         value: function onProposalResponse(response) {
             var contract_type = response.echo_req.contract_type;
             this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response)));
+
+            this.proposal_info_req_id = response.echo_req.req_id;
 
             if (!this.smart_chart.is_contract_mode) {
                 (0, _chart.setChartBarrier)(this.smart_chart, response, this.onChartBarrierChange);
@@ -20696,12 +20723,17 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     initializer: function initializer() {
         return {};
     }
-}), _descriptor30 = _applyDecoratedDescriptor(_class.prototype, 'purchase_info', [_mobx.observable], {
+}), _descriptor30 = _applyDecoratedDescriptor(_class.prototype, 'proposal_info_req_id', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return 0;
+    }
+}), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, 'purchase_info', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return {};
     }
-}), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec], {
+}), _descriptor32 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec], {
     enumerable: true,
     initializer: function initializer() {
         var _this8 = this;

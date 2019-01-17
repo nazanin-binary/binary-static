@@ -5613,7 +5613,7 @@ a {
       .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section {
         display: grid;
         grid-template-columns: 1fr; }
-        .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase {
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase {
           position: relative;
           background-color: #34a39a;
           overflow: hidden;
@@ -5624,7 +5624,7 @@ a {
           -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
                   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
           margin-top: 5px; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .info-container {
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__info {
             width: 30%;
             float: right;
             text-align: right;
@@ -5636,7 +5636,7 @@ a {
             -webkit-box-direction: normal;
                 -ms-flex-direction: column;
                     flex-direction: column; }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .info-container div {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__info div {
               display: -webkit-box;
               display: -ms-flexbox;
               display: flex;
@@ -5646,19 +5646,19 @@ a {
               -webkit-box-pack: end;
                   -ms-flex-pack: end;
                       justify-content: flex-end; }
-              .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .info-container div.return {
-                font-size: 14px;
-                -webkit-box-align: end;
-                    -ms-flex-align: end;
-                        align-items: flex-end;
-                font-weight: bold; }
-              .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .info-container div.profit {
-                font-size: 10px;
-                -webkit-box-align: start;
-                    -ms-flex-align: start;
-                        align-items: flex-start;
-                font-weight: bold; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .trade-type-container {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__info__return {
+              font-size: 14px;
+              -webkit-box-align: end;
+                  -ms-flex-align: end;
+                      align-items: flex-end;
+              font-weight: bold; }
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__info__profit {
+              font-size: 10px;
+              -webkit-box-align: start;
+                  -ms-flex-align: start;
+                      align-items: flex-start;
+              font-weight: bold; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__content {
             max-width: 50%;
             float: left;
             text-align: left;
@@ -5670,7 +5670,7 @@ a {
             -webkit-box-direction: normal;
                 -ms-flex-direction: column;
                     flex-direction: column; }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .trade-type-container .trade-type {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__content__trade-type {
               position: relative;
               display: -webkit-box;
               display: -ms-flexbox;
@@ -5681,12 +5681,12 @@ a {
               -webkit-box-align: center;
                   -ms-flex-align: center;
                       align-items: center; }
-              .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .trade-type-container .trade-type span {
+              .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__content__trade-type span {
                 margin-left: 10px; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .symbols {
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase .symbols {
             background: none;
             position: relative; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .btn-purchase-rec {
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__rec {
             width: 60%;
             height: 56px;
             position: absolute;
@@ -5698,7 +5698,7 @@ a {
             display: inline-block;
             float: left;
             text-align: left; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase .btn-purchase-tri {
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__tri {
             width: 0;
             height: 0;
             border-style: solid;
@@ -5709,18 +5709,18 @@ a {
             top: 0;
             bottom: 0;
             display: inline-block; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled {
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase:disabled {
             background-color: rgba(127, 131, 151, 0.3);
             color: #7f8397; }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled .btn-purchase-rec {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase:disabled .btn-purchase-rec {
               background: rgba(127, 131, 151, 0.3); }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled .btn-purchase-tri {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase:disabled .btn-purchase-tri {
               border-color: transparent transparent transparent rgba(127, 131, 151, 0.3); }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled .trade-type svg {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase:disabled .trade-type svg {
               opacity: 0.16; }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:disabled .symbols {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase:disabled .symbols {
               color: rgba(127, 131, 151, 0.3); }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section button.btn-purchase:hover {
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase:hover {
             -webkit-box-shadow: none;
                     box-shadow: none; }
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip {
@@ -5737,22 +5737,22 @@ a {
           top: 0; }
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip i:hover:before {
           opacity: 1; }
-      .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:before {
-        background: #15212d;
-        color: #fff;
-        -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-        max-width: unset;
-        width: 290px;
-        white-space: normal;
-        margin-right: 32px;
-        font-size: 12px;
-        padding-left: 40px; }
-      .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:after {
-        border-left-color: #15212d;
-        margin-right: 20px; }
-      .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:after, .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:before {
-        opacity: 1; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:before {
+          background: #15212d;
+          color: #fff;
+          -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+                  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+          max-width: unset;
+          width: 290px;
+          white-space: normal;
+          margin-right: 32px;
+          font-size: 12px;
+          padding-left: 40px; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:after {
+          border-left-color: #15212d;
+          margin-right: 20px; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:after, .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:before {
+          opacity: 1; }
       .binary-app div.purchase-wrapper fieldset.purchase-option:not(:only-child):nth-last-child(2) {
         border-bottom: 1px;
         border-bottom-left-radius: 0;

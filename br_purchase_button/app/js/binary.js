@@ -15103,14 +15103,14 @@ var Purchase = function Purchase(_ref) {
             _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
-                _react2.default.createElement('div', { className: 'btn-purchase-rec' }),
-                _react2.default.createElement('div', { className: 'btn-purchase-tri' }),
+                _react2.default.createElement('div', { className: 'btn-purchase__rec' }),
+                _react2.default.createElement('div', { className: 'btn-purchase__tri' }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'trade-type-container' },
+                    { className: 'btn-purchase__content' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'trade-type' },
+                        { className: 'btn-purchase__content__trade-type' },
                         _react2.default.createElement(_Types.IconTradeType, { type: type.toLowerCase() }),
                         _react2.default.createElement(
                             'span',
@@ -15121,15 +15121,15 @@ var Purchase = function Purchase(_ref) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'info-container' },
+                    { className: 'btn-purchase__info' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'return' },
+                        { className: 'btn-purchase__info__return' },
                         info.returns
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'profit' },
+                        { className: 'btn-purchase__info__profit' },
                         _react2.default.createElement(_money2.default, { amount: info.payout, currency: currency })
                     )
                 )

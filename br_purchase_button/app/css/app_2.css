@@ -5726,7 +5726,7 @@ a {
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip {
         position: unset; }
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip i:before {
-          content: url("../images/common/tooltip/ic_tooltip_info_light.svg ");
+          content: url("../images/common/tooltip/ic_tooltip_info_dark.svg ");
           right: 100%;
           position: absolute;
           margin-right: 342px;

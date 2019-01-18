@@ -5658,9 +5658,10 @@ a {
                 -ms-flex-align: start;
                     align-items: flex-start;
             font-weight: bold; }
-            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__profit.symbols {
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__profit .symbols {
               background: none;
-              position: relative; }
+              position: relative;
+              color: #fff; }
           .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__content {
             max-width: 50%;
             float: left;

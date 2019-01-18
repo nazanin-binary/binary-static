@@ -5658,6 +5658,9 @@ a {
                 -ms-flex-align: start;
                     align-items: flex-start;
             font-weight: bold; }
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__profit.symbols {
+              background: none;
+              position: relative; }
           .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__content {
             max-width: 50%;
             float: left;
@@ -5683,9 +5686,6 @@ a {
                     align-items: center; }
             .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__trade-type span {
               margin-left: 10px; }
-          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase .symbols {
-            background: none;
-            position: relative; }
           .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn-purchase__effect-main {
             width: 60%;
             height: 56px;
@@ -5726,7 +5726,7 @@ a {
       .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip {
         position: unset; }
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip i:before {
-          content: url("../images/common/tooltip/ic_tooltip_info_dark.svg ");
+          content: url("../images/common/tooltip/ic_tooltip_info_light.svg ");
           right: 100%;
           position: absolute;
           margin-right: 342px;
@@ -5738,8 +5738,8 @@ a {
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip i:hover:before {
           opacity: 1; }
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:before {
-          background: #15212d;
-          color: #fff;
+          background: #fff;
+          color: #2a3052;
           -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
                   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
           max-width: unset;
@@ -5749,7 +5749,7 @@ a {
           font-size: 12px;
           padding-left: 40px; }
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:after {
-          border-left-color: #15212d;
+          border-left-color: #fff;
           margin-right: 20px; }
         .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:after, .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:hover:before {
           opacity: 1; }
@@ -5838,6 +5838,20 @@ a {
       margin-bottom: 1rem; }
       .binary-app .fullscreen-dialog__content .contracts-modal-list fieldset div:not(.fieldset-header) {
         margin-bottom: 0.5rem; }
+
+.theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip {
+  position: unset; }
+  .theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip i:before {
+    content: url("../images/common/tooltip/ic_tooltip_info_dark.svg "); }
+  .theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip i:hover:before {
+    opacity: 1; }
+  .theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip:before {
+    background: #15212d;
+    color: #fff; }
+  .theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip:after {
+    border-left-color: #15212d; }
+  .theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip:hover:after, .theme-wrapper.dark div.purchase-wrapper .purchase-tooltip span.tooltip:hover:before {
+    opacity: 1; }
 
 body.dark, .theme-wrapper.dark {
   background: #2a3052; }

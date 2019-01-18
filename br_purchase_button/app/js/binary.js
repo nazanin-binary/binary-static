@@ -15103,14 +15103,14 @@ var Purchase = function Purchase(_ref) {
             _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
-                _react2.default.createElement('div', { className: 'btn-purchase__rec' }),
-                _react2.default.createElement('div', { className: 'btn-purchase__tri' }),
+                _react2.default.createElement('div', { className: 'btn-purchase__effect-main' }),
+                _react2.default.createElement('div', { className: 'btn-purchase__effect-detail' }),
                 _react2.default.createElement(
                     'div',
                     { className: 'btn-purchase__content' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'btn-purchase__content__trade-type' },
+                        { className: 'btn-purchase__trade-type' },
                         _react2.default.createElement(_Types.IconTradeType, { type: type.toLowerCase() }),
                         _react2.default.createElement(
                             'span',
@@ -15124,13 +15124,13 @@ var Purchase = function Purchase(_ref) {
                     { className: 'btn-purchase__info' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'btn-purchase__info__return' },
-                        info.returns
+                        { className: 'btn-purchase__return' },
+                        is_disabled ? '---,-' : info.returns
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'btn-purchase__info__profit' },
-                        _react2.default.createElement(_money2.default, { amount: info.payout, currency: currency })
+                        { className: 'btn-purchase__profit' },
+                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info.payout, currency: currency })
                     )
                 )
             )

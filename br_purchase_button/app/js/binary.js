@@ -20808,7 +20808,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var contract_type = response.echo_req.contract_type;
             this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response)));
 
-            this.proposal_info_res_ids[contract_type] = !this.proposal_info_res_ids[contract_type] ? 1 : this.proposal_info_res_ids[contract_type] + 1;
+            var prev_res_id = this.proposal_info_res_ids[contract_type];
+            this.proposal_info_res_ids[contract_type] = !prev_res_id ? 1 : prev_res_id + 1;
             this.proposal_info[contract_type].res_id = this.proposal_info_res_ids[contract_type];
 
             if (!this.smart_chart.is_contract_mode) {

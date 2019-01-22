@@ -19994,18 +19994,20 @@ var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, 
     var stake = proposal.display_value;
     var basis_list = store.basis_list;
 
-    var contract_basis = basis_list ? basis_list.find(function (o) {
+    var contract_basis = basis_list.find(function (o) {
         return o.value !== store.basis;
-    }) : {};
-    var has_increased = proposal[contract_basis.value] > obj_prev_contract_basis.value;
+    });
+    var is_stake = contract_basis.text === 'Stake';
+    var price = is_stake ? stake : proposal[contract_basis.value];
+    var has_increased = price > obj_prev_contract_basis.value;
 
-    if (proposal[contract_basis.value] === obj_prev_contract_basis.value) {
+    if (price === obj_prev_contract_basis.value) {
         has_increased = null;
     }
 
     var obj_contract_basis = {
         text: contract_basis.text || '',
-        value: (contract_basis.text === 'Stake' ? stake : proposal[contract_basis.value]) || ''
+        value: price || ''
     };
 
     return {

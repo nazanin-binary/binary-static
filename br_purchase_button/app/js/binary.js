@@ -14163,8 +14163,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -14187,111 +14185,56 @@ var _icon_price_move = __webpack_require__(/*! ../../../../../Assets/Trading/ico
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ContractInfo = function (_React$PureComponent) {
-    _inherits(ContractInfo, _React$PureComponent);
-
-    function ContractInfo(props) {
-        _classCallCheck(this, ContractInfo);
-
-        var _this = _possibleConstructorReturn(this, (ContractInfo.__proto__ || Object.getPrototypeOf(ContractInfo)).call(this, props));
-
-        _this.state = {
-            previous_price: null,
-            icon_type: null,
-            proposal_info_res_id: null
-        };
-        return _this;
-    }
-
-    _createClass(ContractInfo, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _react2.default.Fragment,
+var ContractInfo = function ContractInfo(_ref) {
+    var currency = _ref.currency,
+        has_increased = _ref.has_increased,
+        proposal_info = _ref.proposal_info;
+    return _react2.default.createElement(
+        _react2.default.Fragment,
+        null,
+        proposal_info.has_error || !proposal_info.id ? _react2.default.createElement(
+            'div',
+            { className: proposal_info.has_error ? 'error-info-wrapper' : '' },
+            _react2.default.createElement(
+                'span',
                 null,
-                this.props.proposal_info.has_error || !this.props.proposal_info.id ? _react2.default.createElement(
+                proposal_info.message
+            )
+        ) : _react2.default.createElement(
+            'div',
+            { className: 'purchase-info-wrapper' },
+            _react2.default.createElement(
+                'div',
+                { className: 'info-wrapper' },
+                _react2.default.createElement(
                     'div',
-                    { className: this.props.proposal_info.has_error ? 'error-info-wrapper' : '' },
-                    _react2.default.createElement(
-                        'span',
-                        null,
-                        this.props.proposal_info.message
-                    )
-                ) : _react2.default.createElement(
+                    null,
+                    (0, _localize.localize)('[_1]', proposal_info.obj_contract_basis.text)
+                ),
+                _react2.default.createElement(
                     'div',
-                    { className: 'purchase-info-wrapper' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'info-wrapper' },
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            (0, _localize.localize)('[_1]', this.props.contract_basis.text)
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            _react2.default.createElement(_money2.default, {
-                                amount: this.props.proposal_info[this.props.contract_basis.value],
-                                currency: this.props.currency
-                            })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'icon_price_move_container' },
-                            this.state.icon_type && _react2.default.createElement(_icon_price_move.IconPriceMove, { type: this.state.icon_type })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'purchase-tooltip' },
-                        _react2.default.createElement(_tooltip2.default, { alignment: 'left', icon: 'info', message: this.props.proposal_info.message })
-                    )
+                    null,
+                    _react2.default.createElement(_money2.default, { amount: proposal_info.obj_contract_basis.value, currency: currency })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'icon_price_move_container' },
+                    has_increased !== null && _react2.default.createElement(_icon_price_move.IconPriceMove, { type: has_increased ? 'profit' : 'loss' })
                 )
-            );
-        }
-    }], [{
-        key: 'getDerivedStateFromProps',
-        value: function getDerivedStateFromProps(props, state) {
-            var previous_price = state.previous_price;
-            var proposal_info_res_id = props.proposal_info.res_id;
-
-            if (proposal_info_res_id && proposal_info_res_id !== state.proposal_info_res_id) {
-                var icon_type = null;
-                var price = props.proposal_info[props.contract_basis.value];
-                if (price !== previous_price) {
-                    icon_type = price > previous_price ? 'profit' : 'loss';
-                }
-                return {
-                    icon_type: icon_type,
-                    previous_price: price,
-                    proposal_info_res_id: proposal_info_res_id
-                };
-            }
-            return {
-                icon_type: state.icon_type,
-                previous_price: previous_price,
-                proposal_info_res_id: proposal_info_res_id
-            };
-        }
-    }]);
-
-    return ContractInfo;
-}(_react2.default.PureComponent);
+            ),
+            _react2.default.createElement(
+                'span',
+                { className: 'purchase-tooltip' },
+                _react2.default.createElement(_tooltip2.default, { alignment: 'left', icon: 'info', message: proposal_info.message })
+            )
+        )
+    );
+};
 
 ContractInfo.propTypes = {
-    barrier_count: _propTypes2.default.number,
-    basis: _propTypes2.default.string,
-    contract_basis: _propTypes2.default.object,
     currency: _propTypes2.default.string,
-    proposal_info: _propTypes2.default.object,
-    proposal_info_res_id: _propTypes2.default.number
+    has_increased: _propTypes2.default.bool,
+    proposal_info: _propTypes2.default.object
 };
 
 exports.default = ContractInfo;
@@ -15355,8 +15298,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -15406,9 +15347,7 @@ var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Purchase = function Purchase(_ref) {
-    var barrier_count = _ref.barrier_count,
-        basis = _ref.basis,
-        basis_list = _ref.basis_list,
+    var basis = _ref.basis,
         currency = _ref.currency,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
         is_purchase_confirm_on = _ref.is_purchase_confirm_on,
@@ -15468,16 +15407,13 @@ var Purchase = function Purchase(_ref) {
                     _react2.default.createElement(
                         'div',
                         { className: 'btn-purchase__profit' },
-                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info.payout, currency: currency })
+                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info[basis], currency: currency })
                     )
                 )
             )
         );
 
         var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
-        var contract_basis = basis_list.find(function (o) {
-            return o.value !== basis;
-        });
 
         return _react2.default.createElement(
             _fieldset2.default,
@@ -15501,13 +15437,9 @@ var Purchase = function Purchase(_ref) {
                 null,
                 !is_purchase_enabled && idx === 0 && _react2.default.createElement(_ui_loader2.default, null),
                 _react2.default.createElement(_contract_info2.default, {
-                    barrier_count: barrier_count,
-                    basis: basis,
-                    contract_basis: contract_basis,
-                    contract_title: trade_types[type],
-                    contract_type: type,
                     currency: currency,
-                    proposal_info: info
+                    proposal_info: info,
+                    has_increased: info.has_increased
                 }),
                 is_purchase_confirm_on ? _react2.default.createElement(
                     _PopConfirm.PopConfirm,
@@ -15525,9 +15457,7 @@ var Purchase = function Purchase(_ref) {
 };
 
 Purchase.propTypes = {
-    barrier_count: _propTypes2.default.number,
     basis: _propTypes2.default.string,
-    basis_list: _mobxReact.PropTypes.arrayOrObservableArray,
     currency: _propTypes2.default.string,
     is_client_allowed_to_visit: _propTypes2.default.bool,
     is_purchase_confirm_on: _propTypes2.default.bool,
@@ -15550,9 +15480,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
     return {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
-        barrier_count: modules.trade.barrier_count,
         basis: modules.trade.basis,
-        basis_list: modules.trade.basis_list,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,
@@ -20059,19 +19987,36 @@ var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/
 
 var _query_string = __webpack_require__(/*! ../Constants/query_string */ "./src/javascript/app_2/Stores/Modules/Trading/Constants/query_string.js");
 
-var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, response) {
+var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, response, obj_prev_contract_basis) {
     var proposal = response.proposal || {};
     var profit = proposal.payout - proposal.ask_price || 0;
     var returns = profit * 100 / (proposal.ask_price || 1);
+    var stake = proposal.display_value;
+
+    var contract_basis = store.basis_list.find(function (o) {
+        return o.value !== store.basis;
+    });
+    var has_increased = proposal[contract_basis.value] > obj_prev_contract_basis.value;
+
+    if (proposal[contract_basis.value] === obj_prev_contract_basis.value) {
+        has_increased = null;
+    }
+
+    var obj_contract_basis = {
+        text: contract_basis.text,
+        value: contract_basis.text === 'Stake' ? stake : proposal[contract_basis.value]
+    };
 
     return {
+        id: proposal.id || '',
+        has_error: !!response.error,
+        has_increased: has_increased,
+        message: proposal.longcode || response.error.message,
+        obj_contract_basis: obj_contract_basis,
+        payout: proposal.payout,
         profit: profit.toFixed((0, _currency_base.getDecimalPlaces)(store.currency)),
         returns: returns.toFixed(2) + '%',
-        stake: proposal.display_value,
-        payout: proposal.payout,
-        id: proposal.id || '',
-        message: proposal.longcode || response.error.message,
-        has_error: !!response.error
+        stake: stake
     };
 };
 
@@ -20363,16 +20308,20 @@ function _initializerWarningHelper(descriptor, context) {
 var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(TradeStore, _BaseStore);
 
-    // Last Digit
+    // Chart
 
 
-    // Start Time
+    // Purchase
+    // Number(0) refers to 'now'
 
 
-    // Duration
+    // Barrier
 
 
-    // Underlying
+    // Amount
+
+
+    // Contract Type
     function TradeStore(_ref) {
         var root_store = _ref.root_store;
 
@@ -20451,7 +20400,6 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         _initDefineProp(_this, 'purchase_info', _descriptor32, _this);
 
         _this.chart_id = 1;
-        _this.proposal_info_res_ids = {};
         _this.debouncedProposal = (0, _lodash2.default)(_this.requestProposal, 500);
         _this.proposal_requests = {};
 
@@ -20476,20 +20424,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         return _this;
     }
 
-    // Chart
+    // Last Digit
 
 
-    // Purchase
-    // Number(0) refers to 'now'
+    // Start Time
 
 
-    // Barrier
+    // Duration
 
 
-    // Amount
-
-
-    // Contract Type
+    // Underlying
 
 
     _createClass(TradeStore, [{
@@ -20720,8 +20664,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.updateStore({ // disable purchase button(s), clear contract info
                                     is_purchase_enabled: false,
-                                    proposal_info: {},
-                                    proposal_info_req_id: 0
+                                    proposal_info: {}
                                 });
 
                                 if (!this.smart_chart.is_contract_mode) {
@@ -20779,7 +20722,6 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                 return e.length;
             })) {
                 this.proposal_info = {};
-                this.proposal_info_res_ids = {};
                 this.purchase_info = {};
                 _Services.WS.forgetAll('proposal');
                 return;
@@ -20792,7 +20734,6 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                 this.proposal_requests = requests;
                 this.proposal_info = {};
-                this.proposal_info_res_ids = {};
                 this.purchase_info = {};
 
                 _Services.WS.forgetAll('proposal').then(function () {
@@ -20806,11 +20747,10 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         key: 'onProposalResponse',
         value: function onProposalResponse(response) {
             var contract_type = response.echo_req.contract_type;
-            this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response)));
+            var prev_proposal_info = (0, _utility.getPropertyValue)(this.proposal_info, contract_type) || {};
+            var obj_prev_contract_basis = (0, _utility.getPropertyValue)(prev_proposal_info, 'obj_contract_basis') || {};
 
-            var prev_res_id = this.proposal_info_res_ids[contract_type];
-            this.proposal_info_res_ids[contract_type] = !prev_res_id ? 1 : prev_res_id + 1;
-            this.proposal_info[contract_type].res_id = this.proposal_info_res_ids[contract_type];
+            this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response, obj_prev_contract_basis)));
 
             if (!this.smart_chart.is_contract_mode) {
                 (0, _chart.setChartBarrier)(this.smart_chart, response, this.onChartBarrierChange);

@@ -15347,8 +15347,7 @@ var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Purchase = function Purchase(_ref) {
-    var basis = _ref.basis,
-        currency = _ref.currency,
+    var currency = _ref.currency,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
         is_purchase_confirm_on = _ref.is_purchase_confirm_on,
         is_purchase_enabled = _ref.is_purchase_enabled,
@@ -15407,7 +15406,7 @@ var Purchase = function Purchase(_ref) {
                     _react2.default.createElement(
                         'div',
                         { className: 'btn-purchase__profit' },
-                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info[basis], currency: currency })
+                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info.profit, currency: currency })
                     )
                 )
             )
@@ -15457,7 +15456,6 @@ var Purchase = function Purchase(_ref) {
 };
 
 Purchase.propTypes = {
-    basis: _propTypes2.default.string,
     currency: _propTypes2.default.string,
     is_client_allowed_to_visit: _propTypes2.default.bool,
     is_purchase_confirm_on: _propTypes2.default.bool,
@@ -15480,7 +15478,6 @@ exports.default = (0, _connect.connect)(function (_ref2) {
     return {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
-        basis: modules.trade.basis,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,

@@ -13572,7 +13572,7 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 contract.text
             ),
             _react2.default.createElement(
-                'span',
+                'div',
                 { id: 'info-icon', className: 'trade-type-info-icon', onClick: function onClick() {
                         return handleInfoClick(contract);
                     } },
@@ -13755,6 +13755,38 @@ var ContractTypeWidget = function (_React$PureComponent) {
             _this.handleVisibility();
         };
 
+        _this.handlePaginationClick = function (item) {
+            _this.setState({ item: item });
+        };
+
+        _this.handleNextClick = function (paginationList) {
+            var paginationLength = paginationList.length;
+            var item = _this.state.item;
+            var currentIndex = paginationList.findIndex(function (list_item) {
+                return list_item.value === item.value;
+            });
+            var nextIndex = currentIndex + 1;
+            if (nextIndex < paginationLength) {
+                _this.handlePaginationClick(paginationList[nextIndex]);
+            } else {
+                _this.handlePaginationClick(paginationList[0]);
+            }
+        };
+
+        _this.handlePrevClick = function (paginationList) {
+            var paginationLength = paginationList.length;
+            var item = _this.state.item;
+            var currentIndex = paginationList.findIndex(function (list_item) {
+                return list_item.value === item.value;
+            });
+            var prevIndex = currentIndex - 1;
+            if (prevIndex > -1) {
+                _this.handlePaginationClick(paginationList[prevIndex]);
+            } else {
+                _this.handlePaginationClick(paginationList[paginationLength - 1]);
+            }
+        };
+
         _this.setWrapperRef = function (node) {
             _this.wrapper_ref = node;
         };
@@ -13812,6 +13844,19 @@ var ContractTypeWidget = function (_React$PureComponent) {
             }
             if (_this.state.is_dialog_open) container_classes.push('show');
             return container_classes;
+        };
+
+        _this.getPaginationList = function () {
+            var paginationList = [];
+            var list = _this.props.list;
+            /* eslint-disable */
+            Object.keys(list).map(function (key) {
+                !['In/Out', 'Asians'].includes(key) && list[key].map(function (contract) {
+                    contract.value !== 'rise_fall_equal' && paginationList.push(contract);
+                });
+            });
+            /* eslint-disable */
+            return paginationList;
         };
 
         _this.state = {
@@ -13880,9 +13925,13 @@ var ContractTypeWidget = function (_React$PureComponent) {
                         is_mobile: this.props.is_mobile
                     },
                     _react2.default.createElement(_trade_type_info_item2.default, {
+                        handleNextClick: this.handleNextClick,
+                        handlePaginationClick: this.handlePaginationClick,
+                        handlePrevClick: this.handlePrevClick,
                         item: this.state.item,
                         onBackButtonClick: this.onBackButtonClick,
-                        onSubmitButtonClick: this.onSubmitButtonClick
+                        onSubmitButtonClick: this.onSubmitButtonClick,
+                        paginationList: this.getPaginationList()
                     })
                 )
             );
@@ -15436,9 +15485,13 @@ var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ ".
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractTypeItem = function ContractTypeItem(_ref) {
-    var item = _ref.item,
+    var handleNextClick = _ref.handleNextClick,
+        handlePaginationClick = _ref.handlePaginationClick,
+        handlePrevClick = _ref.handlePrevClick,
+        item = _ref.item,
         onBackButtonClick = _ref.onBackButtonClick,
-        onSubmitButtonClick = _ref.onSubmitButtonClick;
+        onSubmitButtonClick = _ref.onSubmitButtonClick,
+        paginationList = _ref.paginationList;
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
@@ -15468,16 +15521,46 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
             { className: 'info-content' },
             _react2.default.createElement(_components_trade_categories.ComponentTradeCategories, { category: item.value })
         ),
-        _react2.default.createElement(_button2.default, { text: (0, _localize.localize)('CHOOSE'), className: 'info-choose', onClick: function onClick() {
+        _react2.default.createElement(_button2.default, { className: 'info-choose', text: (0, _localize.localize)('CHOOSE'), onClick: function onClick() {
                 return onSubmitButtonClick(item);
-            } })
+            } }),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-pagination-container' },
+            _react2.default.createElement('span', { className: 'prev', onClick: function onClick() {
+                    return handlePrevClick(paginationList);
+                } }),
+            _react2.default.createElement(
+                'div',
+                { className: 'info-pagination' },
+                paginationList.map(function (contract, idx) {
+                    return _react2.default.createElement(
+                        _react2.default.Fragment,
+                        { key: idx },
+                        _react2.default.createElement('div', {
+                            className: 'circle-button ' + (contract.value === item.value ? 'active' : ''),
+                            onClick: function onClick() {
+                                return handlePaginationClick(contract);
+                            }
+                        })
+                    );
+                })
+            ),
+            _react2.default.createElement('span', { className: 'next', onClick: function onClick() {
+                    return handleNextClick(paginationList);
+                } })
+        )
     );
 };
 
 ContractTypeItem.propTypes = {
+    handleNextClick: _propTypes2.default.func,
+    handlePaginationClick: _propTypes2.default.func,
+    handlePrevClick: _propTypes2.default.func,
     item: _propTypes2.default.object,
     onBackButtonClick: _propTypes2.default.func,
-    onSubmitButtonClick: _propTypes2.default.func
+    onSubmitButtonClick: _propTypes2.default.func,
+    paginationList: _propTypes2.default.array
 };
 
 exports.default = ContractTypeItem;

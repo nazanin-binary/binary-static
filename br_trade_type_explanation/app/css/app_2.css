@@ -3052,7 +3052,7 @@ div.contracts-popup-container {
   .theme-wrapper.dark .trade-type-info-popup .trade-type-info .info-pagination .circle-button {
     background-color: #fff; }
     .theme-wrapper.dark .trade-type-info-popup .trade-type-info .info-pagination .circle-button.active {
-      background-color: #fafafb; }
+      background-color: #b0b3bf; }
 
 .table {
   display: -webkit-box;
@@ -4538,6 +4538,69 @@ a {
     border: none;
     margin-right: 0.5rem;
     margin-left: 0.5rem; }
+  .fullscreen-dialog .trade-type-info-modal {
+    padding: 16px; }
+    .fullscreen-dialog .trade-type-info-modal .info-header {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      padding: 8px; }
+      .fullscreen-dialog .trade-type-info-modal .info-header .title {
+        margin-left: 15px;
+        font-size: 14px;
+        color: #333; }
+      .fullscreen-dialog .trade-type-info-modal .info-header span {
+        -ms-flex-item-align: center;
+            align-self: center; }
+    .fullscreen-dialog .trade-type-info-modal .info-gif {
+      padding: 8px;
+      width: 90%;
+      width: calc(100% - 16px);
+      height: -webkit-fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      background-color: #fff;
+      border-radius: 4px;
+      margin: 0 auto; }
+    .fullscreen-dialog .trade-type-info-modal .info-content {
+      padding: 8px;
+      margin: 0 auto;
+      font-size: 14px;
+      line-height: 20px;
+      color: #333; }
+    .fullscreen-dialog .trade-type-info-modal .info-choose {
+      background: #ffc107;
+      color: #fff;
+      font-weight: bold;
+      margin: 0 auto;
+      display: block; }
+    .fullscreen-dialog .trade-type-info-modal .info-pagination-container {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin-top: 16px; }
+    .fullscreen-dialog .trade-type-info-modal .info-pagination {
+      display: inline-block;
+      text-align: center;
+      margin: 0 auto; }
+      .fullscreen-dialog .trade-type-info-modal .info-pagination .circle-button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 5px;
+        background-color: #d8d8d8;
+        cursor: pointer; }
+        .fullscreen-dialog .trade-type-info-modal .info-pagination .circle-button.active {
+          background-color: #7f8397; }
+    .fullscreen-dialog .trade-type-info-modal .prev {
+      width: 16px; }
+      .fullscreen-dialog .trade-type-info-modal .prev:before {
+        content: url("../images/common/ic-chevron-right.svg "); }
+    .fullscreen-dialog .trade-type-info-modal .next {
+      width: 16px; }
+      .fullscreen-dialog .trade-type-info-modal .next:before {
+        content: url("../images/common/ic-chevron-right.svg "); }
 
 .theme-wrapper.dark .fullscreen-dialog {
   background: #2a3052; }
@@ -4548,6 +4611,16 @@ a {
             box-shadow: 0 1px 0px #2a3052; }
   .theme-wrapper.dark .fullscreen-dialog__title {
     color: #aaacba; }
+  .theme-wrapper.dark .fullscreen-dialog .trade-type-info-modal .info-header .title {
+    color: #aaacba; }
+  .theme-wrapper.dark .fullscreen-dialog .trade-type-info-modal .info-gif {
+    background-color: #60647e; }
+  .theme-wrapper.dark .fullscreen-dialog .trade-type-info-modal .info-content {
+    color: #7f8397; }
+  .theme-wrapper.dark .fullscreen-dialog .trade-type-info-modal .info-pagination .circle-button {
+    background-color: #fff; }
+    .theme-wrapper.dark .fullscreen-dialog .trade-type-info-modal .info-pagination .circle-button.active {
+      background-color: #7f8397; }
 
 .mobile-widget {
   border: 1px solid #7f8397;

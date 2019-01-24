@@ -9489,7 +9489,7 @@ var IconBack = function IconBack(_ref) {
     return _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
-        _react2.default.createElement('path', { fill: '#333', fillRule: 'nonzero', d: 'M3.6 8.5L7 12.2a.5.5 0 1 1-.8.6l-4-4.5a.5.5 0 0 1 0-.6l4-4.5a.5.5 0 0 1 .8.6L3.6 7.5h9.9a.5.5 0 1 1 0 1H3.6z' })
+        _react2.default.createElement('path', { fill: '#5C5C5C', fillRule: 'evenodd', d: 'M3.613 8.5l3.26 3.668a.5.5 0 1 1-.747.664l-4-4.5a.5.5 0 0 1 0-.664l4-4.5a.5.5 0 0 1 .748.664L3.614 7.5H13.5a.5.5 0 1 1 0 1H3.613z' })
     );
 };
 
@@ -9736,6 +9736,58 @@ IconPlus.propTypes = {
 };
 
 exports.IconPlus = IconPlus;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx":
+/*!*******************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconTooltipLight = undefined;
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconTooltipLight = function IconTooltipLight(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        { className: className, xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('circle', { cx: '8', cy: '8', r: '7.5', stroke: '#B0B3BF' }),
+            _react2.default.createElement(
+                'g',
+                { fill: '#B0B3BF', transform: 'translate(6.5 4)' },
+                _react2.default.createElement('circle', { cx: '1.5', cy: '1.25', r: '1' }),
+                _react2.default.createElement('rect', { width: '1', height: '5', x: '1', y: '3', rx: '.5' })
+            )
+        )
+    );
+};
+
+IconTooltipLight.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconTooltipLight = IconTooltipLight;
 
 /***/ }),
 
@@ -13254,7 +13306,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FullScreenDialog = function FullScreenDialog(props) {
     var title = props.title,
         visible = props.visible,
-        children = props.children;
+        children = props.children,
+        wrapperClassName = props.wrapperClassName;
 
 
     var checkVisibility = function checkVisibility() {
@@ -13323,7 +13376,7 @@ var FullScreenDialog = function FullScreenDialog(props) {
             { className: 'fullscreen-dialog__content' },
             _react2.default.createElement(
                 'div',
-                { className: 'contracts-modal-list' },
+                { className: '' + (wrapperClassName || 'contracts-modal-list') },
                 children
             )
         )
@@ -13334,7 +13387,8 @@ FullScreenDialog.propTypes = {
     children: _propTypes2.default.any,
     onClose: _propTypes2.default.func,
     title: _propTypes2.default.string,
-    visible: _propTypes2.default.bool
+    visible: _propTypes2.default.bool,
+    wrapperClassName: _propTypes2.default.string
 };
 
 exports.default = FullScreenDialog;
@@ -13541,9 +13595,9 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
+var _icon_tooltip_light = __webpack_require__(/*! ../../../../../Assets/Common/icon_tooltip_light.jsx */ "./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx");
 
-var _icon_exclamation = __webpack_require__(/*! ../../../../../Assets/Common/icon_exclamation.jsx */ "./src/javascript/app_2/Assets/Common/icon_exclamation.jsx");
+var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13576,7 +13630,7 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 { id: 'info-icon', className: 'trade-type-info-icon', onClick: function onClick() {
                         return handleInfoClick(contract);
                     } },
-                _react2.default.createElement(_icon_exclamation.IconExclamation, null)
+                _react2.default.createElement(_icon_tooltip_light.IconTooltipLight, null)
             )
         );
     });
@@ -13922,12 +13976,14 @@ var ContractTypeWidget = function (_React$PureComponent) {
                     {
                         open: this.state.is_info_dialog_open,
                         onClose: this.handleInfoClick,
-                        is_mobile: this.props.is_mobile
+                        is_mobile: this.props.is_mobile,
+                        title: this.state.item.text
                     },
                     _react2.default.createElement(_trade_type_info_item2.default, {
                         handleNextClick: this.handleNextClick,
                         handlePaginationClick: this.handlePaginationClick,
                         handlePrevClick: this.handlePrevClick,
+                        is_mobile: this.props.is_mobile,
                         item: this.state.item,
                         onBackButtonClick: this.onBackButtonClick,
                         onSubmitButtonClick: this.onSubmitButtonClick,
@@ -15411,12 +15467,15 @@ var TradeTypeInfoDialog = function TradeTypeInfoDialog(_ref) {
     var children = _ref.children,
         is_mobile = _ref.is_mobile,
         open = _ref.open,
-        onClose = _ref.onClose;
+        onClose = _ref.onClose,
+        title = _ref.title;
     return is_mobile ? _react2.default.createElement(
         _full_screen_dialog2.default,
         {
             visible: open,
-            onClose: onClose
+            onClose: onClose,
+            title: title,
+            wrapperClassName: 'trade-type-info-modal'
         },
         children
     ) : _react2.default.createElement(
@@ -15443,7 +15502,8 @@ TradeTypeInfoDialog.propTypes = {
     children: _propTypes2.default.element,
     is_mobile: _propTypes2.default.bool,
     onClose: _propTypes2.default.func,
-    open: _propTypes2.default.bool
+    open: _propTypes2.default.bool,
+    title: _propTypes2.default.string
 };
 
 exports.default = TradeTypeInfoDialog;
@@ -15488,6 +15548,7 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
     var handleNextClick = _ref.handleNextClick,
         handlePaginationClick = _ref.handlePaginationClick,
         handlePrevClick = _ref.handlePrevClick,
+        is_mobile = _ref.is_mobile,
         item = _ref.item,
         onBackButtonClick = _ref.onBackButtonClick,
         onSubmitButtonClick = _ref.onSubmitButtonClick,
@@ -15495,7 +15556,7 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        _react2.default.createElement(
+        !is_mobile && _react2.default.createElement(
             'div',
             { className: 'info-header' },
             _react2.default.createElement(
@@ -15557,6 +15618,7 @@ ContractTypeItem.propTypes = {
     handleNextClick: _propTypes2.default.func,
     handlePaginationClick: _propTypes2.default.func,
     handlePrevClick: _propTypes2.default.func,
+    is_mobile: _propTypes2.default.bool,
     item: _propTypes2.default.object,
     onBackButtonClick: _propTypes2.default.func,
     onSubmitButtonClick: _propTypes2.default.func,

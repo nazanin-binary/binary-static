@@ -1166,10 +1166,19 @@ var Login = function () {
         return loginUrl() + '&social_signup=' + brand;
     };
 
+    var initOneAll = function initOneAll() {
+        ['google', 'facebook'].forEach(function (provider) {
+            $('#button_' + provider).off('click').on('click', function (e) {
+                e.preventDefault();
+                window.location.href = socialLoginUrl(provider);
+            });
+        });
+    };
+
     return {
         redirectToLogin: redirectToLogin,
         isLoginPages: isLoginPages,
-        socialLoginUrl: socialLoginUrl
+        initOneAll: initOneAll
     };
 }();
 
@@ -13026,9 +13035,16 @@ var isIndonesia = function isIndonesia() {
     return State.getResponse('website_status.clients_country') === 'id';
 };
 
+var isExcludedFromCfd = function isExcludedFromCfd() {
+    var cfd_excluded_regex = new RegExp('^fr$');
+    var clients_country = Client.get('residence') || State.getResponse('website_status.clients_country');
+    return cfd_excluded_regex.test(clients_country);
+};
+
 module.exports = {
     isEuCountry: isEuCountry,
-    isIndonesia: isIndonesia
+    isIndonesia: isIndonesia,
+    isExcludedFromCfd: isExcludedFromCfd
 };
 
 /***/ }),
@@ -17543,7 +17559,6 @@ var isBinaryApp = __webpack_require__(/*! ../../config */ "./src/javascript/conf
 
 var NewAccount = function () {
     var clients_country = void 0,
-        $google_btn = void 0,
         $login_btn = void 0,
         $verify_email = void 0;
 
@@ -17552,7 +17567,6 @@ var NewAccount = function () {
     var onLoad = function onLoad() {
         getElementById('footer').setVisibility(0); // always hide footer in this page
 
-        $google_btn = $('#google-signup');
         $login_btn = $('#login');
         $verify_email = $('#verify_email');
 
@@ -17571,14 +17585,11 @@ var NewAccount = function () {
             }
         });
 
-        $google_btn.off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = Login.socialLoginUrl('google');
-        });
         $login_btn.off('click').on('click', function (e) {
             e.preventDefault();
             Login.redirectToLogin();
         });
+        Login.initOneAll();
     };
 
     var verifyEmailHandler = function verifyEmailHandler(response) {
@@ -35337,6 +35348,7 @@ var Home = function () {
     var clients_country = void 0;
 
     var onLoad = function onLoad() {
+        Login.initOneAll();
         TabSelector.onLoad();
 
         BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
@@ -35352,17 +35364,9 @@ var Home = function () {
                 fnc_response_handler: handler,
                 fnc_additional_check: checkCountry
             });
-            socialLogin();
             if (isEuCountry()) {
                 $('.mfsa_message').slideDown(300);
             }
-        });
-    };
-
-    var socialLogin = function socialLogin() {
-        $('#google-signup').off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = Login.socialLoginUrl('google');
         });
     };
 
@@ -35592,6 +35596,10 @@ module.exports = Platforms;
 "use strict";
 
 
+var BinarySocket = __webpack_require__(/*! ../../app/base/socket */ "./src/javascript/app/base/socket.js");
+var isExcludedFromCfd = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isExcludedFromCfd;
+var getElementById = __webpack_require__(/*! ../../../javascript/_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+
 var Regulation = function () {
     var onLoad = function onLoad() {
         $(function () {
@@ -35613,6 +35621,14 @@ var Regulation = function () {
                 // if EU passport rights tab is active, call relocateLinks to initialize map coordinates
                 if (!$accordion.accordion('option', 'active')) {
                     relocateLinks();
+                }
+            });
+
+            BinarySocket.wait('website_status', 'authorize').then(function () {
+                if (isExcludedFromCfd()) {
+                    var el_cfd_fillbox = getElementById('cfd_fillbox');
+                    el_cfd_fillbox.nextSibling.classList.remove('margin-left-0');
+                    el_cfd_fillbox.remove();
                 }
             });
         });

@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"1f20d1cb6ffbf53419ed","account_password":"67c66084bc424d34b10b","api_toke":"7c72ca04a060c6e8363d","authorized_application":"97635409ac3488b8a4dc","cashier_password":"0061f340e2203b85c4de","contract":"d5ff3abe544011cd2843","financial_assessment":"fa615b65ab7d51a072e8","limits":"6122a66075b7120f5152","login_history":"f73b0e94430bafb6dff4","personal_details":"8c2c516db1200e2e67f1","portfolio":"16052a629104e3c26ee7","self_exclusion":"10c70715aab8e89cdf0f","settings":"b65a79071afa6712cab7","statement":"df0f87e87ef416986955","vendors~smart_chart":"e29bce83a9f50024f42a","smart_chart":"3bd5fe29258265801823"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","positions":"positions","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"1f20d1cb6ffbf53419ed","account_password":"67c66084bc424d34b10b","api_toke":"7c72ca04a060c6e8363d","authorized_application":"97635409ac3488b8a4dc","cashier_password":"0061f340e2203b85c4de","contract":"d5ff3abe544011cd2843","financial_assessment":"fa615b65ab7d51a072e8","limits":"6122a66075b7120f5152","login_history":"f73b0e94430bafb6dff4","personal_details":"8c2c516db1200e2e67f1","positions":"86a3d5886035970b0cec","self_exclusion":"10c70715aab8e89cdf0f","settings":"b65a79071afa6712cab7","statement":"df0f87e87ef416986955","vendors~smart_chart":"e29bce83a9f50024f42a","smart_chart":"3bd5fe29258265801823"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -3023,8 +3023,9 @@ var PopConfirm = function (_React$Component) {
                 _react2.default.Children.map(this.props.children, function (child) {
                     return _react2.default.cloneElement(child, {
                         onClick: _this2.handleOpen
-                    }, popconfirm_element);
-                })
+                    });
+                }),
+                popconfirm_element
             );
         }
     }]);
@@ -3147,303 +3148,6 @@ exports.PopConfirmElement = PopConfirmElement;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js":
-/*!*******************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _portfolio_drawer = __webpack_require__(/*! ./portfolio_drawer.jsx */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx");
-
-var _portfolio_drawer2 = _interopRequireDefault(_portfolio_drawer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _portfolio_drawer2.default;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx":
-/*!*******************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx ***!
-  \*******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _ttReactCustomScrollbars = __webpack_require__(/*! tt-react-custom-scrollbars */ "./node_modules/tt-react-custom-scrollbars/lib/index.js");
-
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
-
-var _empty_portfolio_message = __webpack_require__(/*! ../../../../Modules/Portfolio/Components/empty_portfolio_message.jsx */ "./src/javascript/app_2/Modules/Portfolio/Components/empty_portfolio_message.jsx");
-
-var _empty_portfolio_message2 = _interopRequireDefault(_empty_portfolio_message);
-
-var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
-
-var _portfolio_drawer_card = __webpack_require__(/*! ./portfolio_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx");
-
-var _portfolio_drawer_card2 = _interopRequireDefault(_portfolio_drawer_card);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var PortfolioDrawer = function (_React$Component) {
-    _inherits(PortfolioDrawer, _React$Component);
-
-    function PortfolioDrawer() {
-        _classCallCheck(this, PortfolioDrawer);
-
-        return _possibleConstructorReturn(this, (PortfolioDrawer.__proto__ || Object.getPrototypeOf(PortfolioDrawer)).apply(this, arguments));
-    }
-
-    _createClass(PortfolioDrawer, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.onMount();
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            this.props.onUnmount();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                active_positions = _props.active_positions,
-                error = _props.error,
-                currency = _props.currency,
-                is_empty = _props.is_empty,
-                is_portfolio_drawer_on = _props.is_portfolio_drawer_on,
-                toggleDrawer = _props.toggleDrawer;
-
-
-            var body_content = void 0;
-
-            if (error) {
-                body_content = _react2.default.createElement(
-                    'p',
-                    null,
-                    error
-                );
-            } else if (is_empty) {
-                body_content = _react2.default.createElement(_empty_portfolio_message2.default, null);
-            } else {
-                body_content = active_positions.map(function (portfolio_position) {
-                    return _react2.default.createElement(_portfolio_drawer_card2.default, _extends({
-                        key: portfolio_position.id,
-                        currency: currency
-                    }, portfolio_position));
-                });
-            }
-
-            return _react2.default.createElement(
-                'div',
-                { className: (0, _classnames2.default)('portfolio-drawer', { 'portfolio-drawer--open': is_portfolio_drawer_on }) },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'portfolio-drawer__header' },
-                    _react2.default.createElement('span', { className: 'portfolio-drawer__icon-main ic-portfolio' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'portfolio-drawer__title' },
-                        (0, _localize.localize)('Portfolio Quick Menu')
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        {
-                            className: 'portfolio-drawer__icon-close',
-                            onClick: toggleDrawer
-                        },
-                        _react2.default.createElement(_Common.IconClose, null)
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'portfolio-drawer__body' },
-                    _react2.default.createElement(
-                        _ttReactCustomScrollbars.Scrollbars,
-                        {
-                            style: { width: '100%', height: 'calc(100vh - 35px)' },
-                            autoHide: true
-                        },
-                        body_content
-                    )
-                )
-            );
-        }
-    }]);
-
-    return PortfolioDrawer;
-}(_react2.default.Component);
-
-PortfolioDrawer.propTypes = {
-    active_positions: _mobxReact.PropTypes.arrayOrObservableArray,
-    children: _propTypes2.default.any,
-    currency: _propTypes2.default.string,
-    error: _propTypes2.default.string,
-    is_empty: _propTypes2.default.bool,
-    is_loading: _propTypes2.default.bool,
-    is_portfolio_drawer_on: _propTypes2.default.bool,
-    onMount: _propTypes2.default.func,
-    onUnmount: _propTypes2.default.func,
-    toggleDrawer: _propTypes2.default.func
-};
-
-exports.default = (0, _connect.connect)(function (_ref) {
-    var modules = _ref.modules,
-        client = _ref.client,
-        ui = _ref.ui;
-    return {
-        active_positions: modules.portfolio.active_positions,
-        is_loading: modules.portfolio.is_loading,
-        error: modules.portfolio.error,
-        is_empty: modules.portfolio.is_empty,
-        onMount: modules.portfolio.onMount,
-        onUnmount: modules.portfolio.onUnmount,
-        currency: client.currency,
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
-        toggleDrawer: ui.togglePortfolioDrawer
-    };
-})(PortfolioDrawer);
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx":
-/*!************************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx ***!
-  \************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _contract_type_cell = __webpack_require__(/*! ../../../../Modules/Portfolio/Components/contract_type_cell.jsx */ "./src/javascript/app_2/Modules/Portfolio/Components/contract_type_cell.jsx");
-
-var _contract_type_cell2 = _interopRequireDefault(_contract_type_cell);
-
-var _money = __webpack_require__(/*! ../money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
-
-var _money2 = _interopRequireDefault(_money);
-
-var _binary_link = __webpack_require__(/*! ../../Routes/binary_link.jsx */ "./src/javascript/app_2/App/Components/Routes/binary_link.jsx");
-
-var _binary_link2 = _interopRequireDefault(_binary_link);
-
-var _helpers = __webpack_require__(/*! ../../Routes/helpers */ "./src/javascript/app_2/App/Components/Routes/helpers.js");
-
-var _remaining_time = __webpack_require__(/*! ../../../Containers/remaining_time.jsx */ "./src/javascript/app_2/App/Containers/remaining_time.jsx");
-
-var _remaining_time2 = _interopRequireDefault(_remaining_time);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var PortfolioDrawerCard = function PortfolioDrawerCard(_ref) {
-    var currency = _ref.currency,
-        expiry_time = _ref.expiry_time,
-        id = _ref.id,
-        indicative = _ref.indicative,
-        status = _ref.status,
-        type = _ref.type,
-        underlying = _ref.underlying;
-    return _react2.default.createElement(
-        _binary_link2.default,
-        { className: 'portfolio-drawer-card', to: (0, _helpers.getContractPath)(id) },
-        _react2.default.createElement(
-            _react2.default.Fragment,
-            null,
-            _react2.default.createElement(
-                'div',
-                { className: 'portfolio-drawer-card__type' },
-                _react2.default.createElement(_contract_type_cell2.default, { type: type })
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'portfolio-drawer-card__indicative portfolio-drawer-card__indicative--' + status },
-                _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
-            ),
-            _react2.default.createElement(
-                'span',
-                { className: 'portfolio-drawer-card__symbol' },
-                underlying
-            ),
-            _react2.default.createElement(
-                'span',
-                { className: 'portfolio-drawer-card__remaining-time' },
-                _react2.default.createElement(_remaining_time2.default, { end_time: expiry_time })
-            )
-        )
-    );
-};
-
-PortfolioDrawerCard.propTypes = {
-    currency: _propTypes2.default.string,
-    expiry_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-    id: _propTypes2.default.number,
-    indicative: _propTypes2.default.number,
-    status: _propTypes2.default.string,
-    type: _propTypes2.default.string,
-    underlying: _propTypes2.default.string
-};
-
-exports.default = PortfolioDrawerCard;
-
-/***/ }),
-
 /***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js":
 /*!*******************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js ***!
@@ -3483,11 +3187,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 
 var _classnames2 = _interopRequireDefault(_classnames);
+
+var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
@@ -3503,7 +3211,15 @@ var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./sr
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
+var _empty_positions_message = __webpack_require__(/*! ../../../../Modules/Positions/Components/empty_positions_message.jsx */ "./src/javascript/app_2/Modules/Positions/Components/empty_positions_message.jsx");
+
+var _empty_positions_message2 = _interopRequireDefault(_empty_positions_message);
+
 var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+var _positions_drawer_card = __webpack_require__(/*! ./positions_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx");
+
+var _positions_drawer_card2 = _interopRequireDefault(_positions_drawer_card);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3536,9 +3252,32 @@ var PositionsDrawer = function (_React$Component) {
         key: 'render',
         value: function render() {
             var _props = this.props,
+                active_positions = _props.active_positions,
+                currency = _props.currency,
+                error = _props.error,
+                is_empty = _props.is_empty,
                 is_positions_drawer_on = _props.is_positions_drawer_on,
                 toggleDrawer = _props.toggleDrawer;
 
+
+            var body_content = void 0;
+
+            if (error) {
+                body_content = _react2.default.createElement(
+                    'p',
+                    null,
+                    error
+                );
+            } else if (is_empty) {
+                body_content = _react2.default.createElement(_empty_positions_message2.default, null);
+            } else {
+                body_content = active_positions.map(function (position) {
+                    return _react2.default.createElement(_positions_drawer_card2.default, _extends({
+                        key: position.id,
+                        currency: currency
+                    }, position));
+                });
+            }
 
             return _react2.default.createElement(
                 'div',
@@ -3570,7 +3309,7 @@ var PositionsDrawer = function (_React$Component) {
                             style: { width: '100%', height: 'calc(100vh - 35px)' },
                             autoHide: true
                         },
-                        'No Running Contracts'
+                        body_content
                     )
                 )
             );
@@ -3581,7 +3320,12 @@ var PositionsDrawer = function (_React$Component) {
 }(_react2.default.Component);
 
 PositionsDrawer.propTypes = {
+    active_positions: _mobxReact.PropTypes.arrayOrObservableArray,
     children: _propTypes2.default.any,
+    currency: _propTypes2.default.string,
+    error: _propTypes2.default.string,
+    is_empty: _propTypes2.default.bool,
+    is_loading: _propTypes2.default.bool,
     is_positions_drawer_on: _propTypes2.default.bool,
     onMount: _propTypes2.default.func,
     onUnmount: _propTypes2.default.func,
@@ -3589,15 +3333,115 @@ PositionsDrawer.propTypes = {
 };
 
 exports.default = (0, _connect.connect)(function (_ref) {
-    var modules = _ref.modules,
+    var client = _ref.client,
+        modules = _ref.modules,
         ui = _ref.ui;
     return {
-        onMount: modules.portfolio.onMount,
-        onUnmount: modules.portfolio.onUnmount,
+        currency: client.currency,
+        active_positions: modules.positions.active_positions,
+        error: modules.positions.error,
+        is_empty: modules.positions.is_empty,
+        is_loading: modules.positions.is_loading,
+        onMount: modules.positions.onMount,
+        onUnmount: modules.positions.onUnmount,
         is_positions_drawer_on: ui.is_positions_drawer_on,
         toggleDrawer: ui.togglePositionsDrawer
     };
 })(PositionsDrawer);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx":
+/*!************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _contract_type_cell = __webpack_require__(/*! ../../../../Modules/Positions/Components/contract_type_cell.jsx */ "./src/javascript/app_2/Modules/Positions/Components/contract_type_cell.jsx");
+
+var _contract_type_cell2 = _interopRequireDefault(_contract_type_cell);
+
+var _money = __webpack_require__(/*! ../money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
+
+var _money2 = _interopRequireDefault(_money);
+
+var _binary_link = __webpack_require__(/*! ../../Routes/binary_link.jsx */ "./src/javascript/app_2/App/Components/Routes/binary_link.jsx");
+
+var _binary_link2 = _interopRequireDefault(_binary_link);
+
+var _helpers = __webpack_require__(/*! ../../Routes/helpers */ "./src/javascript/app_2/App/Components/Routes/helpers.js");
+
+var _remaining_time = __webpack_require__(/*! ../../../Containers/remaining_time.jsx */ "./src/javascript/app_2/App/Containers/remaining_time.jsx");
+
+var _remaining_time2 = _interopRequireDefault(_remaining_time);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
+    var currency = _ref.currency,
+        expiry_time = _ref.expiry_time,
+        id = _ref.id,
+        indicative = _ref.indicative,
+        status = _ref.status,
+        type = _ref.type,
+        underlying = _ref.underlying;
+    return _react2.default.createElement(
+        _binary_link2.default,
+        { className: 'positions-drawer-card', to: (0, _helpers.getContractPath)(id) },
+        _react2.default.createElement(
+            _react2.default.Fragment,
+            null,
+            _react2.default.createElement(
+                'div',
+                { className: 'positions-drawer-card__type' },
+                _react2.default.createElement(_contract_type_cell2.default, { type: type })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
+                _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
+            ),
+            _react2.default.createElement(
+                'span',
+                { className: 'positions-drawer-card__symbol' },
+                underlying
+            ),
+            _react2.default.createElement(
+                'span',
+                { className: 'positions-drawer-card__remaining-time' },
+                _react2.default.createElement(_remaining_time2.default, { end_time: expiry_time })
+            )
+        )
+    );
+};
+
+PositionsDrawerCard.propTypes = {
+    currency: _propTypes2.default.string,
+    expiry_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    id: _propTypes2.default.number,
+    indicative: _propTypes2.default.number,
+    status: _propTypes2.default.string,
+    type: _propTypes2.default.string,
+    underlying: _propTypes2.default.string
+};
+
+exports.default = PositionsDrawerCard;
 
 /***/ }),
 
@@ -5130,7 +4974,13 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -5150,6 +5000,14 @@ var _ttReactCustomScrollbars = __webpack_require__(/*! tt-react-custom-scrollbar
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
+var _items = __webpack_require__(/*! ./items.jsx */ "./src/javascript/app_2/App/Components/Form/DropDown/items.jsx");
+
+var _items2 = _interopRequireDefault(_items);
+
+var _native_select = __webpack_require__(/*! ./native_select.jsx */ "./src/javascript/app_2/App/Components/Form/DropDown/native_select.jsx");
+
+var _native_select2 = _interopRequireDefault(_native_select);
+
 var _helpers = __webpack_require__(/*! ./helpers */ "./src/javascript/app_2/App/Components/Form/DropDown/helpers.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5163,12 +5021,37 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Dropdown = function (_React$Component) {
     _inherits(Dropdown, _React$Component);
 
-    function Dropdown(props) {
+    function Dropdown() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, Dropdown);
 
-        var _this = _possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, props));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-        _this.onKeyPressed = function (event) {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call.apply(_ref, [this].concat(args))), _this), _this.list_ref = _react2.default.createRef(), _this.state = {
+            curr_index: (0, _helpers.getItemFromValue)(_this.props.list, _this.props.value).number,
+            is_list_visible: false
+        }, _this.handleSelect = function (item) {
+            if (item.value !== _this.props.value) {
+                _this.props.onChange({ target: { name: _this.props.name, value: item.value } });
+            }
+            _this.handleVisibility();
+        }, _this.setWrapperRef = function (node) {
+            return _this.wrapper_ref = node;
+        }, _this.handleClickOutside = function (event) {
+            if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target) && _this.state.is_list_visible) {
+                _this.setState({ is_list_visible: false });
+            }
+        }, _this.handleVisibility = function () {
+            _this.setState(function (state) {
+                return { is_list_visible: !state.is_list_visible };
+            });
+        }, _this.onKeyPressed = function (event) {
+            if (_this.is_single_option) return;
             if (event.keyCode === 9) {
                 // Tab is pressed
                 if (_this.state.is_list_visible) {
@@ -5203,6 +5086,20 @@ var Dropdown = function (_React$Component) {
                     if (_this.state.is_list_visible) {
                         var next_index = (0, _helpers.getNextIndex)(_this.state.curr_index, index.length);
                         _this.setState({ curr_index: next_index });
+                    } else if (!_this.props.is_alignment_left) {
+                        _this.handleVisibility();
+                    }
+                    break;
+                case 37:
+                    // Left arrow is pressed
+                    if (!_this.state.is_list_visible && _this.props.is_alignment_left) {
+                        _this.handleVisibility();
+                    }
+                    break;
+                case 39:
+                    // Right Arrow is pressed
+                    if (_this.state.is_list_visible && _this.props.is_alignment_left) {
+                        _this.handleVisibility();
                     }
                     break;
                 default:
@@ -5226,17 +5123,7 @@ var Dropdown = function (_React$Component) {
                     _this.setState({ curr_index: idx });
                 }
             }
-        };
-
-        _this.handleVisibility = _this.handleVisibility.bind(_this);
-        _this.handleSelect = _this.handleSelect.bind(_this);
-        _this.setWrapperRef = _this.setWrapperRef.bind(_this);
-        _this.handleClickOutside = _this.handleClickOutside.bind(_this);
-        _this.state = {
-            is_list_visible: false,
-            curr_index: (0, _helpers.getItemFromValue)(_this.props.list, _this.props.value).number
-        };
-        return _this;
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(Dropdown, [{
@@ -5250,67 +5137,49 @@ var Dropdown = function (_React$Component) {
             document.removeEventListener('mousedown', this.handleClickOutside);
         }
     }, {
-        key: 'handleSelect',
-        value: function handleSelect(item) {
-            if (item.value !== this.props.value) {
-                this.props.onChange({ target: { name: this.props.name, value: item.value } });
-            }
-            this.handleVisibility();
-        }
-    }, {
-        key: 'setWrapperRef',
-        value: function setWrapperRef(node) {
-            this.wrapper_ref = node;
-        }
-    }, {
-        key: 'scrollToggle',
-        value: function scrollToggle(state) {
-            this.is_open = state;
-            // Used to disable y-scroll on body - disabled in this component for now
-            // document.body.classList.toggle('no-scroll', this.is_open);
-        }
-    }, {
-        key: 'handleClickOutside',
-        value: function handleClickOutside(event) {
-            if (this.wrapper_ref && !this.wrapper_ref.contains(event.target) && this.state.is_list_visible) {
-                this.setState({ is_list_visible: false });
-                this.scrollToggle(this.state.is_list_visible);
-            }
-        }
-    }, {
-        key: 'handleVisibility',
-        value: function handleVisibility() {
-            this.setState({ is_list_visible: !this.state.is_list_visible });
-            this.scrollToggle(!this.state.is_list_visible);
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            // TODO: Fix list not being populated in native picker dropdown before re-enabling
-            // if (this.props.is_nativepicker) {
-            //     return (
-            //         <NativeSelect
-            //             name={this.props.name}
-            //             value={this.props.value}
-            //             list={this.props.list}
-            //             onChange={this.props.onChange}
-            //         />
-            //     );
-            // }
+            if (this.props.is_nativepicker) {
+                return _react2.default.createElement(_native_select2.default, {
+                    name: this.props.name,
+                    value: this.props.value,
+                    list: this.props.list,
+                    onChange: this.props.onChange
+                });
+            }
+
+            // we are calculating the offset for the dropdown list based on it's width here
+            var left_alignment_style = {
+                transform: 'translate3d(calc(-' + this.state.list_width + 'px - 12px), 0, 0px)'
+            };
+
+            // upon render via css transition group, we use this as a callback to set the width of the dropdown list in the state
+            var setListWidth = function setListWidth() {
+                return _this2.setState({ list_width: _this2.list_ref.current.offsetWidth });
+            };
+
+            var is_single_option = (0, _mobx.isArrayLike)(this.props.list) ? !!(this.props.list.length < 2) : !!(Object.keys(this.props.list).length < 2);
+
             return _react2.default.createElement(
                 'div',
                 {
                     ref: this.setWrapperRef,
-                    className: 'dropdown-container ' + (this.props.className ? this.props.className : '') + ' ' + (this.state.is_list_visible ? 'show' : '')
+                    className: (0, _classnames2.default)('dropdown-container', this.props.className, {
+                        'dropdown-container--left': this.props.is_alignment_left,
+                        'dropdown-container--show': this.state.is_list_visible,
+                        'dropdown-container--disabled': is_single_option
+                    })
                 },
                 _react2.default.createElement(
                     'div',
                     {
-                        className: 'dropdown-display ' + (this.state.is_list_visible ? 'clicked' : ''),
+                        className: (0, _classnames2.default)('dropdown__display', {
+                            'dropdown__display--clicked': this.state.is_list_visible
+                        }),
+                        tabIndex: is_single_option ? '-1' : '0',
                         onClick: this.handleVisibility,
-                        tabIndex: '0',
                         onKeyDown: this.onKeyPressed
                     },
                     _react2.default.createElement(
@@ -5319,29 +5188,52 @@ var Dropdown = function (_React$Component) {
                         (0, _helpers.getDisplayText)(this.props.list, this.props.value)
                     )
                 ),
-                _react2.default.createElement(_Common.IconArrow, { className: 'select-arrow' }),
+                !is_single_option && _react2.default.createElement(_Common.IconArrow, { className: (0, _classnames2.default)('select-arrow', {
+                        'select-arrow--left': this.props.is_alignment_left
+                    })
+                }),
                 _react2.default.createElement(
                     _reactTransitionGroup.CSSTransition,
                     {
                         'in': this.state.is_list_visible,
                         timeout: 100,
-                        classNames: 'dropdown-list',
+                        classNames: {
+                            enter: 'dropdown__list--enter',
+                            enterDone: 'dropdown__list--enter--done',
+                            exit: 'dropdown__list--exit'
+                        },
+                        onEntered: setListWidth,
                         unmountOnExit: true
                     },
                     _react2.default.createElement(
                         'div',
-                        { className: 'dropdown-list' },
+                        { className: (0, _classnames2.default)('dropdown__list', {
+                                'dropdown__list--left': this.props.is_alignment_left
+                            })
+                        },
                         _react2.default.createElement(
                             'div',
-                            { className: 'list-container' },
+                            {
+                                className: (0, _classnames2.default)('list', {
+                                    'list--left': this.props.is_alignment_left
+                                }),
+                                ref: this.list_ref,
+                                style: this.props.is_alignment_left ? left_alignment_style : undefined
+                            },
                             _react2.default.createElement(
                                 _ttReactCustomScrollbars.Scrollbars,
                                 {
                                     autoHeight: true,
                                     autoHide: true,
-                                    autoHeightMax: 200
+                                    autoHeightMax: 200,
+                                    renderTrackHorizontal: function renderTrackHorizontal(props) {
+                                        return _react2.default.createElement('div', _extends({}, props, { className: 'track-horizontal', style: { display: 'none' } }));
+                                    },
+                                    renderThumbHorizontal: function renderThumbHorizontal(props) {
+                                        return _react2.default.createElement('div', _extends({}, props, { className: 'thumb-horizontal', style: { display: 'none' } }));
+                                    }
                                 },
-                                (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(Items, {
+                                (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(_items2.default, {
                                     highlightedIdx: this.state.curr_index,
                                     items: this.props.list,
                                     name: this.props.name,
@@ -5353,14 +5245,14 @@ var Dropdown = function (_React$Component) {
                                         { key: key },
                                         _react2.default.createElement(
                                             'div',
-                                            { className: 'list-label' },
+                                            { className: 'list__label' },
                                             _react2.default.createElement(
                                                 'span',
                                                 null,
                                                 key
                                             )
                                         ),
-                                        _react2.default.createElement(Items, {
+                                        _react2.default.createElement(_items2.default, {
                                             highlightedIdx: _this2.state.curr_index,
                                             items: _this2.props.list[key],
                                             name: _this2.props.name,
@@ -5380,88 +5272,11 @@ var Dropdown = function (_React$Component) {
     return Dropdown;
 }(_react2.default.Component);
 
-var Items = function Items(_ref) {
-    var items = _ref.items,
-        name = _ref.name,
-        value = _ref.value,
-        handleSelect = _ref.handleSelect,
-        highlightedIdx = _ref.highlightedIdx;
-    return items.map(function (item, idx) {
-        return _react2.default.createElement(
-            _react2.default.Fragment,
-            { key: idx },
-            _react2.default.createElement(
-                'div',
-                {
-                    className: 'list-item ' + (value === item.value ? 'selected' : '') + ' ' + (highlightedIdx === idx ? 'highlighted' : ''),
-                    key: idx,
-                    name: name,
-                    value: item.value,
-                    onClick: handleSelect.bind(null, item)
-                },
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    item.text
-                )
-            )
-        );
-    });
-};
-
-var NativeSelect = function NativeSelect(_ref2) {
-    var name = _ref2.name,
-        value = _ref2.value,
-        list = _ref2.list,
-        onChange = _ref2.onChange;
-    return _react2.default.createElement(
-        'div',
-        { className: 'select-wrapper' },
-        _react2.default.createElement(
-            'select',
-            { name: name, value: value, onChange: onChange },
-            Array.isArray(list) ? list.map(function (item, idx) {
-                return _react2.default.createElement(
-                    'option',
-                    { key: idx, value: item.value },
-                    item.text
-                );
-            }) : Object.keys(list).map(function (key) {
-                return _react2.default.createElement(
-                    _react2.default.Fragment,
-                    { key: key },
-                    _react2.default.createElement(
-                        'optgroup',
-                        { label: key },
-                        list[key].map(function (item, idx) {
-                            return _react2.default.createElement(
-                                'option',
-                                { key: idx, value: item.value },
-                                item.text
-                            );
-                        })
-                    )
-                );
-            })
-        )
-    );
-};
-
-// ToDo: Refactor Drop-down.
-// It's now too risky to refactor Dropdown for 'list' and 'value' prop types.
 Dropdown.propTypes = {
     className: _propTypes2.default.string,
+    is_alignment_left: _propTypes2.default.bool,
     is_nativepicker: _propTypes2.default.bool,
     list: _propTypes2.default.oneOfType([_propTypes2.default.array, _propTypes2.default.object]),
-    name: _propTypes2.default.string,
-    onChange: _propTypes2.default.func,
-    type: _propTypes2.default.string,
-    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
-};
-
-// ToDo: Refactor NativeSelect
-NativeSelect.propTypes = {
-    list: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.array]),
     name: _propTypes2.default.string,
     onChange: _propTypes2.default.func,
     value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
@@ -5574,6 +5389,150 @@ var _dropdown2 = _interopRequireDefault(_dropdown);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _dropdown2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/DropDown/items.jsx":
+/*!*********************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/DropDown/items.jsx ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Items = function Items(_ref) {
+    var items = _ref.items,
+        name = _ref.name,
+        value = _ref.value,
+        handleSelect = _ref.handleSelect,
+        highlightedIdx = _ref.highlightedIdx;
+    return items.map(function (item, idx) {
+        return _react2.default.createElement(
+            _react2.default.Fragment,
+            { key: idx },
+            _react2.default.createElement(
+                'div',
+                {
+                    className: (0, _classnames2.default)('list__item', {
+                        'list__item--selected': value === item.value,
+                        'list__item--highlighted': highlightedIdx === idx
+                    }),
+                    key: idx,
+                    name: name,
+                    value: item.value,
+                    onClick: handleSelect.bind(null, item)
+                },
+                _react2.default.createElement(
+                    'span',
+                    null,
+                    item.text
+                )
+            )
+        );
+    });
+};
+
+Items.propTypes = {
+    handleSelect: _propTypes2.default.func,
+    highlightedIdx: _propTypes2.default.number,
+    name: _propTypes2.default.string,
+    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
+};
+
+exports.default = Items;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/DropDown/native_select.jsx":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/DropDown/native_select.jsx ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NativeSelect = function NativeSelect(_ref) {
+    var name = _ref.name,
+        list = _ref.list,
+        value = _ref.value,
+        onChange = _ref.onChange;
+    return _react2.default.createElement(
+        'div',
+        { className: 'select-wrapper' },
+        _react2.default.createElement(
+            'select',
+            { name: name, value: value, onChange: onChange },
+            Array.isArray(list) ? list.map(function (item, idx) {
+                return _react2.default.createElement(
+                    'option',
+                    { key: idx, value: item.value },
+                    item.text
+                );
+            }) : Object.keys(list).map(function (key) {
+                return _react2.default.createElement(
+                    _react2.default.Fragment,
+                    { key: key },
+                    _react2.default.createElement(
+                        'optgroup',
+                        { label: key },
+                        list[key].map(function (item, idx) {
+                            return _react2.default.createElement(
+                                'option',
+                                { key: idx, value: item.value },
+                                item.text
+                            );
+                        })
+                    )
+                );
+            })
+        )
+    );
+};
+
+NativeSelect.propTypes = {
+    list: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.array]),
+    name: _propTypes2.default.string,
+    onChange: _propTypes2.default.func,
+    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
+};
+
+exports.default = NativeSelect;
 
 /***/ }),
 
@@ -5831,13 +5790,20 @@ var Button = function Button(_ref) {
         id = _ref.id,
         is_disabled = _ref.is_disabled,
         onClick = _ref.onClick,
+        tabIndex = _ref.tabIndex,
         text = _ref.text,
         wrapperClassName = _ref.wrapperClassName;
 
     var classes = 'btn' + (has_effect ? ' effect' : '') + ' ' + className;
     var button = _react2.default.createElement(
         'button',
-        { id: id, className: classes, onClick: onClick || undefined, disabled: is_disabled },
+        {
+            id: id,
+            className: classes,
+            onClick: onClick || undefined,
+            disabled: is_disabled,
+            tabIndex: tabIndex || '0'
+        },
         _react2.default.createElement(
             'span',
             null,
@@ -6109,7 +6075,8 @@ var InputField = function InputField(_ref) {
             {
                 className: 'input-wrapper__button input-wrapper__button--increment',
                 is_disabled: max_is_disabled,
-                onClick: incrementValue
+                onClick: incrementValue,
+                tabIndex: '-1'
             },
             _react2.default.createElement(_icon_plus.IconPlus, { className: 'input-wrapper__icon input-wrapper__icon--plus', is_disabled: max_is_disabled })
         ),
@@ -6118,7 +6085,8 @@ var InputField = function InputField(_ref) {
             {
                 className: 'input-wrapper__button input-wrapper__button--decrement',
                 is_disabled: min_is_disabled,
-                onClick: decrementValue
+                onClick: decrementValue,
+                tabIndex: '-1'
             },
             _react2.default.createElement(_icon_minus.IconMinus, { className: 'input-wrapper__icon input-wrapper__icon--minus', is_disabled: min_is_disabled })
         ),
@@ -6685,18 +6653,6 @@ Object.keys(_toggle_fullscreen).forEach(function (key) {
   });
 });
 
-var _toggle_portfolio = __webpack_require__(/*! ./toggle_portfolio.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx");
-
-Object.keys(_toggle_portfolio).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _toggle_portfolio[key];
-    }
-  });
-});
-
 var _toggle_positions = __webpack_require__(/*! ./toggle_positions.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx");
 
 Object.keys(_toggle_positions).forEach(function (key) {
@@ -6889,64 +6845,6 @@ var ToggleFullScreen = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.ToggleFullScreen = ToggleFullScreen;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx":
-/*!********************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.TogglePortfolio = undefined;
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Footer = __webpack_require__(/*! ../../../../Assets/Footer */ "./src/javascript/app_2/Assets/Footer/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TogglePortfolio = function TogglePortfolio(_ref) {
-    var is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
-        togglePortfolioDrawer = _ref.togglePortfolioDrawer;
-
-    var toggle_portfolio_class = (0, _classnames2.default)('ic-portfolio', {
-        'active': is_portfolio_drawer_on
-    });
-    return _react2.default.createElement(
-        'a',
-        {
-            href: 'javascript:;',
-            className: toggle_portfolio_class,
-            onClick: togglePortfolioDrawer
-        },
-        _react2.default.createElement(_Footer.IconQuickPortfolio, { className: 'footer-icon' })
-    );
-};
-
-TogglePortfolio.propTypes = {
-    is_portfolio_drawer_on: _propTypes2.default.bool,
-    togglePortfolioDrawer: _propTypes2.default.func
-};
-
-exports.TogglePortfolio = TogglePortfolio;
 
 /***/ }),
 
@@ -7987,9 +7885,9 @@ var header_links = [{
     text: (0, _localize.localize)('Trade'),
     link_to: _Constants.routes.trade
 }, {
-    icon: _react2.default.createElement(_NavBar.IconPortfolio, { className: 'ic-header__portfolio' }),
-    text: (0, _localize.localize)('Portfolio'),
-    link_to: _Constants.routes.portfolio
+    icon: _react2.default.createElement(_NavBar.IconPositions, { className: 'ic-header__positions' }),
+    text: (0, _localize.localize)('Positions'),
+    link_to: _Constants.routes.positions
 }, {
     icon: _react2.default.createElement(_NavBar.IconStatement, { className: 'ic-header__statement' }),
     text: (0, _localize.localize)('Statement'),
@@ -8035,8 +7933,8 @@ var ContractDetails = (0, _react.lazy)(function () {
 });
 // import Statement       from 'Modules/Statement';
 
-var Portfolio = (0, _react.lazy)(function () {
-    return __webpack_require__.e(/*! import() | portfolio */ "portfolio").then(__webpack_require__.t.bind(null, /*! ../../Modules/Portfolio */ "./src/javascript/app_2/Modules/Portfolio/index.js", 7));
+var Positions = (0, _react.lazy)(function () {
+    return __webpack_require__.e(/*! import() | positions */ "positions").then(__webpack_require__.t.bind(null, /*! ../../Modules/Positions */ "./src/javascript/app_2/Modules/Positions/index.js", 7));
 });
 var Settings = (0, _react.lazy)(function () {
     return __webpack_require__.e(/*! import() | settings */ "settings").then(__webpack_require__.t.bind(null, /*! ../../Modules/settings/settings.jsx */ "./src/javascript/app_2/Modules/settings/settings.jsx", 7));
@@ -8080,7 +7978,7 @@ var Page404 = (0, _react.lazy)(function () {
 });
 
 var initRoutesConfig = function initRoutesConfig() {
-    return [{ path: _Constants.routes.contract, component: ContractDetails, title: (0, _localize.localize)('Contract Details'), is_authenticated: true }, { path: _Constants.routes.index, component: _reactRouterDom.Redirect, title: '', to: '/trade' }, { path: _Constants.routes.portfolio, component: Portfolio, title: (0, _localize.localize)('Portfolio'), is_authenticated: true, icon_component: _NavBar.IconPortfolio }, { path: _Constants.routes.root, component: _reactRouterDom.Redirect, title: '', exact: true, to: '/trade' }, { path: _Constants.routes.statement, component: Statement, title: (0, _localize.localize)('Statement'), is_authenticated: true, icon_component: _NavBar.IconStatement }, { path: _Constants.routes.trade, component: _Trading2.default, title: (0, _localize.localize)('Trade'), exact: true }, {
+    return [{ path: _Constants.routes.contract, component: ContractDetails, title: (0, _localize.localize)('Contract Details'), is_authenticated: true }, { path: _Constants.routes.index, component: _reactRouterDom.Redirect, title: '', to: '/trade' }, { path: _Constants.routes.positions, component: Positions, title: (0, _localize.localize)('Positions'), is_authenticated: true, icon_component: _NavBar.IconPositions }, { path: _Constants.routes.root, component: _reactRouterDom.Redirect, title: '', exact: true, to: '/trade' }, { path: _Constants.routes.statement, component: Statement, title: (0, _localize.localize)('Statement'), is_authenticated: true, icon_component: _NavBar.IconStatement }, { path: _Constants.routes.trade, component: _Trading2.default, title: (0, _localize.localize)('Trade'), exact: true }, {
         path: _Constants.routes.settings,
         component: Settings,
         is_authenticated: true,
@@ -8491,10 +8389,10 @@ var MenuDrawer = function MenuDrawer(_ref) {
     var is_dark_mode = _ref.is_dark_mode,
         is_logged_in = _ref.is_logged_in,
         is_mobile = _ref.is_mobile,
-        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
+        is_positions_drawer_on = _ref.is_positions_drawer_on,
         is_purchase_locked = _ref.is_purchase_locked,
         toggleDarkMode = _ref.toggleDarkMode,
-        togglePortfolioDrawer = _ref.togglePortfolioDrawer,
+        togglePositionsDrawer = _ref.togglePositionsDrawer,
         togglePurchaseLock = _ref.togglePurchaseLock;
     return _react2.default.createElement(
         'div',
@@ -8511,9 +8409,9 @@ var MenuDrawer = function MenuDrawer(_ref) {
                     link_to: _routes2.default.trade
                 }),
                 _react2.default.createElement(_Drawer.DrawerItem, {
-                    text: (0, _localize.localize)('Portfolio'),
-                    icon: _react2.default.createElement(_NavBar.IconPortfolio, { className: 'drawer-icon' }),
-                    link_to: _routes2.default.portfolio
+                    text: (0, _localize.localize)('Positions'),
+                    icon: _react2.default.createElement(_NavBar.IconPositions, { className: 'drawer-icon' }),
+                    link_to: _routes2.default.positions
                 }),
                 _react2.default.createElement(_Drawer.DrawerItem, {
                     text: (0, _localize.localize)('Statement'),
@@ -8540,8 +8438,8 @@ var MenuDrawer = function MenuDrawer(_ref) {
                 icon: _react2.default.createElement(_Drawer2.IconLogout, { className: 'drawer-icon' }),
                 text: (0, _localize.localize)('Logout'),
                 custom_action: function custom_action() {
-                    if (is_portfolio_drawer_on) {
-                        togglePortfolioDrawer(); // TODO: hide drawer inside logout, once it is a mobx action
+                    if (is_positions_drawer_on) {
+                        togglePositionsDrawer(); // TODO: hide drawer inside logout, once it is a mobx action
                     }
                     (0, _Services.requestLogout)();
                 }
@@ -8554,11 +8452,11 @@ MenuDrawer.propTypes = {
     is_dark_mode: _propTypes2.default.bool,
     is_logged_in: _propTypes2.default.bool,
     is_mobile: _propTypes2.default.bool,
-    is_portfolio_drawer_on: _propTypes2.default.bool,
+    is_positions_drawer_on: _propTypes2.default.bool,
     is_purchase_confirmed: _propTypes2.default.bool,
     is_purchase_locked: _propTypes2.default.bool,
     toggleDarkMode: _propTypes2.default.func,
-    togglePortfolioDrawer: _propTypes2.default.func,
+    togglePositionsDrawer: _propTypes2.default.func,
     togglePurchaseConfirmation: _propTypes2.default.func,
     togglePurchaseLock: _propTypes2.default.func
 };
@@ -8570,11 +8468,11 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         is_logged_in: client.is_logged_in,
         is_dark_mode: ui.is_dark_mode_on,
         is_mobile: ui.is_mobile,
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
+        is_positions_drawer_on: ui.is_positions_drawer_on,
         is_purchase_confirmed: ui.is_purchase_confirm_on,
         is_purchase_locked: ui.is_purchase_lock_on,
         toggleDarkMode: ui.toggleDarkMode,
-        togglePortfolioDrawer: ui.togglePortfolioDrawer,
+        togglePositionsDrawer: ui.togglePositionsDrawer,
         togglePurchaseConfirmation: ui.togglePurchaseConfirmation,
         togglePurchaseLock: ui.togglePurchaseLock
     };
@@ -8616,14 +8514,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AppContents = function AppContents(_ref) {
     var children = _ref.children,
-        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
         is_positions_drawer_on = _ref.is_positions_drawer_on;
     return _react2.default.createElement(
         'div',
         {
             id: 'app_contents',
             className: (0, _classnames2.default)('app-contents', {
-                'app-contents--show-portfolio-drawer': is_portfolio_drawer_on,
                 'app-contents--show-positions-drawer': is_positions_drawer_on
             })
         },
@@ -8633,14 +8529,12 @@ var AppContents = function AppContents(_ref) {
 
 AppContents.propTypes = {
     children: _propTypes2.default.any,
-    is_portfolio_drawer_on: _propTypes2.default.bool,
     is_positions_drawer_on: _propTypes2.default.bool
 };
 
 exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_ref2) {
     var ui = _ref2.ui;
     return {
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
         is_positions_drawer_on: ui.is_positions_drawer_on
     };
 })(AppContents));
@@ -8682,11 +8576,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Footer = function Footer(_ref) {
     var is_language_dialog_visible = _ref.is_language_dialog_visible,
         is_logged_in = _ref.is_logged_in,
-        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
         is_positions_drawer_on = _ref.is_positions_drawer_on,
         is_settings_dialog_on = _ref.is_settings_dialog_on,
         network_status = _ref.network_status,
-        togglePortfolioDrawer = _ref.togglePortfolioDrawer,
         togglePositionsDrawer = _ref.togglePositionsDrawer,
         toggleSettingsDialog = _ref.toggleSettingsDialog;
     return _react2.default.createElement(
@@ -8697,10 +8589,6 @@ var Footer = function Footer(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'footer-links' },
-            is_logged_in && _react2.default.createElement(_Footer.TogglePortfolio, {
-                is_portfolio_drawer_on: is_portfolio_drawer_on,
-                togglePortfolioDrawer: togglePortfolioDrawer
-            }),
             _react2.default.createElement(_Footer.ToggleFullScreen, null),
             _react2.default.createElement(_Footer.ToggleSettings, {
                 is_settings_visible: is_settings_dialog_on,
@@ -8722,11 +8610,9 @@ var Footer = function Footer(_ref) {
 Footer.propTypes = {
     is_language_dialog_visible: _propTypes2.default.bool,
     is_logged_in: _propTypes2.default.bool,
-    is_portfolio_drawer_on: _propTypes2.default.bool,
     is_positions_drawer_on: _propTypes2.default.bool,
     is_settings_dialog_on: _propTypes2.default.bool,
     network_status: _propTypes2.default.object,
-    togglePortfolioDrawer: _propTypes2.default.func,
     togglePositionsDrawer: _propTypes2.default.func,
     toggleSettingsDialog: _propTypes2.default.func
 };
@@ -8739,10 +8625,8 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         is_logged_in: client.is_logged_in,
         network_status: common.network_status,
         is_language_dialog_visible: ui.is_language_dialog_on,
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
         is_positions_drawer_on: ui.is_positions_drawer_on,
         is_settings_dialog_on: ui.is_settings_dialog_on,
-        togglePortfolioDrawer: ui.togglePortfolioDrawer,
         togglePositionsDrawer: ui.togglePositionsDrawer,
         toggleSettingsDialog: ui.toggleSettingsDialog
     };
@@ -9627,10 +9511,6 @@ var _error_boundary = __webpack_require__(/*! ./Components/Elements/Errors/error
 
 var _error_boundary2 = _interopRequireDefault(_error_boundary);
 
-var _PortfolioDrawer = __webpack_require__(/*! ./Components/Elements/PortfolioDrawer */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js");
-
-var _PortfolioDrawer2 = _interopRequireDefault(_PortfolioDrawer);
-
 var _PositionsDrawer = __webpack_require__(/*! ./Components/Elements/PositionsDrawer */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js");
 
 var _PositionsDrawer2 = _interopRequireDefault(_PositionsDrawer);
@@ -9690,7 +9570,6 @@ var App = function App(_ref) {
                         _app_contents2.default,
                         null,
                         _react2.default.createElement(_routes2.default, null),
-                        _react2.default.createElement(_PortfolioDrawer2.default, null),
                         _react2.default.createElement(_PositionsDrawer2.default, null),
                         _react2.default.createElement(_toast_message2.default, { position: _ToastMessage.POSITIONS.TOP_RIGHT })
                     ),
@@ -10807,52 +10686,6 @@ exports.IconPositions = IconPositions;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx":
-/*!*********************************************************************!*\
-  !*** ./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.IconQuickPortfolio = undefined;
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var IconQuickPortfolio = function IconQuickPortfolio(_ref) {
-    var className = _ref.className;
-    return _react2.default.createElement(
-        'svg',
-        { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 16 12' },
-        _react2.default.createElement('path', { className: 'color1-fill color3-fill', fill: '#2A3052', fillRule: 'evenodd', d: 'M1 0h14c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1H1a1 1 0 0 1-1-1V1c0-.6.4-1 1-1zm0 1v10h5V1H1zm6 0v10h8V1H7zm1.5 1.5a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1z' })
-    );
-};
-
-IconQuickPortfolio.propTypes = {
-    className: _propTypes2.default.string
-};
-
-exports.IconQuickPortfolio = IconQuickPortfolio;
-
-/***/ }),
-
 /***/ "./src/javascript/app_2/Assets/Footer/icon_settings.jsx":
 /*!**************************************************************!*\
   !*** ./src/javascript/app_2/Assets/Footer/icon_settings.jsx ***!
@@ -10933,18 +10766,6 @@ Object.keys(_icon_positions).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _icon_positions[key];
-    }
-  });
-});
-
-var _icon_quick_portfolio = __webpack_require__(/*! ./icon_quick_portfolio.jsx */ "./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx");
-
-Object.keys(_icon_quick_portfolio).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _icon_quick_portfolio[key];
     }
   });
 });
@@ -11205,9 +11026,9 @@ exports.IconHamburger = IconHamburger;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Assets/Header/NavBar/icon_portfolio.jsx":
+/***/ "./src/javascript/app_2/Assets/Header/NavBar/icon_positions.jsx":
 /*!**********************************************************************!*\
-  !*** ./src/javascript/app_2/Assets/Header/NavBar/icon_portfolio.jsx ***!
+  !*** ./src/javascript/app_2/Assets/Header/NavBar/icon_positions.jsx ***!
   \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -11218,7 +11039,7 @@ exports.IconHamburger = IconHamburger;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.IconPortfolio = undefined;
+exports.IconPositions = undefined;
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 
@@ -11234,7 +11055,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var IconPortfolio = function IconPortfolio(_ref) {
+var IconPositions = function IconPositions(_ref) {
     var className = _ref.className;
     return _react2.default.createElement(
         'svg',
@@ -11246,7 +11067,7 @@ var IconPortfolio = function IconPortfolio(_ref) {
                 'g',
                 null,
                 _react2.default.createElement('path', { className: 'color1-stroke color2-fill color3-stroke', fill: 'none', stroke: '#2A3052', d: 'M1.5 14.5h13a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1h-13a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1z' }),
-                _react2.default.createElement('path', { className: 'color1-stroke color3-stroke color4-fill portfolio-fix', stroke: '#2A3052', d: 'M5.5 3v-.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V3' }),
+                _react2.default.createElement('path', { className: 'color1-stroke color3-stroke color4-fill positions-fix', stroke: '#2A3052', d: 'M5.5 3v-.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V3' }),
                 _react2.default.createElement('path', { className: 'color1-stroke scale-fix', stroke: '#2A3052', strokeLinecap: 'square', d: 'M0 8l4.047 2.248a2 2 0 0 0 .971.252h5.964a2 2 0 0 0 .971-.252L16 8' }),
                 _react2.default.createElement('path', { className: 'color1-stroke', stroke: '#2A3052', strokeLinecap: 'round', d: 'M6.5 8.5h3' })
             )
@@ -11254,11 +11075,11 @@ var IconPortfolio = function IconPortfolio(_ref) {
     );
 };
 
-IconPortfolio.propTypes = {
+IconPositions.propTypes = {
     className: _propTypes2.default.string
 };
 
-exports.IconPortfolio = IconPortfolio;
+exports.IconPositions = IconPositions;
 
 /***/ }),
 
@@ -11417,14 +11238,14 @@ Object.keys(_icon_hamburger).forEach(function (key) {
   });
 });
 
-var _icon_portfolio = __webpack_require__(/*! ./icon_portfolio.jsx */ "./src/javascript/app_2/Assets/Header/NavBar/icon_portfolio.jsx");
+var _icon_positions = __webpack_require__(/*! ./icon_positions.jsx */ "./src/javascript/app_2/Assets/Header/NavBar/icon_positions.jsx");
 
-Object.keys(_icon_portfolio).forEach(function (key) {
+Object.keys(_icon_positions).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _icon_portfolio[key];
+      return _icon_positions[key];
     }
   });
 });
@@ -12374,7 +12195,7 @@ var routes = {
     index: '/index',
     limits: '/settings/limits',
     personal: '/settings/personal',
-    portfolio: '/portfolio',
+    positions: '/positions',
     root: '/',
     settings: '/settings',
     statement: '/statement',
@@ -13514,7 +13335,7 @@ var InfoBox = function InfoBox(_ref) {
 
     var Contents = is_ended ? _InfoBox.InfoBoxExpired : _InfoBox.InfoBoxGeneral;
     if (is_digit && is_trade_page) {
-        // we don't display digit info in Statement/Portfolio because of API shortages
+        // we don't display digit info in Statement/Positions because of API shortages
         Contents = _InfoBox.InfoBoxDigit;
     }
 
@@ -13573,9 +13394,9 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Modules/Portfolio/Components/contract_type_cell.jsx":
+/***/ "./src/javascript/app_2/Modules/Positions/Components/contract_type_cell.jsx":
 /*!**********************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Portfolio/Components/contract_type_cell.jsx ***!
+  !*** ./src/javascript/app_2/Modules/Positions/Components/contract_type_cell.jsx ***!
   \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13627,9 +13448,9 @@ exports.default = ContractTypeCell;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Modules/Portfolio/Components/empty_portfolio_message.jsx":
+/***/ "./src/javascript/app_2/Modules/Positions/Components/empty_positions_message.jsx":
 /*!***************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Portfolio/Components/empty_portfolio_message.jsx ***!
+  !*** ./src/javascript/app_2/Modules/Positions/Components/empty_positions_message.jsx ***!
   \***************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13651,23 +13472,23 @@ var _NavBar = __webpack_require__(/*! ../../../Assets/Header/NavBar */ "./src/ja
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EmptyPortfolioMessage = function EmptyPortfolioMessage() {
+var EmptyPositionsMessage = function EmptyPositionsMessage() {
     return (
         // TODO: combine with statement component, once design is final
         _react2.default.createElement(
             'div',
-            { className: 'portfolio-empty' },
-            _react2.default.createElement(_NavBar.IconPortfolio, { className: 'portfolio-empty__icon' }),
+            { className: 'positions-empty' },
+            _react2.default.createElement(_NavBar.IconPositions, { className: 'positions-empty__icon' }),
             _react2.default.createElement(
                 'span',
-                { className: 'portfolio-empty__text' },
+                { className: 'positions-empty__text' },
                 (0, _localize.localize)('No open positions.')
             )
         )
     );
 };
 
-exports.default = EmptyPortfolioMessage;
+exports.default = EmptyPositionsMessage;
 
 /***/ }),
 
@@ -15146,8 +14967,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _currency_base = __webpack_require__(/*! ../../../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
 
-var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _DropDown = __webpack_require__(/*! ../../../../../App/Components/Form/DropDown */ "./src/javascript/app_2/App/Components/Form/DropDown/index.js");
 
 var _DropDown2 = _interopRequireDefault(_DropDown);
@@ -15207,26 +15026,25 @@ var Amount = function Amount(_ref) {
 
     return _react2.default.createElement(
         _fieldset2.default,
-        {
-            header: (0, _localize.localize)('Invest Amount'),
-            icon: 'invest-amount'
-        },
+        null,
         _react2.default.createElement(
             'div',
             { className: amount_container_class },
             _react2.default.createElement(_DropDown2.default, {
+                is_alignment_left: true,
+                is_nativepicker: is_nativepicker,
                 list: basis_list,
-                value: basis,
                 name: 'basis',
-                onChange: onChange,
-                is_nativepicker: is_nativepicker
+                value: basis,
+                onChange: onChange
             }),
             !is_single_currency && _react2.default.createElement(_DropDown2.default, {
+                is_alignment_left: true,
+                is_nativepicker: is_nativepicker,
                 list: currencies_list,
-                value: currency,
                 name: 'currency',
-                onChange: onChange,
-                is_nativepicker: is_nativepicker
+                value: currency,
+                onChange: onChange
             }),
             _react2.default.createElement(_input_field2.default, {
                 error_messages: validation_errors.amount,
@@ -15288,8 +15106,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _fieldset = __webpack_require__(/*! ../../../../../App/Components/Form/fieldset.jsx */ "./src/javascript/app_2/App/Components/Form/fieldset.jsx");
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
@@ -15336,10 +15152,7 @@ var Barrier = function Barrier(_ref) {
     }
     return _react2.default.createElement(
         _fieldset2.default,
-        {
-            header: barrier_count > 1 ? (0, _localize.localize)('Barriers') : (0, _localize.localize)('Barrier'),
-            icon: 'barriers'
-        },
+        null,
         _react2.default.createElement(_input_field2.default, {
             type: 'number',
             name: 'barrier_1',
@@ -15529,16 +15342,14 @@ var Duration = function Duration(_ref) {
 
     return _react2.default.createElement(
         _fieldset2.default,
-        {
-            header: (0, _localize.localize)('Trade Duration'),
-            icon: 'trade-duration'
-        },
+        null,
         _react2.default.createElement(_DropDown2.default, {
+            is_alignment_left: true,
+            is_nativepicker: is_nativepicker,
             list: expiry_list,
-            value: expiry_type,
             name: 'expiry_type',
-            onChange: onChange,
-            is_nativepicker: is_nativepicker
+            value: expiry_type,
+            onChange: onChange
         }),
         expiry_type === 'duration' ? _react2.default.createElement(
             _react2.default.Fragment,
@@ -15547,11 +15358,12 @@ var Duration = function Duration(_ref) {
                 'div',
                 { className: 'duration-container' },
                 _react2.default.createElement(_DropDown2.default, {
+                    is_alignment_left: true,
+                    is_nativepicker: is_nativepicker,
                     list: duration_units_list,
-                    value: duration_unit,
                     name: 'duration_unit',
-                    onChange: onChange,
-                    is_nativepicker: is_nativepicker
+                    value: duration_unit,
+                    onChange: onChange
                 }),
                 duration_unit === 't' ? _react2.default.createElement(_RangeSlider2.default, {
                     max_value: max_duration,
@@ -15787,16 +15599,14 @@ var StartDate = function StartDate(_ref) {
     }
     return _react2.default.createElement(
         _fieldset2.default,
-        {
-            header: (0, _localize.localize)('Start time'),
-            icon: 'start-time'
-        },
+        null,
         _react2.default.createElement(_DropDown2.default, {
+            is_alignment_left: true,
+            is_nativepicker: is_nativepicker,
+            list: start_dates_list,
             name: 'start_date',
             value: start_date,
-            list: start_dates_list,
-            onChange: onChange,
-            is_nativepicker: is_nativepicker
+            onChange: onChange
         }),
         !is_today && start_time && _react2.default.createElement(_time_picker2.default, {
             onChange: onChange,
@@ -17275,7 +17085,7 @@ var WS = function () {
         return _socket_base2.default.send({ payout_currencies: 1 });
     };
 
-    var portfolio = function portfolio() {
+    var positions = function positions() {
         return _socket_base2.default.send({ portfolio: 1 });
     };
 
@@ -17351,7 +17161,7 @@ var WS = function () {
         logout: logout,
         mt5LoginList: mt5LoginList,
         oauthApps: oauthApps,
-        portfolio: portfolio,
+        positions: positions,
         payoutCurrencies: payoutCurrencies,
         proposalOpenContract: proposalOpenContract,
         sell: sell,
@@ -18168,9 +17978,9 @@ exports.default = ContractStore;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/format_response.js":
+/***/ "./src/javascript/app_2/Stores/Modules/Positions/Helpers/format_response.js":
 /*!**********************************************************************************!*\
-  !*** ./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/format_response.js ***!
+  !*** ./src/javascript/app_2/Stores/Modules/Positions/Helpers/format_response.js ***!
   \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18181,27 +17991,27 @@ exports.default = ContractStore;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var formatPortfolioPosition = exports.formatPortfolioPosition = function formatPortfolioPosition(portfolio_pos) {
-    var purchase = parseFloat(portfolio_pos.buy_price);
-    var payout = parseFloat(portfolio_pos.payout);
+var formatPositionsPosition = exports.formatPositionsPosition = function formatPositionsPosition(positions_pos) {
+    var purchase = parseFloat(positions_pos.buy_price);
+    var payout = parseFloat(positions_pos.payout);
 
     return {
-        reference: +portfolio_pos.transaction_id,
-        type: portfolio_pos.contract_type,
-        details: portfolio_pos.longcode.replace(/\n/g, '<br />'),
+        reference: +positions_pos.transaction_id,
+        type: positions_pos.contract_type,
+        details: positions_pos.longcode.replace(/\n/g, '<br />'),
         payout: payout,
         purchase: purchase,
-        expiry_time: portfolio_pos.expiry_time,
-        id: portfolio_pos.contract_id,
+        expiry_time: positions_pos.expiry_time,
+        id: positions_pos.contract_id,
         indicative: 0
     };
 };
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Stores/Modules/Portfolio/portfolio_store.js":
+/***/ "./src/javascript/app_2/Stores/Modules/Positions/positions_store.js":
 /*!**************************************************************************!*\
-  !*** ./src/javascript/app_2/Stores/Modules/Portfolio/portfolio_store.js ***!
+  !*** ./src/javascript/app_2/Stores/Modules/Positions/positions_store.js ***!
   \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18222,7 +18032,7 @@ var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module
 
 var _Services = __webpack_require__(/*! ../../../Services */ "./src/javascript/app_2/Services/index.js");
 
-var _format_response = __webpack_require__(/*! ./Helpers/format_response */ "./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/format_response.js");
+var _format_response = __webpack_require__(/*! ./Helpers/format_response */ "./src/javascript/app_2/Stores/Modules/Positions/Helpers/format_response.js");
 
 var _base_store = __webpack_require__(/*! ../../base_store */ "./src/javascript/app_2/Stores/base_store.js");
 
@@ -18279,24 +18089,24 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, (_class = function (_BaseStore) {
-    _inherits(PortfolioStore, _BaseStore);
+var PositionsStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, (_class = function (_BaseStore) {
+    _inherits(PositionsStore, _BaseStore);
 
-    function PortfolioStore() {
+    function PositionsStore() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, PortfolioStore);
+        _classCallCheck(this, PositionsStore);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PortfolioStore.__proto__ || Object.getPrototypeOf(PortfolioStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'data', _descriptor, _this), _initDefineProp(_this, 'is_loading', _descriptor2, _this), _initDefineProp(_this, 'error', _descriptor3, _this), _initDefineProp(_this, 'initializePortfolio', _descriptor4, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PositionsStore.__proto__ || Object.getPrototypeOf(PositionsStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'data', _descriptor, _this), _initDefineProp(_this, 'is_loading', _descriptor2, _this), _initDefineProp(_this, 'error', _descriptor3, _this), _initDefineProp(_this, 'initializePositions', _descriptor4, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    _createClass(PortfolioStore, [{
+    _createClass(PositionsStore, [{
         key: 'clearTable',
         value: function clearTable() {
             this.data = [];
@@ -18304,8 +18114,8 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             this.error = '';
         }
     }, {
-        key: 'portfolioHandler',
-        value: function portfolioHandler(response) {
+        key: 'positionsHandler',
+        value: function positionsHandler(response) {
             this.is_loading = false;
             if ('error' in response) {
                 this.error = response.error.message;
@@ -18314,7 +18124,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             this.error = '';
             if (response.portfolio.contracts) {
                 this.data = response.portfolio.contracts.map(function (pos) {
-                    return (0, _format_response.formatPortfolioPosition)(pos);
+                    return (0, _format_response.formatPositionsPosition)(pos);
                 }).sort(function (pos1, pos2) {
                     return pos2.reference - pos1.reference;
                 }); // new contracts first
@@ -18335,7 +18145,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
 
 
             if (act === 'buy') {
-                _Services.WS.portfolio().then(function (res) {
+                _Services.WS.positions().then(function (res) {
                     var new_pos = res.portfolio.contracts.find(function (pos) {
                         return +pos.contract_id === +contract_id;
                     });
@@ -18354,32 +18164,32 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             if ('error' in response) return;
 
             var proposal = response.proposal_open_contract;
-            var portfolio_position = this.data.find(function (position) {
+            var positions_position = this.data.find(function (position) {
                 return +position.id === +proposal.contract_id;
             });
 
-            if (!portfolio_position) return;
+            if (!positions_position) return;
 
-            var prev_indicative = portfolio_position.indicative;
+            var prev_indicative = positions_position.indicative;
             var new_indicative = +proposal.bid_price;
 
-            portfolio_position.indicative = new_indicative;
-            portfolio_position.underlying = proposal.display_name;
+            positions_position.indicative = new_indicative;
+            positions_position.underlying = proposal.display_name;
 
             if (!proposal.is_valid_to_sell) {
-                portfolio_position.status = 'no-resale';
+                positions_position.status = 'no-resale';
             } else if (new_indicative > prev_indicative) {
-                portfolio_position.status = 'price-moved-up';
+                positions_position.status = 'price-moved-up';
             } else if (new_indicative < prev_indicative) {
-                portfolio_position.status = 'price-moved-down';
+                positions_position.status = 'price-moved-down';
             } else {
-                portfolio_position.status = 'price-stable';
+                positions_position.status = 'price-stable';
             }
         }
     }, {
         key: 'pushNewPosition',
         value: function pushNewPosition(new_pos) {
-            this.data.unshift((0, _format_response.formatPortfolioPosition)(new_pos));
+            this.data.unshift((0, _format_response.formatPositionsPosition)(new_pos));
         }
     }, {
         key: 'removePositionById',
@@ -18396,7 +18206,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
 
             return new Promise(function (resolve) {
                 if (_this3.data.length === 0) {
-                    resolve(_this3.initializePortfolio());
+                    resolve(_this3.initializePositions());
                 }
             });
         }
@@ -18405,14 +18215,14 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
         value: function onMount() {
             this.onSwitchAccount(this.accountSwitcherListener);
             if (this.data.length === 0) {
-                this.initializePortfolio();
+                this.initializePositions();
             }
         }
     }, {
         key: 'onUnmount',
         value: function onUnmount() {
             this.disposeSwitchAccount();
-            // keep data and connections for portfolio drawer on desktop
+            // keep data and connections for positions drawer on desktop
             if (this.root_store.ui.is_mobile) {
                 this.clearTable();
                 _Services.WS.forgetAll('proposal_open_contract', 'transaction');
@@ -18425,10 +18235,10 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             var payout = 0;
             var purchase = 0;
 
-            this.data.forEach(function (portfolio_pos) {
-                indicative += +portfolio_pos.indicative;
-                payout += +portfolio_pos.payout;
-                purchase += +portfolio_pos.purchase;
+            this.data.forEach(function (positions_pos) {
+                indicative += +positions_pos.indicative;
+                payout += +positions_pos.payout;
+                purchase += +positions_pos.purchase;
             });
             return {
                 indicative: indicative,
@@ -18441,9 +18251,9 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
         get: function get() {
             var _this4 = this;
 
-            return this.data.filter(function (portfolio_pos) {
+            return this.data.filter(function (positions_pos) {
                 var server_epoch = _this4.root_store.common.server_time.unix();
-                return portfolio_pos.expiry_time > server_epoch;
+                return positions_pos.expiry_time > server_epoch;
             });
         }
     }, {
@@ -18453,7 +18263,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
         }
     }]);
 
-    return PortfolioStore;
+    return PositionsStore;
 }(_base_store2.default), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'data', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
@@ -18469,7 +18279,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
     initializer: function initializer() {
         return '';
     }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'initializePortfolio', [_dec], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'initializePositions', [_dec], {
     enumerable: true,
     initializer: function initializer() {
         var _this5 = this;
@@ -18478,13 +18288,13 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             if (!_this5.root_store.client.is_logged_in) return;
             _this5.is_loading = true;
 
-            _Services.WS.portfolio().then(_this5.portfolioHandler);
+            _Services.WS.positions().then(_this5.positionsHandler);
             _Services.WS.subscribeProposalOpenContract(null, _this5.proposalOpenContractHandler, false);
             _Services.WS.subscribeTransaction(_this5.transactionHandler, false);
         };
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'clearTable', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'clearTable'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'portfolioHandler', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'portfolioHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'transactionHandler', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'transactionHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'proposalOpenContractHandler', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'proposalOpenContractHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
-exports.default = PortfolioStore;
+}), _applyDecoratedDescriptor(_class.prototype, 'clearTable', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'clearTable'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'positionsHandler', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'positionsHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'transactionHandler', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'transactionHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'proposalOpenContractHandler', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'proposalOpenContractHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
+exports.default = PositionsStore;
 
 /***/ }),
 
@@ -20799,7 +20609,7 @@ var getExpiryType = exports.getExpiryType = function getExpiryType(store) {
     var server_time = store.root_store.common.server_time;
 
     var duration_is_day = expiry_type === 'duration' && duration_unit === 'd';
-    var expiry_is_after_today = expiry_type === 'endtime' && (0, _Date.toMoment)(expiry_date).isAfter((0, _Date.toMoment)(server_time), 'day') || !hasIntradayDurationUnit(duration_units_list);
+    var expiry_is_after_today = expiry_type === 'endtime' && ((0, _Date.toMoment)(expiry_date).isAfter((0, _Date.toMoment)(server_time), 'day') || !hasIntradayDurationUnit(duration_units_list));
 
     var contract_expiry_type = 'daily';
     if (!duration_is_day && !expiry_is_after_today) {
@@ -22134,9 +21944,9 @@ var _contract_store = __webpack_require__(/*! ./Contract/contract_store */ "./sr
 
 var _contract_store2 = _interopRequireDefault(_contract_store);
 
-var _portfolio_store = __webpack_require__(/*! ./Portfolio/portfolio_store */ "./src/javascript/app_2/Stores/Modules/Portfolio/portfolio_store.js");
+var _positions_store = __webpack_require__(/*! ./Positions/positions_store */ "./src/javascript/app_2/Stores/Modules/Positions/positions_store.js");
 
-var _portfolio_store2 = _interopRequireDefault(_portfolio_store);
+var _positions_store2 = _interopRequireDefault(_positions_store);
 
 var _smart_chart_store = __webpack_require__(/*! ./SmartChart/smart_chart_store */ "./src/javascript/app_2/Stores/Modules/SmartChart/smart_chart_store.js");
 
@@ -22158,7 +21968,7 @@ var ModulesStore = function ModulesStore(root_store) {
     _classCallCheck(this, ModulesStore);
 
     this.contract = new _contract_store2.default({ root_store: root_store });
-    this.portfolio = new _portfolio_store2.default({ root_store: root_store });
+    this.positions = new _positions_store2.default({ root_store: root_store });
     this.smart_chart = new _smart_chart_store2.default({ root_store: root_store });
     this.statement = new _statement_store2.default({ root_store: root_store });
     this.trade = new _trade_store2.default({ root_store: root_store });
@@ -23592,7 +23402,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -23653,14 +23463,14 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, _dec22 = _mobx.action.bound, (_class = function (_BaseStore) {
+var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(UIStore, _BaseStore);
 
     // PWA event and config
     function UIStore() {
         _classCallCheck(this, UIStore);
 
-        var local_storage_properties = ['is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_portfolio_drawer_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
+        var local_storage_properties = ['is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
 
         var _this = _possibleConstructorReturn(this, (UIStore.__proto__ || Object.getPrototypeOf(UIStore)).call(this, { local_storage_properties: local_storage_properties }));
 
@@ -23668,35 +23478,33 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         _initDefineProp(_this, 'is_notifications_drawer_on', _descriptor2, _this);
 
-        _initDefineProp(_this, 'is_portfolio_drawer_on', _descriptor3, _this);
+        _initDefineProp(_this, 'is_positions_drawer_on', _descriptor3, _this);
 
-        _initDefineProp(_this, 'is_positions_drawer_on', _descriptor4, _this);
+        _initDefineProp(_this, 'is_dark_mode_on', _descriptor4, _this);
 
-        _initDefineProp(_this, 'is_dark_mode_on', _descriptor5, _this);
+        _initDefineProp(_this, 'is_language_dialog_on', _descriptor5, _this);
 
-        _initDefineProp(_this, 'is_language_dialog_on', _descriptor6, _this);
+        _initDefineProp(_this, 'is_settings_dialog_on', _descriptor6, _this);
 
-        _initDefineProp(_this, 'is_settings_dialog_on', _descriptor7, _this);
+        _initDefineProp(_this, 'is_accounts_switcher_on', _descriptor7, _this);
 
-        _initDefineProp(_this, 'is_accounts_switcher_on', _descriptor8, _this);
+        _initDefineProp(_this, 'is_purchase_confirm_on', _descriptor8, _this);
 
-        _initDefineProp(_this, 'is_purchase_confirm_on', _descriptor9, _this);
+        _initDefineProp(_this, 'is_purchase_lock_on', _descriptor9, _this);
 
-        _initDefineProp(_this, 'is_purchase_lock_on', _descriptor10, _this);
+        _initDefineProp(_this, 'is_chart_asset_info_visible', _descriptor10, _this);
 
-        _initDefineProp(_this, 'is_chart_asset_info_visible', _descriptor11, _this);
+        _initDefineProp(_this, 'is_chart_countdown_visible', _descriptor11, _this);
 
-        _initDefineProp(_this, 'is_chart_countdown_visible', _descriptor12, _this);
+        _initDefineProp(_this, 'is_chart_layout_default', _descriptor12, _this);
 
-        _initDefineProp(_this, 'is_chart_layout_default', _descriptor13, _this);
+        _initDefineProp(_this, 'is_install_button_visible', _descriptor13, _this);
 
-        _initDefineProp(_this, 'is_install_button_visible', _descriptor14, _this);
+        _initDefineProp(_this, 'pwa_prompt_event', _descriptor14, _this);
 
-        _initDefineProp(_this, 'pwa_prompt_event', _descriptor15, _this);
+        _initDefineProp(_this, 'screen_width', _descriptor15, _this);
 
-        _initDefineProp(_this, 'screen_width', _descriptor16, _this);
-
-        _initDefineProp(_this, 'toast_messages', _descriptor17, _this);
+        _initDefineProp(_this, 'toast_messages', _descriptor16, _this);
 
         window.addEventListener('resize', _this.handleResize);
         (0, _mobx.autorun)(function () {
@@ -23716,7 +23524,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
         value: function handleResize() {
             this.screen_width = window.innerWidth;
             if (this.is_mobile) {
-                this.is_portfolio_drawer_on = false;
+                this.is_positions_drawer_on = false;
             }
         }
     }, {
@@ -23771,17 +23579,9 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
             this.is_language_dialog_on = false;
         }
     }, {
-        key: 'togglePortfolioDrawer',
-        value: function togglePortfolioDrawer() {
-            // show and hide Portfolio Drawer
-            this.is_portfolio_drawer_on = !this.is_portfolio_drawer_on;
-            this.is_positions_drawer_on = false;
-        }
-    }, {
         key: 'togglePositionsDrawer',
         value: function togglePositionsDrawer() {
             this.is_positions_drawer_on = !this.is_positions_drawer_on;
-            this.is_portfolio_drawer_on = false;
         }
     }, {
         key: 'showMainDrawer',
@@ -23859,82 +23659,77 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return false;
     }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'is_portfolio_drawer_on', [_mobx.observable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'is_positions_drawer_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'is_positions_drawer_on', [_mobx.observable], {
-    enumerable: true,
-    initializer: function initializer() {
-        return false;
-    }
-}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'is_dark_mode_on', [_mobx.observable], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, 'is_dark_mode_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return true;
     }
-}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, 'is_language_dialog_on', [_mobx.observable], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'is_language_dialog_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, 'is_settings_dialog_on', [_mobx.observable], {
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, 'is_settings_dialog_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, 'is_accounts_switcher_on', [_mobx.observable], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, 'is_accounts_switcher_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, 'is_purchase_confirm_on', [_mobx.observable], {
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, 'is_purchase_confirm_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, 'is_purchase_lock_on', [_mobx.observable], {
+}), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, 'is_purchase_lock_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_asset_info_visible', [_mobx.observable], {
+}), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_asset_info_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return true;
     }
-}), _descriptor12 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_countdown_visible', [_mobx.observable], {
+}), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_countdown_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_layout_default', [_mobx.observable], {
+}), _descriptor12 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_layout_default', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return true;
     }
-}), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'is_install_button_visible', [_mobx.observable], {
+}), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, 'is_install_button_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, 'pwa_prompt_event', [_mobx.observable], {
+}), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'pwa_prompt_event', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return null;
     }
-}), _descriptor16 = _applyDecoratedDescriptor(_class.prototype, 'screen_width', [_mobx.observable], {
+}), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, 'screen_width', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return window.innerWidth;
     }
-}), _descriptor17 = _applyDecoratedDescriptor(_class.prototype, 'toast_messages', [_mobx.observable], {
+}), _descriptor16 = _applyDecoratedDescriptor(_class.prototype, 'toast_messages', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return [];
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePortfolioDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePortfolioDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec22], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
 exports.default = UIStore;
 
 /***/ }),
@@ -24351,6 +24146,7 @@ var currentLanguage = exports.currentLanguage = (0, _language.get)();
 
 var getAllowedLanguages = exports.getAllowedLanguages = function getAllowedLanguages() {
     var exclude_languages = ['ACH'];
+    // TODO Change language_list to const when design is ready.
     var language_list = Object.keys((0, _language.getAll)()).filter(function (key) {
         return !exclude_languages.includes(key);
     }).reduce(function (obj, key) {
@@ -24358,6 +24154,8 @@ var getAllowedLanguages = exports.getAllowedLanguages = function getAllowedLangu
         return obj;
     }, {});
 
+    // TODO Remove this one line below when design is ready.
+    language_list = { EN: 'English' };
     return language_list;
 };
 
@@ -25077,7 +24875,7 @@ var GTM = function () {
             },
             settings: {
                 theme: root_store.ui.is_dark_mode_on ? 'dark' : 'light',
-                portfolio_drawer: root_store.ui.is_portfolio_drawer_on ? 'open' : 'closed',
+                positions_drawer: root_store.ui.is_positions_drawer_on ? 'open' : 'closed',
                 purchase_confirm: root_store.ui.is_purchase_confirm_on ? 'enabled' : 'disabled',
                 chart: {
                     toolbar_position: root_store.ui.is_chart_layout_default ? 'bottom' : 'left',

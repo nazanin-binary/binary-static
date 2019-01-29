@@ -722,7 +722,6 @@ var CryptoConfig = function () {
             ETH: { name: localize('Ether'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             ETC: { name: localize('Ether Classic'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
             LTC: { name: localize('Litecoin'), min_withdrawal: 0.002, pa_max_withdrawal: 5, pa_min_withdrawal: 0.002 },
-            DAI: { name: localize('Dai'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 },
             UST: { name: localize('Tether'), min_withdrawal: 0.02, pa_max_withdrawal: 2000, pa_min_withdrawal: 10 }
         };
     };
@@ -1167,10 +1166,19 @@ var Login = function () {
         return loginUrl() + '&social_signup=' + brand;
     };
 
+    var initOneAll = function initOneAll() {
+        ['google', 'facebook'].forEach(function (provider) {
+            $('#button_' + provider).off('click').on('click', function (e) {
+                e.preventDefault();
+                window.location.href = socialLoginUrl(provider);
+            });
+        });
+    };
+
     return {
         redirectToLogin: redirectToLogin,
         isLoginPages: isLoginPages,
-        socialLoginUrl: socialLoginUrl
+        initOneAll: initOneAll
     };
 }();
 
@@ -13027,9 +13035,16 @@ var isIndonesia = function isIndonesia() {
     return State.getResponse('website_status.clients_country') === 'id';
 };
 
+var isExcludedFromCfd = function isExcludedFromCfd() {
+    var cfd_excluded_regex = new RegExp('^fr$');
+    var clients_country = Client.get('residence') || State.getResponse('website_status.clients_country');
+    return cfd_excluded_regex.test(clients_country);
+};
+
 module.exports = {
     isEuCountry: isEuCountry,
-    isIndonesia: isIndonesia
+    isIndonesia: isIndonesia,
+    isExcludedFromCfd: isExcludedFromCfd
 };
 
 /***/ }),
@@ -14475,7 +14490,6 @@ var AccountTransfer = function () {
         el_transfer_fee = void 0,
         el_fee_amount = void 0,
         el_fee_minimum = void 0,
-        el_transfer_info = void 0,
         el_success_form = void 0,
         client_balance = void 0,
         client_currency = void 0,
@@ -14508,7 +14522,7 @@ var AccountTransfer = function () {
             el_transfer_to.innerHTML = fragment_transfer_to.innerHTML;
             el_transfer_to.onchange = function () {
                 var to_currency = el_transfer_to.options[el_transfer_to.selectedIndex].getAttribute('data-currency');
-                el_transfer_info.setVisibility(client_currency !== to_currency);
+                el_transfer_fee.setVisibility(client_currency !== to_currency);
                 setTransferFeeAmount();
             };
         } else {
@@ -14531,7 +14545,7 @@ var AccountTransfer = function () {
             el_transfer_fee.setVisibility(1);
         } else {
             var to_currency = el_transfer_to.getAttribute('data-currency');
-            el_transfer_info.setVisibility(client_currency !== to_currency);
+            el_transfer_fee.setVisibility(client_currency !== to_currency);
         }
     };
 
@@ -14606,7 +14620,6 @@ var AccountTransfer = function () {
         });
 
         el_transfer_fee.setVisibility(0);
-        el_transfer_info.setVisibility(0);
         el_success_form.setVisibility(1);
     };
 
@@ -14625,7 +14638,6 @@ var AccountTransfer = function () {
         el_transfer_fee = getElementById('transfer_fee');
         el_fee_amount = getElementById('transfer_fee_amount');
         el_fee_minimum = getElementById('transfer_fee_minimum');
-        el_transfer_info = getElementById('transfer_info');
         el_success_form = getElementById('success_form');
         el_reset_transfer = getElementById('reset_transfer');
         el_reset_transfer.addEventListener('click', onClickReset);
@@ -14771,7 +14783,7 @@ var Cashier = function () {
                         var list = getPropertyValue(response, ['paymentagent_list', 'list']);
                         if (list && list.length) {
                             var regex_currency = new RegExp(currency);
-                            if (!/^(UST|DAI)$/.test(currency) || list.find(function (pa) {
+                            if (!/^UST$/.test(currency) || list.find(function (pa) {
                                 return regex_currency.test(pa.currencies);
                             })) {
                                 $('#payment-agent-section').setVisibility(1);
@@ -16429,7 +16441,7 @@ var MBPortfolio = function () {
         }
 
         var $container = $('#tab_portfolio-content');
-        $portfolio = $portfolio || $('#portfolio');
+        $portfolio = $portfolio || $('#positions');
 
         if ($portfolio && (!$portfolio.parent().length || $portfolio.parent().get(0).id !== 'tab_portfolio-content')) {
             $portfolio.detach();
@@ -17547,7 +17559,6 @@ var isBinaryApp = __webpack_require__(/*! ../../config */ "./src/javascript/conf
 
 var NewAccount = function () {
     var clients_country = void 0,
-        $google_btn = void 0,
         $login_btn = void 0,
         $verify_email = void 0;
 
@@ -17556,7 +17567,6 @@ var NewAccount = function () {
     var onLoad = function onLoad() {
         getElementById('footer').setVisibility(0); // always hide footer in this page
 
-        $google_btn = $('#google-signup');
         $login_btn = $('#login');
         $verify_email = $('#verify_email');
 
@@ -17575,14 +17585,11 @@ var NewAccount = function () {
             }
         });
 
-        $google_btn.off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = Login.socialLoginUrl('google');
-        });
         $login_btn.off('click').on('click', function (e) {
             e.preventDefault();
             Login.redirectToLogin();
         });
+        Login.initOneAll();
     };
 
     var verifyEmailHandler = function verifyEmailHandler(response) {
@@ -27473,7 +27480,7 @@ var PortfolioInit = function () {
         values = {};
         currency = '';
         oauth_apps = {};
-        $portfolio_loading = $('#portfolio-loading');
+        $portfolio_loading = $('#positions-loading');
         $portfolio_loading.show();
         showLoadingImage($portfolio_loading[0]);
         is_first_response = true;
@@ -27499,11 +27506,11 @@ var PortfolioInit = function () {
         var $div = $('<div/>');
         $div.append($('<tr/>', { class: 'tr-first ' + new_class + ' ' + data.contract_id, id: data.contract_id }).append($('<td/>', { class: 'ref' }).append($('<span ' + GetAppDetails.showTooltip(data.app_id, oauth_apps[data.app_id]) + ' data-balloon-position="right">' + data.transaction_id + '</span>'))).append($('<td/>', { class: 'payout' }).append($('<strong/>', { html: +data.payout ? formatMoney(data.currency, data.payout) : '-' }))).append($('<td/>', { class: 'details', text: data.longcode })).append($('<td/>', { class: 'purchase' }).append($('<strong/>', { html: formatMoney(data.currency, data.buy_price) }))).append($('<td/>', { class: 'indicative' }).append($('<strong/>', { class: 'indicative_price', text: '--.--' }))).append($('<td/>', { class: 'button' }).append($('<button/>', { class: 'button open_contract_details nowrap', contract_id: data.contract_id, text: localize('View') })))).append($('<tr/>', { class: 'tr-desc ' + new_class + ' ' + data.contract_id }).append($('<td/>', { colspan: '6', text: data.longcode })));
 
-        $('#portfolio-body').prepend($div.html());
+        $('#positions-body').prepend($div.html());
     };
 
     var updateBalance = function updateBalance() {
-        var $portfolio_balance = $('#portfolio-balance');
+        var $portfolio_balance = $('#positions-balance');
         if ($portfolio_balance.length === 0) return;
         $portfolio_balance.html(Portfolio.getBalance(Client.get('balance'), Client.get('currency')));
         var $if_balance_zero = $('#if-balance-zero');
@@ -27525,7 +27532,7 @@ var PortfolioInit = function () {
             /**
              * User has at least one contract
              */
-            $('#portfolio-no-contract').hide();
+            $('#positions-no-contract').hide();
             $.each(data.portfolio.contracts, function (ci, c) {
                 // TODO: remove ico exception when all ico contracts are removed
                 if (!getPropertyValue(values, c.contract_id) && c.contract_type !== 'BINARYICO') {
@@ -27542,19 +27549,19 @@ var PortfolioInit = function () {
         }
         // no open contracts
         if (!portfolio_data) {
-            $('#portfolio-no-contract').show();
-            $('#portfolio-table').setVisibility(0);
+            $('#positions-no-contract').show();
+            $('#positions-table').setVisibility(0);
         } else {
-            $('#portfolio-table').setVisibility(1);
+            $('#positions-table').setVisibility(1);
             // update footer area data
             updateFooter();
 
             // request "proposal_open_contract"
             BinarySocket.send({ proposal_open_contract: 1, subscribe: 1 }, { callback: updateIndicative });
         }
-        // ready to show portfolio table
+        // ready to show positions table
         $portfolio_loading.hide();
-        $('#portfolio-content').setVisibility(1);
+        $('#positions-content').setVisibility(1);
         is_first_response = false;
     };
 
@@ -27581,7 +27588,7 @@ var PortfolioInit = function () {
             return;
         }
 
-        // force to sell the expired contract, in order to remove from portfolio
+        // force to sell the expired contract, in order to remove from positions
         if (+proposal.is_settleable === 1 && !proposal.is_sold) {
             BinarySocket.send({ sell_expired: 1 });
         }
@@ -27619,10 +27626,10 @@ var PortfolioInit = function () {
         delete values[contract_id];
         $('tr.' + contract_id).removeClass('new').css('opacity', '0.5').fadeOut(1000, function () {
             $(this).remove();
-            if ($('#portfolio-body').find('tr').length === 0) {
-                $('#portfolio-table').setVisibility(0);
+            if ($('#positions-body').find('tr').length === 0) {
+                $('#positions-table').setVisibility(0);
                 $('#cost-of-open-positions, #value-of-open-positions').text('');
-                $('#portfolio-no-contract').show();
+                $('#positions-no-contract').show();
             }
         });
         updateFooter();
@@ -27634,7 +27641,7 @@ var PortfolioInit = function () {
     };
 
     var errorMessage = function errorMessage(msg) {
-        var $err = $('#portfolio').find('#error-msg');
+        var $err = $('#positions').find('#error-msg');
         if (msg) {
             $err.setVisibility(1).text(msg);
             $portfolio_loading.hide();
@@ -27645,14 +27652,14 @@ var PortfolioInit = function () {
 
     var onLoad = function onLoad() {
         init();
-        ViewPopup.viewButtonOnClick('#portfolio-table');
+        ViewPopup.viewButtonOnClick('#positions-table');
     };
 
     var onUnload = function onUnload() {
         BinarySocket.send({ forget_all: ['proposal_open_contract'] });
         SubscriptionManager.forget('transaction', transactionResponseHandler);
-        $('#portfolio-body').empty();
-        $('#portfolio-content').setVisibility(0);
+        $('#positions-body').empty();
+        $('#positions-content').setVisibility(0);
         is_initialized = false;
     };
 
@@ -35341,6 +35348,7 @@ var Home = function () {
     var clients_country = void 0;
 
     var onLoad = function onLoad() {
+        Login.initOneAll();
         TabSelector.onLoad();
 
         BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
@@ -35356,17 +35364,9 @@ var Home = function () {
                 fnc_response_handler: handler,
                 fnc_additional_check: checkCountry
             });
-            socialLogin();
             if (isEuCountry()) {
                 $('.mfsa_message').slideDown(300);
             }
-        });
-    };
-
-    var socialLogin = function socialLogin() {
-        $('#google-signup').off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = Login.socialLoginUrl('google');
         });
     };
 
@@ -35596,6 +35596,10 @@ module.exports = Platforms;
 "use strict";
 
 
+var BinarySocket = __webpack_require__(/*! ../../app/base/socket */ "./src/javascript/app/base/socket.js");
+var isExcludedFromCfd = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isExcludedFromCfd;
+var getElementById = __webpack_require__(/*! ../../../javascript/_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+
 var Regulation = function () {
     var onLoad = function onLoad() {
         $(function () {
@@ -35617,6 +35621,14 @@ var Regulation = function () {
                 // if EU passport rights tab is active, call relocateLinks to initialize map coordinates
                 if (!$accordion.accordion('option', 'active')) {
                     relocateLinks();
+                }
+            });
+
+            BinarySocket.wait('website_status', 'authorize').then(function () {
+                if (isExcludedFromCfd()) {
+                    var el_cfd_fillbox = getElementById('cfd_fillbox');
+                    el_cfd_fillbox.nextSibling.classList.remove('margin-left-0');
+                    el_cfd_fillbox.remove();
                 }
             });
         });

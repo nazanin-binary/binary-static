@@ -35013,7 +35013,7 @@ var getAppId = function getAppId() {
     } else if (/localhost/i.test(window.location.hostname)) {
         app_id = 1159;
     } else if (is_new_app) {
-        window.localStorage.removeItem('config.default_app_id');
+        // window.localStorage.removeItem('config.default_app_id');
         app_id = 12447;
     } else {
         window.localStorage.removeItem('config.default_app_id');

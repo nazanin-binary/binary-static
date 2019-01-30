@@ -34975,7 +34975,7 @@ module.exports = ViewPopupUI;
  */
 var domain_app_ids = { // these domains also being used in '_common/url.js' as supported "production domains"
     'binary.com': 1,
-    'binary.me': 12447
+    'binary.me': 15284
 };
 
 var getCurrentBinaryDomain = function getCurrentBinaryDomain() {
@@ -34995,7 +34995,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = 12447; // you can insert Application ID of your registered application here
+    var user_app_id = '12447'; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {

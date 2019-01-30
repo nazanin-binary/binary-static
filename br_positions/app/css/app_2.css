@@ -377,32 +377,36 @@ span.tooltip {
   overflow-y: auto;
   overflow-x: hidden; }
   .app-contents--show-positions-drawer .chart-container {
-    width: calc(100% - (240px + 16px));
-    margin-left: calc(240px + 16px); }
-  .app-contents .chart-container .cq-chart-control-left .cq-chart-controls {
-    -webkit-transform: translateX(0);
-            transform: translateX(0);
-    -webkit-transition: -webkit-transform 0.25s ease;
-    transition: -webkit-transform 0.25s ease;
-    transition: transform 0.25s ease;
-    transition: transform 0.25s ease, -webkit-transform 0.25s ease; }
-  .app-contents .chart-container .cq-chart-control-left .cq-top-ui-widgets {
-    left: 90px; }
-    .app-contents .chart-container .cq-chart-control-left .cq-top-ui-widgets .info-box {
+    width: calc(100% - (240px + 16px)) !important;
+    margin-left: calc(240px + 16px);
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease; }
+  .app-contents .chart-container {
+    width: 100%; }
+    .app-contents .chart-container .cq-chart-control-left .cq-chart-controls {
       -webkit-transform: translateX(0);
-              transform: translateX(0); }
-  .app-contents .chart-container .ciq-chart .cq-top-ui-widgets, .app-contents .chart-container .ciq-chart .info-box {
-    -webkit-transition: -webkit-transform 0.25s ease;
-    transition: -webkit-transform 0.25s ease;
-    transition: transform 0.25s ease;
-    transition: transform 0.25s ease, -webkit-transform 0.25s ease; }
-    .app-contents .chart-container .ciq-chart .cq-top-ui-widgets .cq-symbols-display, .app-contents .chart-container .ciq-chart .info-box .cq-symbols-display {
-      z-index: 1; }
-  .app-contents .chart-container .ciq-chart .cq-chart-controls {
-    -webkit-transition: max-width 0.25s ease, -webkit-transform 0.25s ease;
-    transition: max-width 0.25s ease, -webkit-transform 0.25s ease;
-    transition: max-width 0.25s ease, transform 0.25s ease;
-    transition: max-width 0.25s ease, transform 0.25s ease, -webkit-transform 0.25s ease; }
+              transform: translateX(0);
+      -webkit-transition: -webkit-transform 0.25s ease;
+      transition: -webkit-transform 0.25s ease;
+      transition: transform 0.25s ease;
+      transition: transform 0.25s ease, -webkit-transform 0.25s ease; }
+    .app-contents .chart-container .cq-chart-control-left .cq-top-ui-widgets {
+      left: 90px; }
+      .app-contents .chart-container .cq-chart-control-left .cq-top-ui-widgets .info-box {
+        -webkit-transform: translateX(0);
+                transform: translateX(0); }
+    .app-contents .chart-container .ciq-chart .cq-top-ui-widgets, .app-contents .chart-container .ciq-chart .info-box {
+      -webkit-transition: -webkit-transform 0.25s ease;
+      transition: -webkit-transform 0.25s ease;
+      transition: transform 0.25s ease;
+      transition: transform 0.25s ease, -webkit-transform 0.25s ease; }
+      .app-contents .chart-container .ciq-chart .cq-top-ui-widgets .cq-symbols-display, .app-contents .chart-container .ciq-chart .info-box .cq-symbols-display {
+        z-index: 1; }
+    .app-contents .chart-container .ciq-chart .cq-chart-controls {
+      -webkit-transition: max-width 0.25s ease, -webkit-transform 0.25s ease;
+      transition: max-width 0.25s ease, -webkit-transform 0.25s ease;
+      transition: max-width 0.25s ease, transform 0.25s ease;
+      transition: max-width 0.25s ease, transform 0.25s ease, -webkit-transform 0.25s ease; }
   @media screen and (max-width: 768px) {
     .app-contents {
       margin-bottom: 0;
@@ -1182,13 +1186,13 @@ hr {
 
 .positions-drawer {
   width: 240px;
-  height: calc(100vh - 48px - 35px - (2 * 16px));
+  height: calc(100vh - 48px - 35px - 2px - (2 * 16px));
   margin-top: 16px;
   position: fixed;
   z-index: 2;
   top: 48px;
   left: 0;
-  border-left: 1px solid #e9e9ed;
+  border: 1px solid #e9e9ed;
   background-color: #e9e9ed;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;

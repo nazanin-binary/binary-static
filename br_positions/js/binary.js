@@ -3037,7 +3037,7 @@ var Mellt = function () {
             if (power_of === 0) {
                 attempts += char_at_position;
             }
-            // Otherwise we need to iterate through all the other characters positions to
+            // Otherwise we need to iterate through all the other characters portfolio to
             // get here. For example, to find the 5 in 25 we can't just guess 2 and then 5
             // (even though Hollywood seems to insist this is possible), we need to try 0,1,
             // 2,3...15,16,17...23,24,25 (got it).
@@ -5512,7 +5512,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             getRegion: function getRegion(el, x, y) {
                 var i,
-                    regionMap = this.regionMap; // maps regions to value positions
+                    regionMap = this.regionMap; // maps regions to value portfolio
                 for (i = regionMap.length; i--;) {
                     if (regionMap[i] !== null && x >= regionMap[i][0] && x <= regionMap[i][1]) {
                         return regionMap[i][2];
@@ -27628,7 +27628,7 @@ var PortfolioInit = function () {
             $(this).remove();
             if ($('#portfolio-body').find('tr').length === 0) {
                 $('#portfolio-table').setVisibility(0);
-                $('#cost-of-open-positions, #value-of-open-positions').text('');
+                $('#cost-of-open-portfolio, #value-of-open-portfolio').text('');
                 $('#portfolio-no-contract').show();
             }
         });
@@ -27636,8 +27636,8 @@ var PortfolioInit = function () {
     };
 
     var updateFooter = function updateFooter() {
-        $('#cost-of-open-positions').html(formatMoney(currency, Portfolio.getSumPurchase(values)));
-        $('#value-of-open-positions').html(formatMoney(currency, Portfolio.getIndicativeSum(values)));
+        $('#cost-of-open-portfolio').html(formatMoney(currency, Portfolio.getSumPurchase(values)));
+        $('#value-of-open-portfolio').html(formatMoney(currency, Portfolio.getIndicativeSum(values)));
     };
 
     var errorMessage = function errorMessage(msg) {
@@ -29095,7 +29095,7 @@ var LimitsUI = function () {
             $('.limit').append(' (' + currency + ')');
         }
 
-        var open_position = getElementById('open-positions');
+        var open_position = getElementById('open-portfolio');
         var account_balance = getElementById('account-balance');
         var payout = getElementById('payout');
 
@@ -33537,7 +33537,7 @@ var ResetPassword = function () {
         generateBirthDate();
 
         $('#have_real_account').off('click').on('click', function () {
-            if ($(this).is(':checked')) {
+            if ($('#have_real_account_option_0').is(':checked')) {
                 $('#dob_field').setVisibility(1);
             } else {
                 $('#dob_field').setVisibility(0);
@@ -33545,7 +33545,7 @@ var ResetPassword = function () {
         });
 
         var form_id = '#frm_reset_password';
-        FormManager.init(form_id, [{ selector: '#new_password', validations: ['req', 'password'], re_check_field: '#repeat_password' }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]], exclude_request: 1 }, { selector: '#date_of_birth', validations: ['req'] }, { request_field: 'reset_password', value: 1 }], true);
+        FormManager.init(form_id, [{ selector: '#have_real_account', validations: ['req'], exclude_request: 1 }, { selector: '#date_of_birth', validations: ['req'] }, { selector: '#new_password', validations: ['req', 'password'], re_check_field: '#repeat_password' }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]], exclude_request: 1 }, { request_field: 'reset_password', value: 1 }], true);
 
         FormManager.handleSubmit({
             form_selector: form_id,
@@ -34995,7 +34995,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = 15928; // you can insert Application ID of your registered application here
+    var user_app_id = 12447; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {

@@ -25083,7 +25083,7 @@ var getAppId = function getAppId() {
         app_id = 1159;
     } else if (is_new_app) {
         window.localStorage.removeItem('config.default_app_id');
-        app_id = 15265;
+        app_id = 12447;
     } else {
         window.localStorage.removeItem('config.default_app_id');
         app_id = domain_app_ids[getCurrentBinaryDomain()] || 1;

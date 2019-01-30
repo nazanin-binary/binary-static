@@ -5512,7 +5512,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             getRegion: function getRegion(el, x, y) {
                 var i,
-                    regionMap = this.regionMap; // maps regions to value portfolio
+                    regionMap = this.regionMap; // maps regions to value positions
                 for (i = regionMap.length; i--;) {
                     if (regionMap[i] !== null && x >= regionMap[i][0] && x <= regionMap[i][1]) {
                         return regionMap[i][2];
@@ -27628,7 +27628,7 @@ var PortfolioInit = function () {
             $(this).remove();
             if ($('#portfolio-body').find('tr').length === 0) {
                 $('#portfolio-table').setVisibility(0);
-                $('#cost-of-open-portfolio, #value-of-open-portfolio').text('');
+                $('#cost-of-open-positions, #value-of-open-positions').text('');
                 $('#portfolio-no-contract').show();
             }
         });
@@ -27636,8 +27636,8 @@ var PortfolioInit = function () {
     };
 
     var updateFooter = function updateFooter() {
-        $('#cost-of-open-portfolio').html(formatMoney(currency, Portfolio.getSumPurchase(values)));
-        $('#value-of-open-portfolio').html(formatMoney(currency, Portfolio.getIndicativeSum(values)));
+        $('#cost-of-open-positions').html(formatMoney(currency, Portfolio.getSumPurchase(values)));
+        $('#value-of-open-positions').html(formatMoney(currency, Portfolio.getIndicativeSum(values)));
     };
 
     var errorMessage = function errorMessage(msg) {
@@ -29095,7 +29095,7 @@ var LimitsUI = function () {
             $('.limit').append(' (' + currency + ')');
         }
 
-        var open_position = getElementById('open-portfolio');
+        var open_position = getElementById('open-positions');
         var account_balance = getElementById('account-balance');
         var payout = getElementById('payout');
 

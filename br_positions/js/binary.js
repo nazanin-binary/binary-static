@@ -16441,7 +16441,7 @@ var MBPortfolio = function () {
         }
 
         var $container = $('#tab_portfolio-content');
-        $portfolio = $portfolio || $('#positions');
+        $portfolio = $portfolio || $('#portfolio');
 
         if ($portfolio && (!$portfolio.parent().length || $portfolio.parent().get(0).id !== 'tab_portfolio-content')) {
             $portfolio.detach();
@@ -27480,7 +27480,7 @@ var PortfolioInit = function () {
         values = {};
         currency = '';
         oauth_apps = {};
-        $portfolio_loading = $('#positions-loading');
+        $portfolio_loading = $('#portfolio-loading');
         $portfolio_loading.show();
         showLoadingImage($portfolio_loading[0]);
         is_first_response = true;
@@ -27506,11 +27506,11 @@ var PortfolioInit = function () {
         var $div = $('<div/>');
         $div.append($('<tr/>', { class: 'tr-first ' + new_class + ' ' + data.contract_id, id: data.contract_id }).append($('<td/>', { class: 'ref' }).append($('<span ' + GetAppDetails.showTooltip(data.app_id, oauth_apps[data.app_id]) + ' data-balloon-position="right">' + data.transaction_id + '</span>'))).append($('<td/>', { class: 'payout' }).append($('<strong/>', { html: +data.payout ? formatMoney(data.currency, data.payout) : '-' }))).append($('<td/>', { class: 'details', text: data.longcode })).append($('<td/>', { class: 'purchase' }).append($('<strong/>', { html: formatMoney(data.currency, data.buy_price) }))).append($('<td/>', { class: 'indicative' }).append($('<strong/>', { class: 'indicative_price', text: '--.--' }))).append($('<td/>', { class: 'button' }).append($('<button/>', { class: 'button open_contract_details nowrap', contract_id: data.contract_id, text: localize('View') })))).append($('<tr/>', { class: 'tr-desc ' + new_class + ' ' + data.contract_id }).append($('<td/>', { colspan: '6', text: data.longcode })));
 
-        $('#positions-body').prepend($div.html());
+        $('#portfolio-body').prepend($div.html());
     };
 
     var updateBalance = function updateBalance() {
-        var $portfolio_balance = $('#positions-balance');
+        var $portfolio_balance = $('#portfolio-balance');
         if ($portfolio_balance.length === 0) return;
         $portfolio_balance.html(Portfolio.getBalance(Client.get('balance'), Client.get('currency')));
         var $if_balance_zero = $('#if-balance-zero');
@@ -27532,7 +27532,7 @@ var PortfolioInit = function () {
             /**
              * User has at least one contract
              */
-            $('#positions-no-contract').hide();
+            $('#portfolio-no-contract').hide();
             $.each(data.portfolio.contracts, function (ci, c) {
                 // TODO: remove ico exception when all ico contracts are removed
                 if (!getPropertyValue(values, c.contract_id) && c.contract_type !== 'BINARYICO') {
@@ -27549,19 +27549,19 @@ var PortfolioInit = function () {
         }
         // no open contracts
         if (!portfolio_data) {
-            $('#positions-no-contract').show();
-            $('#positions-table').setVisibility(0);
+            $('#portfolio-no-contract').show();
+            $('#portfolio-table').setVisibility(0);
         } else {
-            $('#positions-table').setVisibility(1);
+            $('#portfolio-table').setVisibility(1);
             // update footer area data
             updateFooter();
 
             // request "proposal_open_contract"
             BinarySocket.send({ proposal_open_contract: 1, subscribe: 1 }, { callback: updateIndicative });
         }
-        // ready to show positions table
+        // ready to show portfolio table
         $portfolio_loading.hide();
-        $('#positions-content').setVisibility(1);
+        $('#portfolio-content').setVisibility(1);
         is_first_response = false;
     };
 
@@ -27588,7 +27588,7 @@ var PortfolioInit = function () {
             return;
         }
 
-        // force to sell the expired contract, in order to remove from positions
+        // force to sell the expired contract, in order to remove from portfolio
         if (+proposal.is_settleable === 1 && !proposal.is_sold) {
             BinarySocket.send({ sell_expired: 1 });
         }
@@ -27626,10 +27626,10 @@ var PortfolioInit = function () {
         delete values[contract_id];
         $('tr.' + contract_id).removeClass('new').css('opacity', '0.5').fadeOut(1000, function () {
             $(this).remove();
-            if ($('#positions-body').find('tr').length === 0) {
-                $('#positions-table').setVisibility(0);
+            if ($('#portfolio-body').find('tr').length === 0) {
+                $('#portfolio-table').setVisibility(0);
                 $('#cost-of-open-positions, #value-of-open-positions').text('');
-                $('#positions-no-contract').show();
+                $('#portfolio-no-contract').show();
             }
         });
         updateFooter();
@@ -27641,7 +27641,7 @@ var PortfolioInit = function () {
     };
 
     var errorMessage = function errorMessage(msg) {
-        var $err = $('#positions').find('#error-msg');
+        var $err = $('#portfolio').find('#error-msg');
         if (msg) {
             $err.setVisibility(1).text(msg);
             $portfolio_loading.hide();
@@ -27652,14 +27652,14 @@ var PortfolioInit = function () {
 
     var onLoad = function onLoad() {
         init();
-        ViewPopup.viewButtonOnClick('#positions-table');
+        ViewPopup.viewButtonOnClick('#portfolio-table');
     };
 
     var onUnload = function onUnload() {
         BinarySocket.send({ forget_all: ['proposal_open_contract'] });
         SubscriptionManager.forget('transaction', transactionResponseHandler);
-        $('#positions-body').empty();
-        $('#positions-content').setVisibility(0);
+        $('#portfolio-body').empty();
+        $('#portfolio-content').setVisibility(0);
         is_initialized = false;
     };
 

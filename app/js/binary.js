@@ -3148,9 +3148,9 @@ exports.PopConfirmElement = PopConfirmElement;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js":
+/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js":
 /*!*******************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js ***!
+  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js ***!
   \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3163,19 +3163,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _positions_drawer = __webpack_require__(/*! ./positions_drawer.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer.jsx");
+var _portfolio_drawer = __webpack_require__(/*! ./portfolio_drawer.jsx */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx");
 
-var _positions_drawer2 = _interopRequireDefault(_positions_drawer);
+var _portfolio_drawer2 = _interopRequireDefault(_portfolio_drawer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _positions_drawer2.default;
+exports.default = _portfolio_drawer2.default;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer.jsx":
+/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx":
 /*!*******************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer.jsx ***!
+  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx ***!
   \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3217,9 +3217,9 @@ var _empty_portfolio_message2 = _interopRequireDefault(_empty_portfolio_message)
 
 var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
-var _positions_drawer_card = __webpack_require__(/*! ./positions_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx");
+var _portfolio_drawer_card = __webpack_require__(/*! ./portfolio_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx");
 
-var _positions_drawer_card2 = _interopRequireDefault(_positions_drawer_card);
+var _portfolio_drawer_card2 = _interopRequireDefault(_portfolio_drawer_card);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3229,16 +3229,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PositionsDrawer = function (_React$Component) {
-    _inherits(PositionsDrawer, _React$Component);
+var PortfolioDrawer = function (_React$Component) {
+    _inherits(PortfolioDrawer, _React$Component);
 
-    function PositionsDrawer() {
-        _classCallCheck(this, PositionsDrawer);
+    function PortfolioDrawer() {
+        _classCallCheck(this, PortfolioDrawer);
 
-        return _possibleConstructorReturn(this, (PositionsDrawer.__proto__ || Object.getPrototypeOf(PositionsDrawer)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (PortfolioDrawer.__proto__ || Object.getPrototypeOf(PortfolioDrawer)).apply(this, arguments));
     }
 
-    _createClass(PositionsDrawer, [{
+    _createClass(PortfolioDrawer, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.onMount();
@@ -3256,7 +3256,7 @@ var PositionsDrawer = function (_React$Component) {
                 error = _props.error,
                 currency = _props.currency,
                 is_empty = _props.is_empty,
-                is_positions_drawer_on = _props.is_positions_drawer_on,
+                is_portfolio_drawer_on = _props.is_portfolio_drawer_on,
                 toggleDrawer = _props.toggleDrawer;
 
 
@@ -3272,7 +3272,7 @@ var PositionsDrawer = function (_React$Component) {
                 body_content = _react2.default.createElement(_empty_portfolio_message2.default, null);
             } else {
                 body_content = active_positions.map(function (portfolio_position) {
-                    return _react2.default.createElement(_positions_drawer_card2.default, _extends({
+                    return _react2.default.createElement(_portfolio_drawer_card2.default, _extends({
                         key: portfolio_position.id,
                         currency: currency
                     }, portfolio_position));
@@ -3281,20 +3281,20 @@ var PositionsDrawer = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: (0, _classnames2.default)('positions-drawer', { 'positions-drawer--open': is_positions_drawer_on }) },
+                { className: (0, _classnames2.default)('portfolio-drawer', { 'portfolio-drawer--open': is_portfolio_drawer_on }) },
                 _react2.default.createElement(
                     'div',
-                    { className: 'positions-drawer__header' },
-                    _react2.default.createElement('span', { className: 'positions-drawer__icon-main ic-positions' }),
+                    { className: 'portfolio-drawer__header' },
+                    _react2.default.createElement('span', { className: 'portfolio-drawer__icon-main ic-portfolio' }),
                     _react2.default.createElement(
                         'span',
-                        { className: 'positions-drawer__title' },
-                        (0, _localize.localize)('Positions Quick Menu')
+                        { className: 'portfolio-drawer__title' },
+                        (0, _localize.localize)('Portfolio Quick Menu')
                     ),
                     _react2.default.createElement(
                         'div',
                         {
-                            className: 'positions-drawer__icon-close',
+                            className: 'portfolio-drawer__icon-close',
                             onClick: toggleDrawer
                         },
                         _react2.default.createElement(_Common.IconClose, null)
@@ -3302,7 +3302,7 @@ var PositionsDrawer = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'positions-drawer__body' },
+                    { className: 'portfolio-drawer__body' },
                     _react2.default.createElement(
                         _ttReactCustomScrollbars.Scrollbars,
                         {
@@ -3316,17 +3316,17 @@ var PositionsDrawer = function (_React$Component) {
         }
     }]);
 
-    return PositionsDrawer;
+    return PortfolioDrawer;
 }(_react2.default.Component);
 
-PositionsDrawer.propTypes = {
+PortfolioDrawer.propTypes = {
     active_positions: _mobxReact.PropTypes.arrayOrObservableArray,
     children: _propTypes2.default.any,
     currency: _propTypes2.default.string,
     error: _propTypes2.default.string,
     is_empty: _propTypes2.default.bool,
     is_loading: _propTypes2.default.bool,
-    is_positions_drawer_on: _propTypes2.default.bool,
+    is_portfolio_drawer_on: _propTypes2.default.bool,
     onMount: _propTypes2.default.func,
     onUnmount: _propTypes2.default.func,
     toggleDrawer: _propTypes2.default.func
@@ -3344,16 +3344,16 @@ exports.default = (0, _connect.connect)(function (_ref) {
         onMount: modules.portfolio.onMount,
         onUnmount: modules.portfolio.onUnmount,
         currency: client.currency,
-        is_positions_drawer_on: ui.is_positions_drawer_on,
-        toggleDrawer: ui.togglePositionsDrawer
+        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
+        toggleDrawer: ui.togglePortfolioDrawer
     };
-})(PositionsDrawer);
+})(PortfolioDrawer);
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx":
+/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx":
 /*!************************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx ***!
+  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx ***!
   \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3393,7 +3393,7 @@ var _remaining_time2 = _interopRequireDefault(_remaining_time);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
+var PortfolioDrawerCard = function PortfolioDrawerCard(_ref) {
     var currency = _ref.currency,
         expiry_time = _ref.expiry_time,
         id = _ref.id,
@@ -3403,35 +3403,35 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
         underlying = _ref.underlying;
     return _react2.default.createElement(
         _binary_link2.default,
-        { className: 'positions-drawer-card', to: (0, _helpers.getContractPath)(id) },
+        { className: 'portfolio-drawer-card', to: (0, _helpers.getContractPath)(id) },
         _react2.default.createElement(
             _react2.default.Fragment,
             null,
             _react2.default.createElement(
                 'div',
-                { className: 'positions-drawer-card__type' },
+                { className: 'portfolio-drawer-card__type' },
                 _react2.default.createElement(_contract_type_cell2.default, { type: type })
             ),
             _react2.default.createElement(
                 'div',
-                { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
+                { className: 'portfolio-drawer-card__indicative portfolio-drawer-card__indicative--' + status },
                 _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
             ),
             _react2.default.createElement(
                 'span',
-                { className: 'positions-drawer-card__symbol' },
+                { className: 'portfolio-drawer-card__symbol' },
                 underlying
             ),
             _react2.default.createElement(
                 'span',
-                { className: 'positions-drawer-card__remaining-time' },
+                { className: 'portfolio-drawer-card__remaining-time' },
                 _react2.default.createElement(_remaining_time2.default, { end_time: expiry_time })
             )
         )
     );
 };
 
-PositionsDrawerCard.propTypes = {
+PortfolioDrawerCard.propTypes = {
     currency: _propTypes2.default.string,
     expiry_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     id: _propTypes2.default.number,
@@ -3441,7 +3441,7 @@ PositionsDrawerCard.propTypes = {
     underlying: _propTypes2.default.string
 };
 
-exports.default = PositionsDrawerCard;
+exports.default = PortfolioDrawerCard;
 
 /***/ }),
 
@@ -6653,14 +6653,14 @@ Object.keys(_toggle_fullscreen).forEach(function (key) {
   });
 });
 
-var _toggle_positions = __webpack_require__(/*! ./toggle_positions.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx");
+var _toggle_portfolio = __webpack_require__(/*! ./toggle_portfolio.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx");
 
-Object.keys(_toggle_positions).forEach(function (key) {
+Object.keys(_toggle_portfolio).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _toggle_positions[key];
+      return _toggle_portfolio[key];
     }
   });
 });
@@ -6848,9 +6848,9 @@ exports.ToggleFullScreen = ToggleFullScreen;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx":
+/***/ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx":
 /*!********************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx ***!
+  !*** ./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx ***!
   \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6861,7 +6861,7 @@ exports.ToggleFullScreen = ToggleFullScreen;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.TogglePositions = undefined;
+exports.TogglePortfolio = undefined;
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 
@@ -6879,30 +6879,30 @@ var _Footer = __webpack_require__(/*! ../../../../Assets/Footer */ "./src/javasc
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TogglePositions = function TogglePositions(_ref) {
-    var is_positions_drawer_on = _ref.is_positions_drawer_on,
-        togglePositionsDrawer = _ref.togglePositionsDrawer;
+var TogglePortfolio = function TogglePortfolio(_ref) {
+    var is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
+        togglePortfolioDrawer = _ref.togglePortfolioDrawer;
 
-    var toggle_positions_class = (0, _classnames2.default)('ic-portfolio', {
-        'active': is_positions_drawer_on
+    var toggle_portfolio_class = (0, _classnames2.default)('ic-portfolio', {
+        'active': is_portfolio_drawer_on
     });
     return _react2.default.createElement(
         'a',
         {
             href: 'javascript:;',
-            className: toggle_positions_class,
-            onClick: togglePositionsDrawer
+            className: toggle_portfolio_class,
+            onClick: togglePortfolioDrawer
         },
-        _react2.default.createElement(_Footer.IconPositions, { className: 'footer-icon', type: is_positions_drawer_on ? 'active' : null })
+        _react2.default.createElement(_Footer.IconQuickPortfolio, { className: 'footer-icon' })
     );
 };
 
-TogglePositions.propTypes = {
-    is_positions_drawer_on: _propTypes2.default.bool,
-    togglePositionsDrawer: _propTypes2.default.func
+TogglePortfolio.propTypes = {
+    is_portfolio_drawer_on: _propTypes2.default.bool,
+    togglePortfolioDrawer: _propTypes2.default.func
 };
 
-exports.TogglePositions = TogglePositions;
+exports.TogglePortfolio = TogglePortfolio;
 
 /***/ }),
 
@@ -8514,13 +8514,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AppContents = function AppContents(_ref) {
     var children = _ref.children,
-        is_positions_drawer_on = _ref.is_positions_drawer_on;
+        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on;
     return _react2.default.createElement(
         'div',
         {
             id: 'app_contents',
             className: (0, _classnames2.default)('app-contents', {
-                'app-contents--show-positions-drawer': is_positions_drawer_on
+                'app-contents--show-portfolio-drawer': is_portfolio_drawer_on
             })
         },
         children
@@ -8529,13 +8529,13 @@ var AppContents = function AppContents(_ref) {
 
 AppContents.propTypes = {
     children: _propTypes2.default.any,
-    is_positions_drawer_on: _propTypes2.default.bool
+    is_portfolio_drawer_on: _propTypes2.default.bool
 };
 
 exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_ref2) {
     var ui = _ref2.ui;
     return {
-        is_positions_drawer_on: ui.is_positions_drawer_on
+        is_portfolio_drawer_on: ui.is_portfolio_drawer_on
     };
 })(AppContents));
 
@@ -8575,12 +8575,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Footer = function Footer(_ref) {
     var is_logged_in = _ref.is_logged_in,
-        is_positions_drawer_on = _ref.is_positions_drawer_on,
+        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
         is_language_dialog_visible = _ref.is_language_dialog_visible,
         is_settings_dialog_on = _ref.is_settings_dialog_on,
         network_status = _ref.network_status,
         toggleSettingsDialog = _ref.toggleSettingsDialog,
-        togglePositionsDrawer = _ref.togglePositionsDrawer;
+        togglePortfolioDrawer = _ref.togglePortfolioDrawer;
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
@@ -8589,19 +8589,15 @@ var Footer = function Footer(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'footer-links' },
+            is_logged_in && _react2.default.createElement(_Footer.TogglePortfolio, {
+                is_portfolio_drawer_on: is_portfolio_drawer_on,
+                togglePortfolioDrawer: togglePortfolioDrawer
+            }),
             _react2.default.createElement(_Footer.ToggleFullScreen, null),
             _react2.default.createElement(_Footer.ToggleSettings, {
                 is_settings_visible: is_settings_dialog_on,
                 is_language_visible: is_language_dialog_visible,
                 toggleSettings: toggleSettingsDialog
-            })
-        ),
-        _react2.default.createElement(
-            'div',
-            { className: 'footer-links footer-links-left' },
-            is_logged_in && _react2.default.createElement(_Footer.TogglePositions, {
-                is_positions_drawer_on: is_positions_drawer_on,
-                togglePositionsDrawer: togglePositionsDrawer
             })
         )
     );
@@ -8610,10 +8606,10 @@ var Footer = function Footer(_ref) {
 Footer.propTypes = {
     is_language_dialog_visible: _propTypes2.default.bool,
     is_logged_in: _propTypes2.default.bool,
-    is_positions_drawer_on: _propTypes2.default.bool,
+    is_portfolio_drawer_on: _propTypes2.default.bool,
     is_settings_dialog_on: _propTypes2.default.bool,
     network_status: _propTypes2.default.object,
-    togglePositionsDrawer: _propTypes2.default.func,
+    togglePortfolioDrawer: _propTypes2.default.func,
     toggleSettingsDialog: _propTypes2.default.func
 };
 
@@ -8624,10 +8620,10 @@ exports.default = (0, _connect.connect)(function (_ref2) {
     return {
         is_logged_in: client.is_logged_in,
         is_language_dialog_visible: ui.is_language_dialog_on,
-        is_positions_drawer_on: ui.is_positions_drawer_on,
+        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
         is_settings_dialog_on: ui.is_settings_dialog_on,
         network_status: common.network_status,
-        togglePositionsDrawer: ui.togglePositionsDrawer,
+        togglePortfolioDrawer: ui.togglePortfolioDrawer,
         toggleSettingsDialog: ui.toggleSettingsDialog
     };
 })(Footer);
@@ -9511,9 +9507,9 @@ var _error_boundary = __webpack_require__(/*! ./Components/Elements/Errors/error
 
 var _error_boundary2 = _interopRequireDefault(_error_boundary);
 
-var _PositionsDrawer = __webpack_require__(/*! ./Components/Elements/PositionsDrawer */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js");
+var _PortfolioDrawer = __webpack_require__(/*! ./Components/Elements/PortfolioDrawer */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js");
 
-var _PositionsDrawer2 = _interopRequireDefault(_PositionsDrawer);
+var _PortfolioDrawer2 = _interopRequireDefault(_PortfolioDrawer);
 
 var _ToastMessage = __webpack_require__(/*! ./Components/Elements/ToastMessage */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/index.js");
 
@@ -9570,7 +9566,7 @@ var App = function App(_ref) {
                         _app_contents2.default,
                         null,
                         _react2.default.createElement(_routes2.default, null),
-                        _react2.default.createElement(_PositionsDrawer2.default, null),
+                        _react2.default.createElement(_PortfolioDrawer2.default, null),
                         _react2.default.createElement(_toast_message2.default, { position: _ToastMessage.POSITIONS.TOP_RIGHT })
                     ),
                     _react2.default.createElement(_DenialOfServiceModal2.default, null)
@@ -10615,10 +10611,10 @@ exports.IconMaximize = IconMaximize;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Assets/Footer/icon_positions.jsx":
-/*!***************************************************************!*\
-  !*** ./src/javascript/app_2/Assets/Footer/icon_positions.jsx ***!
-  \***************************************************************/
+/***/ "./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx":
+/*!*********************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10628,7 +10624,11 @@ exports.IconMaximize = IconMaximize;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.IconPositions = undefined;
+exports.IconQuickPortfolio = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
@@ -10638,51 +10638,22 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var IconPositions = function IconPositions(_ref) {
-    var className = _ref.className,
-        type = _ref.type;
-
-    var IconType = void 0;
-    switch (type) {
-        case 'active':
-            IconType = _react2.default.createElement(
-                'g',
-                { fill: 'none', fillRule: 'evenodd' },
-                _react2.default.createElement('path', { fill: '#2A3052', fillRule: 'evenodd', d: 'M1 2h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm0 1v10h8V3H1zm9 0v10h5V3h-5zM2.5 4.5a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1z' })
-            );
-            break;
-        default:
-            IconType = _react2.default.createElement(
-                'g',
-                { fill: 'none', fillRule: 'evenodd' },
-                _react2.default.createElement('path', { fill: '#000', fillOpacity: '.8', fillRule: 'evenodd', d: 'M1 2h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm0 1v10h2V3H1zm3 0v10h11V3H4z' })
-            );
-            break;
-    }
-
+var IconQuickPortfolio = function IconQuickPortfolio(_ref) {
+    var className = _ref.className;
     return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-            'svg',
-            { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
-            IconType
-        )
+        'svg',
+        { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 16 12' },
+        _react2.default.createElement('path', { className: 'color1-fill color3-fill', fill: '#2A3052', fillRule: 'evenodd', d: 'M1 0h14c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1H1a1 1 0 0 1-1-1V1c0-.6.4-1 1-1zm0 1v10h5V1H1zm6 0v10h8V1H7zm1.5 1.5a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1z' })
     );
 };
 
-IconPositions.propTypes = {
-    className: _propTypes2.default.string,
-    type: _propTypes2.default.string
+IconQuickPortfolio.propTypes = {
+    className: _propTypes2.default.string
 };
 
-exports.IconPositions = IconPositions;
+exports.IconQuickPortfolio = IconQuickPortfolio;
 
 /***/ }),
 
@@ -10758,14 +10729,14 @@ Object.keys(_icon_maximize).forEach(function (key) {
   });
 });
 
-var _icon_positions = __webpack_require__(/*! ./icon_positions.jsx */ "./src/javascript/app_2/Assets/Footer/icon_positions.jsx");
+var _icon_quick_portfolio = __webpack_require__(/*! ./icon_quick_portfolio.jsx */ "./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx");
 
-Object.keys(_icon_positions).forEach(function (key) {
+Object.keys(_icon_quick_portfolio).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _icon_positions[key];
+      return _icon_quick_portfolio[key];
     }
   });
 });
@@ -23470,7 +23441,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     function UIStore() {
         _classCallCheck(this, UIStore);
 
-        var local_storage_properties = ['is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_positions_drawer_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
+        var local_storage_properties = ['is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_portfolio_drawer_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
 
         var _this = _possibleConstructorReturn(this, (UIStore.__proto__ || Object.getPrototypeOf(UIStore)).call(this, { local_storage_properties: local_storage_properties }));
 
@@ -23478,7 +23449,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         _initDefineProp(_this, 'is_notifications_drawer_on', _descriptor2, _this);
 
-        _initDefineProp(_this, 'is_positions_drawer_on', _descriptor3, _this);
+        _initDefineProp(_this, 'is_portfolio_drawer_on', _descriptor3, _this);
 
         _initDefineProp(_this, 'is_dark_mode_on', _descriptor4, _this);
 
@@ -23524,7 +23495,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
         value: function handleResize() {
             this.screen_width = window.innerWidth;
             if (this.is_mobile) {
-                this.is_positions_drawer_on = false;
+                this.is_portfolio_drawer_on = false;
             }
         }
     }, {
@@ -23579,10 +23550,10 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
             this.is_language_dialog_on = false;
         }
     }, {
-        key: 'togglePositionsDrawer',
-        value: function togglePositionsDrawer() {
-            // show and hide Positions Drawer
-            this.is_positions_drawer_on = !this.is_positions_drawer_on;
+        key: 'togglePortfolioDrawer',
+        value: function togglePortfolioDrawer() {
+            // show and hide Portfolio Drawer
+            this.is_portfolio_drawer_on = !this.is_portfolio_drawer_on;
         }
     }, {
         key: 'showMainDrawer',
@@ -23660,7 +23631,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return false;
     }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'is_positions_drawer_on', [_mobx.observable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'is_portfolio_drawer_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
@@ -23730,7 +23701,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return [];
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePortfolioDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePortfolioDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
 exports.default = UIStore;
 
 /***/ }),

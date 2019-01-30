@@ -3037,7 +3037,7 @@ var Mellt = function () {
             if (power_of === 0) {
                 attempts += char_at_position;
             }
-            // Otherwise we need to iterate through all the other characters portfolio to
+            // Otherwise we need to iterate through all the other characters positions to
             // get here. For example, to find the 5 in 25 we can't just guess 2 and then 5
             // (even though Hollywood seems to insist this is possible), we need to try 0,1,
             // 2,3...15,16,17...23,24,25 (got it).

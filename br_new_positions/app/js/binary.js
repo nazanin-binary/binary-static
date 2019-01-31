@@ -3289,7 +3289,7 @@ var PositionsDrawer = function (_React$PureComponent) {
                     _react2.default.createElement(
                         'span',
                         { className: 'positions-drawer__title' },
-                        (0, _localize.localize)('Positions Quick Menu')
+                        (0, _localize.localize)('Positions')
                     ),
                     _react2.default.createElement(
                         'div',
@@ -3297,7 +3297,7 @@ var PositionsDrawer = function (_React$PureComponent) {
                             className: 'positions-drawer__icon-close',
                             onClick: toggleDrawer
                         },
-                        _react2.default.createElement(_Common.IconClose, null)
+                        _react2.default.createElement(_Common.IconMinus, null)
                     )
                 ),
                 _react2.default.createElement(

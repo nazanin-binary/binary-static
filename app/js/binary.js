@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"1f20d1cb6ffbf53419ed","account_password":"67c66084bc424d34b10b","api_toke":"7c72ca04a060c6e8363d","authorized_application":"97635409ac3488b8a4dc","cashier_password":"0061f340e2203b85c4de","contract":"d5ff3abe544011cd2843","financial_assessment":"fa615b65ab7d51a072e8","limits":"6122a66075b7120f5152","login_history":"f73b0e94430bafb6dff4","personal_details":"8c2c516db1200e2e67f1","portfolio":"16052a629104e3c26ee7","self_exclusion":"10c70715aab8e89cdf0f","settings":"b65a79071afa6712cab7","statement":"df0f87e87ef416986955","vendors~smart_chart":"e29bce83a9f50024f42a","smart_chart":"3bd5fe29258265801823"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"1f20d1cb6ffbf53419ed","account_password":"67c66084bc424d34b10b","api_toke":"7c72ca04a060c6e8363d","authorized_application":"97635409ac3488b8a4dc","cashier_password":"0061f340e2203b85c4de","contract":"d5ff3abe544011cd2843","financial_assessment":"fa615b65ab7d51a072e8","limits":"6122a66075b7120f5152","login_history":"f73b0e94430bafb6dff4","personal_details":"8c2c516db1200e2e67f1","portfolio":"dcfcf75f0048e5d379cb","self_exclusion":"10c70715aab8e89cdf0f","settings":"b65a79071afa6712cab7","statement":"df0f87e87ef416986955","vendors~smart_chart":"e29bce83a9f50024f42a","smart_chart":"3bd5fe29258265801823"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -3148,9 +3148,9 @@ exports.PopConfirmElement = PopConfirmElement;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js":
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js":
 /*!*******************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js ***!
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js ***!
   \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3163,19 +3163,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _portfolio_drawer = __webpack_require__(/*! ./portfolio_drawer.jsx */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx");
+var _positions_drawer = __webpack_require__(/*! ./positions_drawer.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer.jsx");
 
-var _portfolio_drawer2 = _interopRequireDefault(_portfolio_drawer);
+var _positions_drawer2 = _interopRequireDefault(_positions_drawer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = _portfolio_drawer2.default;
+exports.default = _positions_drawer2.default;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx":
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer.jsx":
 /*!*******************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer.jsx ***!
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer.jsx ***!
   \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3217,9 +3217,9 @@ var _empty_portfolio_message2 = _interopRequireDefault(_empty_portfolio_message)
 
 var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
-var _portfolio_drawer_card = __webpack_require__(/*! ./portfolio_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx");
+var _positions_drawer_card = __webpack_require__(/*! ./positions_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx");
 
-var _portfolio_drawer_card2 = _interopRequireDefault(_portfolio_drawer_card);
+var _positions_drawer_card2 = _interopRequireDefault(_positions_drawer_card);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3229,16 +3229,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PortfolioDrawer = function (_React$Component) {
-    _inherits(PortfolioDrawer, _React$Component);
+var PositionsDrawer = function (_React$PureComponent) {
+    _inherits(PositionsDrawer, _React$PureComponent);
 
-    function PortfolioDrawer() {
-        _classCallCheck(this, PortfolioDrawer);
+    function PositionsDrawer() {
+        _classCallCheck(this, PositionsDrawer);
 
-        return _possibleConstructorReturn(this, (PortfolioDrawer.__proto__ || Object.getPrototypeOf(PortfolioDrawer)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (PositionsDrawer.__proto__ || Object.getPrototypeOf(PositionsDrawer)).apply(this, arguments));
     }
 
-    _createClass(PortfolioDrawer, [{
+    _createClass(PositionsDrawer, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.props.onMount();
@@ -3256,7 +3256,7 @@ var PortfolioDrawer = function (_React$Component) {
                 error = _props.error,
                 currency = _props.currency,
                 is_empty = _props.is_empty,
-                is_portfolio_drawer_on = _props.is_portfolio_drawer_on,
+                is_positions_drawer_on = _props.is_positions_drawer_on,
                 toggleDrawer = _props.toggleDrawer;
 
 
@@ -3272,7 +3272,7 @@ var PortfolioDrawer = function (_React$Component) {
                 body_content = _react2.default.createElement(_empty_portfolio_message2.default, null);
             } else {
                 body_content = active_positions.map(function (portfolio_position) {
-                    return _react2.default.createElement(_portfolio_drawer_card2.default, _extends({
+                    return _react2.default.createElement(_positions_drawer_card2.default, _extends({
                         key: portfolio_position.id,
                         currency: currency
                     }, portfolio_position));
@@ -3281,20 +3281,20 @@ var PortfolioDrawer = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: (0, _classnames2.default)('portfolio-drawer', { 'portfolio-drawer--open': is_portfolio_drawer_on }) },
+                { className: (0, _classnames2.default)('positions-drawer', { 'positions-drawer--open': is_positions_drawer_on }) },
                 _react2.default.createElement(
                     'div',
-                    { className: 'portfolio-drawer__header' },
-                    _react2.default.createElement('span', { className: 'portfolio-drawer__icon-main ic-portfolio' }),
+                    { className: 'positions-drawer__header' },
+                    _react2.default.createElement('span', { className: 'positions-drawer__icon-main ic-positions' }),
                     _react2.default.createElement(
                         'span',
-                        { className: 'portfolio-drawer__title' },
-                        (0, _localize.localize)('Portfolio Quick Menu')
+                        { className: 'positions-drawer__title' },
+                        (0, _localize.localize)('Positions Quick Menu')
                     ),
                     _react2.default.createElement(
                         'div',
                         {
-                            className: 'portfolio-drawer__icon-close',
+                            className: 'positions-drawer__icon-close',
                             onClick: toggleDrawer
                         },
                         _react2.default.createElement(_Common.IconClose, null)
@@ -3302,7 +3302,7 @@ var PortfolioDrawer = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'portfolio-drawer__body' },
+                    { className: 'positions-drawer__body' },
                     _react2.default.createElement(
                         _ttReactCustomScrollbars.Scrollbars,
                         {
@@ -3316,17 +3316,17 @@ var PortfolioDrawer = function (_React$Component) {
         }
     }]);
 
-    return PortfolioDrawer;
-}(_react2.default.Component);
+    return PositionsDrawer;
+}(_react2.default.PureComponent);
 
-PortfolioDrawer.propTypes = {
+PositionsDrawer.propTypes = {
     active_positions: _mobxReact.PropTypes.arrayOrObservableArray,
     children: _propTypes2.default.any,
     currency: _propTypes2.default.string,
     error: _propTypes2.default.string,
     is_empty: _propTypes2.default.bool,
     is_loading: _propTypes2.default.bool,
-    is_portfolio_drawer_on: _propTypes2.default.bool,
+    is_positions_drawer_on: _propTypes2.default.bool,
     onMount: _propTypes2.default.func,
     onUnmount: _propTypes2.default.func,
     toggleDrawer: _propTypes2.default.func
@@ -3344,16 +3344,16 @@ exports.default = (0, _connect.connect)(function (_ref) {
         onMount: modules.portfolio.onMount,
         onUnmount: modules.portfolio.onUnmount,
         currency: client.currency,
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
-        toggleDrawer: ui.togglePortfolioDrawer
+        is_positions_drawer_on: ui.is_positions_drawer_on,
+        toggleDrawer: ui.togglePositionsDrawer
     };
-})(PortfolioDrawer);
+})(PositionsDrawer);
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx":
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx":
 /*!************************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/portfolio_drawer_card.jsx ***!
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx ***!
   \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3393,7 +3393,7 @@ var _remaining_time2 = _interopRequireDefault(_remaining_time);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PortfolioDrawerCard = function PortfolioDrawerCard(_ref) {
+var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
     var currency = _ref.currency,
         expiry_time = _ref.expiry_time,
         id = _ref.id,
@@ -3403,35 +3403,38 @@ var PortfolioDrawerCard = function PortfolioDrawerCard(_ref) {
         underlying = _ref.underlying;
     return _react2.default.createElement(
         _binary_link2.default,
-        { className: 'portfolio-drawer-card', to: (0, _helpers.getContractPath)(id) },
+        {
+            className: 'positions-drawer-card',
+            to: (0, _helpers.getContractPath)(id)
+        },
         _react2.default.createElement(
             _react2.default.Fragment,
             null,
             _react2.default.createElement(
                 'div',
-                { className: 'portfolio-drawer-card__type' },
+                { className: 'positions-drawer-card__type' },
                 _react2.default.createElement(_contract_type_cell2.default, { type: type })
             ),
             _react2.default.createElement(
                 'div',
-                { className: 'portfolio-drawer-card__indicative portfolio-drawer-card__indicative--' + status },
+                { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
                 _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
             ),
             _react2.default.createElement(
                 'span',
-                { className: 'portfolio-drawer-card__symbol' },
+                { className: 'positions-drawer-card__symbol' },
                 underlying
             ),
             _react2.default.createElement(
                 'span',
-                { className: 'portfolio-drawer-card__remaining-time' },
+                { className: 'positions-drawer-card__remaining-time' },
                 _react2.default.createElement(_remaining_time2.default, { end_time: expiry_time })
             )
         )
     );
 };
 
-PortfolioDrawerCard.propTypes = {
+PositionsDrawerCard.propTypes = {
     currency: _propTypes2.default.string,
     expiry_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     id: _propTypes2.default.number,
@@ -3441,7 +3444,7 @@ PortfolioDrawerCard.propTypes = {
     underlying: _propTypes2.default.string
 };
 
-exports.default = PortfolioDrawerCard;
+exports.default = PositionsDrawerCard;
 
 /***/ }),
 
@@ -6653,14 +6656,14 @@ Object.keys(_toggle_fullscreen).forEach(function (key) {
   });
 });
 
-var _toggle_portfolio = __webpack_require__(/*! ./toggle_portfolio.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx");
+var _toggle_positions = __webpack_require__(/*! ./toggle_positions.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx");
 
-Object.keys(_toggle_portfolio).forEach(function (key) {
+Object.keys(_toggle_positions).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _toggle_portfolio[key];
+      return _toggle_positions[key];
     }
   });
 });
@@ -6848,9 +6851,9 @@ exports.ToggleFullScreen = ToggleFullScreen;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx":
+/***/ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx":
 /*!********************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Layout/Footer/toggle_portfolio.jsx ***!
+  !*** ./src/javascript/app_2/App/Components/Layout/Footer/toggle_positions.jsx ***!
   \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -6861,7 +6864,7 @@ exports.ToggleFullScreen = ToggleFullScreen;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.TogglePortfolio = undefined;
+exports.TogglePositions = undefined;
 
 var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 
@@ -6879,30 +6882,30 @@ var _Footer = __webpack_require__(/*! ../../../../Assets/Footer */ "./src/javasc
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var TogglePortfolio = function TogglePortfolio(_ref) {
-    var is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
-        togglePortfolioDrawer = _ref.togglePortfolioDrawer;
+var TogglePositions = function TogglePositions(_ref) {
+    var is_positions_drawer_on = _ref.is_positions_drawer_on,
+        togglePositionsDrawer = _ref.togglePositionsDrawer;
 
-    var toggle_portfolio_class = (0, _classnames2.default)('ic-portfolio', {
-        'active': is_portfolio_drawer_on
+    var toggle_positions_class = (0, _classnames2.default)('ic-portfolio', {
+        'active': is_positions_drawer_on
     });
     return _react2.default.createElement(
         'a',
         {
             href: 'javascript:;',
-            className: toggle_portfolio_class,
-            onClick: togglePortfolioDrawer
+            className: toggle_positions_class,
+            onClick: togglePositionsDrawer
         },
-        _react2.default.createElement(_Footer.IconQuickPortfolio, { className: 'footer-icon' })
+        _react2.default.createElement(_Footer.IconPositions, { className: 'footer-icon', type: is_positions_drawer_on ? 'active' : null })
     );
 };
 
-TogglePortfolio.propTypes = {
-    is_portfolio_drawer_on: _propTypes2.default.bool,
-    togglePortfolioDrawer: _propTypes2.default.func
+TogglePositions.propTypes = {
+    is_positions_drawer_on: _propTypes2.default.bool,
+    togglePositionsDrawer: _propTypes2.default.func
 };
 
-exports.TogglePortfolio = TogglePortfolio;
+exports.TogglePositions = TogglePositions;
 
 /***/ }),
 
@@ -8514,13 +8517,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AppContents = function AppContents(_ref) {
     var children = _ref.children,
-        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on;
+        is_positions_drawer_on = _ref.is_positions_drawer_on;
     return _react2.default.createElement(
         'div',
         {
             id: 'app_contents',
             className: (0, _classnames2.default)('app-contents', {
-                'app-contents--show-portfolio-drawer': is_portfolio_drawer_on
+                'app-contents--show-positions-drawer': is_positions_drawer_on
             })
         },
         children
@@ -8529,13 +8532,13 @@ var AppContents = function AppContents(_ref) {
 
 AppContents.propTypes = {
     children: _propTypes2.default.any,
-    is_portfolio_drawer_on: _propTypes2.default.bool
+    is_positions_drawer_on: _propTypes2.default.bool
 };
 
 exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_ref2) {
     var ui = _ref2.ui;
     return {
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on
+        is_positions_drawer_on: ui.is_positions_drawer_on
     };
 })(AppContents));
 
@@ -8574,13 +8577,13 @@ var _Footer = __webpack_require__(/*! ../../Components/Layout/Footer */ "./src/j
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Footer = function Footer(_ref) {
-    var is_logged_in = _ref.is_logged_in,
-        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
-        is_language_dialog_visible = _ref.is_language_dialog_visible,
+    var is_language_dialog_visible = _ref.is_language_dialog_visible,
+        is_logged_in = _ref.is_logged_in,
+        is_positions_drawer_on = _ref.is_positions_drawer_on,
         is_settings_dialog_on = _ref.is_settings_dialog_on,
         network_status = _ref.network_status,
-        toggleSettingsDialog = _ref.toggleSettingsDialog,
-        togglePortfolioDrawer = _ref.togglePortfolioDrawer;
+        togglePositionsDrawer = _ref.togglePositionsDrawer,
+        toggleSettingsDialog = _ref.toggleSettingsDialog;
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
@@ -8589,15 +8592,19 @@ var Footer = function Footer(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'footer-links' },
-            is_logged_in && _react2.default.createElement(_Footer.TogglePortfolio, {
-                is_portfolio_drawer_on: is_portfolio_drawer_on,
-                togglePortfolioDrawer: togglePortfolioDrawer
-            }),
             _react2.default.createElement(_Footer.ToggleFullScreen, null),
             _react2.default.createElement(_Footer.ToggleSettings, {
-                is_settings_visible: is_settings_dialog_on,
                 is_language_visible: is_language_dialog_visible,
+                is_settings_visible: is_settings_dialog_on,
                 toggleSettings: toggleSettingsDialog
+            })
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'footer-links footer-links-left' },
+            is_logged_in && _react2.default.createElement(_Footer.TogglePositions, {
+                is_positions_drawer_on: is_positions_drawer_on,
+                togglePositionsDrawer: togglePositionsDrawer
             })
         )
     );
@@ -8606,10 +8613,10 @@ var Footer = function Footer(_ref) {
 Footer.propTypes = {
     is_language_dialog_visible: _propTypes2.default.bool,
     is_logged_in: _propTypes2.default.bool,
-    is_portfolio_drawer_on: _propTypes2.default.bool,
+    is_positions_drawer_on: _propTypes2.default.bool,
     is_settings_dialog_on: _propTypes2.default.bool,
     network_status: _propTypes2.default.object,
-    togglePortfolioDrawer: _propTypes2.default.func,
+    togglePositionsDrawer: _propTypes2.default.func,
     toggleSettingsDialog: _propTypes2.default.func
 };
 
@@ -8619,11 +8626,11 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         ui = _ref2.ui;
     return {
         is_logged_in: client.is_logged_in,
-        is_language_dialog_visible: ui.is_language_dialog_on,
-        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
-        is_settings_dialog_on: ui.is_settings_dialog_on,
         network_status: common.network_status,
-        togglePortfolioDrawer: ui.togglePortfolioDrawer,
+        is_language_dialog_visible: ui.is_language_dialog_on,
+        is_positions_drawer_on: ui.is_positions_drawer_on,
+        is_settings_dialog_on: ui.is_settings_dialog_on,
+        togglePositionsDrawer: ui.togglePositionsDrawer,
         toggleSettingsDialog: ui.toggleSettingsDialog
     };
 })(Footer);
@@ -9507,9 +9514,9 @@ var _error_boundary = __webpack_require__(/*! ./Components/Elements/Errors/error
 
 var _error_boundary2 = _interopRequireDefault(_error_boundary);
 
-var _PortfolioDrawer = __webpack_require__(/*! ./Components/Elements/PortfolioDrawer */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js");
+var _PositionsDrawer = __webpack_require__(/*! ./Components/Elements/PositionsDrawer */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js");
 
-var _PortfolioDrawer2 = _interopRequireDefault(_PortfolioDrawer);
+var _PositionsDrawer2 = _interopRequireDefault(_PositionsDrawer);
 
 var _ToastMessage = __webpack_require__(/*! ./Components/Elements/ToastMessage */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/index.js");
 
@@ -9566,7 +9573,7 @@ var App = function App(_ref) {
                         _app_contents2.default,
                         null,
                         _react2.default.createElement(_routes2.default, null),
-                        _react2.default.createElement(_PortfolioDrawer2.default, null),
+                        _react2.default.createElement(_PositionsDrawer2.default, null),
                         _react2.default.createElement(_toast_message2.default, { position: _ToastMessage.POSITIONS.TOP_RIGHT })
                     ),
                     _react2.default.createElement(_DenialOfServiceModal2.default, null)
@@ -9665,7 +9672,7 @@ var IconBack = function IconBack(_ref) {
     return _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
-        _react2.default.createElement('path', { fill: '#333', fillRule: 'nonzero', d: 'M3.6 8.5L7 12.2a.5.5 0 1 1-.8.6l-4-4.5a.5.5 0 0 1 0-.6l4-4.5a.5.5 0 0 1 .8.6L3.6 7.5h9.9a.5.5 0 1 1 0 1H3.6z' })
+        _react2.default.createElement('path', { fill: '#5C5C5C', fillRule: 'evenodd', d: 'M3.613 8.5l3.26 3.668a.5.5 0 1 1-.747.664l-4-4.5a.5.5 0 0 1 0-.664l4-4.5a.5.5 0 0 1 .748.664L3.614 7.5H13.5a.5.5 0 1 1 0 1H3.613z' })
     );
 };
 
@@ -10250,6 +10257,58 @@ exports.IconPlus = IconPlus;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx":
+/*!*******************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconTooltipLight = undefined;
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconTooltipLight = function IconTooltipLight(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        { className: className, xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('circle', { cx: '8', cy: '8', r: '7.5', stroke: '#B0B3BF' }),
+            _react2.default.createElement(
+                'g',
+                { fill: '#B0B3BF', transform: 'translate(6.5 4)' },
+                _react2.default.createElement('circle', { cx: '1.5', cy: '1.25', r: '1' }),
+                _react2.default.createElement('rect', { width: '1', height: '5', x: '1', y: '3', rx: '.5' })
+            )
+        )
+    );
+};
+
+IconTooltipLight.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconTooltipLight = IconTooltipLight;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/Assets/Common/index.js":
 /*!*****************************************************!*\
   !*** ./src/javascript/app_2/Assets/Common/index.js ***!
@@ -10611,10 +10670,10 @@ exports.IconMaximize = IconMaximize;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx":
-/*!*********************************************************************!*\
-  !*** ./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx ***!
-  \*********************************************************************/
+/***/ "./src/javascript/app_2/Assets/Footer/icon_positions.jsx":
+/*!***************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Footer/icon_positions.jsx ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10624,11 +10683,7 @@ exports.IconMaximize = IconMaximize;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.IconQuickPortfolio = undefined;
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
+exports.IconPositions = undefined;
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
@@ -10638,22 +10693,51 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var IconQuickPortfolio = function IconQuickPortfolio(_ref) {
-    var className = _ref.className;
+var IconPositions = function IconPositions(_ref) {
+    var className = _ref.className,
+        type = _ref.type;
+
+    var IconType = void 0;
+    switch (type) {
+        case 'active':
+            IconType = _react2.default.createElement(
+                'g',
+                { fill: 'none', fillRule: 'evenodd' },
+                _react2.default.createElement('path', { fill: '#2A3052', fillRule: 'evenodd', d: 'M1 2h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm0 1v10h8V3H1zm9 0v10h5V3h-5zM2.5 4.5a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1z' })
+            );
+            break;
+        default:
+            IconType = _react2.default.createElement(
+                'g',
+                { fill: 'none', fillRule: 'evenodd' },
+                _react2.default.createElement('path', { fill: '#000', fillOpacity: '.8', fillRule: 'evenodd', d: 'M1 2h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm0 1v10h2V3H1zm3 0v10h11V3H4z' })
+            );
+            break;
+    }
+
     return _react2.default.createElement(
-        'svg',
-        { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', viewBox: '0 0 16 12' },
-        _react2.default.createElement('path', { className: 'color1-fill color3-fill', fill: '#2A3052', fillRule: 'evenodd', d: 'M1 0h14c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1H1a1 1 0 0 1-1-1V1c0-.6.4-1 1-1zm0 1v10h5V1H1zm6 0v10h8V1H7zm1.5 1.5a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1zm-2 2a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1zm2 0h3a.5.5 0 1 1 0 1h-3a.5.5 0 1 1 0-1z' })
+        'div',
+        null,
+        _react2.default.createElement(
+            'svg',
+            { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+            IconType
+        )
     );
 };
 
-IconQuickPortfolio.propTypes = {
-    className: _propTypes2.default.string
+IconPositions.propTypes = {
+    className: _propTypes2.default.string,
+    type: _propTypes2.default.string
 };
 
-exports.IconQuickPortfolio = IconQuickPortfolio;
+exports.IconPositions = IconPositions;
 
 /***/ }),
 
@@ -10729,14 +10813,14 @@ Object.keys(_icon_maximize).forEach(function (key) {
   });
 });
 
-var _icon_quick_portfolio = __webpack_require__(/*! ./icon_quick_portfolio.jsx */ "./src/javascript/app_2/Assets/Footer/icon_quick_portfolio.jsx");
+var _icon_positions = __webpack_require__(/*! ./icon_positions.jsx */ "./src/javascript/app_2/Assets/Footer/icon_positions.jsx");
 
-Object.keys(_icon_quick_portfolio).forEach(function (key) {
+Object.keys(_icon_positions).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _icon_quick_portfolio[key];
+      return _icon_positions[key];
     }
   });
 });
@@ -11582,6 +11666,255 @@ Object.keys(_icon_trade_categories).forEach(function (key) {
     }
   });
 });
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Trading/Categories/trade_categories.jsx":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Trading/Categories/trade_categories.jsx ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.TradeCategories = undefined;
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Templates are from Binary 1.0, it should be checked if they need change or not and add all of trade types
+
+var TradeCategories = function TradeCategories(_ref) {
+    var category = _ref.category;
+
+    var TradeTypeTemplate = void 0;
+    if (category) {
+        switch (category) {
+            case 'rise_fall':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Higher", you win the payout if the exit spot is strictly higher than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Lower", you win the payout if the exit spot is strictly lower than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Higher". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Lower".')
+                    )
+                );
+                break;
+            case 'rise_fall_equal':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Higher", you win the payout if the exit spot is strictly higher than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Lower", you win the payout if the exit spot is strictly lower than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Higher". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Lower".')
+                    )
+                );
+                break;
+            case 'high_low':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Higher", you win the payout if the exit spot is strictly higher than the barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Lower", you win the payout if the exit spot is strictly lower than the barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If the exit spot is equal to the barrier, you don\'t win the payout.')
+                    )
+                );
+                break;
+            case 'end':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Ends Between", you win the payout if the exit spot is strictly higher than the Low barrier AND strictly lower than the High barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Ends Outside", you win the payout if the exit spot is EITHER strictly higher than the High barrier, OR strictly lower than the Low barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If the exit spot is equal to either the Low barrier or the High barrier, you don\'t win the payout.')
+                    )
+                );
+                break;
+            case 'stay':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Stays Between", you win the payout if the market stays between (does not touch) either the High barrier or the Low barrier at any time during the contract period')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Goes Outside", you win the payout if the market touches either the High barrier or the Low barrier at any time during the contract period.')
+                    )
+                );
+                break;
+            case 'match_diff':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Matches", you will win the payout if the last digit of the last tick is the same as your prediction.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Differs", you will win the payout if the last digit of the last tick is not the same as your prediction.')
+                    )
+                );
+                break;
+            case 'even_odd':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Even", you will win the payout if the last digit of the last tick is an even number (i.e., 2, 4, 6, 8, or 0).')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Odd", you will win the payout if the last digit of the last tick is an odd number (i.e., 1, 3, 5, 7, or 9).')
+                    )
+                );
+                break;
+            case 'over_under':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Over", you will win the payout if the last digit of the last tick is greater than your prediction.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Under", you will win the payout if the last digit of the last tick is less than your prediction.')
+                    )
+                );
+                break;
+            case 'touch':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Touches", you win the payout if the market touches the barrier at any time during the contract period.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Does Not Touch", you win the payout if the market never touches the barrier at any time during the contract period.')
+                    )
+                );
+                break;
+            case 'asian':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('Asian options settle by comparing the last tick with the average spot over the period.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Asian Rise", you will win the payout if the last tick is higher than the average of the ticks.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Asian Fall", you will win the payout if the last tick is lower than the average of the ticks.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If the last tick is equal to the average of the ticks, you don\'t win the payout.')
+                    )
+                );
+                break;
+            default:
+                TradeTypeTemplate = _react2.default.createElement(
+                    'p',
+                    null,
+                    'not found'
+                );
+                break;
+        }
+    }
+    return _react2.default.createElement(
+        'div',
+        null,
+        TradeTypeTemplate
+    );
+};
+
+TradeCategories.propTypes = {
+    category: _propTypes2.default.string
+};
+
+exports.TradeCategories = TradeCategories;
 
 /***/ }),
 
@@ -13605,7 +13938,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FullScreenDialog = function FullScreenDialog(props) {
     var title = props.title,
         visible = props.visible,
-        children = props.children;
+        children = props.children,
+        wrapperClassName = props.wrapperClassName;
 
 
     var checkVisibility = function checkVisibility() {
@@ -13674,7 +14008,7 @@ var FullScreenDialog = function FullScreenDialog(props) {
             { className: 'fullscreen-dialog__content' },
             _react2.default.createElement(
                 'div',
-                { className: 'contracts-modal-list' },
+                { className: '' + (wrapperClassName || 'contracts-modal-list') },
                 children
             )
         )
@@ -13685,7 +14019,8 @@ FullScreenDialog.propTypes = {
     children: _propTypes2.default.any,
     onClose: _propTypes2.default.func,
     title: _propTypes2.default.string,
-    visible: _propTypes2.default.bool
+    visible: _propTypes2.default.bool,
+    wrapperClassName: _propTypes2.default.string
 };
 
 exports.default = FullScreenDialog;
@@ -13892,11 +14227,9 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _icon_tooltip_light = __webpack_require__(/*! ../../../../../Assets/Common/icon_tooltip_light.jsx */ "./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx");
+
 var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
-
-var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
-
-var _tooltip2 = _interopRequireDefault(_tooltip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13904,6 +14237,7 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
     var contracts = _ref.contracts,
         name = _ref.name,
         value = _ref.value,
+        handleInfoClick = _ref.handleInfoClick,
         handleSelect = _ref.handleSelect;
     return contracts.map(function (contract, idx) {
         return contract.value !== 'rise_fall_equal' && _react2.default.createElement(
@@ -13913,8 +14247,8 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 className: 'list-item ' + (value === contract.value ? 'selected' : ''),
                 name: name,
                 value: contract.value,
-                onClick: function onClick() {
-                    return handleSelect(contract);
+                onClick: function onClick(e) {
+                    return handleSelect(contract, e);
                 }
             },
             _react2.default.createElement(_Categories.IconTradeCategory, { category: contract.value }),
@@ -13923,16 +14257,20 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 { className: 'contract-title' },
                 contract.text
             ),
-            _react2.default.createElement(_tooltip2.default, {
-                alignment: 'left',
-                icon: 'info'
-            })
+            _react2.default.createElement(
+                'div',
+                { id: 'info-icon', className: 'trade-type-info-icon', onClick: function onClick() {
+                        return handleInfoClick(contract);
+                    } },
+                _react2.default.createElement(_icon_tooltip_light.IconTooltipLight, null)
+            )
         );
     });
 };
 
 ContractTypeItem.propTypes = {
     contracts: _mobxReact.PropTypes.arrayOrObservableArray,
+    handleInfoClick: _propTypes2.default.func,
     handleSelect: _propTypes2.default.func,
     name: _propTypes2.default.string,
     value: _propTypes2.default.string
@@ -13973,7 +14311,8 @@ var _contract_type_item2 = _interopRequireDefault(_contract_type_item);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractTypeList = function ContractTypeList(_ref) {
-    var handleSelect = _ref.handleSelect,
+    var handleInfoClick = _ref.handleInfoClick,
+        handleSelect = _ref.handleSelect,
         list = _ref.list,
         name = _ref.name,
         value = _ref.value;
@@ -14002,7 +14341,8 @@ var ContractTypeList = function ContractTypeList(_ref) {
                             contracts: list[key],
                             name: name,
                             value: value,
-                            handleSelect: handleSelect
+                            handleSelect: handleSelect,
+                            handleInfoClick: handleInfoClick
                         })
                     )
                 )
@@ -14012,6 +14352,7 @@ var ContractTypeList = function ContractTypeList(_ref) {
 };
 
 ContractTypeList.propTypes = {
+    handleInfoClick: _propTypes2.default.func,
     handleSelect: _propTypes2.default.func,
     list: _mobxReact.PropTypes.objectOrObservableObject,
     name: _propTypes2.default.string,
@@ -14056,6 +14397,14 @@ var _contract_type_list = __webpack_require__(/*! ./contract_type_list.jsx */ ".
 
 var _contract_type_list2 = _interopRequireDefault(_contract_type_list);
 
+var _trade_type_info_dialog = __webpack_require__(/*! ../TradeTypeInfo/trade_type_info_dialog.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_dialog.jsx");
+
+var _trade_type_info_dialog2 = _interopRequireDefault(_trade_type_info_dialog);
+
+var _trade_type_info_item = __webpack_require__(/*! ../TradeTypeInfo/trade_type_info_item.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_item.jsx");
+
+var _trade_type_info_item2 = _interopRequireDefault(_trade_type_info_item);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14072,11 +14421,56 @@ var ContractTypeWidget = function (_React$PureComponent) {
 
         var _this = _possibleConstructorReturn(this, (ContractTypeWidget.__proto__ || Object.getPrototypeOf(ContractTypeWidget)).call(this, props));
 
-        _this.handleSelect = function (item) {
-            if (item.value !== _this.props.value) {
+        _this.handleSelect = function (item, e) {
+            if (item.value !== _this.props.value && e.target.id !== 'info-icon') {
                 _this.props.onChange({ target: { name: _this.props.name, value: item.value } });
             }
             _this.handleVisibility();
+        };
+
+        _this.onSubmitButtonClick = function (item) {
+            if (item.value !== _this.props.value) {
+                _this.props.onChange({ target: { name: _this.props.name, value: item.value } });
+            }
+            _this.handleInfoVisibility();
+        };
+
+        _this.handleInfoClick = function (item) {
+            _this.setState({ item: item });
+            _this.handleInfoVisibility();
+            _this.handleVisibility();
+        };
+
+        _this.handleNavigationClick = function (item) {
+            _this.setState({ item: item });
+        };
+
+        _this.handleNextClick = function (navigationList) {
+            var navigationLength = navigationList.length;
+            var item = _this.state.item;
+            var currentIndex = navigationList.findIndex(function (list_item) {
+                return list_item.value === item.value;
+            });
+            var nextIndex = currentIndex + 1;
+            if (nextIndex < navigationLength) {
+                _this.handleNavigationClick(navigationList[nextIndex]);
+            } else {
+                _this.handleNavigationClick(navigationList[0]);
+            }
+        };
+
+        _this.handlePrevClick = function (navigationList) {
+            var navigationLength = navigationList.length;
+            var item = _this.state.item;
+            var currentIndex = navigationList.findIndex(function (list_item) {
+                return list_item.value === item.value;
+            });
+            var prevIndex = currentIndex - 1;
+            if (prevIndex > -1) {
+                _this.handleNavigationClick(navigationList[prevIndex]);
+            } else {
+                _this.handleNavigationClick(navigationList[navigationLength - 1]);
+            }
         };
 
         _this.setWrapperRef = function (node) {
@@ -14086,11 +14480,33 @@ var ContractTypeWidget = function (_React$PureComponent) {
         _this.handleClickOutside = function (event) {
             if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target) && _this.state.is_dialog_open) {
                 _this.setState({ is_dialog_open: false });
+            } else if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target) && _this.state.is_info_dialog_open) {
+                _this.setState({ is_info_dialog_open: false, is_dialog_open: true });
             }
+        };
+
+        _this.handleInfoVisibility = function () {
+            _this.setState(function (state) {
+                return {
+                    is_info_dialog_open: !state.is_info_dialog_open
+                };
+            });
         };
 
         _this.handleVisibility = function () {
             _this.setState({ is_dialog_open: !_this.state.is_dialog_open });
+        };
+
+        _this.onWidgetClick = function () {
+            _this.setState(function (state) {
+                return { is_dialog_open: !state.is_dialog_open, is_info_dialog_open: false };
+            });
+        };
+
+        _this.onBackButtonClick = function () {
+            _this.setState(function (state) {
+                return { is_dialog_open: !state.is_dialog_open, is_info_dialog_open: false };
+            });
         };
 
         _this.getDisplayText = function () {
@@ -14124,8 +14540,23 @@ var ContractTypeWidget = function (_React$PureComponent) {
             return container_classes;
         };
 
+        _this.getNavigationList = function () {
+            var navigationList = [];
+            var list = _this.props.list;
+            /* eslint-disable */
+            Object.keys(list).map(function (key) {
+                !['In/Out', 'Asians'].includes(key) && list[key].map(function (contract) {
+                    contract.value !== 'rise_fall_equal' && navigationList.push(contract);
+                });
+            });
+            /* eslint-disable */
+            return navigationList;
+        };
+
         _this.state = {
-            is_dialog_open: false
+            is_dialog_open: false,
+            is_info_dialog_open: false,
+            item: {}
         };
         return _this;
     }
@@ -14156,7 +14587,7 @@ var ContractTypeWidget = function (_React$PureComponent) {
                     'div',
                     {
                         className: 'contracts-popup-display ' + (this.state.is_dialog_open ? 'clicked' : ''),
-                        onClick: this.handleVisibility
+                        onClick: this.onWidgetClick
                     },
                     _react2.default.createElement(_Categories.IconTradeCategory, { category: this.props.value }),
                     _react2.default.createElement(
@@ -14176,7 +14607,27 @@ var ContractTypeWidget = function (_React$PureComponent) {
                         list: this.props.list,
                         name: this.props.name,
                         value: this.props.value,
-                        handleSelect: this.handleSelect
+                        handleSelect: this.handleSelect,
+                        handleInfoClick: this.handleInfoClick
+                    })
+                ),
+                _react2.default.createElement(
+                    _trade_type_info_dialog2.default,
+                    {
+                        is_mobile: this.props.is_mobile,
+                        onClose: this.handleInfoClick,
+                        open: this.state.is_info_dialog_open,
+                        title: this.state.item.text
+                    },
+                    _react2.default.createElement(_trade_type_info_item2.default, {
+                        handleNavigationClick: this.handleNavigationClick,
+                        handleNextClick: this.handleNextClick,
+                        handlePrevClick: this.handlePrevClick,
+                        is_mobile: this.props.is_mobile,
+                        item: this.state.item,
+                        navigationList: this.getNavigationList(),
+                        onBackButtonClick: this.onBackButtonClick,
+                        onSubmitButtonClick: this.onSubmitButtonClick
                     })
                 )
             );
@@ -15606,6 +16057,214 @@ StartDate.propTypes = {
 };
 
 exports.default = (0, _mobxReact.observer)(StartDate);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_dialog.jsx":
+/*!*******************************************************************************************************!*\
+  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_dialog.jsx ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
+var _full_screen_dialog = __webpack_require__(/*! ../../Elements/full_screen_dialog.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Elements/full_screen_dialog.jsx");
+
+var _full_screen_dialog2 = _interopRequireDefault(_full_screen_dialog);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TradeTypeInfoDialog = function TradeTypeInfoDialog(_ref) {
+    var children = _ref.children,
+        is_mobile = _ref.is_mobile,
+        open = _ref.open,
+        onClose = _ref.onClose,
+        title = _ref.title;
+    return is_mobile ? _react2.default.createElement(
+        _full_screen_dialog2.default,
+        {
+            visible: open,
+            onClose: onClose,
+            title: title,
+            wrapperClassName: 'trade-type-info-modal'
+        },
+        children
+    ) : _react2.default.createElement(
+        _reactTransitionGroup.CSSTransition,
+        {
+            classNames: 'trade-type-info-popup',
+            'in': open,
+            timeout: 100,
+            unmountOnExit: true
+        },
+        _react2.default.createElement(
+            'div',
+            { className: 'trade-type-info-popup' },
+            _react2.default.createElement(
+                'div',
+                { className: 'trade-type-info' },
+                children
+            )
+        )
+    );
+};
+
+TradeTypeInfoDialog.propTypes = {
+    children: _propTypes2.default.element,
+    is_mobile: _propTypes2.default.bool,
+    onClose: _propTypes2.default.func,
+    open: _propTypes2.default.bool,
+    title: _propTypes2.default.string
+};
+
+exports.default = TradeTypeInfoDialog;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_item.jsx":
+/*!*****************************************************************************************************!*\
+  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_item.jsx ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _icon_back = __webpack_require__(/*! ../../../../../Assets/Common/icon_back.jsx */ "./src/javascript/app_2/Assets/Common/icon_back.jsx");
+
+var _icon_chevron_left = __webpack_require__(/*! ../../../../../Assets/Common/icon_chevron_left.jsx */ "./src/javascript/app_2/Assets/Common/icon_chevron_left.jsx");
+
+var _icon_chevron_right = __webpack_require__(/*! ../../../../../Assets/Common/icon_chevron_right.jsx */ "./src/javascript/app_2/Assets/Common/icon_chevron_right.jsx");
+
+var _trade_categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories/trade_categories.jsx */ "./src/javascript/app_2/Assets/Trading/Categories/trade_categories.jsx");
+
+var _button = __webpack_require__(/*! ../../../../../App/Components/Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
+
+var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ContractTypeItem = function ContractTypeItem(_ref) {
+    var handleNavigationClick = _ref.handleNavigationClick,
+        handleNextClick = _ref.handleNextClick,
+        handlePrevClick = _ref.handlePrevClick,
+        is_mobile = _ref.is_mobile,
+        item = _ref.item,
+        navigationList = _ref.navigationList,
+        onBackButtonClick = _ref.onBackButtonClick,
+        onSubmitButtonClick = _ref.onSubmitButtonClick;
+    return _react2.default.createElement(
+        _react2.default.Fragment,
+        null,
+        !is_mobile && _react2.default.createElement(
+            'div',
+            { className: 'info-header' },
+            _react2.default.createElement(
+                'span',
+                { onClick: function onClick() {
+                        return onBackButtonClick();
+                    } },
+                _react2.default.createElement(_icon_back.IconBack, null)
+            ),
+            _react2.default.createElement(
+                'span',
+                { className: 'title' },
+                item.text
+            )
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-gif' },
+            'gif explanation'
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-content' },
+            _react2.default.createElement(_trade_categories.TradeCategories, { category: item.value })
+        ),
+        _react2.default.createElement(_button2.default, { className: 'info-choose', text: (0, _localize.localize)('CHOOSE'), onClick: function onClick() {
+                return onSubmitButtonClick(item);
+            } }),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-navigation' },
+            _react2.default.createElement(
+                'div',
+                { className: 'info-navigation__icon', onClick: function onClick() {
+                        return handlePrevClick(navigationList);
+                    } },
+                _react2.default.createElement(_icon_chevron_left.IconChevronLeft, null)
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'info-navigation__list' },
+                navigationList.map(function (contract, idx) {
+                    return _react2.default.createElement(
+                        _react2.default.Fragment,
+                        { key: idx },
+                        _react2.default.createElement('div', {
+                            className: 'circle-button ' + (contract.value === item.value ? 'active' : ''),
+                            onClick: function onClick() {
+                                return handleNavigationClick(contract);
+                            }
+                        })
+                    );
+                })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'info-navigation__icon', onClick: function onClick() {
+                        return handleNextClick(navigationList);
+                    } },
+                _react2.default.createElement(_icon_chevron_right.IconChevronRight, null)
+            )
+        )
+    );
+};
+
+ContractTypeItem.propTypes = {
+    handleNavigationClick: _propTypes2.default.func,
+    handleNextClick: _propTypes2.default.func,
+    handlePrevClick: _propTypes2.default.func,
+    is_mobile: _propTypes2.default.bool,
+    item: _propTypes2.default.object,
+    navigationList: _propTypes2.default.array,
+    onBackButtonClick: _propTypes2.default.func,
+    onSubmitButtonClick: _propTypes2.default.func
+};
+
+exports.default = ContractTypeItem;
 
 /***/ }),
 
@@ -23441,7 +24100,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     function UIStore() {
         _classCallCheck(this, UIStore);
 
-        var local_storage_properties = ['is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_portfolio_drawer_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
+        var local_storage_properties = ['is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_positions_drawer_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
 
         var _this = _possibleConstructorReturn(this, (UIStore.__proto__ || Object.getPrototypeOf(UIStore)).call(this, { local_storage_properties: local_storage_properties }));
 
@@ -23449,7 +24108,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         _initDefineProp(_this, 'is_notifications_drawer_on', _descriptor2, _this);
 
-        _initDefineProp(_this, 'is_portfolio_drawer_on', _descriptor3, _this);
+        _initDefineProp(_this, 'is_positions_drawer_on', _descriptor3, _this);
 
         _initDefineProp(_this, 'is_dark_mode_on', _descriptor4, _this);
 
@@ -23495,7 +24154,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
         value: function handleResize() {
             this.screen_width = window.innerWidth;
             if (this.is_mobile) {
-                this.is_portfolio_drawer_on = false;
+                this.is_positions_drawer_on = false;
             }
         }
     }, {
@@ -23550,10 +24209,10 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
             this.is_language_dialog_on = false;
         }
     }, {
-        key: 'togglePortfolioDrawer',
-        value: function togglePortfolioDrawer() {
-            // show and hide Portfolio Drawer
-            this.is_portfolio_drawer_on = !this.is_portfolio_drawer_on;
+        key: 'togglePositionsDrawer',
+        value: function togglePositionsDrawer() {
+            // show and hide Positions Drawer
+            this.is_positions_drawer_on = !this.is_positions_drawer_on;
         }
     }, {
         key: 'showMainDrawer',
@@ -23631,7 +24290,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return false;
     }
-}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'is_portfolio_drawer_on', [_mobx.observable], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, 'is_positions_drawer_on', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
@@ -23701,7 +24360,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return [];
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePortfolioDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePortfolioDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
 exports.default = UIStore;
 
 /***/ }),

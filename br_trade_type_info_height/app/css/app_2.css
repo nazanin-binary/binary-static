@@ -4443,8 +4443,7 @@ a {
     margin-right: 0.5rem;
     margin-left: 0.5rem; }
   .fullscreen-dialog .trade-type-info-modal {
-    padding: 16px;
-    height: 100vh; }
+    padding: 16px; }
     .fullscreen-dialog .trade-type-info-modal .info-header {
       display: -webkit-box;
       display: -ms-flexbox;

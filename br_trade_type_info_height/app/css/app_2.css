@@ -4443,7 +4443,8 @@ a {
     margin-right: 0.5rem;
     margin-left: 0.5rem; }
   .fullscreen-dialog .trade-type-info-modal {
-    padding: 16px; }
+    padding: 16px;
+    height: 100vh; }
     .fullscreen-dialog .trade-type-info-modal .info-header {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -4473,15 +4474,17 @@ a {
       line-height: 20px;
       color: #333; }
     .fullscreen-dialog .trade-type-info-modal .info-choose {
-      background: #ffc107;
-      color: #fff;
-      font-weight: bold;
-      margin: 0 auto;
-      display: block; }
+      text-align: center; }
+      .fullscreen-dialog .trade-type-info-modal .info-choose button {
+        background: #ffc107;
+        color: #fff;
+        font-weight: bold; }
     .fullscreen-dialog .trade-type-info-modal .info-navigation {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
+      -ms-flex-item-align: end;
+          align-self: flex-end;
       margin-top: 16px; }
       .fullscreen-dialog .trade-type-info-modal .info-navigation__list {
         display: inline-block;

@@ -809,10 +809,6 @@ footer {
         -ms-flex-direction: row;
             flex-direction: row;
     height: 100%; }
-    footer .footer-links.footer-links-left {
-      position: absolute;
-      left: 0;
-      float: left; }
     footer .footer-links a {
       padding: 0 8px;
       text-decoration: none;
@@ -834,6 +830,26 @@ footer {
         display: inline-block; }
       footer .footer-links a:hover {
         background: #f4f4f6; }
+    footer .footer-links.footer-links-left {
+      margin-right: auto; }
+      footer .footer-links.footer-links-left .ic-positions svg {
+        margin-bottom: 5px; }
+      footer .footer-links.footer-links-left .ic-positions:after {
+        content: '';
+        width: 2px;
+        height: 2px;
+        border-radius: 50%;
+        background-color: #000;
+        position: absolute;
+        margin-top: 10px;
+        right: 15px;
+        display: block; }
+      footer .footer-links.footer-links-left .ic-positions.active {
+        background: none !important; }
+        footer .footer-links.footer-links-left .ic-positions.active svg {
+          margin-bottom: 0; }
+        footer .footer-links.footer-links-left .ic-positions.active:after {
+          display: none; }
   @media (max-width: 768px) {
     footer {
       display: none; } }
@@ -6425,6 +6441,8 @@ body.dark, .theme-wrapper.dark {
       background: #4a4f6c; }
       body.dark footer .footer-links a.active:after, body.dark footer .footer-links a:hover:after, .theme-wrapper.dark footer .footer-links a.active:after, .theme-wrapper.dark footer .footer-links a:hover:after {
         background: #fff; }
+    body.dark footer .footer-links-left .ic-positions:after, .theme-wrapper.dark footer .footer-links-left .ic-positions:after {
+      background-color: #aaacba; }
     body.dark footer .server-time, body.dark footer .network-status-wrapper, .theme-wrapper.dark footer .server-time, .theme-wrapper.dark footer .network-status-wrapper {
       border-color: #4a4f6c; }
   body.dark .type-wrapper, .theme-wrapper.dark .type-wrapper {

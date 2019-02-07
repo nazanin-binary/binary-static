@@ -19732,7 +19732,9 @@ var CONTRACT_SHADES = exports.CONTRACT_SHADES = {
     RANGE: 'BETWEEN',
     UPORDOWN: 'OUTSIDE',
     ONETOUCH: 'NONE_SINGLE', // no shade
-    NOTOUCH: 'NONE_SINGLE' // no shade
+    NOTOUCH: 'NONE_SINGLE', // no shade
+    ASIANU: 'ABOVE',
+    ASIAND: 'BELOW'
 };
 
 // Default non-shade according to number of barriers

@@ -4409,7 +4409,7 @@ var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ ".
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
-var _input_field = __webpack_require__(/*! ../input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+var _input_field = __webpack_require__(/*! ../InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -5495,21 +5495,16 @@ var ExpandableInput = function (_React$Component) {
     _createClass(ExpandableInput, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
-
-            var textContainer = void 0,
-                textareaSize = void 0,
-                input = void 0;
+            var textContainer = document.querySelector('.' + this.props.className);
+            var textareaSize = textContainer.querySelector('.' + this.props.className + '-size');
+            var input = textContainer.querySelector('input');
 
             var autoSize = function autoSize() {
                 textareaSize.innerHTML = input.value + ' \n';
             };
+            autoSize();
 
             document.addEventListener('DOMContentLoaded', function () {
-                textContainer = document.querySelector('.' + _this2.props.className);
-                textareaSize = textContainer.querySelector('.' + _this2.props.className + '-size');
-                input = textContainer.querySelector('input');
-
                 autoSize();
                 input.addEventListener('input', autoSize);
             });
@@ -5792,7 +5787,7 @@ var InputField = function InputField(_ref) {
         unit = _ref.unit,
         value = _ref.value;
 
-    var has_error = error_messages && error_messages.length;
+    var has_error = error_messages && !!error_messages.length;
     var has_valid_length = true;
     var max_is_disabled = max_value && +value >= +max_value;
     var min_is_disabled = min_value && +value <= +min_value;
@@ -6422,254 +6417,6 @@ exports.default = Fieldset;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Form/input_field.jsx":
-/*!******************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Form/input_field.jsx ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _icon_minus = __webpack_require__(/*! ../../../Assets/Common/icon_minus.jsx */ "./src/javascript/app_2/Assets/Common/icon_minus.jsx");
-
-var _icon_plus = __webpack_require__(/*! ../../../Assets/Common/icon_plus.jsx */ "./src/javascript/app_2/Assets/Common/icon_plus.jsx");
-
-var _button = __webpack_require__(/*! ./button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
-
-var _button2 = _interopRequireDefault(_button);
-
-var _tooltip = __webpack_require__(/*! ../Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
-
-var _tooltip2 = _interopRequireDefault(_tooltip);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var InputField = function InputField(_ref) {
-    var checked = _ref.checked,
-        className = _ref.className,
-        data_tip = _ref.data_tip,
-        data_value = _ref.data_value,
-        error_messages = _ref.error_messages,
-        fractional_digits = _ref.fractional_digits,
-        helper = _ref.helper,
-        id = _ref.id,
-        is_autocomplete_disabled = _ref.is_autocomplete_disabled,
-        is_disabled = _ref.is_disabled,
-        is_float = _ref.is_float,
-        is_incrementable = _ref.is_incrementable,
-        _ref$is_read_only = _ref.is_read_only,
-        is_read_only = _ref$is_read_only === undefined ? false : _ref$is_read_only,
-        _ref$is_signed = _ref.is_signed,
-        is_signed = _ref$is_signed === undefined ? false : _ref$is_signed,
-        _ref$is_unit_at_right = _ref.is_unit_at_right,
-        is_unit_at_right = _ref$is_unit_at_right === undefined ? false : _ref$is_unit_at_right,
-        label = _ref.label,
-        max_length = _ref.max_length,
-        max_value = _ref.max_value,
-        min_value = _ref.min_value,
-        name = _ref.name,
-        onChange = _ref.onChange,
-        onClick = _ref.onClick,
-        placeholder = _ref.placeholder,
-        prefix = _ref.prefix,
-        required = _ref.required,
-        type = _ref.type,
-        unit = _ref.unit,
-        value = _ref.value;
-
-    var has_error = error_messages && error_messages.length;
-    var has_valid_length = true;
-    var max_is_disabled = max_value && +value >= +max_value;
-    var min_is_disabled = min_value && +value <= +min_value;
-
-    var changeValue = function changeValue(e) {
-        if (unit) {
-            e.target.value = e.target.value.replace(unit, '').trim();
-        }
-
-        if (e.target.value === value && type !== 'checkbox') {
-            return;
-        }
-
-        if (type === 'number') {
-            var is_empty = !e.target.value || e.target.value === '' || e.target.value === '  ';
-            var signed_regex = is_signed ? '[\+\-\.0-9]$' : '^';
-
-            var is_number = new RegExp(signed_regex + '(\\d*)?' + (is_float ? '(\\.\\d+)?' : '') + '$').test(e.target.value);
-
-            var is_not_completed_number = is_float && new RegExp(signed_regex + '(\\.|\\d+\\.)?$').test(e.target.value);
-
-            // This regex check whether there is any zero at the end of fractional part or not.
-            var has_zero_at_end = new RegExp(signed_regex + '(\\d+)?\\.(\\d+)?[0]+$').test(e.target.value);
-
-            var is_scientific_notation = /e/.test('' + +e.target.value);
-
-            if (max_length && fractional_digits) {
-                has_valid_length = new RegExp(signed_regex + '(\\d{0,' + max_length + '})(\\.\\d{0,' + fractional_digits + '})?$').test(e.target.value);
-            }
-
-            if ((is_number || is_empty) && has_valid_length) {
-                e.target.value = is_empty || is_signed || has_zero_at_end || is_scientific_notation ? e.target.value : +e.target.value;
-            } else if (!is_not_completed_number) {
-                e.target.value = value;
-                return;
-            }
-        }
-
-        onChange(e);
-    };
-
-    var incrementValue = function incrementValue() {
-        if (max_is_disabled) return;
-
-        var increment_value = +value + 1;
-        onChange({ target: { value: increment_value, name: name } });
-    };
-
-    var decrementValue = function decrementValue() {
-        if (!value || min_is_disabled) return;
-
-        var decrement_value = +value - 1;
-        onChange({ target: { value: decrement_value, name: name } });
-    };
-
-    var onKeyPressed = function onKeyPressed(e) {
-        if (e.keyCode === 38) incrementValue(); // up-arrow pressed
-        if (e.keyCode === 40) decrementValue(); // down-arrow pressed
-    };
-
-    var display_value = value;
-
-    if (unit) {
-        display_value = is_unit_at_right ? value + ' ' + unit : unit + ' ' + value;
-    }
-
-    var input = _react2.default.createElement('input', {
-        checked: checked ? 'checked' : '',
-        className: (0, _classnames2.default)({ error: has_error }),
-        disabled: is_disabled,
-        'data-for': 'error_tooltip_' + name,
-        'data-value': data_value,
-        'data-tip': data_tip,
-        id: id,
-        maxLength: fractional_digits ? max_length + fractional_digits + 1 : max_length,
-        name: name,
-        onKeyDown: is_incrementable ? onKeyPressed : undefined,
-        onChange: changeValue,
-        onClick: onClick,
-        placeholder: placeholder || undefined,
-        readOnly: is_read_only,
-        required: required || undefined,
-        type: type === 'number' ? 'text' : type,
-        value: display_value || '',
-        autoComplete: is_autocomplete_disabled ? 'off' : undefined
-    });
-
-    var input_increment = _react2.default.createElement(
-        'div',
-        { className: 'input-wrapper' },
-        _react2.default.createElement(
-            _button2.default,
-            {
-                className: 'input-wrapper__button input-wrapper__button--increment',
-                is_disabled: max_is_disabled,
-                onClick: incrementValue,
-                tabIndex: '-1'
-            },
-            _react2.default.createElement(_icon_plus.IconPlus, { className: 'input-wrapper__icon input-wrapper__icon--plus', is_disabled: max_is_disabled })
-        ),
-        _react2.default.createElement(
-            _button2.default,
-            {
-                className: 'input-wrapper__button input-wrapper__button--decrement',
-                is_disabled: min_is_disabled,
-                onClick: decrementValue,
-                tabIndex: '-1'
-            },
-            _react2.default.createElement(_icon_minus.IconMinus, { className: 'input-wrapper__icon input-wrapper__icon--minus', is_disabled: min_is_disabled })
-        ),
-        input
-    );
-
-    return _react2.default.createElement(
-        'div',
-        {
-            className: 'input-field ' + (className || '')
-        },
-        _react2.default.createElement(
-            _tooltip2.default,
-            { alignment: 'left', message: has_error ? error_messages[0] : null },
-            !!label && _react2.default.createElement(
-                'label',
-                { htmlFor: name, className: 'input-label' },
-                label
-            ),
-            !!prefix && _react2.default.createElement('span', { className: 'symbols ' + prefix.toLowerCase() }),
-            !!helper && _react2.default.createElement(
-                'span',
-                { className: 'input-helper' },
-                helper
-            ),
-            is_incrementable && type === 'number' ? input_increment : input
-        )
-    );
-};
-
-// ToDo: Refactor input_field
-// supports more than two different types of 'value' as a prop.
-// Quick Solution - Pass two different props to input field.
-// implicit import here { IconMinus, IconPlus } from 'Assets/Common' breaks compilation
-InputField.propTypes = {
-    checked: _propTypes2.default.number,
-    className: _propTypes2.default.string,
-    error_messages: _mobxReact.PropTypes.arrayOrObservableArray,
-    fractional_digits: _propTypes2.default.number,
-    helper: _propTypes2.default.string,
-    id: _propTypes2.default.string,
-    is_autocomplete_disabled: _propTypes2.default.bool,
-    is_disabled: _propTypes2.default.string,
-    is_float: _propTypes2.default.bool,
-    is_incrementable: _propTypes2.default.bool,
-    is_read_only: _propTypes2.default.bool,
-    is_signed: _propTypes2.default.bool,
-    is_unit_at_right: _propTypes2.default.bool,
-    label: _propTypes2.default.string,
-    max_length: _propTypes2.default.number,
-    name: _propTypes2.default.string,
-    onChange: _propTypes2.default.func,
-    onClick: _propTypes2.default.func,
-    placeholder: _propTypes2.default.string,
-    prefix: _propTypes2.default.string,
-    required: _propTypes2.default.bool,
-    type: _propTypes2.default.string,
-    unit: _propTypes2.default.string,
-    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
-};
-
-exports.default = (0, _mobxReact.observer)(InputField);
-
-/***/ }),
-
 /***/ "./src/javascript/app_2/App/Components/Form/number_selector.jsx":
 /*!**********************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Form/number_selector.jsx ***!
@@ -6783,7 +6530,7 @@ var _start_date = __webpack_require__(/*! ../../../Stores/Modules/Trading/Helper
 
 var _Date = __webpack_require__(/*! ../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
-var _input_field = __webpack_require__(/*! ./input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+var _input_field = __webpack_require__(/*! ./InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -16373,7 +16120,7 @@ var _button_toggle_menu = __webpack_require__(/*! ../../../../../../App/Componen
 
 var _button_toggle_menu2 = _interopRequireDefault(_button_toggle_menu);
 
-var _input_field = __webpack_require__(/*! ../../../../../../App/Components/Form/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+var _input_field = __webpack_require__(/*! ../../../../../../App/Components/Form/InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -17006,7 +16753,7 @@ var DurationWrapper = function (_React$Component) {
             var current_duration = this.props.getDurationFromUnit(this.props.duration_unit);
             var has_missing_duration_unit = !this.hasDurationUnit(current_duration_unit);
             var simple_is_not_type_duration = !this.props.is_advanced_duration && this.props.expiry_type !== 'duration';
-            var advanced_has_wrong_expiry = this.props.is_advanced_duration && this.props.expiry_type !== this.props.advanced_expiry_type;
+            var advanced_has_wrong_expiry = this.props.is_advanced_duration && this.props.expiry_type !== this.props.advanced_expiry_type && this.props.duration_units_list.length > 1;
 
             // intercept changes to current contracts duration_units_list - if they are missing change duration_unit and value in trade_store and ui_store
             if (has_missing_duration_unit || simple_is_missing_duration_unit) {
@@ -17131,7 +16878,7 @@ var _button_toggle_menu = __webpack_require__(/*! ../../../../../../App/Componen
 
 var _button_toggle_menu2 = _interopRequireDefault(_button_toggle_menu);
 
-var _input_field = __webpack_require__(/*! ../../../../../../App/Components/Form/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+var _input_field = __webpack_require__(/*! ../../../../../../App/Components/Form/InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -17226,7 +16973,7 @@ var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/to
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _input_field = __webpack_require__(/*! ../../../../../App/Components/Form/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+var _input_field = __webpack_require__(/*! ../../../../../App/Components/Form/InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -17448,7 +17195,7 @@ var _fieldset = __webpack_require__(/*! ../../../../../App/Components/Form/field
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _input_field = __webpack_require__(/*! ../../../../../App/Components/Form/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/input_field.jsx");
+var _input_field = __webpack_require__(/*! ../../../../../App/Components/Form/InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -27409,7 +27156,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = ''; // you can insert Application ID of your registered application here
+    var user_app_id = 12447; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
@@ -27428,7 +27175,7 @@ var getAppId = function getAppId() {
         app_id = 1159;
     } else if (is_new_app) {
         window.localStorage.removeItem('config.default_app_id');
-        app_id = 15265;
+        app_id = 12447;
     } else {
         window.localStorage.removeItem('config.default_app_id');
         app_id = domain_app_ids[getCurrentBinaryDomain()] || 1;

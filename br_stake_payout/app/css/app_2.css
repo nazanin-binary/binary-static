@@ -5995,7 +5995,7 @@ a {
         width: -webkit-fit-content;
         width: -moz-fit-content;
         width: fit-content;
-        min-width: 14px;
+        min-width: 15px;
         height: 30px;
         float: right; }
         .binary-app fieldset .expandable-input-container .expandable-input input, .binary-app fieldset .expandable-input-container .expandable-input .input-size {

@@ -5888,37 +5888,45 @@ var InputField = function InputField(_ref) {
         !is_expandable && input
     );
 
+    var input_tooltip = _react2.default.createElement(
+        _tooltip2.default,
+        { alignment: 'left', message: has_error ? error_messages[0] : null },
+        !!label && _react2.default.createElement(
+            'label',
+            { htmlFor: name, className: 'input-label' },
+            label
+        ),
+        !!prefix && _react2.default.createElement('span', { className: 'symbols ' + (is_expandable ? 'expandable-symbols' : null) + ' ' + prefix.toLowerCase() }),
+        !!helper && _react2.default.createElement(
+            'span',
+            { className: 'input-helper' },
+            helper
+        ),
+        !is_expandable && (is_incrementable && type === 'number' ? _react2.default.createElement(
+            _react2.default.Fragment,
+            null,
+            increment_buttons
+        ) : input),
+        is_expandable && _react2.default.createElement(
+            _expandable_input2.default,
+            { className: 'expandable-' + name },
+            input
+        )
+    );
+
+    var expandableInputWrapper = _react2.default.createElement(
+        'label',
+        { htmlFor: id, className: 'expandable-input-wrapper' },
+        input_tooltip
+    );
+
     return _react2.default.createElement(
         'div',
         {
             className: 'input-field ' + (className || '') + ' ' + (is_expandable ? has_error ? 'expandable-input-container error' : 'expandable-input-container' : null)
         },
         is_incrementable && type === 'number' && is_expandable && increment_buttons,
-        _react2.default.createElement(
-            _tooltip2.default,
-            { alignment: 'left', message: has_error ? error_messages[0] : null },
-            !!label && _react2.default.createElement(
-                'label',
-                { htmlFor: name, className: 'input-label' },
-                label
-            ),
-            !!prefix && _react2.default.createElement('span', { className: 'symbols ' + (is_expandable ? 'expandable-symbols' : null) + ' ' + prefix.toLowerCase() }),
-            !!helper && _react2.default.createElement(
-                'span',
-                { className: 'input-helper' },
-                helper
-            ),
-            !is_expandable && (is_incrementable && type === 'number' ? _react2.default.createElement(
-                _react2.default.Fragment,
-                null,
-                increment_buttons
-            ) : input),
-            !!is_expandable && _react2.default.createElement(
-                _expandable_input2.default,
-                { className: 'expandable-' + name },
-                input
-            )
-        )
+        is_expandable ? expandableInputWrapper : input_tooltip
     );
 };
 
@@ -17129,6 +17137,7 @@ var Amount = function Amount(_ref) {
                 className: (0, _classnames2.default)({ 'has-currency-options': !is_single_currency }),
                 error_messages: validation_errors.amount,
                 fractional_digits: (0, _currency_base.getDecimalPlaces)(currency),
+                id: 'amount',
                 is_autocomplete_disabled: true,
                 is_expandable: true,
                 is_float: true,

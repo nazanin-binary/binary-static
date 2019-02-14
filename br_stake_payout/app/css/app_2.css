@@ -1973,6 +1973,82 @@ a.btn {
     font-weight: 300;
     font-size: 0.75rem;
     color: rgba(153, 156, 172, 0.32); }
+  .input-field .expandable-input-wrapper {
+    margin: 0 30px;
+    display: block; }
+  .input-field.expandable-input-container {
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #ffffff !important; }
+    .input-field.expandable-input-container .expandable-input {
+      position: relative;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      min-width: 15px;
+      height: 30px;
+      float: right; }
+      .input-field.expandable-input-container .expandable-input input, .input-field.expandable-input-container .expandable-input .input-size {
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        padding: 4px;
+        border: 1px solid;
+        overflow: hidden;
+        width: 100%;
+        -ms-flex-item-align: unset;
+            align-self: unset; }
+      .input-field.expandable-input-container .expandable-input input {
+        height: 100%;
+        position: absolute;
+        resize: none;
+        white-space: normal;
+        background: none !important;
+        border: none;
+        text-align: left;
+        padding-top: 6px; }
+        .input-field.expandable-input-container .expandable-input input.error {
+          border: none !important; }
+        .input-field.expandable-input-container .expandable-input input:focus {
+          border: none;
+          -webkit-box-shadow: none !important;
+                  box-shadow: none !important; }
+      .input-field.expandable-input-container .expandable-input .input-size {
+        visibility: hidden;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: break-word; }
+    .input-field.expandable-input-container .input-wrapper__button {
+      height: 30px; }
+    .input-field.expandable-input-container .tooltip {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      position: relative;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      margin: 0 auto; }
+    .input-field.expandable-input-container .expandable-symbols {
+      float: left;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      text-align: right;
+      -webkit-box-flex: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      position: relative;
+      background: none !important; }
+      .input-field.expandable-input-container .expandable-symbols:before {
+        position: absolute;
+        right: 0; }
+    .input-field.expandable-input-container.error {
+      color: #e31c4b;
+      border: 1px solid #e31c4b !important; }
 
 .theme-wrapper.dark .input-field:has(input[type=checkbox]) {
   display: inline-block; }
@@ -2028,6 +2104,11 @@ a.btn {
     color: #7f8397; }
   .theme-wrapper.dark .input-field input::placeholder {
     color: #7f8397; }
+
+.theme-wrapper.dark .input-field.expandable-input-container {
+  background: #101320;
+  border-radius: 4px;
+  border: 1px solid #101320 !important; }
 
 .theme-wrapper.dark .input-wrapper:hover input {
   border-color: #7f8397; }
@@ -5986,82 +6067,6 @@ a {
     .binary-app fieldset .has-currency-options, .binary-app fieldset .currency-options {
       width: 50%;
       display: inline-block; }
-    .binary-app fieldset .expandable-input-wrapper {
-      margin: 0 30px;
-      display: block; }
-    .binary-app fieldset .expandable-input-container {
-      background: #ffffff;
-      border-radius: 4px;
-      border: 1px solid #ffffff !important; }
-      .binary-app fieldset .expandable-input-container .expandable-input {
-        position: relative;
-        width: -webkit-fit-content;
-        width: -moz-fit-content;
-        width: fit-content;
-        min-width: 15px;
-        height: 30px;
-        float: right; }
-        .binary-app fieldset .expandable-input-container .expandable-input input, .binary-app fieldset .expandable-input-container .expandable-input .input-size {
-          -webkit-box-sizing: border-box;
-                  box-sizing: border-box;
-          padding: 4px;
-          border: 1px solid;
-          overflow: hidden;
-          width: 100%;
-          -ms-flex-item-align: unset;
-              align-self: unset; }
-        .binary-app fieldset .expandable-input-container .expandable-input input {
-          height: 100%;
-          position: absolute;
-          resize: none;
-          white-space: normal;
-          background: none !important;
-          border: none;
-          text-align: left;
-          padding-top: 6px; }
-          .binary-app fieldset .expandable-input-container .expandable-input input.error {
-            border: none !important; }
-          .binary-app fieldset .expandable-input-container .expandable-input input:focus {
-            border: none;
-            -webkit-box-shadow: none !important;
-                    box-shadow: none !important; }
-        .binary-app fieldset .expandable-input-container .expandable-input .input-size {
-          visibility: hidden;
-          white-space: pre-wrap;
-          word-wrap: break-word;
-          overflow-wrap: break-word; }
-      .binary-app fieldset .expandable-input-container .tooltip {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-                flex-direction: row;
-        position: relative;
-        width: -webkit-fit-content;
-        width: -moz-fit-content;
-        width: fit-content;
-        margin: 0 auto; }
-      .binary-app fieldset .expandable-input-container .expandable-symbols {
-        float: left;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        text-align: right;
-        -webkit-box-flex: 1;
-            -ms-flex-positive: 1;
-                flex-grow: 1;
-        position: relative;
-        background: none !important; }
-        .binary-app fieldset .expandable-input-container .expandable-symbols:before {
-          position: absolute;
-          right: 0; }
-      .binary-app fieldset .expandable-input-container.error {
-        color: #e31c4b;
-        border: 1px solid #e31c4b !important; }
-    .binary-app fieldset .input-wrapper__button {
-      margin-top: 4px; }
   .binary-app div.purchase-wrapper {
     position: relative; }
     .binary-app div.purchase-wrapper div.purchase-error {
@@ -6425,11 +6430,6 @@ a {
 
 .theme-wrapper.dark fieldset.barriers .up, .theme-wrapper.dark fieldset.barriers .down {
   fill: #ffffff; }
-
-.theme-wrapper.dark .expandable-input-container {
-  background: #101320;
-  border-radius: 4px;
-  border: 1px solid #101320 !important; }
 
 body.dark, .theme-wrapper.dark {
   background: #0b0e18; }

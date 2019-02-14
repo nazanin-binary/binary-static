@@ -5503,11 +5503,7 @@ var ExpandableInput = function (_React$Component) {
                 textareaSize.innerHTML = input.value + ' \n';
             };
             autoSize();
-
-            document.addEventListener('DOMContentLoaded', function () {
-                autoSize();
-                input.addEventListener('input', autoSize);
-            });
+            input.addEventListener('input', autoSize);
         }
     }, {
         key: 'render',
@@ -17139,7 +17135,7 @@ var Amount = function Amount(_ref) {
                 fractional_digits: (0, _currency_base.getDecimalPlaces)(currency),
                 id: 'amount',
                 is_autocomplete_disabled: true,
-                is_expandable: true,
+                is_expandable: is_single_currency,
                 is_float: true,
                 is_incrementable: true,
                 is_nativepicker: is_nativepicker,

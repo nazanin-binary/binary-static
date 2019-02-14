@@ -27165,7 +27165,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = 12447; // you can insert Application ID of your registered application here
+    var user_app_id = 16027; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
@@ -27184,7 +27184,7 @@ var getAppId = function getAppId() {
         app_id = 1159;
     } else if (is_new_app) {
         window.localStorage.removeItem('config.default_app_id');
-        app_id = 12447;
+        app_id = 15265;
     } else {
         window.localStorage.removeItem('config.default_app_id');
         app_id = domain_app_ids[getCurrentBinaryDomain()] || 1;

@@ -5986,6 +5986,9 @@ a {
     .binary-app fieldset .has-currency-options, .binary-app fieldset .currency-options {
       width: 50%;
       display: inline-block; }
+    .binary-app fieldset .expandable-input-wrapper {
+      margin: 0 30px;
+      display: block; }
     .binary-app fieldset .expandable-input-container {
       background: #ffffff;
       border-radius: 4px;

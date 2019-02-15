@@ -5622,6 +5622,31 @@ exports.default = (0, _mobxReact.observer)(IncrementButtons);
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Form/InputField/index.js":
+/*!**********************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/InputField/index.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _input_field = __webpack_require__(/*! ./input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
+
+var _input_field2 = _interopRequireDefault(_input_field);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _input_field2.default;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Form/InputField/input.jsx":
 /*!***********************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Form/InputField/input.jsx ***!
@@ -6208,6 +6233,383 @@ exports.default = TickSteps;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Form/TimePicker/dialog.jsx":
+/*!************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/TimePicker/dialog.jsx ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var Dialog = function Dialog(_ref) {
+    var preClass = _ref.preClass,
+        value = _ref.value,
+        start_time = _ref.start_time,
+        end_time = _ref.end_time,
+        onChange = _ref.onChange,
+        className = _ref.className;
+
+    var start_time_moment = start_time ? (0, _Date.toMoment)(start_time) : (0, _Date.toMoment)();
+    var end_time_moment = end_time ? (0, _Date.toMoment)(end_time) : (0, _Date.toMoment)().hour('23').minute('59').seconds('59').milliseconds('999');
+    var to_compare_moment = (0, _Date.toMoment)();
+
+    var _value$split = value.split(':'),
+        _value$split2 = _slicedToArray(_value$split, 2),
+        hour = _value$split2[0],
+        minute = _value$split2[1];
+
+    var hours = [].concat(_toConsumableArray(Array(24).keys())).map(function (a) {
+        return ('0' + a).slice(-2);
+    });
+    var minutes = [].concat(_toConsumableArray(Array(12).keys())).map(function (a) {
+        return ('0' + a * 5).slice(-2);
+    });
+
+    var selectOption = function selectOption(type, current_value, prev_value) {
+        var is_enabled = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+
+        if (is_enabled && prev_value) {
+            var _prev_value$split = prev_value.split(':'),
+                _prev_value$split2 = _slicedToArray(_prev_value$split, 2),
+                prev_hour = _prev_value$split2[0],
+                prev_minute = _prev_value$split2[1];
+
+            if (type === 'h' && current_value !== prev_hour || type === 'm' && current_value !== prev_minute) {
+                onChange((type === 'h' ? current_value : prev_hour) + ':' + (type === 'm' ? current_value : prev_minute));
+            }
+        }
+    };
+
+    return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)(preClass + '-dialog', '' + className) },
+        _react2.default.createElement(
+            'div',
+            { className: preClass + '-selector' },
+            _react2.default.createElement(
+                'div',
+                { className: preClass + '-hours' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'list-title center-text' },
+                    _react2.default.createElement(
+                        'strong',
+                        null,
+                        (0, _localize.localize)('Hour')
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'list-container' },
+                    hours.map(function (h, key) {
+                        to_compare_moment.hour(h).minute(minute);
+                        var is_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment);
+                        return _react2.default.createElement(
+                            'div',
+                            {
+                                className: (0, _classnames2.default)('list-item', { 'selected': hour === h }, { 'disabled': !is_enabled }),
+                                key: key,
+                                onClick: function onClick() {
+                                    selectOption('h', h, value, is_enabled);
+                                }
+                            },
+                            h
+                        );
+                    })
+                )
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: preClass + '-minutes' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'list-title center-text' },
+                    _react2.default.createElement(
+                        'strong',
+                        null,
+                        (0, _localize.localize)('Minute')
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'list-container' },
+                    minutes.map(function (mm, key) {
+                        to_compare_moment.hour(hour).minute(mm);
+                        var is_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment, 'minute');
+                        return _react2.default.createElement(
+                            'div',
+                            {
+                                className: (0, _classnames2.default)('list-item', { 'selected': minute === mm }, { 'disabled': !is_enabled }),
+                                key: key,
+                                onClick: function onClick() {
+                                    selectOption('m', mm, value, is_enabled);
+                                }
+                            },
+                            mm
+                        );
+                    })
+                )
+            )
+        )
+    );
+};
+
+Dialog.propTypes = {
+    className: _propTypes2.default.string,
+    end_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
+    onChange: _propTypes2.default.func,
+    preClass: _propTypes2.default.string,
+    start_time: _propTypes2.default.number,
+    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object])
+};
+
+exports.default = Dialog;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/TimePicker/index.js":
+/*!**********************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/TimePicker/index.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _time_picker = __webpack_require__(/*! ./time_picker.jsx */ "./src/javascript/app_2/App/Components/Form/TimePicker/time_picker.jsx");
+
+var _time_picker2 = _interopRequireDefault(_time_picker);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _time_picker2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/TimePicker/time_picker.jsx":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/TimePicker/time_picker.jsx ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
+var _dialog = __webpack_require__(/*! ./dialog.jsx */ "./src/javascript/app_2/App/Components/Form/TimePicker/dialog.jsx");
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
+var _InputField = __webpack_require__(/*! ../InputField */ "./src/javascript/app_2/App/Components/Form/InputField/index.js");
+
+var _InputField2 = _interopRequireDefault(_InputField);
+
+var _icon_clock = __webpack_require__(/*! ../../../../Assets/Common/icon_clock.jsx */ "./src/javascript/app_2/Assets/Common/icon_clock.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TimePicker = function (_React$Component) {
+    _inherits(TimePicker, _React$Component);
+
+    function TimePicker() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, TimePicker);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call.apply(_ref, [this].concat(args))), _this), _this.state = { is_open: false }, _this.toggleDropDown = function () {
+            _this.setState(function (state) {
+                return { is_open: !state.is_open };
+            });
+        }, _this.handleChange = function (arg) {
+            // To handle nativepicker;
+            var value = (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object' ? arg.target.value : arg;
+
+            if (value !== _this.props.value) {
+                _this.props.onChange({ target: { name: _this.props.name, value: value } });
+            }
+        }, _this.saveRef = function (node) {
+            if (!node) return;
+            if (node.nodeName === 'INPUT') {
+                _this.target_element = node;
+                return;
+            }
+            _this.wrapper_ref = node;
+        }, _this.handleClickOutside = function (event) {
+            if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target)) {
+                if (_this.state.is_open) {
+                    _this.setState({ is_open: false });
+                }
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(TimePicker, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.addEventListener('mousedown', this.handleClickOutside);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            document.removeEventListener('mousedown', this.handleClickOutside);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var prefix_class = 'time-picker';
+            var _props = this.props,
+                value = _props.value,
+                name = _props.name,
+                is_nativepicker = _props.is_nativepicker,
+                placeholder = _props.placeholder,
+                start_time = _props.start_time,
+                end_time = _props.end_time,
+                validation_errors = _props.validation_errors;
+
+            return _react2.default.createElement(
+                'div',
+                {
+                    ref: this.saveRef,
+                    className: (0, _classnames2.default)(prefix_class, { 'padding': this.props.padding })
+                },
+                is_nativepicker ? _react2.default.createElement('input', {
+                    type: 'time',
+                    id: prefix_class + '-input',
+                    value: value,
+                    onChange: this.handleChange,
+                    name: name,
+                    min: start_time,
+                    max: end_time
+                }) : _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(_icon_clock.IconClock, { className: 'time-picker-icon' }),
+                    _react2.default.createElement(_InputField2.default, {
+                        error_messages: validation_errors,
+                        type: 'text',
+                        is_read_only: true,
+                        id: prefix_class + '-input',
+                        className: (0, _classnames2.default)(prefix_class + '-input'),
+                        value: value,
+                        onClick: this.toggleDropDown,
+                        name: name,
+                        placeholder: placeholder
+                    }),
+                    _react2.default.createElement(
+                        _reactTransitionGroup.CSSTransition,
+                        {
+                            'in': this.state.is_open,
+                            classNames: {
+                                enter: 'time-picker-dialog-enter',
+                                enterDone: 'time-picker-dialog-enter-done',
+                                exit: 'time-picker-dialog-exit'
+                            },
+                            timeout: 100,
+                            unmountOnExit: true
+                        },
+                        _react2.default.createElement(_dialog2.default, {
+                            className: 'from-left',
+                            onChange: this.handleChange,
+                            preClass: prefix_class,
+                            start_time: start_time,
+                            end_time: end_time,
+                            value: value
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return TimePicker;
+}(_react2.default.Component);
+
+TimePicker.propTypes = {
+    end_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
+    is_clearable: _propTypes2.default.bool,
+    is_nativepicker: _propTypes2.default.bool,
+    name: _propTypes2.default.string,
+    onChange: _propTypes2.default.func,
+    padding: _propTypes2.default.string,
+    placeholder: _propTypes2.default.string,
+    start_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
+    value: _propTypes2.default.string
+};
+
+exports.default = (0, _mobxReact.observer)(TimePicker);
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Form/button.jsx":
 /*!*************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Form/button.jsx ***!
@@ -6506,404 +6908,6 @@ NumberSelector.propTypes = {
 };
 
 exports.default = NumberSelector;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Form/time_picker.jsx":
-/*!******************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Form/time_picker.jsx ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _Common = __webpack_require__(/*! ../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
-
-var _start_date = __webpack_require__(/*! ../../../Stores/Modules/Trading/Helpers/start_date */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/start_date.js");
-
-var _Date = __webpack_require__(/*! ../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
-
-var _input_field = __webpack_require__(/*! ./InputField/input_field.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/input_field.jsx");
-
-var _input_field2 = _interopRequireDefault(_input_field);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TimePickerDropdown = function (_React$Component) {
-    _inherits(TimePickerDropdown, _React$Component);
-
-    function TimePickerDropdown(props) {
-        _classCallCheck(this, TimePickerDropdown);
-
-        var _this = _possibleConstructorReturn(this, (TimePickerDropdown.__proto__ || Object.getPrototypeOf(TimePickerDropdown)).call(this, props));
-
-        _this.selectOption = function (type, value) {
-            var is_enabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-
-            if (is_enabled && _this.props.value) {
-                var _this$props$value$spl = _this.props.value.split(':'),
-                    _this$props$value$spl2 = _slicedToArray(_this$props$value$spl, 2),
-                    prev_hour = _this$props$value$spl2[0],
-                    prev_minute = _this$props$value$spl2[1];
-
-                if (type === 'h' && value !== prev_hour || type === 'm' && value !== prev_minute) {
-                    var is_type_selected = type === 'h' ? 'is_hour_selected' : 'is_minute_selected';
-                    _this.setState(_defineProperty({
-                        last_updated_type: type
-                    }, is_type_selected, true));
-                    _this.props.onChange((type === 'h' ? value : prev_hour) + ':' + (type === 'm' ? value : prev_minute));
-                }
-            }
-        };
-
-        _this.clear = function (event) {
-            event.stopPropagation();
-            _this.resetValues();
-            _this.props.onChange('');
-        };
-
-        _this.hours = [].concat(_toConsumableArray(Array(24).keys())).map(function (a) {
-            return ('0' + a).slice(-2);
-        });
-        _this.minutes = [].concat(_toConsumableArray(Array(12).keys())).map(function (a) {
-            return ('0' + a * 5).slice(-2);
-        });
-        _this.state = {
-            is_hour_selected: false,
-            is_minute_selected: false,
-            last_updated_type: null
-        };
-        return _this;
-    }
-
-    _createClass(TimePickerDropdown, [{
-        key: 'componentDidUpdate',
-        value: function componentDidUpdate(prevProps, prevState) {
-            var _state = this.state,
-                is_hour_selected = _state.is_hour_selected,
-                is_minute_selected = _state.is_minute_selected;
-
-            if (is_hour_selected && is_minute_selected) {
-                this.resetValues();
-                this.props.toggle();
-            }
-            if (!prevProps.className && this.props.className === 'active') {
-                this.resetValues();
-            }
-            if (prevState.last_updated_type !== this.state.last_updated_type && this.state.last_updated_type) {
-                this.setState({ last_updated_type: null });
-            }
-        }
-    }, {
-        key: 'resetValues',
-        value: function resetValues() {
-            this.setState({
-                is_hour_selected: false,
-                is_minute_selected: false
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var _props = this.props,
-                preClass = _props.preClass,
-                value = _props.value,
-                toggle = _props.toggle,
-                start_date = _props.start_date,
-                sessions = _props.sessions;
-
-            var start_moment = (0, _Date.toMoment)(start_date);
-            var start_moment_clone = start_moment.clone().minute(0).second(0);
-
-            var _value$split = value.split(':'),
-                _value$split2 = _slicedToArray(_value$split, 2),
-                hour = _value$split2[0],
-                minute = _value$split2[1];
-
-            return _react2.default.createElement(
-                'div',
-                { className: preClass + '-dropdown ' + this.props.className },
-                _react2.default.createElement(
-                    'div',
-                    {
-                        className: preClass + '-panel',
-                        onClick: toggle
-                    },
-                    _react2.default.createElement(
-                        'span',
-                        { className: value ? '' : 'placeholder' },
-                        value || (0, _localize.localize)('Select time')
-                    ),
-                    (!('is_clearable' in this.props) || this.props.is_clearable) && _react2.default.createElement('span', {
-                        className: preClass + '-clear',
-                        onClick: this.clear
-                    })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: preClass + '-selector' },
-                    _react2.default.createElement(
-                        'div',
-                        {
-                            ref: this.saveHourRef,
-                            className: preClass + '-hours'
-                        },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'list-title center-text' },
-                            _react2.default.createElement(
-                                'strong',
-                                null,
-                                (0, _localize.localize)('Hour')
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'list-container' },
-                            this.hours.map(function (h, key) {
-                                start_moment_clone.hour(h);
-                                var is_enabled = (0, _start_date.isSessionAvailable)(sessions, start_moment_clone, start_moment, true);
-                                return _react2.default.createElement(
-                                    'div',
-                                    {
-                                        className: 'list-item' + (hour === h ? ' selected' : '') + (is_enabled ? '' : ' disabled'),
-                                        key: key,
-                                        onClick: function onClick() {
-                                            _this2.selectOption('h', h, is_enabled);
-                                        }
-                                    },
-                                    h
-                                );
-                            })
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        {
-                            ref: this.saveMinuteRef,
-                            className: preClass + '-minutes'
-                        },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'list-title center-text' },
-                            _react2.default.createElement(
-                                'strong',
-                                null,
-                                (0, _localize.localize)('Minute')
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'list-container' },
-                            this.minutes.map(function (mm, key) {
-                                start_moment_clone.hour(hour).minute(mm);
-                                var is_enabled = (0, _start_date.isSessionAvailable)(sessions, start_moment_clone, start_moment);
-                                return _react2.default.createElement(
-                                    'div',
-                                    {
-                                        className: 'list-item' + (minute === mm ? ' selected' : '') + (is_enabled ? '' : ' disabled'),
-                                        key: key,
-                                        onClick: function onClick() {
-                                            _this2.selectOption('m', mm, is_enabled);
-                                        }
-                                    },
-                                    mm
-                                );
-                            })
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return TimePickerDropdown;
-}(_react2.default.Component);
-
-var TimePicker = function (_React$Component2) {
-    _inherits(TimePicker, _React$Component2);
-
-    function TimePicker(props) {
-        _classCallCheck(this, TimePicker);
-
-        var _this3 = _possibleConstructorReturn(this, (TimePicker.__proto__ || Object.getPrototypeOf(TimePicker)).call(this, props));
-
-        _this3.toggleDropDown = function () {
-            _this3.setState({ is_open: !_this3.state.is_open });
-        };
-
-        _this3.handleChange = function (arg) {
-            // To handle nativepicker;
-            var value = (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object' ? arg.target.value : arg;
-
-            if (value !== _this3.props.value) {
-                _this3.props.onChange({ target: { name: _this3.props.name, value: value } });
-            }
-        };
-
-        _this3.saveRef = function (node) {
-            if (!node) return;
-            if (node.nodeName === 'INPUT') {
-                _this3.target_element = node;
-                return;
-            }
-            _this3.wrapper_ref = node;
-        };
-
-        _this3.handleClickOutside = function (event) {
-            if (_this3.wrapper_ref && !_this3.wrapper_ref.contains(event.target)) {
-                if (_this3.state.is_open) {
-                    _this3.setState({ is_open: false });
-                }
-            }
-        };
-
-        _this3.state = {
-            is_open: false,
-            value: ''
-        };
-        return _this3;
-    }
-
-    _createClass(TimePicker, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            document.addEventListener('mousedown', this.handleClickOutside);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            document.removeEventListener('mousedown', this.handleClickOutside);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var prefix_class = 'time-picker';
-            var _props2 = this.props,
-                is_nativepicker = _props2.is_nativepicker,
-                value = _props2.value,
-                name = _props2.name,
-                is_align_right = _props2.is_align_right,
-                placeholder = _props2.placeholder,
-                start_date = _props2.start_date,
-                sessions = _props2.sessions,
-                validation_errors = _props2.validation_errors;
-
-            return _react2.default.createElement(
-                'div',
-                {
-                    ref: this.saveRef,
-                    className: '' + prefix_class + (this.props.padding ? ' padding' : '') + (this.state.is_open ? ' active' : '')
-                },
-                is_nativepicker ? _react2.default.createElement('input', {
-                    type: 'time',
-                    className: 'trade-container__input',
-                    id: prefix_class + '-input',
-                    value: value,
-                    onChange: this.handleChange,
-                    name: name
-                }) : _react2.default.createElement(
-                    _react2.default.Fragment,
-                    null,
-                    _react2.default.createElement(_input_field2.default, {
-                        error_messages: validation_errors,
-                        type: 'text',
-                        is_read_only: true,
-                        is_unit_at_right: true,
-                        id: prefix_class + '-input',
-                        className: (0, _classnames2.default)(prefix_class + '-input', this.state.is_open ? 'active' : ''),
-                        classNameInput: 'trade-container__input',
-                        value: value,
-                        onClick: this.toggleDropDown,
-                        name: name,
-                        placeholder: placeholder,
-                        unit: 'GMT'
-                    }),
-                    _react2.default.createElement(_Common.IconClock, { className: prefix_class + '-icon' }),
-                    _react2.default.createElement(TimePickerDropdown, {
-                        className: '' + (this.state.is_open ? 'active' : '') + (is_align_right ? ' from-right' : ''),
-                        toggle: this.toggleDropDown,
-                        onChange: this.handleChange,
-                        preClass: prefix_class,
-                        start_date: start_date,
-                        value: value,
-                        sessions: sessions,
-                        is_clearable: this.props.is_clearable
-                    })
-                )
-            );
-        }
-    }]);
-
-    return TimePicker;
-}(_react2.default.Component);
-
-TimePicker.propTypes = {
-    is_align_right: _propTypes2.default.bool,
-    is_clearable: _propTypes2.default.bool,
-    is_nativepicker: _propTypes2.default.bool,
-    name: _propTypes2.default.string,
-    onChange: _propTypes2.default.func,
-    padding: _propTypes2.default.string,
-    placeholder: _propTypes2.default.string,
-    sessions: _mobxReact.PropTypes.arrayOrObservableArray,
-    start_date: _propTypes2.default.number,
-    value: _propTypes2.default.string
-};
-
-TimePickerDropdown.propTypes = {
-    className: _propTypes2.default.string,
-    is_clearable: _propTypes2.default.bool,
-    onChange: _propTypes2.default.func,
-    preClass: _propTypes2.default.string,
-    sessions: _mobxReact.PropTypes.arrayOrObservableArray,
-    start_date: _propTypes2.default.number,
-    toggle: _propTypes2.default.func,
-    value: _propTypes2.default.string,
-    value_split: _propTypes2.default.bool
-};
-
-exports.default = (0, _mobxReact.observer)(TimePicker);
 
 /***/ }),
 
@@ -16070,9 +16074,9 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _time_picker = __webpack_require__(/*! ../../../../../../App/Components/Form/time_picker.jsx */ "./src/javascript/app_2/App/Components/Form/time_picker.jsx");
+var _TimePicker = __webpack_require__(/*! ../../../../../../App/Components/Form/TimePicker */ "./src/javascript/app_2/App/Components/Form/TimePicker/index.js");
 
-var _time_picker2 = _interopRequireDefault(_time_picker);
+var _TimePicker2 = _interopRequireDefault(_TimePicker);
 
 var _DatePicker = __webpack_require__(/*! ../../../../../../App/Components/Form/DatePicker */ "./src/javascript/app_2/App/Components/Form/DatePicker/index.js");
 
@@ -16148,7 +16152,6 @@ var AdvancedDuration = function AdvancedDuration(_ref) {
                 // when the expiry_date is on the next day of the start_date, the session should be close 5 min before the start_time of the contract.
                 close: is_expired_next_day ? (0, _Date.minDate)(expiry_date_time.clone().subtract(10, 'minute'), expiry_date_market_close) : expiry_date_market_close.clone()
             }];
-
             min_date_expiry = moment_contract_start_date_time.clone().startOf('day');
             max_date_duration = moment_contract_start_date_time.clone().add(start_date ? 24 * 3600 : max_daily_duration, 'second');
         } else {
@@ -16232,15 +16235,13 @@ var AdvancedDuration = function AdvancedDuration(_ref) {
                     underlying: symbol
                     // validation_errors={validation_errors.expiry_date} TODO: add validation_errors for expiry date
                 }),
-                is_24_hours_contract && _react2.default.createElement(_time_picker2.default, {
+                is_24_hours_contract && _react2.default.createElement(_TimePicker2.default, {
+                    end_time: expiry_time_sessions[0].close,
                     onChange: onChange,
-                    is_align_right: true,
                     name: 'expiry_time',
                     placeholder: '12:00',
-                    sessions: expiry_time_sessions,
-                    start_date: moment_expiry.unix(),
+                    start_time: expiry_time_sessions[0].open,
                     value: expiry_time || min_date_expiry.format('HH:mm'),
-                    is_clearable: false,
                     is_nativepicker: is_nativepicker
                     // validation_errors={validation_errors.end_time} TODO: add validation_errors for end time
                 })

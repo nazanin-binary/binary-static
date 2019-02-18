@@ -5501,37 +5501,48 @@ var ExpandableInput = function (_React$Component) {
     _inherits(ExpandableInput, _React$Component);
 
     function ExpandableInput() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, ExpandableInput);
 
-        return _possibleConstructorReturn(this, (ExpandableInput.__proto__ || Object.getPrototypeOf(ExpandableInput)).apply(this, arguments));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ExpandableInput.__proto__ || Object.getPrototypeOf(ExpandableInput)).call.apply(_ref, [this].concat(args))), _this), _this.handleExpand = function () {
+            var textContainer = document.querySelector('.' + _this.props.input_class);
+            var textareaSize = textContainer.querySelector('.' + _this.props.input_resizer_class);
+            var input = textContainer.querySelector('input');
+            textareaSize.innerHTML = input.value + ' \n';
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(ExpandableInput, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var textContainer = document.querySelector('.' + this.props.className);
-            var textareaSize = textContainer.querySelector('.' + this.props.className + '-size');
-            var input = textContainer.querySelector('input');
-
-            var autoSize = function autoSize() {
-                textareaSize.innerHTML = input.value + ' \n';
-            };
-            autoSize();
-            input.addEventListener('input', autoSize);
+            this.handleExpand();
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            this.handleExpand();
         }
     }, {
         key: 'render',
         value: function render() {
             var _props = this.props,
-                className = _props.className,
+                input_class = _props.input_class,
+                input_resizer_class = _props.input_resizer_class,
                 children = _props.children;
 
 
             return _react2.default.createElement(
                 'div',
-                { className: 'expandable-input ' + className },
+                { className: 'expandable-input ' + input_class },
                 children,
-                _react2.default.createElement('div', { className: 'input-size ' + className + '-size' })
+                _react2.default.createElement('div', { className: 'input-size ' + input_resizer_class })
             );
         }
     }]);
@@ -5541,7 +5552,8 @@ var ExpandableInput = function (_React$Component) {
 
 ExpandableInput.propTypes = {
     children: _propTypes2.default.node,
-    className: _propTypes2.default.string
+    input_class: _propTypes2.default.string,
+    input_resizer_class: _propTypes2.default.string
 };
 
 exports.default = (0, _mobxReact.observer)(ExpandableInput);
@@ -5776,6 +5788,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _currency_base = __webpack_require__(/*! ../../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
+
 var _expandable_input = __webpack_require__(/*! ./expandable_input.jsx */ "./src/javascript/app_2/App/Components/Form/InputField/expandable_input.jsx");
 
 var _expandable_input2 = _interopRequireDefault(_expandable_input);
@@ -5799,6 +5813,7 @@ var InputField = function InputField(_ref) {
         className = _ref.className,
         classNameInput = _ref.classNameInput,
         classNamePrefix = _ref.classNamePrefix,
+        currency = _ref.currency,
         data_tip = _ref.data_tip,
         data_value = _ref.data_value,
         error_messages = _ref.error_messages,
@@ -5874,15 +5889,27 @@ var InputField = function InputField(_ref) {
 
     var incrementValue = function incrementValue() {
         if (max_is_disabled) return;
-
-        var increment_value = +value + 1;
+        var increment_value = void 0;
+        var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
+        if (is_crypto) {
+            var new_value = parseFloat(+value) + parseFloat(1 * Math.pow(10, 0 - fractional_digits));
+            increment_value = parseFloat(new_value).toFixed(fractional_digits);
+        } else {
+            increment_value = parseFloat(+value + 1).toFixed(fractional_digits);
+        }
         onChange({ target: { value: increment_value, name: name } });
     };
 
     var decrementValue = function decrementValue() {
         if (!value || min_is_disabled) return;
-
-        var decrement_value = +value - 1;
+        var decrement_value = void 0;
+        var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
+        if (is_crypto) {
+            var new_value = parseFloat(+value) - parseFloat(1 * Math.pow(10, 0 - fractional_digits));
+            decrement_value = parseFloat(new_value).toFixed(fractional_digits);
+        } else {
+            decrement_value = parseFloat(+value - 1).toFixed(fractional_digits);
+        }
         onChange({ target: { value: decrement_value, name: name } });
     };
 
@@ -5953,7 +5980,10 @@ var InputField = function InputField(_ref) {
         ) : input),
         is_expandable && _react2.default.createElement(
             _expandable_input2.default,
-            { className: 'expandable-' + name },
+            {
+                input_class: 'expandable-' + name,
+                input_resizer_class: 'expandable-' + name + '-resizer'
+            },
             input
         )
     );
@@ -5982,6 +6012,7 @@ InputField.propTypes = {
     className: _propTypes2.default.string,
     classNameInput: _propTypes2.default.string,
     classNamePrefix: _propTypes2.default.string,
+    currency: _propTypes2.default.string,
     error_messages: _mobxReact.PropTypes.arrayOrObservableArray,
     fractional_digits: _propTypes2.default.number,
     helper: _propTypes2.default.string,
@@ -17097,6 +17128,7 @@ var Amount = function Amount(_ref) {
                 className: (0, _classnames2.default)({ 'trade-container__amount--has-currency-options': !is_single_currency }),
                 classNameInput: 'trade-container__input',
                 classNamePrefix: 'trade-container__currency',
+                currency: currency,
                 error_messages: validation_errors.amount,
                 fractional_digits: (0, _currency_base.getDecimalPlaces)(currency),
                 id: 'amount',

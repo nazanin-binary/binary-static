@@ -5846,7 +5846,7 @@ a {
   padding: 4px 8px 8px; }
   .trade-container__fieldset-header {
     height: 1.5rem;
-    position: absolute; }
+    position: relative; }
   .trade-container__fieldset-info {
     color: rgba(0, 0, 0, 0.8);
     font-size: 0.75rem;

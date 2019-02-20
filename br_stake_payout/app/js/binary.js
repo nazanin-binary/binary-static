@@ -2513,6 +2513,65 @@ exports.default = FullPageModal;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Elements/Notifications/empty_notification.jsx":
+/*!*******************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Notifications/empty_notification.jsx ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.EmptyNotification = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _NavBar = __webpack_require__(/*! ../../../../Assets/Header/NavBar */ "./src/javascript/app_2/Assets/Header/NavBar/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EmptyNotification = function EmptyNotification() {
+    return _react2.default.createElement(
+        'div',
+        { className: 'no-notifications-container' },
+        _react2.default.createElement(
+            'div',
+            { className: 'notification-message' },
+            _react2.default.createElement(
+                'div',
+                { className: 'bell-icon' },
+                _react2.default.createElement(_NavBar.IconBell, null)
+            ),
+            _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    (0, _localize.localize)('No Notifications')
+                ),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'no-notifications-message' },
+                    (0, _localize.localize)('You have yet to receive any notifications')
+                )
+            )
+        )
+    );
+};
+
+exports.EmptyNotification = EmptyNotification;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/Notifications/index.js":
 /*!*****************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/Notifications/index.js ***!
@@ -2564,9 +2623,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _NavBar = __webpack_require__(/*! ../../../../Assets/Header/NavBar */ "./src/javascript/app_2/Assets/Header/NavBar/index.js");
+var _empty_notification = __webpack_require__(/*! ./empty_notification.jsx */ "./src/javascript/app_2/App/Components/Elements/Notifications/empty_notification.jsx");
 
 var _Drawer = __webpack_require__(/*! ../Drawer */ "./src/javascript/app_2/App/Components/Elements/Drawer/index.js");
 
@@ -2583,38 +2640,12 @@ var Notifications = function Notifications(_ref) {
                 { key: idx },
                 _react2.default.createElement(_Drawer.DrawerItem, { text: item[idx] })
             );
-        }) : _react2.default.createElement(
-            'div',
-            { className: 'no-notifications-container' },
-            _react2.default.createElement(
-                'div',
-                { className: 'notification-message' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'bell-icon' },
-                    _react2.default.createElement(_NavBar.IconBell, null)
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'h4',
-                        null,
-                        (0, _localize.localize)('No Notifications')
-                    ),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'no-notifications-message' },
-                        (0, _localize.localize)('You have yet to receive any notifications')
-                    )
-                )
-            )
-        )
+        }) : _react2.default.createElement(_empty_notification.EmptyNotification, null)
     );
 };
 
 Notifications.propTypes = {
-    'list': _propTypes2.default.object
+    list: _propTypes2.default.object
 };
 
 exports.Notifications = Notifications;
@@ -3863,7 +3894,7 @@ var CloseButton = function CloseButton(_ref) {
 };
 
 CloseButton.propTypes = {
-    onClick: _propTypes2.default.func
+    onClick: _propTypes2.default.func.isRequired
 };
 
 exports.default = CloseButton;
@@ -21780,8 +21811,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var getLocalizedBasis = exports.getLocalizedBasis = function getLocalizedBasis() {
     return {
-        stake: (0, _localize.localize)('Stake'),
         payout: (0, _localize.localize)('Payout'),
+        stake: (0, _localize.localize)('Stake'),
         multiplier: (0, _localize.localize)('Multiplier')
     };
 };
@@ -21792,16 +21823,16 @@ var getLocalizedBasis = exports.getLocalizedBasis = function getLocalizedBasis()
  */
 var getContractTypesConfig = exports.getContractTypesConfig = function getContractTypesConfig() {
     return {
-        rise_fall: { title: (0, _localize.localize)('Rise/Fall'), trade_types: ['CALL', 'PUT'], basis: ['payout', 'stake'], components: ['start_date'], barrier_count: 0 },
-        rise_fall_equal: { title: (0, _localize.localize)('Rise/Fall'), trade_types: ['CALLE', 'PUTE'], basis: ['payout', 'stake'], components: ['start_date'], barrier_count: 0 },
-        high_low: { title: (0, _localize.localize)('Higher/Lower'), trade_types: ['CALL', 'PUT'], basis: ['payout', 'stake'], components: ['barrier'], barrier_count: 1 },
-        touch: { title: (0, _localize.localize)('Touch/No Touch'), trade_types: ['ONETOUCH', 'NOTOUCH'], basis: ['payout', 'stake'], components: ['barrier'] },
-        end: { title: (0, _localize.localize)('Ends Between/Ends Outside'), trade_types: ['EXPIRYMISS', 'EXPIRYRANGE'], basis: ['payout', 'stake'], components: ['barrier'] },
-        stay: { title: (0, _localize.localize)('Stays Between/Goes Outside'), trade_types: ['RANGE', 'UPORDOWN'], basis: ['payout', 'stake'], components: ['barrier'] },
-        asian: { title: (0, _localize.localize)('Asians'), trade_types: ['ASIANU', 'ASIAND'], basis: ['payout', 'stake'], components: [] },
-        match_diff: { title: (0, _localize.localize)('Matches/Differs'), trade_types: ['DIGITMATCH', 'DIGITDIFF'], basis: ['payout', 'stake'], components: ['last_digit'] },
-        even_odd: { title: (0, _localize.localize)('Even/Odd'), trade_types: ['DIGITODD', 'DIGITEVEN'], basis: ['payout', 'stake'], components: [] },
-        over_under: { title: (0, _localize.localize)('Over/Under'), trade_types: ['DIGITOVER', 'DIGITUNDER'], basis: ['payout', 'stake'], components: ['last_digit'] },
+        rise_fall: { title: (0, _localize.localize)('Rise/Fall'), trade_types: ['CALL', 'PUT'], basis: ['stake', 'payout'], components: ['start_date'], barrier_count: 0 },
+        rise_fall_equal: { title: (0, _localize.localize)('Rise/Fall'), trade_types: ['CALLE', 'PUTE'], basis: ['stake', 'payout'], components: ['start_date'], barrier_count: 0 },
+        high_low: { title: (0, _localize.localize)('Higher/Lower'), trade_types: ['CALL', 'PUT'], basis: ['stake', 'payout'], components: ['barrier'], barrier_count: 1 },
+        touch: { title: (0, _localize.localize)('Touch/No Touch'), trade_types: ['ONETOUCH', 'NOTOUCH'], basis: ['stake', 'payout'], components: ['barrier'] },
+        end: { title: (0, _localize.localize)('Ends Between/Ends Outside'), trade_types: ['EXPIRYMISS', 'EXPIRYRANGE'], basis: ['stake', 'payout'], components: ['barrier'] },
+        stay: { title: (0, _localize.localize)('Stays Between/Goes Outside'), trade_types: ['RANGE', 'UPORDOWN'], basis: ['stake', 'payout'], components: ['barrier'] },
+        asian: { title: (0, _localize.localize)('Asians'), trade_types: ['ASIANU', 'ASIAND'], basis: ['stake', 'payout'], components: [] },
+        match_diff: { title: (0, _localize.localize)('Matches/Differs'), trade_types: ['DIGITMATCH', 'DIGITDIFF'], basis: ['stake', 'payout'], components: ['last_digit'] },
+        even_odd: { title: (0, _localize.localize)('Even/Odd'), trade_types: ['DIGITODD', 'DIGITEVEN'], basis: ['stake', 'payout'], components: [] },
+        over_under: { title: (0, _localize.localize)('Over/Under'), trade_types: ['DIGITOVER', 'DIGITUNDER'], basis: ['stake', 'payout'], components: ['last_digit'] },
         lb_call: { title: (0, _localize.localize)('Close-Low'), trade_types: ['LBFLOATCALL'], basis: ['multiplier'], components: [] },
         lb_put: { title: (0, _localize.localize)('High-Close'), trade_types: ['LBFLOATPUT'], basis: ['multiplier'], components: [] },
         lb_high_low: { title: (0, _localize.localize)('High-Low'), trade_types: ['LBHIGHLOW'], basis: ['multiplier'], components: [] }

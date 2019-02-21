@@ -5860,12 +5860,17 @@ var InputField = function InputField(_ref) {
     var incrementValue = function incrementValue() {
         if (max_is_disabled) return;
         var increment_value = void 0;
+        var decimal_places = fractional_digits;
         var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
         if (is_crypto) {
-            var new_value = parseFloat(+value) + parseFloat(1 * Math.pow(10, 0 - fractional_digits));
-            increment_value = parseFloat(new_value).toFixed(fractional_digits);
+            var array_value = value.split('.');
+            if (array_value && array_value.length > 1) {
+                decimal_places = array_value[1].length;
+            }
+            var new_value = parseFloat(+value) + parseFloat(1 * Math.pow(10, 0 - decimal_places));
+            increment_value = parseFloat(new_value).toFixed(decimal_places);
         } else {
-            increment_value = parseFloat(+value + 1).toFixed(fractional_digits);
+            increment_value = parseFloat(+value + 1).toFixed(decimal_places);
         }
         onChange({ target: { value: increment_value, name: name } });
     };
@@ -5873,12 +5878,17 @@ var InputField = function InputField(_ref) {
     var calculateDecrementedValue = function calculateDecrementedValue() {
         var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
         var decrement_value = void 0;
+        var decimal_places = fractional_digits;
 
         if (is_crypto) {
-            var new_value = parseFloat(+value) - parseFloat(1 * Math.pow(10, 0 - fractional_digits));
-            decrement_value = parseFloat(new_value).toFixed(fractional_digits);
+            var array_value = value.split('.');
+            if (array_value && array_value.length > 1) {
+                decimal_places = array_value[1].length;
+            }
+            var new_value = parseFloat(+value) - parseFloat(1 * Math.pow(10, 0 - decimal_places));
+            decrement_value = parseFloat(new_value).toFixed(decimal_places);
         } else {
-            decrement_value = parseFloat(+value - 1).toFixed(fractional_digits);
+            decrement_value = parseFloat(+value - 1).toFixed(decimal_places);
         }
         return decrement_value;
     };

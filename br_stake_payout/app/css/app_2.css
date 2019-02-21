@@ -6163,11 +6163,11 @@ a {
 
 .trade-container__currency-options {
   border-radius: 4px 0 0 4px;
-  background: #101320; }
-  .trade-container__currency-options--show {
-    margin-right: 1px;
-    width: calc(25% - 1px);
-    display: inline-block; }
+  margin-right: 1px;
+  width: calc(25% - 1px);
+  display: inline-block; }
+  .trade-container__currency-options--display {
+    border-radius: 4px 0 0 4px !important; }
 
 .trade-container__amount {
   margin-left: 1px;

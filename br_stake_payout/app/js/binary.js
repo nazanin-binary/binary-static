@@ -5152,7 +5152,7 @@ var Dropdown = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     {
-                        className: (0, _classnames2.default)('dropdown__display', {
+                        className: (0, _classnames2.default)('dropdown__display', this.props.classNameDisplay, {
                             'dropdown__display--clicked': this.state.is_list_visible,
                             'dropdown__display--has-symbol': this.props.has_symbol
                         }),
@@ -5255,6 +5255,7 @@ var Dropdown = function (_React$Component) {
 
 Dropdown.propTypes = {
     className: _propTypes2.default.string,
+    classNameDisplay: _propTypes2.default.string,
     has_symbol: _propTypes2.default.bool,
     is_alignment_left: _propTypes2.default.bool,
     is_nativepicker: _propTypes2.default.bool,
@@ -17286,7 +17287,8 @@ var Amount = function Amount(_ref) {
                 value: basis
             }),
             !is_single_currency && _react2.default.createElement(_DropDown2.default, {
-                className: (0, _classnames2.default)('no-margin', { 'trade-container__currency-options--show': !is_single_currency }),
+                className: (0, _classnames2.default)('no-margin', { 'trade-container__currency-options': !is_single_currency }),
+                classNameDisplay: 'trade-container__currency-options--display',
                 has_symbol: true,
                 is_alignment_left: true,
                 is_nativepicker: false,

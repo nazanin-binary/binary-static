@@ -607,7 +607,7 @@ a.previous-wrapper {
     #mt_account_management #account_selector #mt5_account {
       height: 38px;
       line-height: 38px;
-      padding: 0 20px;
+      padding: 0 10px;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       margin: 0;
@@ -1726,6 +1726,10 @@ a.previous-wrapper {
     #trading_socket_container .contract_heading.PUTSPREAD {
       background: url("../images/pages/trade/put_spread.svg") no-repeat center top;
       background-size: 50%; }
+    #trading_socket_container .contract_heading.RUNHIGH {
+      background: url("../images/pages/trade/run_high.svg") no-repeat center top; }
+    #trading_socket_container .contract_heading.RUNLOW {
+      background: url("../images/pages/trade/run_low.svg") no-repeat center top; }
     #trading_socket_container .contract_heading.TICKHIGH {
       background: url("../images/pages/trade/high_tick.svg") no-repeat center top; }
     #trading_socket_container .contract_heading.TICKLOW {

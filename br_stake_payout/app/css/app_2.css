@@ -1906,14 +1906,18 @@ a.btn {
             left: 30px; }
         .dropdown-container .dropdown__list .list__item:hover, .dropdown-container .dropdown__list .list__item--highlighted {
           background-color: rgba(0, 0, 0, 0.04); }
-        .dropdown-container .dropdown__list .list__item--selected_title {
-          font-size: 1.4em;
-          color: #ffffff;
-          font-weight: 500;
-          text-transform: capitalize;
-          text-align: left;
-          line-height: 1.5;
+        .dropdown-container .dropdown__list .list__item--selected {
           background-color: #999cac; }
+          .dropdown-container .dropdown__list .list__item--selected_title {
+            font-size: 1.4em;
+            color: #ffffff;
+            font-weight: 500;
+            text-transform: capitalize;
+            text-align: left;
+            line-height: 1.5;
+            background-color: #999cac; }
+          .dropdown-container .dropdown__list .list__item--selected:hover {
+            background: #999cac; }
       @media not all and (min-resolution: 0.001dpcm) {
         @supports (-webkit-appearance: none) {
           .dropdown-container .dropdown__list .list > div:nth-child(1) > div:nth-child(1) {

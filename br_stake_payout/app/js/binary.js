@@ -5938,7 +5938,6 @@ var InputField = function InputField(_ref) {
             { htmlFor: name, className: 'input-label' },
             label
         ),
-        !!prefix && _react2.default.createElement('span', { className: (0, _classnames2.default)(classNamePrefix, 'symbols', prefix.toLowerCase()) }),
         !!helper && _react2.default.createElement(
             'span',
             { className: 'input-helper' },
@@ -5949,11 +5948,20 @@ var InputField = function InputField(_ref) {
     );
 
     return _react2.default.createElement(
-        'div',
-        {
-            className: 'input-field ' + (className || '')
-        },
-        input_tooltip
+        _react2.default.Fragment,
+        null,
+        !!prefix && _react2.default.createElement(
+            'div',
+            { className: classNamePrefix },
+            _react2.default.createElement('span', { className: (0, _classnames2.default)(classNamePrefix + '__symbol', 'symbols', prefix.toLowerCase()) })
+        ),
+        _react2.default.createElement(
+            'div',
+            {
+                className: 'input-field ' + (className || '')
+            },
+            input_tooltip
+        )
     );
 };
 
@@ -18363,13 +18371,6 @@ var Amount = function Amount(_ref) {
                 value: currency,
                 onChange: onChange
             }),
-            is_single_currency && _react2.default.createElement(
-                'div',
-                {
-                    className: 'no-margin trade-container__currency'
-                },
-                _react2.default.createElement('span', { className: 'symbols trade-container__currency-symbol ' + (currency || '').toLowerCase() })
-            ),
             _react2.default.createElement(_InputField2.default, {
                 className: (0, _classnames2.default)('trade-container__amount', { 'trade-container__amount--has-currency-options': !is_single_currency }),
                 classNameInput: 'trade-container__input',
@@ -18386,6 +18387,7 @@ var Amount = function Amount(_ref) {
                 max_length: 10,
                 name: 'amount',
                 onChange: onChange,
+                prefix: is_single_currency ? currency : null,
                 type: 'number',
                 value: amount
             })

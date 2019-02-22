@@ -5532,7 +5532,7 @@ div.contracts-popup-container {
   border-radius: 4px 0 0 4px;
   background: #ffffff;
   border-color: #ffffff; }
-  .trade-container__currency-symbol {
+  .trade-container__currency__symbol {
     font-size: 1.4em;
     line-height: 1.5; }
 

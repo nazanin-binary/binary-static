@@ -5245,7 +5245,7 @@ var Dropdown = function (_React$Component) {
                         onClick: this.handleVisibility,
                         onKeyDown: this.onKeyPressed
                     },
-                    this.props.has_symbol && _react2.default.createElement('span', { className: 'symbols ' + (this.props.value || '').toLowerCase() }),
+                    this.props.has_symbol && _react2.default.createElement('span', { name: this.props.name, value: this.props.value, className: 'symbols ' + (this.props.value || '').toLowerCase() }),
                     !this.props.has_symbol && _react2.default.createElement(
                         'span',
                         { name: this.props.name, value: this.props.value },
@@ -5843,7 +5843,7 @@ var InputField = function InputField(_ref) {
     };
 
     var getDecimals = function getDecimals(val) {
-        var array_value = val.split('.');
+        var array_value = typeof val === 'string' ? val.split('.') : val.toString().split('.');
         return array_value && array_value.length > 1 ? array_value[1].length : 0;
     };
 
@@ -5851,7 +5851,7 @@ var InputField = function InputField(_ref) {
         if (max_is_disabled) return;
         var increment_value = void 0;
 
-        var decimal_places = getDecimals(value);
+        var decimal_places = value ? getDecimals(value) : 0;
         var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
 
         if (is_crypto) {
@@ -5866,7 +5866,7 @@ var InputField = function InputField(_ref) {
     var calculateDecrementedValue = function calculateDecrementedValue() {
         var decrement_value = void 0;
 
-        var decimal_places = getDecimals(value);
+        var decimal_places = value ? getDecimals(value) : 0;
         var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
 
         if (is_crypto) {

@@ -24498,7 +24498,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
                 var _this2 = this;
 
-                var query_string_values, active_symbols, is_invalid_symbol;
+                var query_string_values, prev_currency, active_symbols, is_invalid_symbol;
                 return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
@@ -24507,11 +24507,14 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.smart_chart = this.root_store.modules.smart_chart;
 
+                                prev_currency = this.currency;
+
                                 this.currency = this.root_store.client.currency;
-                                _context2.next = 5;
+                                this.amount = prev_currency !== this.currency && (0, _currency_base.isCryptocurrency)(this.currency) ? (0, _currency_base.getMinPayout)(this.currency) : this.amount;
+                                _context2.next = 7;
                                 return _Services.WS.activeSymbols();
 
-                            case 5:
+                            case 7:
                                 active_symbols = _context2.sent;
 
                                 if (!active_symbols.active_symbols || active_symbols.active_symbols.length === 0) {
@@ -24535,16 +24538,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 }
 
                                 if (this.symbol) {
-                                    _context2.next = 12;
+                                    _context2.next = 14;
                                     break;
                                 }
 
-                                _context2.next = 12;
+                                _context2.next = 14;
                                 return this.processNewValuesAsync(_extends({
                                     symbol: (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols)
                                 }, query_string_values));
 
-                            case 12:
+                            case 14:
 
                                 if (this.symbol) {
                                     _contractType2.default.buildContractTypesConfig(query_string_values.symbol || this.symbol).then((0, _mobx.action)(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -24564,7 +24567,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                     }))));
                                 }
 
-                            case 13:
+                            case 15:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -24710,7 +24713,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 // The source of default values is the website_status response.
                                 _Services.WS.forgetAll('proposal');
 
-                                if (/\bcurrency\b/.test(Object.keys(obj_new_values))) {
+                                if (is_changed_by_user && /\bcurrency\b/.test(Object.keys(obj_new_values))) {
                                     if ((0, _currency_base.isCryptocurrency)(obj_new_values.currency) !== (0, _currency_base.isCryptocurrency)(this.currency)) {
                                         obj_new_values.amount = obj_new_values.amount || (0, _currency_base.getMinPayout)(obj_new_values.currency);
                                     }

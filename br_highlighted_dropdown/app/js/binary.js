@@ -5296,7 +5296,6 @@ var Dropdown = function (_React$Component) {
                                     }
                                 },
                                 (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(_items2.default, {
-                                    highlightedIdx: this.state.curr_index,
                                     items: this.props.list,
                                     name: this.props.name,
                                     value: this.props.value,
@@ -5315,8 +5314,6 @@ var Dropdown = function (_React$Component) {
                                             )
                                         ),
                                         _react2.default.createElement(_items2.default, {
-                                            has_highlights: _this2.props.has_highlights,
-                                            highlightedIdx: _this2.state.curr_index,
                                             items: _this2.props.list[key],
                                             name: _this2.props.name,
                                             value: _this2.props.value,
@@ -5337,7 +5334,6 @@ var Dropdown = function (_React$Component) {
 
 Dropdown.propTypes = {
     className: _propTypes2.default.string,
-    has_highlights: _propTypes2.default.bool,
     is_alignment_left: _propTypes2.default.bool,
     is_nativepicker: _propTypes2.default.bool,
     list: _propTypes2.default.oneOfType([_propTypes2.default.array, _propTypes2.default.object]),
@@ -5485,12 +5481,10 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Items = function Items(_ref) {
-    var items = _ref.items,
+    var handleSelect = _ref.handleSelect,
+        items = _ref.items,
         name = _ref.name,
-        value = _ref.value,
-        handleSelect = _ref.handleSelect,
-        has_highlights = _ref.has_highlights,
-        highlightedIdx = _ref.highlightedIdx;
+        value = _ref.value;
     return items.map(function (item, idx) {
         return _react2.default.createElement(
             _react2.default.Fragment,
@@ -5499,8 +5493,7 @@ var Items = function Items(_ref) {
                 'div',
                 {
                     className: (0, _classnames2.default)('list__item', {
-                        'list__item--selected': value === item.value,
-                        'list__item--highlighted': has_highlights && highlightedIdx === idx
+                        'list__item--selected': value === item.value
                     }),
                     key: idx,
                     name: name,
@@ -5519,8 +5512,6 @@ var Items = function Items(_ref) {
 
 Items.propTypes = {
     handleSelect: _propTypes2.default.func,
-    has_highlights: _propTypes2.default.bool,
-    highlightedIdx: _propTypes2.default.number,
     name: _propTypes2.default.string,
     value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };

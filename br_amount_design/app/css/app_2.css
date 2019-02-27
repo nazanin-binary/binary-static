@@ -2639,7 +2639,8 @@ hr {
     -webkit-box-shadow: 0 0 0 2px rgba(127, 131, 151, 0.3);
             box-shadow: 0 0 0 2px rgba(127, 131, 151, 0.3); }
   .input--has-inline-prefix {
-    padding-left: 50px !important; }
+    padding-left: 50px !important;
+    border-radius: 4px !important; }
 
 /** @define time-picker */
 .time-picker {

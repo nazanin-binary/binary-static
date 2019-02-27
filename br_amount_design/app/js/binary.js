@@ -25565,7 +25565,6 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 query_string_values = this.updateQueryString();
 
                                 this.smart_chart = this.root_store.modules.smart_chart;
-
                                 this.currency = this.root_store.client.currency;
                                 _context2.next = 5;
                                 return _Services.WS.activeSymbols();
@@ -25759,8 +25758,9 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         value: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
                 var obj_new_values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-                var is_changed_by_user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-                var new_state, is_barrier_changed, snapshot, query_string_values;
+                var obj_old_values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+                var is_changed_by_user = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+                var prev_currency, new_state, is_barrier_changed, snapshot, query_string_values;
                 return regeneratorRuntime.wrap(function _callee3$(_context3) {
                     while (1) {
                         switch (_context3.prev = _context3.next) {
@@ -25769,29 +25769,33 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 // The source of default values is the website_status response.
                                 _Services.WS.forgetAll('proposal');
 
-                                if (is_changed_by_user && /\bcurrency\b/.test(Object.keys(obj_new_values))) {
-                                    if ((0, _currency_base.isCryptocurrency)(obj_new_values.currency) !== (0, _currency_base.isCryptocurrency)(this.currency)) {
-                                        obj_new_values.amount = obj_new_values.amount || (0, _currency_base.getMinPayout)(obj_new_values.currency);
+                                if (/\bcurrency\b/.test(Object.keys(obj_new_values))) {
+                                    prev_currency = !(0, _utility.isEmptyObject)(obj_old_values) && obj_old_values.currency ? obj_old_values.currency : this.currency;
+
+                                    if ((0, _currency_base.isCryptocurrency)(obj_new_values.currency) !== (0, _currency_base.isCryptocurrency)(prev_currency)) {
+                                        obj_new_values.amount = is_changed_by_user && obj_new_values.amount ? obj_new_values.amount : (0, _currency_base.getMinPayout)(obj_new_values.currency);
                                     }
+                                }
+                                if (is_changed_by_user) {
                                     this.currency = obj_new_values.currency;
                                 }
 
                                 new_state = this.updateStore((0, _utility.cloneObject)(obj_new_values));
 
                                 if (!(is_changed_by_user || /\b(symbol|contract_types_list)\b/.test(Object.keys(new_state)))) {
-                                    _context3.next = 18;
+                                    _context3.next = 19;
                                     break;
                                 }
 
                                 if (!('symbol' in new_state)) {
-                                    _context3.next = 7;
+                                    _context3.next = 8;
                                     break;
                                 }
 
-                                _context3.next = 7;
+                                _context3.next = 8;
                                 return _Symbol.onChangeSymbolAsync(new_state.symbol);
 
-                            case 7:
+                            case 8:
 
                                 this.updateStore({ // disable purchase button(s), clear contract info
                                     is_purchase_enabled: false,
@@ -25808,10 +25812,10 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                     }
                                 }
 
-                                _context3.next = 11;
+                                _context3.next = 12;
                                 return (0, _process.processTradeParams)(this, new_state);
 
-                            case 11:
+                            case 12:
                                 snapshot = _context3.sent;
                                 query_string_values = this.updateQueryString();
 
@@ -25828,7 +25832,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.debouncedProposal();
 
-                            case 18:
+                            case 19:
                             case 'end':
                                 return _context3.stop();
                         }
@@ -25988,16 +25992,20 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                             switch (_context4.prev = _context4.next) {
                                 case 0:
                                     _context4.next = 2;
-                                    return _this7.refresh();
+                                    return _this7.processNewValuesAsync({ currency: _this7.root_store.client.currency }, { currency: _this7.currency });
 
                                 case 2:
                                     _context4.next = 4;
-                                    return _this7.prepareTradeStore();
+                                    return _this7.refresh();
 
                                 case 4:
+                                    _context4.next = 6;
+                                    return _this7.prepareTradeStore();
+
+                                case 6:
                                     return _context4.abrupt('return', resolve(_this7.debouncedProposal()));
 
-                                case 5:
+                                case 7:
                                 case 'end':
                                     return _context4.stop();
                             }
@@ -26005,7 +26013,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                     }, _callee4, _this7);
                 }));
 
-                return function (_x3) {
+                return function (_x4) {
                     return _ref6.apply(this, arguments);
                 };
             }());

@@ -6132,7 +6132,7 @@ var Dropdown = function (_React$Component) {
                         onClick: this.handleVisibility,
                         onKeyDown: this.onKeyPressed
                     },
-                    this.props.has_symbol && _react2.default.createElement('span', { name: this.props.name, value: this.props.value, className: 'symbols dropdown__display-symbol ' + (this.props.value || '').toLowerCase() }),
+                    this.props.has_symbol && _react2.default.createElement('span', { name: this.props.name, value: this.props.value, className: 'symbols dropdown__display-symbol symbols--' + (this.props.value || '').toLowerCase() }),
                     !this.props.has_symbol && _react2.default.createElement(
                         'span',
                         { name: this.props.name, value: this.props.value, className: 'dropdown__display-text' },
@@ -6400,10 +6400,10 @@ var Items = function Items(_ref) {
                     _react2.default.createElement(
                         'i',
                         null,
-                        _react2.default.createElement('span', { className: 'symbols list__item-tooltip-symbols ' + (item.text || '').toLowerCase() })
+                        _react2.default.createElement('span', { className: 'symbols list__item-tooltip-symbols symbols--' + (item.text || '').toLowerCase() })
                     )
                 ),
-                !!has_symbol && !item.has_tooltip && _react2.default.createElement('span', { className: 'list__item-text symbols ' + (item.text || '').toLowerCase() }),
+                !!has_symbol && !item.has_tooltip && _react2.default.createElement('span', { className: 'list__item-text symbols symbols--' + (item.text || '').toLowerCase() }),
                 !has_symbol && _react2.default.createElement(
                     'span',
                     { className: 'list__item-text' },
@@ -6836,7 +6836,7 @@ var InputField = function InputField(_ref) {
         !!prefix && _react2.default.createElement(
             'div',
             { className: classNamePrefix },
-            _react2.default.createElement('span', { className: (0, _classnames2.default)(classNamePrefix + '--symbol', 'symbols', prefix.toLowerCase()) })
+            _react2.default.createElement('span', { className: (0, _classnames2.default)(classNamePrefix + '--symbol', 'symbols', 'symbols--' + prefix.toLowerCase()) })
         ),
         _react2.default.createElement(
             'div',
@@ -6946,7 +6946,7 @@ var Input = function Input(_ref) {
         !!inline_prefix && _react2.default.createElement(
             'div',
             { className: classNameInlinePrefix },
-            _react2.default.createElement('span', { className: (0, _classnames2.default)(classNameInlinePrefix ? classNameInlinePrefix + '--symbol' : '', 'symbols', inline_prefix.toLowerCase()) })
+            _react2.default.createElement('span', { className: (0, _classnames2.default)(classNameInlinePrefix ? classNameInlinePrefix + '--symbol' : '', 'symbols', 'symbols--' + inline_prefix.toLowerCase()) })
         ),
         _react2.default.createElement('input', {
             autoComplete: is_autocomplete_disabled ? 'off' : undefined,

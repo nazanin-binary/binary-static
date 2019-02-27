@@ -6694,14 +6694,13 @@ var InputField = function InputField(_ref) {
             return;
         }
 
-        if (type === 'number') {
+        if (type === 'number' || type === 'tel') {
             var is_empty = !e.target.value || e.target.value === '' || e.target.value === '  ';
             var signed_regex = is_signed ? '[\+\-\.0-9]$' : '^';
 
             var is_number = new RegExp(signed_regex + '(\\d*)?' + (is_float ? '(\\.\\d+)?' : '') + '$').test(e.target.value);
 
             var is_not_completed_number = is_float && new RegExp(signed_regex + '(\\.|\\d+\\.)?$').test(e.target.value);
-
             // This regex check whether there is any zero at the end of fractional part or not.
             var has_zero_at_end = new RegExp(signed_regex + '(\\d+)?\\.(\\d+)?[0]+$').test(e.target.value);
 
@@ -6712,7 +6711,7 @@ var InputField = function InputField(_ref) {
             }
 
             if ((is_number || is_empty) && has_valid_length) {
-                e.target.value = is_empty || is_signed || has_zero_at_end || is_scientific_notation ? e.target.value : +e.target.value;
+                e.target.value = is_empty || is_signed || has_zero_at_end || is_scientific_notation || type === 'tel' ? e.target.value : +e.target.value;
             } else if (!is_not_completed_number) {
                 e.target.value = value;
                 return;
@@ -6776,7 +6775,7 @@ var InputField = function InputField(_ref) {
         display_value = is_unit_at_right ? value + ' ' + unit : unit + ' ' + value;
     }
 
-    var is_increment_input = is_incrementable && type === 'number';
+    var is_increment_input = is_incrementable && (type === 'number' || type === 'tel');
 
     var input = _react2.default.createElement(_input2.default, {
         changeValue: changeValue,
@@ -6827,7 +6826,7 @@ var InputField = function InputField(_ref) {
             { className: 'input-field__helper' },
             helper
         ),
-        is_increment_input && type === 'number' && increment_buttons,
+        is_increment_input && increment_buttons,
         input
     );
 
@@ -19312,7 +19311,7 @@ var Amount = function Amount(_ref) {
                 max_length: 10,
                 name: 'amount',
                 onChange: onChange,
-                type: 'number',
+                type: 'tel',
                 value: amount
             })
         ),

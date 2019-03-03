@@ -2480,9 +2480,9 @@ hr {
         font-size: 0.8em !important;
         line-height: 1em;
         padding: 0.4em !important;
-        left: 18px !important; }
+        left: 22px !important; }
       .list__item-tooltip:after {
-        left: 18px !important; }
+        left: 22px !important; }
   @media not all and (min-resolution: 0.001dpcm) {
     @supports (-webkit-appearance: none) {
       .list {

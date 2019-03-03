@@ -6371,6 +6371,8 @@ var _tooltip = __webpack_require__(/*! ../../Elements/tooltip.jsx */ "./src/java
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
+var _currency_base = __webpack_require__(/*! ../../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Items = function Items(_ref) {
@@ -6396,7 +6398,7 @@ var Items = function Items(_ref) {
                 },
                 !!has_symbol && item.has_tooltip && _react2.default.createElement(
                     _tooltip2.default,
-                    { alignment: 'top', className: 'list__item-tooltip', message: item.text },
+                    { alignment: 'top', className: 'list__item-tooltip', message: (0, _currency_base.getCurrencyName)(item.value) },
                     _react2.default.createElement(
                         'i',
                         null,
@@ -25905,8 +25907,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         value: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
                 var obj_new_values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-                var obj_old_values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-                var is_changed_by_user = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+                var is_changed_by_user = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+                var obj_old_values = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
                 var prev_currency, new_state, is_barrier_changed, snapshot, query_string_values;
                 return regeneratorRuntime.wrap(function _callee3$(_context3) {
                     while (1) {
@@ -25915,34 +25917,31 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 // Sets the default value to Amount when Currency has changed from Fiat to Crypto and vice versa.
                                 // The source of default values is the website_status response.
                                 _Services.WS.forgetAll('proposal');
-
-                                if (/\bcurrency\b/.test(Object.keys(obj_new_values))) {
-                                    prev_currency = !(0, _utility.isEmptyObject)(obj_old_values) && obj_old_values.currency ? obj_old_values.currency : this.currency;
+                                if (is_changed_by_user && /\bcurrency\b/.test(Object.keys(obj_new_values))) {
+                                    prev_currency = obj_old_values && !(0, _utility.isEmptyObject)(obj_old_values) && obj_old_values.currency ? obj_old_values.currency : this.currency;
 
                                     if ((0, _currency_base.isCryptocurrency)(obj_new_values.currency) !== (0, _currency_base.isCryptocurrency)(prev_currency)) {
                                         obj_new_values.amount = is_changed_by_user && obj_new_values.amount ? obj_new_values.amount : (0, _currency_base.getMinPayout)(obj_new_values.currency);
                                     }
-                                }
-                                if (is_changed_by_user) {
                                     this.currency = obj_new_values.currency;
                                 }
 
                                 new_state = this.updateStore((0, _utility.cloneObject)(obj_new_values));
 
                                 if (!(is_changed_by_user || /\b(symbol|contract_types_list)\b/.test(Object.keys(new_state)))) {
-                                    _context3.next = 19;
+                                    _context3.next = 18;
                                     break;
                                 }
 
                                 if (!('symbol' in new_state)) {
-                                    _context3.next = 8;
+                                    _context3.next = 7;
                                     break;
                                 }
 
-                                _context3.next = 8;
+                                _context3.next = 7;
                                 return _Symbol.onChangeSymbolAsync(new_state.symbol);
 
-                            case 8:
+                            case 7:
 
                                 this.updateStore({ // disable purchase button(s), clear contract info
                                     is_purchase_enabled: false,
@@ -25959,10 +25958,10 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                     }
                                 }
 
-                                _context3.next = 12;
+                                _context3.next = 11;
                                 return (0, _process.processTradeParams)(this, new_state);
 
-                            case 12:
+                            case 11:
                                 snapshot = _context3.sent;
                                 query_string_values = this.updateQueryString();
 
@@ -25979,7 +25978,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.debouncedProposal();
 
-                            case 19:
+                            case 18:
                             case 'end':
                                 return _context3.stop();
                         }

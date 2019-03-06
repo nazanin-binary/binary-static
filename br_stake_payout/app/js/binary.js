@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio~statement":"portfolio~statement","portfolio":"portfolio","statement":"statement","self_exclusion":"self_exclusion","settings":"settings","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"a07416dc903d3942d9a3","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"09dd0c21e65b199cae97","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio~statement":"e79a828fb50efd777085","portfolio":"248d5d8cd64064b168d1","statement":"3af8c127375a2b6f3658","self_exclusion":"226ac0134b0354423868","settings":"897ff546fbd9f45f9d55","vendors~smart_chart":"c2ded38486a6d9befede","smart_chart":"0ed58ff43f746c8e010e"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio~statement":"portfolio~statement","portfolio":"portfolio","statement":"statement","self_exclusion":"self_exclusion","settings":"settings","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"cbb3f11fff75dd57bfef","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"09dd0c21e65b199cae97","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio~statement":"4b11346e99830481ee15","portfolio":"fdae1dad85e7457b80a9","statement":"83be0ace500a644e5479","self_exclusion":"226ac0134b0354423868","settings":"43136b8784d24e616ce1","vendors~smart_chart":"c2ded38486a6d9befede","smart_chart":"0ed58ff43f746c8e010e"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -6601,8 +6601,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -6657,7 +6655,7 @@ IncrementButtons.propTypes = {
     min_is_disabled: _propTypes2.default.bool
 };
 
-exports.default = (0, _mobxReact.observer)(IncrementButtons);
+exports.default = IncrementButtons;
 
 /***/ }),
 
@@ -6747,8 +6745,10 @@ var InputField = function InputField(_ref) {
         is_autocomplete_disabled = _ref.is_autocomplete_disabled,
         is_disabled = _ref.is_disabled,
         is_float = _ref.is_float,
-        is_incrementable = _ref.is_incrementable,
-        is_negative_disabled = _ref.is_negative_disabled,
+        _ref$is_incrementable = _ref.is_incrementable,
+        is_incrementable = _ref$is_incrementable === undefined ? false : _ref$is_incrementable,
+        _ref$is_negative_disa = _ref.is_negative_disabled,
+        is_negative_disabled = _ref$is_negative_disa === undefined ? false : _ref$is_negative_disa,
         _ref$is_read_only = _ref.is_read_only,
         is_read_only = _ref$is_read_only === undefined ? false : _ref$is_read_only,
         _ref$is_signed = _ref.is_signed,
@@ -6820,9 +6820,9 @@ var InputField = function InputField(_ref) {
         var increment_value = void 0;
 
         var decimal_places = value ? getDecimals(value) : 0;
-        var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
+        var is_crypto = !!currency && (0, _currency_base.isCryptocurrency)(currency);
 
-        if (is_crypto) {
+        if (is_crypto || !currency && is_float) {
             var new_value = parseFloat(+value) + parseFloat(1 * Math.pow(10, 0 - decimal_places));
             increment_value = parseFloat(new_value).toFixed(decimal_places);
         } else {
@@ -6835,9 +6835,9 @@ var InputField = function InputField(_ref) {
         var decrement_value = void 0;
 
         var decimal_places = value ? getDecimals(value) : 0;
-        var is_crypto = (0, _currency_base.isCryptocurrency)(currency);
+        var is_crypto = !!currency && (0, _currency_base.isCryptocurrency)(currency);
 
-        if (is_crypto) {
+        if (is_crypto || !currency && is_float) {
             var new_value = parseFloat(+value) - parseFloat(1 * Math.pow(10, 0 - decimal_places));
             decrement_value = parseFloat(new_value).toFixed(decimal_places);
         } else {
@@ -6995,8 +6995,6 @@ var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnam
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
-var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
-
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -7085,7 +7083,7 @@ Input.propTypes = {
     value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };
 
-exports.default = (0, _mobxReact.observer)(Input);
+exports.default = Input;
 
 /***/ }),
 
@@ -13021,7 +13019,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var IconEntrySpot = function IconEntrySpot() {
     return _react2.default.createElement(
         'svg',
-        { xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        { className: 'chart-spot__icon', xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
         _react2.default.createElement(
             'g',
             { fill: 'none', fillRule: 'evenodd' },
@@ -13069,7 +13067,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var IconFlag = function IconFlag() {
     return _react2.default.createElement(
         'svg',
-        { xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        { className: 'chart-spot__icon', xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
         _react2.default.createElement(
             'g',
             { fill: 'none', fillRule: 'evenodd' },
@@ -16782,6 +16780,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
@@ -16799,10 +16801,10 @@ var MarkerLine = function MarkerLine(_ref) {
         line_style = _ref.line_style;
     return _react2.default.createElement(
         'div',
-        { className: line_style },
+        { className: (0, _classnames2.default)('chart-marker-line__wrapper', 'chart-marker-line--' + line_style) },
         _react2.default.createElement(
             'div',
-            null,
+            { className: 'chart-marker-line__label' },
             label
         )
     );
@@ -16855,15 +16857,15 @@ var MarkerSpot = function MarkerSpot(_ref) {
         status = _ref.status;
     return _react2.default.createElement(
         'div',
-        { className: (0, _classnames2.default)('chart-spot', align, status) },
+        { className: (0, _classnames2.default)('chart-spot', 'chart-spot--' + align, 'chart-spot--' + status) },
         _react2.default.createElement(
             'div',
-            { className: 'content' },
+            { className: 'chart-spot__content' },
             icon,
             (0, _currency_base.addComma)(spot_value)
         ),
-        _react2.default.createElement('div', { className: 'arrow' }),
-        _react2.default.createElement('div', { className: 'spot' })
+        _react2.default.createElement('div', { className: 'chart-spot__arrow' }),
+        _react2.default.createElement('div', { className: 'chart-spot__spot' })
     );
 };
 

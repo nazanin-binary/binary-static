@@ -22170,17 +22170,17 @@ var Trade = function (_React$Component) {
                 _react2.default.createElement(
                     _fullPageModal2.default,
                     {
-                        cancel_button_text: (0, _localize3.localize)('Go Back'),
-                        confirm_button_text: (0, _localize3.localize)('Visit main website'),
+                        cancel_button_text: (0, _localize3.localize)('Trade on other contracts'),
+                        confirm_button_text: (0, _localize3.localize)('Switch to legacy platform'),
                         is_visible: this.props.has_only_forward_starting_contracts,
                         onCancel: function onCancel() {
                             return _this2.props.setHasOnlyForwardingContracts(false);
                         },
                         onConfirm: function onConfirm() {
-                            return window.location.href = _url2.default.websiteUrl();
+                            return window.open(_url2.default.websiteUrl());
                         }
                     },
-                    _react2.default.createElement(_localize2.default, { str: 'This market is not available in New Trading platform yet. Please use our current platform.' })
+                    _react2.default.createElement(_localize2.default, { str: 'Sorry, but forward-start contracts are not supported yet on our new platform.' })
                 )
             );
         }

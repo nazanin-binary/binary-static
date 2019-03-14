@@ -22177,7 +22177,7 @@ var Trade = function (_React$Component) {
                             return _this2.props.setHasOnlyForwardingContracts(false);
                         },
                         onConfirm: function onConfirm() {
-                            return window.open(_url2.default.websiteUrl());
+                            return window.open(_url2.default.websiteUrl()) && _this2.props.setHasOnlyForwardingContracts(false);
                         }
                     },
                     _react2.default.createElement(_localize2.default, { str: 'Sorry, but forward-start contracts are not supported yet on our new platform.' })
@@ -27658,6 +27658,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 has_only_forward_starting_contracts = _contractType2.default.getContractCategories().has_only_forward_starting_contracts;
 
                             case 7:
+                                // TODO: remove all traces of setHasOnlyForwardingContracts and has_only_forward_starting_contracts in app
+                                //  once future contracts are implemented
                                 this.root_store.ui.setHasOnlyForwardingContracts(has_only_forward_starting_contracts);
 
                                 if (!has_only_forward_starting_contracts) {

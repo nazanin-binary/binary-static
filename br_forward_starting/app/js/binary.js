@@ -22177,7 +22177,7 @@ var Trade = function (_React$Component) {
                             return _this2.props.setHasOnlyForwardingContracts(false);
                         },
                         onConfirm: function onConfirm() {
-                            return window.open(_url2.default.websiteUrl() && _this2.props.setHasOnlyForwardingContracts(false));
+                            return window.open(_url2.default.websiteUrl()) && _this2.props.setHasOnlyForwardingContracts(false);
                         }
                     },
                     _react2.default.createElement(_localize2.default, { str: 'Sorry, but forward-start contracts are not supported yet on our new platform.' })
@@ -31432,7 +31432,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = ''; // you can insert Application ID of your registered application here
+    var user_app_id = 16027; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {

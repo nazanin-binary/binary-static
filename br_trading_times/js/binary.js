@@ -2019,6 +2019,50 @@ var SubscriptionManager = function () {
         }
     };
 
+    /**
+     * Add subscription without subscribers from request
+     * E.g. open subscription to proposal_open_contract on buy request
+     * @param {String}   msg_type               msg_type of the subscription
+     * @param {Object}   send_request           the object of the request to be made
+     * @param {Object}   subscribe_request      the object of the subscription request
+     * @param {Array}    subscription_props     Array of prop strings to add to subscribe_request from initial request, e.g. contract_id
+     */
+    var addSubscriptionFromRequest = function addSubscriptionFromRequest(msg_type, send_request, subscribe_request, subscription_props) {
+        return new Promise(function (resolve) {
+            var sub_id = void 0;
+            var is_stream = false;
+
+            _socket_base2.default.send(send_request, {
+                callback: function callback(response) {
+                    if (response.error) {
+                        return resolve(response);
+                    }
+                    if (!is_stream) {
+                        is_stream = true;
+                        sub_id = ++subscription_id;
+
+                        if (subscription_props && Array.isArray(subscription_props)) {
+                            subscription_props.forEach(function (prop) {
+                                if (response[response.msg_type][prop]) {
+                                    subscribe_request[prop] = response[response.msg_type][prop];
+                                }
+                            });
+                        }
+
+                        subscriptions[sub_id] = {
+                            msg_type: msg_type,
+                            request: (0, _utility.cloneObject)(subscribe_request),
+                            stream_id: '', // stream_id will be updated after receiving the response
+                            subscribers: []
+                        };
+                        return resolve(response);
+                    }
+                    return dispatch(response, sub_id);
+                }
+            });
+        });
+    };
+
     // dispatches the response to subscribers of the specific subscription id (internal use only)
     var dispatch = function dispatch(response, sub_id) {
         var stream_id = (0, _utility.getPropertyValue)(response, [response.msg_type, 'id']);
@@ -2145,6 +2189,7 @@ var SubscriptionManager = function () {
     };
 
     return {
+        addSubscriptionFromRequest: addSubscriptionFromRequest,
         subscribe: subscribe,
         forget: forget,
         forgetAll: forgetAll
@@ -17838,6 +17883,8 @@ module.exports = AssetIndex;
 var AssetIndex = __webpack_require__(/*! ./asset_index */ "./src/javascript/app/pages/resources/asset_index/asset_index.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Table = __webpack_require__(/*! ../../../common/attach_dom/table */ "./src/javascript/app/common/attach_dom/table.js");
+var Login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var CommonFunctions = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 
 var AssetIndexUI = function () {
@@ -17870,6 +17917,9 @@ var AssetIndexUI = function () {
         if (!asset_index.length) {
             $container.empty();
             $('#empty-asset-index').setVisibility(1);
+            var empty_asset_index_btn_login = CommonFunctions.getElementById('empty-asset-index-btn-login');
+            empty_asset_index_btn_login.removeEventListener('click', loginOnClick);
+            empty_asset_index_btn_login.addEventListener('click', loginOnClick);
             return;
         }
 
@@ -17962,6 +18012,11 @@ var AssetIndexUI = function () {
             asset_index = response.asset_index;
             if (active_symbols) populateTable();
         });
+    };
+
+    var loginOnClick = function loginOnClick(e) {
+        e.preventDefault();
+        Login.redirectToLogin();
     };
 
     return {
@@ -18149,7 +18204,8 @@ var TradingTimes = __webpack_require__(/*! ./trading_times */ "./src/javascript/
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Table = __webpack_require__(/*! ../../../common/attach_dom/table */ "./src/javascript/app/common/attach_dom/table.js");
 var DatePicker = __webpack_require__(/*! ../../../components/date_picker */ "./src/javascript/app/components/date_picker.js");
-var dateValueChanged = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").dateValueChanged;
+var Login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var CommonFunctions = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 var toISOFormat = __webpack_require__(/*! ../../../../_common/string_util */ "./src/javascript/_common/string_util.js").toISOFormat;
@@ -18213,7 +18269,7 @@ var TradingTimesUI = function () {
             });
         }
         $date.change(function () {
-            if (!dateValueChanged(this, 'date')) {
+            if (!CommonFunctions.dateValueChanged(this, 'date')) {
                 return false;
             }
             $container.empty();
@@ -18233,6 +18289,9 @@ var TradingTimesUI = function () {
             $date_container.setVisibility(0);
             $date_notice.setVisibility(0);
             $empty_trading_times.setVisibility(1);
+            var empty_trading_times_btn_login = CommonFunctions.getElementById('empty-trading-times-btn-login');
+            empty_trading_times_btn_login.removeEventListener('click', loginOnClick);
+            empty_trading_times_btn_login.addEventListener('click', loginOnClick);
             return;
         }
 
@@ -18344,6 +18403,11 @@ var TradingTimesUI = function () {
             trading_times = response.trading_times;
             if (active_symbols) populateTable();
         });
+    };
+
+    var loginOnClick = function loginOnClick(e) {
+        e.preventDefault();
+        Login.redirectToLogin();
     };
 
     return {
@@ -22109,8 +22173,12 @@ var DigitDisplay = function () {
 
     var end = function end(proposal_open_contract) {
         if (proposal_open_contract.status !== 'open') {
+            // if there is no exit tick inside proposal open contract, select a fallback from history instead.
+            var fallback_exit_tick = spot_times.find(function (spot) {
+                return +spot.time === +proposal_open_contract.exit_tick_time;
+            });
             DigitTicker.update(proposal_open_contract.tick_count, {
-                quote: proposal_open_contract.exit_tick,
+                quote: proposal_open_contract.exit_tick || fallback_exit_tick.spot,
                 epoch: +proposal_open_contract.exit_tick_time
             });
         }
@@ -32195,10 +32263,6 @@ var MetaTrader = function () {
                     BinarySocket.send({ get_limits: 1 }).then(getAllAccountsInfo);
                     getExchangeRates();
                 }
-            } else if (State.getResponse('landing_company.gaming_company.shortcode') === 'malta') {
-                // TODO: remove this elseif when we enable mt account opening for malta
-                // show specific message to clients from malta landing company as long as there is no mt_company for them
-                MetaTraderUI.displayPageError(localize('Our MT5 service is currently unavailable to EU residents due to pending regulatory approval.'));
             } else {
                 MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
             }
@@ -35459,7 +35523,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = 16027; // you can insert Application ID of your registered application here
+    var user_app_id = ''; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
@@ -35730,6 +35794,9 @@ module.exports = Contact;
 "use strict";
 
 
+var isEuCountry = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
+var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var BinarySocket = __webpack_require__(/*! ../../_common/base/socket_base */ "./src/javascript/_common/base/socket_base.js");
 var MenuSelector = __webpack_require__(/*! ../../_common/menu_selector */ "./src/javascript/_common/menu_selector.js");
 
 module.exports = {
@@ -35775,7 +35842,16 @@ module.exports = {
     },
     BinaryOptionsForMT5: {
         onLoad: function onLoad() {
-            MenuSelector.init(['what-are-binary-options', 'how-to-trade-binary', 'types-of-trades']);
+            var menu_sections = ['what-are-binary-options', 'how-to-trade-binary', 'types-of-trades'];
+            BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+                if (isEuCountry()) {
+                    menu_sections = menu_sections.filter(function (menu_item) {
+                        return menu_item !== 'how-to-trade-binary';
+                    });
+                }
+                MenuSelector.init(menu_sections);
+                getElementById('loading_binary_options_mt5').setVisibility(0);
+            });
         },
         onUnload: function onUnload() {
             MenuSelector.clean();

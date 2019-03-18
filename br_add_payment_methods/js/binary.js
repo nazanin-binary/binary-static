@@ -497,7 +497,8 @@ var ClientBase = function () {
         var can_open_multi = false;
         var type = void 0,
             can_upgrade_to = void 0;
-        if ((upgradeable_landing_companies || []).length) {
+        if ((upgradeable_landing_companies || []).length && !/^(py|ae)$/i.test(get('residence'))) {
+            // TODO: remove py and ae exceptions when API block is implemented
             var current_landing_company = get('landing_company_shortcode');
 
             can_open_multi = upgradeable_landing_companies.indexOf(current_landing_company) !== -1;
@@ -1368,7 +1369,7 @@ var ServerTime = function () {
     var clock_started = false;
     var pending = new PromiseClass();
     var server_time = void 0,
-        client_time = void 0,
+        performance_request_time = void 0,
         get_time_interval = void 0,
         update_time_interval = void 0,
         onTimeUpdated = void 0;
@@ -1384,7 +1385,7 @@ var ServerTime = function () {
     };
 
     var requestTime = function requestTime() {
-        client_time = moment().valueOf();
+        performance_request_time = performance.now();
         BinarySocket.send({ time: 1 }).then(timeCounter);
     };
 
@@ -1399,11 +1400,13 @@ var ServerTime = function () {
         clearInterval(update_time_interval);
 
         var start_timestamp = response.time;
-        var client_time_at_response = moment().valueOf();
-        var server_time_at_response = start_timestamp * 1000 + (client_time_at_response - client_time);
+        var performance_response_time = performance.now();
+        var time_taken = performance_response_time - performance_request_time;
+        var server_time_at_response = start_timestamp * 1000 + time_taken;
 
         var updateTime = function updateTime() {
-            server_time = moment(server_time_at_response + moment().valueOf() - client_time_at_response).utc();
+            var time_since_response = performance.now() - performance_response_time;
+            server_time = moment(server_time_at_response + time_since_response).utc();
 
             if (typeof onTimeUpdated === 'function') {
                 onTimeUpdated();
@@ -2018,6 +2021,50 @@ var SubscriptionManager = function () {
         }
     };
 
+    /**
+     * Add subscription without subscribers from request
+     * E.g. open subscription to proposal_open_contract on buy request
+     * @param {String}   msg_type               msg_type of the subscription
+     * @param {Object}   send_request           the object of the request to be made
+     * @param {Object}   subscribe_request      the object of the subscription request
+     * @param {Array}    subscription_props     Array of prop strings to add to subscribe_request from initial request, e.g. contract_id
+     */
+    var addSubscriptionFromRequest = function addSubscriptionFromRequest(msg_type, send_request, subscribe_request, subscription_props) {
+        return new Promise(function (resolve) {
+            var sub_id = void 0;
+            var is_stream = false;
+
+            _socket_base2.default.send(send_request, {
+                callback: function callback(response) {
+                    if (response.error) {
+                        return resolve(response);
+                    }
+                    if (!is_stream) {
+                        is_stream = true;
+                        sub_id = ++subscription_id;
+
+                        if (subscription_props && Array.isArray(subscription_props)) {
+                            subscription_props.forEach(function (prop) {
+                                if (response[response.msg_type][prop]) {
+                                    subscribe_request[prop] = response[response.msg_type][prop];
+                                }
+                            });
+                        }
+
+                        subscriptions[sub_id] = {
+                            msg_type: msg_type,
+                            request: (0, _utility.cloneObject)(subscribe_request),
+                            stream_id: '', // stream_id will be updated after receiving the response
+                            subscribers: []
+                        };
+                        return resolve(response);
+                    }
+                    return dispatch(response, sub_id);
+                }
+            });
+        });
+    };
+
     // dispatches the response to subscribers of the specific subscription id (internal use only)
     var dispatch = function dispatch(response, sub_id) {
         var stream_id = (0, _utility.getPropertyValue)(response, [response.msg_type, 'id']);
@@ -2144,6 +2191,7 @@ var SubscriptionManager = function () {
     };
 
     return {
+        addSubscriptionFromRequest: addSubscriptionFromRequest,
         subscribe: subscribe,
         forget: forget,
         forgetAll: forgetAll
@@ -10921,6 +10969,73 @@ module.exports = Header;
 
 /***/ }),
 
+/***/ "./src/javascript/app/base/interview_popup.js":
+/*!****************************************************!*\
+  !*** ./src/javascript/app/base/interview_popup.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
+var Client = __webpack_require__(/*! ../base/client */ "./src/javascript/app/base/client.js");
+var isEuCountry = __webpack_require__(/*! ../common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
+var RealityCheckData = __webpack_require__(/*! ../pages/user/reality_check/reality_check.data */ "./src/javascript/app/pages/user/reality_check/reality_check.data.js");
+
+var InterviewPopup = function () {
+    var onLoad = function onLoad() {
+        BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
+            var is_interview_consent = Cookies.get('InterviewConsent');
+            var $interview_popup = $('#interview_popup_container');
+            var $interview_no_thanks = $('#interview_no_thanks');
+            var $interview_ask_later = $('#interview_ask_later');
+            var $interview_interested = $('#interview_interested');
+
+            if (Client.isLoggedIn() && isEuCountry() && !is_interview_consent && !(RealityCheckData.get('keep_open') === false || RealityCheckData.get('keep_open') === 1)) {
+                setTimeout(function () {
+                    $interview_popup.removeClass('invisible');
+                }, 2000);
+                $interview_no_thanks.one('click', function () {
+                    Cookies.set('InterviewConsent', 1);
+                    $interview_popup.addClass('invisible');
+                });
+                $interview_ask_later.one('click', function () {
+                    var interval_time = 1 / 12;
+                    Cookies.set('InterviewConsent', 1, {
+                        expires: interval_time
+                    });
+                    $interview_popup.addClass('invisible');
+                });
+                $interview_interested.one('click', function () {
+                    BinarySocket.wait('get_settings').then(function (response) {
+                        var get_settings = response.get_settings || {};
+                        var url = 'https://docs.google.com/forms/d/e/1FAIpQLSccg8p-GjoBufjAnMJJUZHJ_1YqlS_GyQyy5vQdgGm4VKmnMg/viewform?usp=pp_url';
+                        var pre_name = '&entry.909179306=' + get_settings.first_name + '%20' + get_settings.last_name;
+                        var pre_email = '&entry.81172074=' + get_settings.email;
+                        var pre_country = '&entry.141529718=' + get_settings.country;
+                        var pre_phone = '&entry.1442583433=' + get_settings.phone;
+                        var encode_uri = ('' + url + pre_name + pre_email + pre_country + pre_phone).replace(/\+/g, '%2B');
+                        $interview_popup.addClass('invisible');
+                        Cookies.set('InterviewConsent', 1);
+                        window.open(encode_uri, '_blank');
+                    });
+                });
+            }
+        });
+    };
+
+    return {
+        onLoad: onLoad
+    };
+}();
+
+module.exports = InterviewPopup;
+
+/***/ }),
+
 /***/ "./src/javascript/app/base/logged_in.js":
 /*!**********************************************!*\
   !*** ./src/javascript/app/base/logged_in.js ***!
@@ -11188,12 +11303,14 @@ var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/clie
 var Contents = __webpack_require__(/*! ./contents */ "./src/javascript/app/base/contents.js");
 var Header = __webpack_require__(/*! ./header */ "./src/javascript/app/base/header.js");
 var Footer = __webpack_require__(/*! ./footer */ "./src/javascript/app/base/footer.js");
+var InterviewPopup = __webpack_require__(/*! ./interview_popup */ "./src/javascript/app/base/interview_popup.js");
 var Menu = __webpack_require__(/*! ./menu */ "./src/javascript/app/base/menu.js");
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var TrafficSource = __webpack_require__(/*! ../common/traffic_source */ "./src/javascript/app/common/traffic_source.js");
 var RealityCheck = __webpack_require__(/*! ../pages/user/reality_check/reality_check */ "./src/javascript/app/pages/user/reality_check/reality_check.js");
 var Elevio = __webpack_require__(/*! ../../_common/base/elevio */ "./src/javascript/_common/base/elevio.js");
 var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var ClientBase = __webpack_require__(/*! ../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
 var elementInnerHtml = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").elementInnerHtml;
 var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var Crowdin = __webpack_require__(/*! ../../_common/crowdin */ "./src/javascript/_common/crowdin.js");
@@ -11262,6 +11379,10 @@ var Page = function () {
             init();
             if (!Login.isLoginPages()) {
                 Language.setCookie(Language.urlLang());
+
+                if (!ClientBase.get('is_virtual')) {
+                    InterviewPopup.onLoad();
+                }
             }
             Header.onLoad();
             Footer.onLoad();
@@ -14307,6 +14428,56 @@ var DatePicker = function () {
 }();
 
 module.exports = DatePicker;
+
+/***/ }),
+
+/***/ "./src/javascript/app/components/loading-spinner.js":
+/*!**********************************************************!*\
+  !*** ./src/javascript/app/components/loading-spinner.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var assertContainerExists = function assertContainerExists(content_id) {
+    if (!content_id) {
+        throw new Error('Loading spinner content id is missing or undefined.');
+    }
+};
+/**
+ * Accepts a DOM element ID and renders loading spinner inside of it.
+ *
+ * @param content_id
+ */
+var show = exports.show = function show(content_id) {
+    assertContainerExists(content_id);
+    var $container = $('#' + content_id);
+    $container.append($('<div />', { class: 'barspinner dark' }).append($('<div />', { class: 'rect1' })).append($('<div />', { class: 'rect2' })).append($('<div />', { class: 'rect3' })).append($('<div />', { class: 'rect4' })).append($('<div />', { class: 'rect5' })));
+};
+
+/**
+ * Remove Loading spinner inside the container, does nothing if there is no spinner loading.
+ *
+ * @param content_id
+ */
+var hide = exports.hide = function hide(content_id) {
+    assertContainerExists(content_id);
+    var $container = $('#' + content_id);
+    var $spinner = $container.find('.barspinner');
+    if ($spinner) {
+        $spinner.remove();
+    }
+};
+
+exports.default = {
+    showLoadingSpinner: show,
+    hideLoadingSpinner: hide
+};
 
 /***/ }),
 
@@ -17799,6 +17970,7 @@ var AssetIndexUI = function () {
 
     var onLoad = function onLoad() {
         $container = $('#asset-index');
+        $('#empty-asset-index').setVisibility(0);
         asset_index = market_columns = undefined;
         active_symbols = undefined;
 
@@ -17814,6 +17986,12 @@ var AssetIndexUI = function () {
 
     var populateTable = function populateTable() {
         if (!active_symbols || !asset_index) return;
+
+        if (!asset_index.length) {
+            $container.empty();
+            $('#empty-asset-index').setVisibility(1);
+            return;
+        }
 
         $('#errorMsg').setVisibility(0);
         asset_index = AssetIndex.getAssetIndexData(asset_index, active_symbols);
@@ -21929,6 +22107,7 @@ var DigitTicker = __webpack_require__(/*! ./digit_ticker */ "./src/javascript/ap
 var ViewPopupUI = __webpack_require__(/*! ../user/view_popup/view_popup.ui */ "./src/javascript/app/pages/user/view_popup/view_popup.ui.js");
 var showLocalTimeOnHover = __webpack_require__(/*! ../../base/clock */ "./src/javascript/app/base/clock.js").showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var LoadingSpinner = __webpack_require__(/*! ../../components/loading-spinner */ "./src/javascript/app/components/loading-spinner.js");
 var addComma = __webpack_require__(/*! ../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
@@ -21956,12 +22135,15 @@ var DigitDisplay = function () {
     };
 
     var init = function init(id_render, proposal_open_contract) {
+        var calculated_height = (proposal_open_contract.tick_count + 1) * 40;
+
         tick_count = 1;
         contract = proposal_open_contract;
         spot_times = [];
 
         $container = $('#' + id_render);
-        $container.addClass('normal-font').html($('<h5 />', { text: contract.display_name, class: 'center-text' })).append($('<div />', { class: 'gr-8 gr-centered gr-12-m' }).append($('<div />', { class: 'gr-row', id: 'table_digits' }).append($('<strong />', { class: 'gr-3', text: localize('Tick') })).append($('<strong />', { class: 'gr-3', text: localize('Spot') })).append($('<strong />', { class: 'gr-6', text: localize('Spot Time (GMT)') })))).append($('<div />', { class: 'digit-ticker invisible', id: 'digit_ticker_container' }));
+        $container.addClass('normal-font').html($('<h5 />', { text: contract.display_name, class: 'center-text' })).append($('<div />', { class: 'gr-8 gr-centered gr-12-m', style: 'height: ' + calculated_height + 'px;' }).append($('<div />', { class: 'gr-row', id: 'table_digits' }).append($('<strong />', { class: 'gr-3', text: localize('Tick') })).append($('<strong />', { class: 'gr-3', text: localize('Spot') })).append($('<strong />', { class: 'gr-6', text: localize('Spot Time (GMT)') })))).append($('<div />', { class: 'digit-ticker invisible', id: 'digit_ticker_container' }));
+        LoadingSpinner.show('table_digits');
 
         DigitTicker.init('digit_ticker_container', contract.contract_type, contract.shortcode, contract.tick_count, contract.status);
 
@@ -22010,7 +22192,7 @@ var DigitDisplay = function () {
         if (getPropertyValue(response, ['tick', 'id']) && document.getElementById('sell_content_wrapper')) {
             ViewPopupUI.storeSubscriptionID(response.tick.id);
         }
-
+        LoadingSpinner.hide('table_digits');
         if (response.history) {
             response.history.times.some(function (time, idx) {
                 if (+time >= +contract.entry_tick_time) {
@@ -22030,8 +22212,12 @@ var DigitDisplay = function () {
 
     var end = function end(proposal_open_contract) {
         if (proposal_open_contract.status !== 'open') {
+            // if there is no exit tick inside proposal open contract, select a fallback from history instead.
+            var fallback_exit_tick = spot_times.find(function (spot) {
+                return +spot.time === +proposal_open_contract.exit_tick_time;
+            });
             DigitTicker.update(proposal_open_contract.tick_count, {
-                quote: proposal_open_contract.exit_tick,
+                quote: proposal_open_contract.exit_tick || fallback_exit_tick.spot,
                 epoch: +proposal_open_contract.exit_tick_time
             });
         }
@@ -29688,7 +29874,8 @@ var PersonalDetails = function () {
                     $options_with_disabled.append(CommonFunctions.makeOption({
                         text: res.text,
                         value: res.value,
-                        is_disabled: res.disabled
+                        // is_disabled: res.disabled,
+                        is_disabled: res.disabled || /^(py|ae)$/i.test(res.value) ? 'disabled' : '' // TODO: remove py and ae exceptions when API block is implemented
                     }));
                 });
                 if (residence) {
@@ -32115,10 +32302,6 @@ var MetaTrader = function () {
                     BinarySocket.send({ get_limits: 1 }).then(getAllAccountsInfo);
                     getExchangeRates();
                 }
-            } else if (State.getResponse('landing_company.gaming_company.shortcode') === 'malta') {
-                // TODO: remove this elseif when we enable mt account opening for malta
-                // show specific message to clients from malta landing company as long as there is no mt_company for them
-                MetaTraderUI.displayPageError(localize('Our MT5 service is currently unavailable to EU residents due to pending regulatory approval.'));
             } else {
                 MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
             }
@@ -33386,7 +33569,8 @@ var VirtualAccOpening = function () {
                 $options_with_disabled.append(makeOption({
                     text: res.text,
                     value: res.value,
-                    is_disabled: res.disabled
+                    // is_disabled: res.disabled,
+                    is_disabled: res.disabled || /^(py|ae)$/i.test(res.value) ? 'disabled' : '' // TODO: remove py and ae exceptions when API block is implemented
                 }));
             });
             $residence.html($options_with_disabled.html());
@@ -33725,6 +33909,7 @@ var RealityCheckData = __webpack_require__(/*! ./reality_check.data */ "./src/ja
 var showLocalTimeOnHover = __webpack_require__(/*! ../../../base/clock */ "./src/javascript/app/base/clock.js").showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var FormManager = __webpack_require__(/*! ../../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
+var InterviewPopup = __webpack_require__(/*! ../../../base/interview_popup */ "./src/javascript/app/base/interview_popup.js");
 var urlFor = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 __webpack_require__(/*! ../../../../_common/lib/polyfills/array.includes */ "./src/javascript/_common/lib/polyfills/array.includes.js");
 __webpack_require__(/*! ../../../../_common/lib/polyfills/string.includes */ "./src/javascript/_common/lib/polyfills/string.includes.js");
@@ -33821,6 +34006,7 @@ var RealityCheckUI = function () {
     var closePopUp = function closePopUp() {
         $('#reality_check').remove();
         startSummaryTimer();
+        InterviewPopup.onLoad();
     };
 
     var startSummaryTimer = function startSummaryTimer() {
@@ -35649,6 +35835,9 @@ module.exports = Contact;
 "use strict";
 
 
+var isEuCountry = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
+var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var BinarySocket = __webpack_require__(/*! ../../_common/base/socket_base */ "./src/javascript/_common/base/socket_base.js");
 var MenuSelector = __webpack_require__(/*! ../../_common/menu_selector */ "./src/javascript/_common/menu_selector.js");
 
 module.exports = {
@@ -35694,7 +35883,16 @@ module.exports = {
     },
     BinaryOptionsForMT5: {
         onLoad: function onLoad() {
-            MenuSelector.init(['what-are-binary-options', 'how-to-trade-binary', 'types-of-trades']);
+            var menu_sections = ['what-are-binary-options', 'how-to-trade-binary', 'types-of-trades'];
+            BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+                if (isEuCountry()) {
+                    menu_sections = menu_sections.filter(function (menu_item) {
+                        return menu_item !== 'how-to-trade-binary';
+                    });
+                }
+                MenuSelector.init(menu_sections);
+                getElementById('loading_binary_options_mt5').setVisibility(0);
+            });
         },
         onUnload: function onUnload() {
             MenuSelector.clean();

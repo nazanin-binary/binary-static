@@ -18230,8 +18230,6 @@ var TradingTimesUI = function () {
         columns = ['Asset', 'Opens', 'Closes', 'Settles', 'UpcomingEvents'];
         active_symbols = trading_times = undefined;
         $empty_trading_times.setVisibility(0);
-        $date_container.setVisibility(1);
-        $date_notice.setVisibility(1);
 
         if ($container.contents().length) return;
 
@@ -18294,6 +18292,9 @@ var TradingTimesUI = function () {
             empty_trading_times_btn_login.addEventListener('click', loginOnClick);
             return;
         }
+
+        $date_container.setVisibility(1);
+        $date_notice.setVisibility(1);
 
         $('#errorMsg').setVisibility(0);
 

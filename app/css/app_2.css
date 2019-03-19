@@ -5224,7 +5224,7 @@ html {
     margin-right: 0.8em;
     /* postcss-bem-linter: ignore */ }
     .full-page-modal .btn--secondary--orange:hover:not([disabled]) {
-      background: none;
+      background: #f4f4f6;
       border: none; }
   .full-page-modal .btn__text {
     font-size: 1.4em; }
@@ -7376,18 +7376,22 @@ html {
       -webkit-animation: dash 1.5s ease-in-out infinite, colorOrange 6s ease-in-out infinite;
               animation: dash 1.5s ease-in-out infinite, colorOrange 6s ease-in-out infinite; }
   .theme--dark .full-page-modal {
-    background-color: rgba(31, 36, 61, 0.8); }
+    background-color: rgba(31, 36, 61, 0.8);
+    /* postcss-bem-linter: ignore */ }
     .theme--dark .full-page-modal__dialog {
       background-color: #191c31;
       -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.16);
               box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.16); }
     .theme--dark .full-page-modal__content, .theme--dark .full-page-modal__header {
       color: #7f8397; }
-    .theme--dark .full-page-modal__btn {
-      background-color: #191c31; }
-      .theme--dark .full-page-modal__btn:hover {
-        background-color: #7f8397; }
-      .theme--dark .full-page-modal__btn-text {
+    .theme--dark .full-page-modal .btn--secondary--orange {
+      background-color: #191c31;
+      /* postcss-bem-linter: ignore */
+      /* postcss-bem-linter: ignore */ }
+      .theme--dark .full-page-modal .btn--secondary--orange:hover:not([disabled]) {
+        background: #202641;
+        border: none; }
+      .theme--dark .full-page-modal .btn--secondary--orange .btn__text {
         color: #ffffff; }
   .theme--dark .toast__body {
     background-color: #dbeefd;

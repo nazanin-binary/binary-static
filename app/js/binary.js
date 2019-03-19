@@ -21703,7 +21703,8 @@ var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Purchase = function Purchase(_ref) {
-    var currency = _ref.currency,
+    var contract_type = _ref.contract_type,
+        currency = _ref.currency,
         is_contract_mode = _ref.is_contract_mode,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
         is_purchase_confirm_on = _ref.is_purchase_confirm_on,
@@ -21721,6 +21722,7 @@ var Purchase = function Purchase(_ref) {
         var info = proposal_info[type] || {};
         var is_disabled = !is_purchase_enabled || !is_trade_enabled || !info.id || !is_client_allowed_to_visit;
         var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
+        var is_high_low = /high_low/.test(contract_type.toLowerCase());
 
         var purchase_button = _react2.default.createElement(
             _button2.default,
@@ -21744,7 +21746,7 @@ var Purchase = function Purchase(_ref) {
                     _react2.default.createElement(
                         'div',
                         { className: 'btn-purchase__trade-type' },
-                        _react2.default.createElement(_Types.IconTradeType, { type: type.toLowerCase(), className: 'btn-purchase__trade-type-icon' }),
+                        _react2.default.createElement(_Types.IconTradeType, { type: !is_high_low ? type.toLowerCase() : type.toLowerCase() + '_barrier', className: 'btn-purchase__trade-type-icon' }),
                         _react2.default.createElement(
                             'span',
                             { className: 'btn-purchase__trade-type-text' },
@@ -21841,6 +21843,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
         is_contract_mode: modules.smart_chart.is_contract_mode,
+        contract_type: modules.trade.contract_type,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,

@@ -17958,6 +17958,8 @@ module.exports = AssetIndex;
 var AssetIndex = __webpack_require__(/*! ./asset_index */ "./src/javascript/app/pages/resources/asset_index/asset_index.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Table = __webpack_require__(/*! ../../../common/attach_dom/table */ "./src/javascript/app/common/attach_dom/table.js");
+var Login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var CommonFunctions = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 
 var AssetIndexUI = function () {
@@ -17990,6 +17992,9 @@ var AssetIndexUI = function () {
         if (!asset_index.length) {
             $container.empty();
             $('#empty-asset-index').setVisibility(1);
+            var empty_asset_index_btn_login = CommonFunctions.getElementById('empty-asset-index-btn-login');
+            empty_asset_index_btn_login.removeEventListener('click', loginOnClick);
+            empty_asset_index_btn_login.addEventListener('click', loginOnClick);
             return;
         }
 
@@ -18082,6 +18087,11 @@ var AssetIndexUI = function () {
             asset_index = response.asset_index;
             if (active_symbols) populateTable();
         });
+    };
+
+    var loginOnClick = function loginOnClick(e) {
+        e.preventDefault();
+        Login.redirectToLogin();
     };
 
     return {
@@ -18269,7 +18279,8 @@ var TradingTimes = __webpack_require__(/*! ./trading_times */ "./src/javascript/
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Table = __webpack_require__(/*! ../../../common/attach_dom/table */ "./src/javascript/app/common/attach_dom/table.js");
 var DatePicker = __webpack_require__(/*! ../../../components/date_picker */ "./src/javascript/app/components/date_picker.js");
-var dateValueChanged = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").dateValueChanged;
+var Login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var CommonFunctions = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 var toISOFormat = __webpack_require__(/*! ../../../../_common/string_util */ "./src/javascript/_common/string_util.js").toISOFormat;
@@ -18277,6 +18288,9 @@ var toISOFormat = __webpack_require__(/*! ../../../../_common/string_util */ "./
 var TradingTimesUI = function () {
     var $date = void 0,
         $container = void 0,
+        $date_container = void 0,
+        $date_notice = void 0,
+        $empty_trading_times = void 0,
         columns = void 0,
         active_symbols = void 0,
         trading_times = void 0;
@@ -18284,8 +18298,13 @@ var TradingTimesUI = function () {
     var onLoad = function onLoad() {
         $date = $('#trading-date');
         $container = $('#trading-times');
+        $date_container = $('#trading-date-container');
+        $date_notice = $('#trading-date-notice');
+        $empty_trading_times = $('#empty-trading-times');
+
         columns = ['Asset', 'Opens', 'Closes', 'Settles', 'UpcomingEvents'];
         active_symbols = trading_times = undefined;
+        $empty_trading_times.setVisibility(0);
 
         if ($container.contents().length) return;
 
@@ -18323,7 +18342,7 @@ var TradingTimesUI = function () {
             });
         }
         $date.change(function () {
-            if (!dateValueChanged(this, 'date')) {
+            if (!CommonFunctions.dateValueChanged(this, 'date')) {
                 return false;
             }
             $container.empty();
@@ -18338,6 +18357,19 @@ var TradingTimesUI = function () {
 
     var populateTable = function populateTable() {
         if (!active_symbols || !trading_times) return;
+        if (!active_symbols.length) {
+            $container.empty();
+            $date_container.setVisibility(0);
+            $date_notice.setVisibility(0);
+            $empty_trading_times.setVisibility(1);
+            var empty_trading_times_btn_login = CommonFunctions.getElementById('empty-trading-times-btn-login');
+            empty_trading_times_btn_login.removeEventListener('click', loginOnClick);
+            empty_trading_times_btn_login.addEventListener('click', loginOnClick);
+            return;
+        }
+
+        $date_container.setVisibility(1);
+        $date_notice.setVisibility(1);
 
         $('#errorMsg').setVisibility(0);
 
@@ -18447,6 +18479,11 @@ var TradingTimesUI = function () {
             trading_times = response.trading_times;
             if (active_symbols) populateTable();
         });
+    };
+
+    var loginOnClick = function loginOnClick(e) {
+        e.preventDefault();
+        Login.redirectToLogin();
     };
 
     return {
@@ -31868,14 +31905,23 @@ var MetaTraderConfig = function () {
                         $message.find('.citizen').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'personal_details_redirect\', \'' + acc_type + '\')');
                     };
 
-                    if (accounts_info[acc_type].account_type === 'financial') {
+                    var has_financial_account = Client.hasAccountType('financial', 1);
+                    var is_maltainvest = State.getResponse('landing_company.mt_financial_company.' + getMTFinancialAccountType(acc_type) + '.shortcode') === 'maltainvest';
+                    var is_financial = accounts_info[acc_type].account_type === 'financial';
+                    var is_demo = accounts_info[acc_type].account_type === 'demo';
+                    var is_ok = true;
+
+                    if (is_maltainvest && (is_financial || is_demo) && !has_financial_account) {
+                        $message.find('.maltainvest').setVisibility(1);
+                        is_ok = false;
+                        $message.find(message_selector).setVisibility(1);
+                        resolve($message.html());
+                    }
+
+                    if (is_financial) {
                         // financial accounts have their own checks
                         BinarySocket.wait('get_account_status', 'landing_company').then(function () {
-                            var is_ok = true;
-                            if (State.getResponse('landing_company.mt_financial_company.' + getMTFinancialAccountType(acc_type) + '.shortcode') === 'maltainvest' && !Client.hasAccountType('financial', 1)) {
-                                $message.find('.maltainvest').setVisibility(1);
-                                is_ok = false;
-                            } else {
+                            if (!(is_maltainvest && !has_financial_account)) {
                                 var response_get_account_status = State.getResponse('get_account_status');
                                 if (/(financial_assessment|trading_experience)_not_complete/.test(response_get_account_status.status)) {
                                     $message.find('.assessment').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'financial_assessment_redirect\', \'' + urlFor('user/metatrader') + '#' + acc_type + '\')');

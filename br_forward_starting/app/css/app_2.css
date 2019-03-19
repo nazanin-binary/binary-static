@@ -5166,6 +5166,7 @@ html {
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.56);
   /* postcss-bem-linter: ignore */
+  /* postcss-bem-linter: ignore */
   /* postcss-bem-linter: ignore */ }
   .full-page-modal__dialog {
     max-width: 560px;
@@ -5193,7 +5194,7 @@ html {
     font-size: 1.6em;
     color: rgba(0, 0, 0, 0.8);
     font-weight: 700;
-    text-transform: capitalize;
+    text-transform: none;
     text-align: left;
     line-height: 1.75;
     margin-bottom: 10px; }
@@ -5219,6 +5220,10 @@ html {
     width: 100%; }
   .full-page-modal__button {
     margin: 0; }
+  .full-page-modal .btn--primary--orange {
+    /* postcss-bem-linter: ignore */ }
+    .full-page-modal .btn--primary--orange:hover:not([disabled]) {
+      background: #ff8802; }
   .full-page-modal .btn--secondary--orange {
     border: none;
     margin-right: 0.8em;

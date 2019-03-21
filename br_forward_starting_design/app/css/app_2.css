@@ -2353,16 +2353,19 @@ html {
     -webkit-transition: all ease 0.4s;
     transition: all ease 0.4s;
     /* postcss-bem-linter: ignore */ }
-    .btn--primary--orange:hover:not([disabled]):before {
-      background: rgba(0, 0, 0, 0.4);
-      content: '';
-      position: absolute;
-      top: -0.1em;
-      left: -0.1em;
-      bottom: -0.1em;
-      right: -0.1em;
-      opacity: 0.4;
-      display: block; }
+    .btn--primary--orange:hover:not([disabled]) {
+      border: none; }
+      .btn--primary--orange:hover:not([disabled]):before {
+        background: rgba(0, 0, 0, 0.4);
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        opacity: 0.4;
+        display: block;
+        border-radius: 4px; }
     .btn--primary--orange:active:not([disabled]) {
       background: #ff9933; }
     .btn--primary--orange.effect:focus:not(:active):after {

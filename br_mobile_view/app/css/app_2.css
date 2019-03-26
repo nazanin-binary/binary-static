@@ -5720,7 +5720,8 @@ html {
     margin: 0 1.6em 2.4em; }
   .work-in-progress__btn {
     background: #2a3052;
-    height: 42px; }
+    height: 42px;
+    cursor: pointer; }
     .work-in-progress__btn--span {
       font-weight: normal;
       color: #ffffff; }

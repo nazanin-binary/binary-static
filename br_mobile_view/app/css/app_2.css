@@ -5709,6 +5709,7 @@ html {
     text-transform: capitalize;
     text-align: center;
     line-height: unset;
+    text-transform: none;
     margin: 0.8em; }
   .work-in-progress__text {
     font-size: 1.6em;
@@ -5717,6 +5718,7 @@ html {
     text-transform: capitalize;
     text-align: center;
     line-height: 1.75;
+    text-transform: none;
     margin: 0 1.6em 2.4em; }
   .work-in-progress__btn {
     background: #2a3052;

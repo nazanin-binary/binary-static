@@ -9387,6 +9387,15 @@ var isEqualObject = function isEqualObject(obj1, obj2) {
     });
 };
 
+// Filters out duplicates in an array of objects by key
+var unique = function unique(array, key) {
+    return array.filter(function (e, idx) {
+        return array.findIndex(function (a, i) {
+            return a[key] ? a[key] === e[key] : i === idx;
+        }) === idx;
+    });
+};
+
 var getPropertyValue = function getPropertyValue(obj, k) {
     var keys = k;
     if (!Array.isArray(keys)) keys = [keys];
@@ -9518,6 +9527,7 @@ module.exports = {
     isEmptyObject: isEmptyObject,
     cloneObject: cloneObject,
     isDeepEqual: isDeepEqual,
+    unique: unique,
     getPropertyValue: getPropertyValue,
     handleHash: handleHash,
     clearable: clearable,
@@ -9835,6 +9845,7 @@ var pages_config = {
     api_tokenws: { module: APIToken, is_authenticated: true },
     assessmentws: { module: FinancialAssessment, is_authenticated: true, only_real: true },
     asset_indexws: { module: AssetIndexUI },
+    asuncion: { module: StaticPages.Locations },
     authenticate: { module: Authenticate, is_authenticated: true, only_real: true },
     authorised_appsws: { module: AuthorisedApps, is_authenticated: true },
     careers: { module: StaticPages.Careers },

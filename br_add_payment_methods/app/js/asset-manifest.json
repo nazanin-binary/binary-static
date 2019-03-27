@@ -18,8 +18,8 @@
   "react_mobx.js": "/br_add_payment_methods/app/js/react_mobx.min.js",
   "self_exclusion.js": "/br_add_payment_methods/app/js/self_exclusion-226ac0134b0354423868.js",
   "settings.js": "/br_add_payment_methods/app/js/settings-90edf5f4d945de1a9104.js",
-  "smart_chart.js": "/br_add_payment_methods/app/js/smart_chart-055a519715c79b34e33c.js",
+  "smart_chart.js": "/br_add_payment_methods/app/js/smart_chart-34e6da84e355fdd9098f.js",
   "statement.js": "/br_add_payment_methods/app/js/statement-83be0ace500a644e5479.js",
   "vendor.js": "/br_add_payment_methods/app/js/vendor.min.js",
-  "vendors~smart_chart.js": "/br_add_payment_methods/app/js/vendors~smart_chart-da70dc806a774f7ff1ee.js"
+  "vendors~smart_chart.js": "/br_add_payment_methods/app/js/vendors~smart_chart-0ba67c3be471f15f41ec.js"
 }

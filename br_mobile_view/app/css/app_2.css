@@ -5686,6 +5686,10 @@ html {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
+  .theme--light .work-in-progress {
+    background: #ffffff; }
+  .theme--dark .work-in-progress {
+    background: #191c31; }
   .work-in-progress__content {
     width: 100%;
     display: -webkit-box;
@@ -5704,29 +5708,43 @@ html {
     padding: 0 1.6em; }
   .work-in-progress__header {
     font-size: 2.8em;
-    color: #2a3052;
+    color: rgba(0, 0, 0, 0.8);
     font-weight: 700;
     text-transform: capitalize;
     text-align: center;
     line-height: unset;
     text-transform: none;
     margin: 0.8em; }
+    .theme--light .work-in-progress__header {
+      color: #2a3052; }
+    .theme--dark .work-in-progress__header {
+      color: #ffffff; }
   .work-in-progress__text {
     font-size: 1.6em;
-    color: #2a3052;
+    color: rgba(0, 0, 0, 0.8);
     font-weight: 400;
     text-transform: capitalize;
     text-align: center;
     line-height: 1.75;
     text-transform: none;
     margin: 0 1.6em 2.4em; }
+    .theme--light .work-in-progress__text {
+      color: #2a3052; }
+    .theme--dark .work-in-progress__text {
+      color: #ffffff; }
   .work-in-progress__btn {
-    background: #2a3052;
     height: 42px;
     cursor: pointer; }
+    .theme--light .work-in-progress__btn {
+      background: #2a3052; }
+    .theme--dark .work-in-progress__btn {
+      background: #ffffff; }
     .work-in-progress__btn--span {
-      font-weight: normal;
-      color: #ffffff; }
+      font-weight: normal; }
+      .theme--light .work-in-progress__btn--span {
+        color: #ffffff; }
+      .theme--dark .work-in-progress__btn--span {
+        color: #101320; }
 
 /*
     to use styles without modifier class on .inline-icon
@@ -8063,13 +8081,3 @@ html {
       background-color: #e31c4b; }
   .theme--dark .chart-spot__entry {
     background-color: unset; }
-  .theme--dark .work-in-progress {
-    background: #191c31; }
-    .theme--dark .work-in-progress__header {
-      color: #ffffff; }
-    .theme--dark .work-in-progress__text {
-      color: #ffffff; }
-    .theme--dark .work-in-progress__btn {
-      background: #ffffff; }
-      .theme--dark .work-in-progress__btn--span {
-        color: #101320; }

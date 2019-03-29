@@ -1088,13 +1088,13 @@ label + input {
 #footer .iom-icon {
   width: 90px; }
 
-#footer .lga-icon {
+#footer .mga-icon {
   width: 100px; }
 
 #footer .gamstop-icon {
   width: 109px; }
 
-#footer .gamstop-icon.data-show-visible + .lga-icon {
+#footer .gamstop-icon.data-show-visible + .mga-icon {
   width: 70px;
   margin-bottom: 3px;
   margin-left: -10px; }
@@ -1111,7 +1111,7 @@ label + input {
       -ms-flex-align: center;
           align-items: center; }
 
-#footer .lga-gamstop-icon-container {
+#footer .mga-gamstop-icon-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

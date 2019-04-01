@@ -11232,10 +11232,6 @@ var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascr
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var onCancel = function onCancel() {
-    return window.open(_url2.default.websiteUrl()) && undefined.props.setHasOnlyForwardingContracts(false);
-};
-
 var MarketUnavailableModal = function MarketUnavailableModal(_ref) {
     var is_visible = _ref.is_visible,
         setHasOnlyForwardingContracts = _ref.setHasOnlyForwardingContracts;
@@ -11245,7 +11241,9 @@ var MarketUnavailableModal = function MarketUnavailableModal(_ref) {
             cancel_button_text: (0, _localize.localize)('Go to SmartTrader'),
             confirm_button_text: (0, _localize.localize)('No, Stay on BinaryNex'),
             is_visible: is_visible,
-            onCancel: onCancel,
+            onCancel: function onCancel() {
+                return window.open(_url2.default.websiteUrl()) && setHasOnlyForwardingContracts(false);
+            },
             onConfirm: function onConfirm() {
                 return setHasOnlyForwardingContracts(false);
             },

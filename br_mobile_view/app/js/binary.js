@@ -3436,11 +3436,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ProgressSlider = function ProgressSlider(_ref) {
     var className = _ref.className,
-        has_result = _ref.has_result,
-        ticks_count = _ref.ticks_count,
         current_tick = _ref.current_tick,
+        has_result = _ref.has_result,
+        is_loading = _ref.is_loading,
         percentage = _ref.percentage,
-        remaining_time = _ref.remaining_time;
+        remaining_time = _ref.remaining_time,
+        ticks_count = _ref.ticks_count;
 
     if (!percentage && !ticks_count || has_result || !remaining_time) return _react2.default.createElement('div', { className: 'progress-slider--completed' });
     return _react2.default.createElement(
@@ -3457,6 +3458,12 @@ var ProgressSlider = function ProgressSlider(_ref) {
                 { className: 'positions-drawer-card__remaining-time' },
                 _react2.default.createElement(_remainingTime2.default, { end_time: remaining_time })
             ),
+            is_loading || percentage < 1 ? _react2.default.createElement(
+                'div',
+                { className: 'progress-slider__infinite-loader' },
+                _react2.default.createElement('div', { className: 'progress-slider__infinite-loader--indeterminate' })
+            ) :
+            /* Calculate line width based on percentage of time left */
             _react2.default.createElement(
                 'div',
                 { className: 'progress-slider__track' },
@@ -3478,6 +3485,7 @@ ProgressSlider.propTypes = {
     className: _propTypes2.default.string,
     current_tick: _propTypes2.default.number,
     has_result: _propTypes2.default.bool,
+    is_loading: _propTypes2.default.bool,
     percentage: _propTypes2.default.number,
     remaining_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     ticks_count: _propTypes2.default.number
@@ -3524,39 +3532,25 @@ var ProgressTicks = function ProgressTicks(_ref) {
         ticks_count = _ref.ticks_count;
 
     var arr_ticks = [].concat(_toConsumableArray(Array(ticks_count).keys()));
-    // TODO: temporary infinite/indeterminate loader
-    if (!current_tick) return _react2.default.createElement(
+    return _react2.default.createElement(
         'div',
-        { className: 'progress-slider__infinite-loader' },
-        _react2.default.createElement('div', { className: 'progress-slider__infinite-loader--indeterminate' })
-    );
-    return (
-        // TODO: Update and show once design for ticks progress bar is finalized
+        { className: 'progress-slider__ticks' },
+        _react2.default.createElement(
+            'span',
+            { className: 'progress-slider__ticks-caption' },
+            (0, _localize.localize)('Tick [_1]', current_tick.toString())
+        ),
         _react2.default.createElement(
             'div',
-            { style: { display: 'none' } },
-            _react2.default.createElement(
-                'span',
-                { className: 'progress-slider__ticks-caption' },
-                (0, _localize.localize)('Tick [_1]', current_tick)
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'progress-slider__track--ticks' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'progress-slider__ticks' },
-                    arr_ticks.map(function (idx) {
-                        return _react2.default.createElement('span', {
-                            key: idx,
-                            className: (0, _classnames2.default)('ticks__step', {
-                                'ticks__step--active': idx + 1 === parseInt(current_tick),
-                                'ticks__step--marked': idx + 1 < parseInt(current_tick)
-                            })
-                        });
+            { className: 'progress-slider__ticks-wrapper' },
+            arr_ticks.map(function (idx) {
+                return _react2.default.createElement('div', {
+                    key: idx,
+                    className: (0, _classnames2.default)('progress-slider__ticks-step', {
+                        'progress-slider__ticks-step--marked': idx + 1 <= parseInt(current_tick)
                     })
-                )
-            )
+                });
+            })
         )
     );
 };
@@ -3689,7 +3683,7 @@ var getTimePercentage = exports.getTimePercentage = function getTimePercentage(c
     var percentage = duration_from_now.asMilliseconds() / duration_from_purchase.asMilliseconds() * 100;
 
     if (percentage < 0.5) {
-        percentage = 1;
+        percentage = 0;
     } else if (percentage > 100) {
         percentage = 100;
     }
@@ -3788,6 +3782,8 @@ var _contractLink2 = _interopRequireDefault(_contractLink);
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _iconPriceMove = __webpack_require__(/*! ../../../../Assets/Trading/icon-price-move.jsx */ "./src/javascript/app_2/Assets/Trading/icon-price-move.jsx");
+
 var _contractTypeCell = __webpack_require__(/*! ./contract-type-cell.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/contract-type-cell.jsx");
 
 var _contractTypeCell2 = _interopRequireDefault(_contractTypeCell);
@@ -3821,11 +3817,13 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
         className = _ref.className,
         contract_info = _ref.contract_info,
         currency = _ref.currency,
+        current_tick = _ref.current_tick,
         duration = _ref.duration,
         duration_unit = _ref.duration_unit,
         exit_spot = _ref.exit_spot,
         indicative = _ref.indicative,
         id = _ref.id,
+        is_loading = _ref.is_loading,
         is_sell_requested = _ref.is_sell_requested,
         is_valid_to_sell = _ref.is_valid_to_sell,
         profit_loss = _ref.profit_loss,
@@ -3887,8 +3885,10 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
                     )
                 ),
                 _react2.default.createElement(_ProgressSlider2.default, {
+                    is_loading: is_loading,
                     remaining_time: contract_info.date_expiry,
                     percentage: percentage,
+                    current_tick: current_tick,
                     ticks_count: contract_info.tick_count,
                     has_result: !!result
                 }),
@@ -3919,8 +3919,18 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
-                        _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
+                        { className: 'positions-drawer-card__indicative' },
+                        _react2.default.createElement(_money2.default, { amount: indicative, currency: currency }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: (0, _classnames2.default)('positions-drawer-card__indicative--movement', {
+                                    'positions-drawer-card__indicative--movement-complete': status === 'complete'
+                                })
+                            },
+                            _react2.default.createElement(_iconPriceMove.IconPriceMove, {
+                                type: status !== 'complete' ? status : null
+                            })
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -3978,11 +3988,13 @@ PositionsDrawerCard.propTypes = {
     className: _propTypes2.default.string,
     contract_info: _propTypes2.default.object,
     currency: _propTypes2.default.string,
+    current_tick: _propTypes2.default.number,
     duration: _propTypes2.default.number,
     duration_unit: _propTypes2.default.string,
     exit_spot: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     id: _propTypes2.default.number,
     indicative: _propTypes2.default.number,
+    is_loading: _propTypes2.default.bool,
     is_sell_requested: _propTypes2.default.bool,
     is_valid_to_sell: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.bool]),
     onClickRemove: _propTypes2.default.func,
@@ -11778,20 +11790,22 @@ var _button2 = _interopRequireDefault(_button);
 
 var _iconWip = __webpack_require__(/*! ../../../Assets/Common/icon-wip.jsx */ "./src/javascript/app_2/Assets/Common/icon-wip.jsx");
 
+var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var onClick = function onClick() {
     window.location.href = _url2.default.websiteUrl();
 };
 
-var Wip = function Wip() {
+var Wip = function Wip(ui) {
     return _react2.default.createElement(
         'div',
         { className: 'work-in-progress' },
         _react2.default.createElement(
             'div',
             { className: 'work-in-progress__content' },
-            _react2.default.createElement(_iconWip.IconWip, null),
+            _react2.default.createElement(_iconWip.IconWip, { theme: ui.is_dark_mode ? 'dark' : 'light' }),
             _react2.default.createElement(
                 'div',
                 { className: 'work-in-progress__header' },
@@ -11812,7 +11826,12 @@ var Wip = function Wip() {
     );
 };
 
-exports.default = Wip;
+exports.default = (0, _connect.connect)(function (_ref) {
+    var ui = _ref.ui;
+    return {
+        is_dark_mode: ui.is_dark_mode_on
+    };
+})(Wip);
 
 /***/ }),
 
@@ -13748,8 +13767,35 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var IconWip = function IconWip(_ref) {
-    var className = _ref.className;
-    return _react2.default.createElement(
+    var className = _ref.className,
+        theme = _ref.theme;
+    return theme === 'dark' ? _react2.default.createElement(
+        'svg',
+        { xmlns: 'http://www.w3.org/2000/svg', width: '96', height: '124', viewBox: '0 0 96 124' },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('path', { fill: '#FFF', d: 'M81.942 42.05C63.22 23.317 32.766 23.317 14.04 42.042c-18.721 18.72-18.721 49.19 0 67.91 18.725 18.731 49.19 18.728 67.9-.002 18.745-18.719 18.745-49.187 0-67.902' }),
+            _react2.default.createElement(
+                'g',
+                { fill: '#2A3052' },
+                _react2.default.createElement('path', { d: 'M34.104 88.969s.542 4.059 3.96 5.94l-.91-1.695s1.74-4.57-3.05-4.245' }),
+                _react2.default.createElement('path', { d: 'M49.965 59.794c3.765 1.342 4.976 5.354 4.976 5.354-4.79 1.092-3.78-3.798-3.78-3.798l-1.196-1.556zm25.201 43.382c-.49.48-.973.948-1.47 1.4-10.814 8.812-19.142 4.427-19.239 4.427-5.645-1.128-8.447-1.144-10.032-2.203-.398-.267-1.675-.953-1.969-.787-1.152.686-2.738 1.04-4.368-.26a6.165 6.165 0 0 1-.406-.369c-1.798-1.79-1.188-3.638-.592-4.28.415-.42-.315-1.603-.315-1.603s-2.12-3.147-3.566-5.042c-1.597-2.08-1.813-6.207-1.832-6.262l-.022-.058c-1.611-1.914-1.779-2.502-2.335-3.435-.325-.552-.824-1.068-1.248-1.513-.291-.29-.56-.567-.751-.825-.042-.055-.053-.135-.037-.263.149-.893 2.07-2.863 2.484-3.138.51-.33 2.7-1.66 2.7-1.66s1.23-1.935 3.325-1.935c1.891.011 3.045-.105 6.305.958l1.355.43c2.272.728 4.276 1.587 5.868 2.274 1.35.582 2.432 1.052 3.261 1.27 2.812.739 7.772-1.536 8.818-2.496 1.716-1.562 2.457-2.608 2.467-3.465.014-.481-.199-.902-.685-1.412-.254-.232-.58-.667-.988-1.08-.065-.064-.134-.141-.216-.2-4.76-5.054-3.936-8.224-3.931-8.275.204-2.274-1.1-3.733-2.5-5.246l-.23-.284c-.073-.066-.163-.184-.163-.184 2.026.332 3.407 1.147 7.367 1.589 2.248.242 1.538.22 3.335.177 2.475-.08 4.435-.296 4.569-.858-.24-.204-1.334.06-6.59-1.948-2.434-.932-2.82-1.07-4.365-1.583-1.988-.67-4.144-1.598-4.144-1.598 8.573 2.249 11.378 3.13 15.3 3.184 1.518.028 2.42-.155 2.95-.264.558-.1 2.289-.492 2.485-1.091.06-.105-1.66.282-4.842-.768-10.008-3.306-10.859-4.96-16.406-7.118-1.937-.751-2.566-1.164-8.41-2.673-2.677-.688-6.727-.292-7.278.053-7.586-1.783-9.31-1.59-11.536-1.109 14.843-9.517 34.89-7.803 47.877 5.181a39.239 39.239 0 0 1 4.685 5.672l.183.276c4.166 6.236 6.39 13.556 6.39 21.22 0 10.264-4 19.907-11.258 27.174zM79.82 44.17c-17.557-17.56-46.103-17.56-63.657-.004-17.55 17.552-17.55 46.115 0 63.67 17.554 17.556 46.11 17.55 63.657-.004 17.573-17.551 17.573-46.114 0-63.662z' })
+            ),
+            _react2.default.createElement(
+                'g',
+                null,
+                _react2.default.createElement('path', { fill: '#F93', stroke: '#101320', d: 'M22.633 28.793c-3.667 2.333-6.167 5-7.5 8-2 4.5 19 14.5 33 12.5 13.5-5 29.5-12 28.5-15.5-.667-2.334-1.5-3.834-2.5-4.5.667-3 .167-5-1.5-6 0-8.5-4.92-12.74-8.5-16.5-2.5-5-7-4.5-11.5-4.5-6.5-3.5-12.5 1-15.5 3-7 2.5-11.5 14-12 17-1.333.333-2.167 2.5-2.5 6.5z' }),
+                _react2.default.createElement('path', { stroke: '#101320', strokeLinecap: 'round', strokeLinejoin: 'round', d: 'M25.133 22.793c.5 2-1 6-1 6.5s1.5 2.5 1.5 2c2-12.5 8-23.5 11.5-26M63.633 6.293c-15.5-12.5-26.5 24-25.5 30.5 1 2.5 9 1.5 10 1 .5-2.5 0-5 1.5-6s5.437-.5 6.468.5c1.032 1-.468 4 .532 5.5s6 1 8.5 0c1-1.5 0-6.5.5-8s6.5-3 7.5-3c.667 0 1 .833 1 2.5M48.133 1.293c-5.5 1.5-10.5 6.5-8.5 7.5s9-6.5 12.5-6.5' }),
+                _react2.default.createElement(
+                    'g',
+                    { stroke: '#FFF', strokeLinecap: 'round' },
+                    _react2.default.createElement('path', { d: 'M51.633 4.293c-8 4.591-13.563 18-15 30M38.07 7C39.133 5.5 40 4.293 41.5 3.5M51.133 32.793c-1.5 0-1 3-1.5 5' }),
+                    _react2.default.createElement('path', { strokeLinejoin: 'round', d: 'M68.133 29.793c-.667 0-1 .5-1 1.5.333 4 0 6.5-1 7.5' })
+                )
+            )
+        )
+    ) : _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '96', height: '118', viewBox: '0 0 96 118' },
         _react2.default.createElement(
@@ -16621,7 +16667,7 @@ var IconPriceMove = function IconPriceMove(_ref) {
                 break;
         }
     }
-    return _react2.default.createElement(
+    return type && _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className), width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
         IconType
@@ -17613,7 +17659,7 @@ var LastDigitPrediction = function (_React$Component) {
                     return !(val % 2);
                 }
             };
-
+            if (!contract_type) return null;
             return barrier_map[contract_type](num) ? num : null;
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -24205,11 +24251,21 @@ exports.default = ContractStore;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getDurationTime = exports.getDurationPeriod = exports.getDurationUnitText = exports.getDurationUnitValue = undefined;
+exports.getDurationTime = exports.getDurationPeriod = exports.getDurationUnitText = exports.getDurationUnitValue = exports.getCurrentTick = undefined;
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
+
 var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
+
+var _digits = __webpack_require__(/*! ../../Contract/Helpers/digits */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/digits.js");
+
+var getCurrentTick = exports.getCurrentTick = function getCurrentTick(contract_info) {
+    var tick_stream = (0, _utility.unique)(contract_info.tick_stream, 'epoch');
+    var current_tick = (0, _digits.isDigitContract)(contract_info.contract_type) ? tick_stream.length : tick_stream.length - 1;
+    return !current_tick || current_tick < 0 ? 0 : current_tick;
+};
 
 var getDurationUnitValue = exports.getDurationUnitValue = function getDurationUnitValue(obj_duration) {
     var duration_ms = obj_duration.asMilliseconds() / 1000;
@@ -24439,6 +24495,8 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
                 // subscribe to new contract:
                 _Services.WS.subscribeProposalOpenContract(contract_id, this.proposalOpenContractHandler, false);
             } else if (act === 'sell') {
+                var i = this.getPositionIndexById(contract_id);
+                this.positions[i].is_loading = true;
                 _Services.WS.subscribeProposalOpenContract(contract_id, this.populateResultDetails, false);
             }
         }
@@ -24469,14 +24527,18 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             // store contract proposal details that do not require modifiers
             portfolio_position.contract_info = proposal;
 
-            if (!proposal.is_valid_to_sell) {
-                portfolio_position.status = 'no-resale';
-            } else if (new_indicative > prev_indicative) {
-                portfolio_position.status = 'price-moved-up';
+            // for tick contracts
+            if (proposal.tick_count) {
+                var current_tick = portfolio_position.current_tick > (0, _details.getCurrentTick)(proposal) ? portfolio_position.current_tick : (0, _details.getCurrentTick)(proposal);
+                portfolio_position.current_tick = current_tick;
+            }
+
+            if (new_indicative > prev_indicative) {
+                portfolio_position.status = 'profit';
             } else if (new_indicative < prev_indicative) {
-                portfolio_position.status = 'price-moved-down';
+                portfolio_position.status = 'loss';
             } else {
-                portfolio_position.status = 'price-stable';
+                portfolio_position.status = null;
             }
         }
     }, {
@@ -24647,12 +24709,15 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             _this5.positions[i].is_valid_to_sell = (0, _logic.isValidToSell)(contract_response);
             _this5.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
             _this5.positions[i].sell_time = (0, _logic.getEndSpotTime)(contract_response) || contract_response.current_spot_time; // same as exit_spot, use latest spot time if no exit_tick_time
+            _this5.positions[i].status = 'complete';
 
             // fix for missing barrier and entry_spot
             if (!_this5.positions[i].contract_info.barrier || !_this5.positions[i].contract_info.entry_spot) {
                 _this5.positions[i].contract_info.barrier = _this5.positions[i].barrier;
                 _this5.positions[i].contract_info.entry_spot = _this5.positions[i].entry_spot;
             }
+
+            _this5.positions[i].is_loading = false;
         };
     }
 }), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
@@ -25355,7 +25420,6 @@ var SmartChartStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _d
         value: function setTickChartView(scroll_to_left_epoch) {
             if (this.granularity !== 0) {
                 this.updateGranularity(0);
-                this.updateChartType('mountain');
             }
             this.updateEpochScrollToOffset(1);
             this.updateChartZoom(100);

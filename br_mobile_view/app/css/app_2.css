@@ -5786,7 +5786,8 @@ html {
       background: #ffffff; }
     .work-in-progress__btn--span {
       font-weight: normal;
-      font-size: 1.6em; }
+      font-size: 1.6em;
+      text-transform: none; }
       .theme--light .work-in-progress__btn--span {
         color: #ffffff; }
       .theme--dark .work-in-progress__btn--span {

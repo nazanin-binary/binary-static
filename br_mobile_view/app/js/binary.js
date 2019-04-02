@@ -12193,7 +12193,7 @@ var App = function App(_ref) {
         _react2.default.createElement(
             _connect.MobxProvider,
             { store: root_store },
-            root_store.ui.is_mobile ? _react2.default.createElement(_Wip2.default, null) : _react2.default.createElement(
+            root_store.ui.is_mobile || root_store.ui.is_tablet ? _react2.default.createElement(_Wip2.default, null) : _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
                 _react2.default.createElement(

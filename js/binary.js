@@ -10844,7 +10844,7 @@ var Header = function () {
 
             var hasMissingRequiredField = function hasMissingRequiredField() {
                 // eslint-disable-next-line no-nested-ternary
-                var required_fields = is_costarica ? [].concat(_toConsumableArray(necessary_signup_fields), _toConsumableArray(necessary_withdrawal_fields)) : Client.isAccountOfType('financial') ? ['account_opening_reason', 'address_line_1', 'address_city', 'phone', 'tax_identification_number', 'tax_residence'].concat(_toConsumableArray(Client.get('residence') === 'gb' ? ['address_postcode'] : [])) : [];
+                var required_fields = is_costarica ? [].concat(_toConsumableArray(necessary_signup_fields), _toConsumableArray(necessary_withdrawal_fields)) : Client.isAccountOfType('financial') ? ['account_opening_reason', 'address_line_1', 'address_city', 'phone', 'tax_identification_number', 'tax_residence'].concat(_toConsumableArray(Client.get('residence') === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? ['address_postcode'] : [])) : [];
 
                 var get_settings = State.getResponse('get_settings');
                 return required_fields.some(function (field) {
@@ -11016,73 +11016,6 @@ var Header = function () {
 }();
 
 module.exports = Header;
-
-/***/ }),
-
-/***/ "./src/javascript/app/base/interview_popup.js":
-/*!****************************************************!*\
-  !*** ./src/javascript/app/base/interview_popup.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
-var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
-var Client = __webpack_require__(/*! ../base/client */ "./src/javascript/app/base/client.js");
-var isEuCountry = __webpack_require__(/*! ../common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
-var RealityCheckData = __webpack_require__(/*! ../pages/user/reality_check/reality_check.data */ "./src/javascript/app/pages/user/reality_check/reality_check.data.js");
-
-var InterviewPopup = function () {
-    var onLoad = function onLoad() {
-        BinarySocket.wait('authorize', 'website_status', 'get_account_status').then(function () {
-            var is_interview_consent = Cookies.get('InterviewConsent');
-            var $interview_popup = $('#interview_popup_container');
-            var $interview_no_thanks = $('#interview_no_thanks');
-            var $interview_ask_later = $('#interview_ask_later');
-            var $interview_interested = $('#interview_interested');
-
-            if (Client.isLoggedIn() && isEuCountry() && !is_interview_consent && !(RealityCheckData.get('keep_open') === false || RealityCheckData.get('keep_open') === 1)) {
-                setTimeout(function () {
-                    $interview_popup.removeClass('invisible');
-                }, 2000);
-                $interview_no_thanks.one('click', function () {
-                    Cookies.set('InterviewConsent', 1);
-                    $interview_popup.addClass('invisible');
-                });
-                $interview_ask_later.one('click', function () {
-                    var interval_time = 1 / 12;
-                    Cookies.set('InterviewConsent', 1, {
-                        expires: interval_time
-                    });
-                    $interview_popup.addClass('invisible');
-                });
-                $interview_interested.one('click', function () {
-                    BinarySocket.wait('get_settings').then(function (response) {
-                        var get_settings = response.get_settings || {};
-                        var url = 'https://docs.google.com/forms/d/e/1FAIpQLSccg8p-GjoBufjAnMJJUZHJ_1YqlS_GyQyy5vQdgGm4VKmnMg/viewform?usp=pp_url';
-                        var pre_name = '&entry.909179306=' + get_settings.first_name + '%20' + get_settings.last_name;
-                        var pre_email = '&entry.81172074=' + get_settings.email;
-                        var pre_country = '&entry.141529718=' + get_settings.country;
-                        var pre_phone = '&entry.1442583433=' + get_settings.phone;
-                        var encode_uri = ('' + url + pre_name + pre_email + pre_country + pre_phone).replace(/\+/g, '%2B');
-                        $interview_popup.addClass('invisible');
-                        Cookies.set('InterviewConsent', 1);
-                        window.open(encode_uri, '_blank');
-                    });
-                });
-            }
-        });
-    };
-
-    return {
-        onLoad: onLoad
-    };
-}();
-
-module.exports = InterviewPopup;
 
 /***/ }),
 
@@ -11353,7 +11286,6 @@ var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/clie
 var Contents = __webpack_require__(/*! ./contents */ "./src/javascript/app/base/contents.js");
 var Header = __webpack_require__(/*! ./header */ "./src/javascript/app/base/header.js");
 var Footer = __webpack_require__(/*! ./footer */ "./src/javascript/app/base/footer.js");
-var InterviewPopup = __webpack_require__(/*! ./interview_popup */ "./src/javascript/app/base/interview_popup.js");
 var Menu = __webpack_require__(/*! ./menu */ "./src/javascript/app/base/menu.js");
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var TrafficSource = __webpack_require__(/*! ../common/traffic_source */ "./src/javascript/app/common/traffic_source.js");
@@ -11431,7 +11363,8 @@ var Page = function () {
                 Language.setCookie(Language.urlLang());
 
                 if (!ClientBase.get('is_virtual')) {
-                    InterviewPopup.onLoad();
+                    // TODO: uncomment below to enable interview popup dialog
+                    // InterviewPopup.onLoad();
                 }
             }
             Header.onLoad();
@@ -12039,7 +11972,7 @@ var AccountOpening = function () {
     };
 
     var commonValidations = function commonValidations() {
-        var req = [{ selector: '#salutation', validations: ['req'] }, { selector: '#first_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: '#last_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: '#date_of_birth', validations: ['req'] }, { selector: '#address_line_1', validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: '#address_line_2', validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: '#address_city', validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol', ['length', { min: 0, max: 35 }]] }, { selector: '#address_postcode', validations: [Client.get('residence') === 'gb' ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 8, max: 35, value: function value() {
+        var req = [{ selector: '#salutation', validations: ['req'] }, { selector: '#first_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: '#last_name', validations: ['req', 'letter_symbol', ['length', { min: 2, max: 30 }]] }, { selector: '#date_of_birth', validations: ['req'] }, { selector: '#address_line_1', validations: ['req', 'address', ['length', { min: 1, max: 70 }]] }, { selector: '#address_line_2', validations: ['address', ['length', { min: 0, max: 70 }]] }, { selector: '#address_city', validations: ['req', 'letter_symbol', ['length', { min: 1, max: 35 }]] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol', ['length', { min: 0, max: 35 }]] }, { selector: '#address_postcode', validations: [Client.get('residence') === 'gb' || State.getResponse('authorize.upgradeable_landing_companies').indexOf('iom') > -1 ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 8, max: 35, value: function value() {
                     return $('#phone').val().replace(/\D/g, '');
                 } }]] }, { selector: '#secret_question', validations: ['req'] }, { selector: '#secret_answer', validations: ['req', 'general', ['length', { min: 4, max: 50 }]] }, { selector: '#tnc', validations: [['req', { message: localize('Please accept the terms and conditions.') }]], exclude_request: 1 }, { selector: '#tax_residence', validations: ['req', ['length', { min: 1, max: 20 }]] }, { selector: '#tax_identification_number', validations: ['req'] }, { request_field: 'residence', value: Client.get('residence') }, { request_field: 'client_type', value: function value() {
                 return $('#chk_professional').is(':checked') ? 'professional' : 'retail';
@@ -27182,6 +27115,11 @@ var Authenticate = function () {
                         link = Url.urlForCurrentDomain('https://marketing.binary.com/authentication/MF_Authentication_Process.pdf');
                     }
                     $not_authenticated.find('.learn_more').setVisibility(1).find('a').attr('href', link);
+
+                    if (isIdentificationNoExpiry(Client.get('residence'))) {
+                        $('#expiry_datepicker_proofid').setVisibility(0);
+                        $('#exp_date_2').datepicker('setDate', '2099-12-31');
+                    }
                 } else if (!/age_verification/.test(status)) {
                     $('#needs_age_verification').setVisibility(1);
                 } else {
@@ -27211,6 +27149,15 @@ var Authenticate = function () {
         });
 
         $('.file-picker').on('change', onFileSelected);
+    };
+
+    /**
+     * Checks for countries of residence with no ID expiry date.
+     * @param {string} residence
+    */
+    var isIdentificationNoExpiry = function isIdentificationNoExpiry(residence) {
+        return (/(ng|za|lk|in|sg|id|mm|vn|br|mx|co)/.test(residence)
+        );
     };
 
     /**
@@ -27533,7 +27480,7 @@ var Authenticate = function () {
             onErrorResolved('id_number', file.passthrough.class);
             return localize('Only letters, numbers, space, underscore, and hyphen are allowed for ID number ([_1]).', doc_name[file.documentType]);
         }
-        if (!file.expirationDate && required_docs.indexOf(file.documentType.toLowerCase()) !== -1) {
+        if (!file.expirationDate && required_docs.indexOf(file.documentType.toLowerCase()) !== -1 && !(isIdentificationNoExpiry(Client.get('residence')) && file.documentType === 'proofid')) {
             onErrorResolved('exp_date', file.passthrough.class);
             return localize('Expiry date is required for [_1].', doc_name[file.documentType]);
         }
@@ -29922,7 +29869,7 @@ var PersonalDetails = function () {
             var is_for_mt_tax = /real/.test(mt_acct_type) && mt_acct_type.split('_').length > 2; // demo and volatility mt accounts do not require tax info
             var is_tax_req = is_financial || is_for_mt_tax && +State.getResponse('landing_company.config.tax_details_required') === 1;
 
-            validations = [{ selector: '#address_line_1', validations: ['req', 'address'] }, { selector: '#address_line_2', validations: ['address'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: [Client.get('residence') === 'gb' ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#email_consent' }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 8, max: 35, value: function value() {
+            validations = [{ selector: '#address_line_1', validations: ['req', 'address'] }, { selector: '#address_line_2', validations: ['address'] }, { selector: '#address_city', validations: ['req', 'letter_symbol'] }, { selector: '#address_state', validations: $('#address_state').prop('nodeName') === 'SELECT' ? '' : ['letter_symbol'] }, { selector: '#address_postcode', validations: [Client.get('residence') === 'gb' || Client.get('landing_company_shortcode') === 'iom' ? 'req' : '', 'postcode', ['length', { min: 0, max: 20 }]] }, { selector: '#email_consent' }, { selector: '#phone', validations: ['req', 'phone', ['length', { min: 8, max: 35, value: function value() {
                         return $('#phone').val().replace(/\D/g, '');
                     } }]] }, { selector: '#place_of_birth', validations: ['req'] }, { selector: '#account_opening_reason', validations: ['req'] }, { selector: '#date_of_birth', validations: ['req'] }, { selector: '#tax_residence', validations: is_tax_req ? ['req'] : '' }, { selector: '#citizen', validations: is_financial || is_gaming || is_for_mt_citizen ? ['req'] : '' }, { selector: '#chk_tax_id', validations: is_financial ? [['req', { hide_asterisk: true, message: localize('Please confirm that all the information above is true and complete.') }]] : '', exclude_request: 1 }];
 
@@ -34072,7 +34019,6 @@ var RealityCheckData = __webpack_require__(/*! ./reality_check.data */ "./src/ja
 var showLocalTimeOnHover = __webpack_require__(/*! ../../../base/clock */ "./src/javascript/app/base/clock.js").showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var FormManager = __webpack_require__(/*! ../../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
-var InterviewPopup = __webpack_require__(/*! ../../../base/interview_popup */ "./src/javascript/app/base/interview_popup.js");
 var urlFor = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 __webpack_require__(/*! ../../../../_common/lib/polyfills/array.includes */ "./src/javascript/_common/lib/polyfills/array.includes.js");
 __webpack_require__(/*! ../../../../_common/lib/polyfills/string.includes */ "./src/javascript/_common/lib/polyfills/string.includes.js");
@@ -34169,7 +34115,8 @@ var RealityCheckUI = function () {
     var closePopUp = function closePopUp() {
         $('#reality_check').remove();
         startSummaryTimer();
-        InterviewPopup.onLoad();
+        // TODO: uncomment below to enable interview popup dialog
+        // InterviewPopup.onLoad();
     };
 
     var startSummaryTimer = function startSummaryTimer() {
@@ -34387,6 +34334,10 @@ var SetCurrency = function () {
                                     if (!/authenticated/.test(get_account_status.status)) {
                                         redirect_url = Url.urlFor('user/authenticate');
                                     }
+                                }
+                                // Do not redirect MLT clients to cashier, because they need to set self exclusion before trading
+                                if (!redirect_url && /^(malta)$/i.test(Client.get('landing_company_shortcode'))) {
+                                    redirect_url = Url.urlFor('user/security/self_exclusionws');
                                 }
                                 // Do not redirect MX clients to cashier, because they need to set max limit before making deposit
                                 if (!redirect_url && !/^(iom)$/i.test(Client.get('landing_company_shortcode'))) {

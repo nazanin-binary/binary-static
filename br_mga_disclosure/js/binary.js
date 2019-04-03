@@ -10442,11 +10442,13 @@ var Footer = function () {
             // logged in virtual clients with maltainvest financial landing company or
             // logged out clients with EU IP address
             if (Client.isLoggedIn()) {
-                showWarning(Client.get('landing_company_shortcode') === 'maltainvest' || Client.get('is_virtual') && State.getResponse('landing_company.financial_company.shortcode') === 'maltainvest');
-                showAgeRestrictionSign(/iom|maltainvest/.test(Client.get('landing_company_shortcode')) || Client.get('is_virtual') && /iom|maltainvest/.test(Client.get('landing_company_shortcode')));
+                var landing_company_shortcode = Client.get('landing_company_shortcode');
+                showWarning(landing_company_shortcode === 'maltainvest' || Client.get('is_virtual') && State.getResponse('landing_company.financial_company.shortcode') === 'maltainvest');
+                setVisibilityAgeRestrictionSign(/iom|maltainvest/.test(landing_company_shortcode));
             } else {
-                showWarning(isEuCountry());
-                showAgeRestrictionSign(isEuCountry());
+                var is_eu_country = isEuCountry();
+                showWarning(is_eu_country);
+                setVisibilityAgeRestrictionSign(is_eu_country);
             }
         });
     };
@@ -10455,8 +10457,8 @@ var Footer = function () {
         $('#footer-regulatory .eu-only').setVisibility(should_show_warning);
     };
 
-    var showAgeRestrictionSign = function showAgeRestrictionSign(should_show_age_restriction_sign) {
-        $('#footer-regulatory .age-restriction').setVisibility(should_show_age_restriction_sign);
+    var setVisibilityAgeRestrictionSign = function setVisibilityAgeRestrictionSign(should_show_age_restriction_sign) {
+        $('#footer-regulatory .age-restriction-sign').setVisibility(+should_show_age_restriction_sign);
     };
 
     var clearNotification = function clearNotification() {

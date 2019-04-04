@@ -18219,7 +18219,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var MAX_MOBILE_WIDTH = exports.MAX_MOBILE_WIDTH = 767;
-var MAX_TABLET_WIDTH = exports.MAX_TABLET_WIDTH = 980;
+var MAX_TABLET_WIDTH = exports.MAX_TABLET_WIDTH = 1024;
 
 /***/ }),
 
